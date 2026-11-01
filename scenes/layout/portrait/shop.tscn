@@ -274,11 +274,9 @@ vertical_alignment = 1
 text_overrun_behavior = 3
 
 [node name="CoinChip" parent="TopBar" index="1"]
-custom_minimum_size = Vector2(120, 35)
 navigate_on_plus = false
 
 [node name="LifeChip" parent="TopBar" index="2"]
-custom_minimum_size = Vector2(110, 35)
 navigate_on_plus = false
 
 [node name="Body" type="VBoxContainer" parent="." index="1" unique_id=1943642727]
@@ -499,16 +497,17 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 24.0
-offset_top = -100.0
+offset_top = -112.0
 offset_right = -24.0
 offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 0
 texture = ExtResource("nav_bar")
-patch_margin_left = 24
-patch_margin_top = 24
-patch_margin_right = 24
-patch_margin_bottom = 26
+patch_margin_left = 28
+patch_margin_top = 30
+patch_margin_right = 28
+patch_margin_bottom = 30
+axis_stretch_horizontal = 2
 
 [node name="Tabs" type="HBoxContainer" parent="." index="6" unique_id=1863904211]
 layout_mode = 1
@@ -517,9 +516,9 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 32.0
-offset_top = -103.0
+offset_top = -112.0
 offset_right = -32.0
-offset_bottom = -37.0
+offset_bottom = -28.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 4

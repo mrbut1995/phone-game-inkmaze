@@ -4,8 +4,8 @@
 [ext_resource type="Script" uid="uid://d3tppcudxm1tm" path="res://scripts/ui/layouts/daily_layout.gd" id="2_layout"]
 [ext_resource type="PackedScene" uid="uid://ba36iykveefpu" path="res://nodes/daily/calendar.tscn" id="3_calendar"]
 [ext_resource type="PackedScene" uid="uid://bx4mq1dw7lc0i" path="res://nodes/daily/action_card.tscn" id="4_card"]
-[ext_resource type="Texture2D" uid="uid://7a3hksoy62bs" path="res://assets/images-png/daily/btn_square_normal.png" id="5_back_n"]
-[ext_resource type="Texture2D" uid="uid://c2jn7vk016ust" path="res://assets/images-png/daily/btn_square_pressed.png" id="6_back_p"]
+[ext_resource type="Texture2D" uid="uid://yssg5du4e4fc" path="res://assets/images-png/btn_header_back_normal.png" id="5_back_n"]
+[ext_resource type="Texture2D" uid="uid://c8fvwpvick2hx" path="res://assets/images-png/btn_header_back_pressed.png" id="6_back_p"]
 [ext_resource type="Texture2D" uid="uid://bypi88itx11cm" path="res://assets/images-png/daily/star_big.png" id="9_star"]
 [ext_resource type="Texture2D" uid="uid://dopputx02por5" path="res://assets/images-png/daily/chip_white.png" id="10_chip"]
 [ext_resource type="Texture2D" uid="uid://byt8wshkuayfy" path="res://assets/images-png/daily/clock_blue.png" id="11_clock"]
@@ -1128,19 +1128,19 @@ size_flags_vertical = 3
 mouse_filter = 2
 
 [node name="Back" type="TextureButton" parent="TopBar/HeaderRow" index="0" unique_id=619384443]
-custom_minimum_size = Vector2(36, 36)
+custom_minimum_size = Vector2(48, 53)
 layout_mode = 0
 offset_left = 26.0
 offset_top = 5.0
-offset_right = 62.0
-offset_bottom = 41.0
+offset_right = 74.0
+offset_bottom = 58.0
 focus_mode = 0
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("5_back_n")
 texture_pressed = ExtResource("6_back_p")
 texture_hover = ExtResource("6_back_p")
 ignore_texture_size = true
-stretch_mode = 0
+stretch_mode = 5
 
 [node name="Banner" type="TextureRect" parent="Panel/Stage"]
 layout_mode = 0

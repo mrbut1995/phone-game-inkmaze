@@ -25,8 +25,10 @@ mouse_filter = 2
 custom_minimum_size = Vector2(111, 32)
 layout_mode = 2
 size_flags_vertical = 4
+large = true
 
 [node name="LifeChip" parent="TopBar" instance=ExtResource("3_life")]
 custom_minimum_size = Vector2(96, 32)
 layout_mode = 2
 size_flags_vertical = 4
+large = true

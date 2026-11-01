@@ -46,6 +46,8 @@ expand_margin_right = -6.0
 [node name="Portrait" unique_id=732847808 node_paths=PackedStringArray("profile_card", "coin_chip", "star_chip", "btn_settings", "event_header", "level_section", "dock_shop", "dock_ranking", "dock_daily", "dock_badges", "stamp_panel", "stamp_label", "header_anchor", "bottom_safe_spacer") instance=ExtResource("1_parent")]
 mouse_filter = 2
 script = ExtResource("2_layout")
+header_inset_left = 40.0
+header_inset_right = 8.0
 profile_card = NodePath("TopBar/ProfileCard")
 coin_chip = NodePath("TopBar/CoinChip")
 star_chip = NodePath("TopBar/StarChip")
@@ -201,7 +203,7 @@ large = true
 [node name="Settings" type="TextureButton" parent="TopBar" index="4" unique_id=1915005296]
 custom_minimum_size = Vector2(56, 56)
 layout_mode = 2
-size_flags_vertical = 0
+size_flags_vertical = 4
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("6_settings_n")
 texture_pressed = ExtResource("7_settings_p")
