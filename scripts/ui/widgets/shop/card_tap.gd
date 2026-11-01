@@ -59,9 +59,10 @@ func feed(event: InputEvent) -> Result:
 static func press_fx(node: Control, down: bool) -> void:
 	if node == null or not node.is_inside_tree():
 		return
-	var old: Variant = node.get_meta("_tap_fx", null)
-	if old is Tween and (old as Tween).is_valid():
-		(old as Tween).kill()
+	if node.has_meta("_tap_fx"):
+		var old: Variant = node.get_meta("_tap_fx")
+		if old is Tween and (old as Tween).is_valid():
+			(old as Tween).kill()
 	node.pivot_offset = node.size * 0.5
 	var tw := node.create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	tw.tween_property(node, "scale", Vector2(0.97, 0.97) if down else Vector2.ONE, 0.07)
@@ -84,7 +85,12 @@ static func arm(node: Object) -> void:
 	_armed = node
 	_armed_until = Time.get_ticks_msec() + int(ARM_SECONDS * 1000.0)
 	if node is Node and (node as Node).is_inside_tree():
-		(node as Node).get_tree().create_timer(ARM_SECONDS).timeout.connect(func() -> void: _expire(node))
+		# Không bắt (capture) thẳng `node` — node có thể bị free trước khi hết giờ ⇒ dùng weakref
+		var ref: WeakRef = weakref(node)
+		(node as Node).get_tree().create_timer(ARM_SECONDS).timeout.connect(func() -> void:
+			var target: Object = ref.get_ref()
+			if target != null:
+				_expire(target))
 
 
 static func is_armed(node: Object) -> bool:

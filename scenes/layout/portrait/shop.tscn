@@ -286,7 +286,7 @@ anchor_left = 0.0444
 anchor_right = 0.9556
 anchor_bottom = 1.0
 offset_top = 100.0
-offset_bottom = -232.0
+offset_bottom = -270.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 12
@@ -339,9 +339,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -130.0
-offset_top = -226.0
+offset_top = -258.0
 offset_right = 130.0
-offset_bottom = -176.0
+offset_bottom = -208.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
@@ -398,9 +398,9 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 24.0
-offset_top = -172.0
+offset_top = -204.0
 offset_right = -24.0
-offset_bottom = -114.0
+offset_bottom = -146.0
 grow_horizontal = 2
 grow_vertical = 0
 texture = ExtResource("11_gift")
@@ -497,17 +497,18 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 24.0
-offset_top = -112.0
+offset_top = -144.0
 offset_right = -24.0
 offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 0
 texture = ExtResource("nav_bar")
 patch_margin_left = 28
-patch_margin_top = 30
+patch_margin_top = 42
 patch_margin_right = 28
-patch_margin_bottom = 30
+patch_margin_bottom = 24
 axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
 
 [node name="Tabs" type="HBoxContainer" parent="." index="6" unique_id=1863904211]
 layout_mode = 1
@@ -516,7 +517,7 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 32.0
-offset_top = -112.0
+offset_top = -153.0
 offset_right = -32.0
 offset_bottom = -28.0
 grow_horizontal = 2
@@ -560,17 +561,11 @@ mouse_filter = 2
 color = Color(0.2392, 0.5137, 0.6824, 1)
 
 [node name="WalletAnim" type="AnimationPlayer" parent="." index="8" unique_id=1722495398]
-libraries = {
-"": SubResource("AnimationLibrary_wallet_psh")
-}
+libraries/ = SubResource("AnimationLibrary_wallet_psh")
 
 [node name="PulseAnim" type="AnimationPlayer" parent="." index="9" unique_id=721877341]
-libraries = {
-"": SubResource("AnimationLibrary_shop_pulse_p")
-}
+libraries/ = SubResource("AnimationLibrary_shop_pulse_p")
 
 [node name="EnterAnim" type="AnimationPlayer" parent="." index="10" unique_id=1195333969]
-libraries = {
-"": SubResource("AnimationLibrary_shop_enter_p")
-}
+libraries/ = SubResource("AnimationLibrary_shop_enter_p")
 autoplay = &"enter"

@@ -1,5 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Chấm trang thường — PHẲNG. Vẽ 1x, viewBox gấp đôi (xuất PNG 12x12 hoặc 24x24). Không dùng filter. -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12"><g transform="scale(2)">
-<circle cx="6" cy="6" r="6" fill="#CFE0EE"/>
-</g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 18" width="12" height="18"><circle cx="6" cy="8" r="5" fill="#FFFFFF" stroke="#E3D8C6" stroke-width="2"/><path d="M1.2 10.5a5 5 0 0 0 9.6 0" fill="none" stroke="#D9CCB8" stroke-width="2"/></svg>
