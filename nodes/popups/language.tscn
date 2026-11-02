@@ -6,7 +6,7 @@
 [ext_resource uid="uid://ruoaaeu82tl0" type="Texture2D" path="res://assets/images-png/popups/washi_tape.png" id="4_washi"]
 [ext_resource uid="uid://blmy5cbx5kmeg" type="Texture2D" path="res://assets/images-png/popups/paper_clip.png" id="5_clip"]
 [ext_resource uid="uid://duqcleabqujwd" type="Texture2D" path="res://assets/images-png/settings/divider_dashed.png" id="6_divider"]
-[ext_resource uid="uid://b8rwt2332ygre" type="Texture2D" path="res://assets/images-png/common/popup_btn_normal.png" id="7_sec_n"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_lang_cancel_normal.png" id="7_sec_n"]
 [ext_resource uid="uid://g54vvrpk2i64" type="Texture2D" path="res://assets/images-png/popups/btn_lang_cancel_pressed.png" id="8_sec_p"]
 [ext_resource uid="uid://btc1kg1ciivhw" type="Texture2D" path="res://assets/images-png/popups/btn_lang_cancel_focus.png" id="9_sec_f"]
 [ext_resource uid="uid://dkbm2jrrjdgew" type="Texture2D" path="res://assets/images-png/popups/btn_lang_apply_normal.png" id="10_pri_n"]
@@ -16,24 +16,24 @@
 
 [sub_resource type="StyleBoxTexture" id="Sb_sec_n"]
 texture = ExtResource("7_sec_n")
-texture_margin_left = 16
-texture_margin_top = 12
-texture_margin_right = 16
-texture_margin_bottom = 12
+texture_margin_left = 24
+texture_margin_top = 20
+texture_margin_right = 24
+texture_margin_bottom = 20
 
 [sub_resource type="StyleBoxTexture" id="Sb_sec_p"]
 texture = ExtResource("8_sec_p")
-texture_margin_left = 16
-texture_margin_top = 12
-texture_margin_right = 16
-texture_margin_bottom = 12
+texture_margin_left = 24
+texture_margin_top = 20
+texture_margin_right = 24
+texture_margin_bottom = 20
 
 [sub_resource type="StyleBoxTexture" id="Sb_sec_f"]
 texture = ExtResource("9_sec_f")
-texture_margin_left = 16
-texture_margin_top = 12
-texture_margin_right = 16
-texture_margin_bottom = 12
+texture_margin_left = 24
+texture_margin_top = 20
+texture_margin_right = 24
+texture_margin_bottom = 20
 
 [node name="Base" type="Control" unique_id=1015568792 node_paths=PackedStringArray("dim", "panel", "list", "scroll")]
 layout_mode = 3
@@ -157,7 +157,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+offset_bottom = -4.0
 theme_type_variation = &"PopupBtnTextMuted"
+theme_override_colors/font_color = Color(0.0863, 0.2745, 0.3882, 1)
 text = "STR_BTN_CANCEL"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -179,6 +181,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+offset_bottom = -4.0
 theme_type_variation = &"PopupBtnPrimarySm"
 text = "STR_BTN_APPLY"
 horizontal_alignment = 1

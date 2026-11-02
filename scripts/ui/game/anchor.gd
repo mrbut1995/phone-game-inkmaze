@@ -19,6 +19,10 @@ signal anchor_tapped(anchor_id: int)
 
 @export var SELECTED_MODULATE := Color(1.8, 1.4, 0.4, 1.0)
 @export var NORMAL_MODULATE := Color(1.0, 1.0, 1.0, 1.0)
+## Art khi neo ĐANG CHỌN (ô vàng + khung đứt đỏ) — để trống thì chỉ nở + đổi màu như cũ
+@export var texture_selected: Texture2D = null
+
+var _texture_idle: Texture2D = null
 
 ## Node binding: khai `node_paths` + NodePath trong `anchor.tscn`
 @export var button: TextureButton = null
@@ -74,6 +78,7 @@ func _on_button_pressed() -> void:
 
 
 func set_selected(active: bool) -> void:
+	_swap_selected_texture(active)
 	if active:
 		if _play_anim(&"selected"):
 			return
@@ -98,6 +103,15 @@ func set_selected(active: bool) -> void:
 		tw.tween_property(self, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 		if button != null:
 			tw.tween_property(button, "modulate", NORMAL_MODULATE, 0.12)
+
+
+## Đổi art theo trạng thái chọn (nhớ art thường lần đầu để trả lại)
+func _swap_selected_texture(active: bool) -> void:
+	if button == null or texture_selected == null:
+		return
+	if _texture_idle == null:
+		_texture_idle = button.texture_normal
+	button.texture_normal = texture_selected if active else _texture_idle
 
 
 func pulse() -> void:

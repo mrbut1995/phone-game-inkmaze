@@ -1,5 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Ô chọn ngôn ngữ 200x41 (đế 3px). Chữ nằm trong LangValue. Vẽ ở toạ độ 1x, viewBox gấp đôi (xuất PNG 200x41 hoặc 400x82). Không dùng filter. -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 82" width="200" height="41"><g transform="scale(2)">
-<rect y="3" width="200" height="38" rx="13" fill="#1E5578"/><rect x="1" y="1" width="198" height="36" rx="12" fill="#FEFDFA" stroke="#E4622B" stroke-width="2"/><path d="M168 17l7 7 7-7" fill="none" stroke="#2F77A5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-</g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 41" width="200" height="41"><rect x="1.5" y="1.5" width="197" height="37" rx="5" fill="#FFFFFF" stroke="#E3D8C6" stroke-width="2"/><rect x="1.5" y="36" width="197" height="3.5" rx="1.7" fill="#F59E0B"/><polyline points="174,16.5 180,22.5 186,16.5" fill="none" stroke="#B86A00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>

@@ -21,6 +21,8 @@ extends Control
 
 ## Texture nền ô theo NỘI DUNG: thường / xuất phát S / đích F (gán trong `cell.tscn`)
 @export var texture_normal: Texture2D = null
+## Ô xen kẽ (ca-rô): ô có (x + y) lẻ dùng art này — để trống thì mọi ô dùng texture_normal
+@export var texture_alt: Texture2D = null
 @export var texture_start: Texture2D = null
 @export var texture_finish: Texture2D = null
 
@@ -73,7 +75,8 @@ func set_text(text: String) -> void:
 			label.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 	else:
 		if button != null:
-			button.texture_normal = texture_normal
+			var odd := (grid_pos.x + grid_pos.y) % 2 == 1
+			button.texture_normal = texture_alt if (odd and texture_alt != null) else texture_normal
 		if label != null:
 			label.text = text
 			label.visible = not text.is_empty()

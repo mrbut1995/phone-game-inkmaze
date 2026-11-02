@@ -1,5 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Nút hành động 130x69 (đế 5px). Vẽ ở toạ độ 1x, viewBox gấp đôi (xuất PNG 130x69 hoặc 260x138). Không dùng filter. -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 138" width="130" height="69"><g transform="scale(2)">
-<rect y="5" width="130" height="64" rx="14" fill="#F0A8A8"/><rect x="1" y="4" width="128" height="62" rx="13" fill="#F1EDE2" stroke="#D84444" stroke-width="2"/>
-</g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 69" width="130" height="69"><rect x="1.5" y="11" width="127" height="54.5" rx="8" fill="#785F3C" fill-opacity=".25"/><rect x="1.5" y="10" width="127" height="54.5" rx="8" fill="#FFDCD8" stroke="#E88A8A" stroke-width="2.5"/><g transform="translate(65.0 10) rotate(-3)"><polygon points="-19.0,-6.0 -19.0,-6.0 -16.0,0.0 -19.0,6.0 19.0,6.0 19.0,6.0 16.0,0.0 19.0,-6.0" fill="#E05A5A" fill-opacity=".82"/><path d="M-13.0 -2.0h26M-13.0 2.0h26" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/></g></svg>

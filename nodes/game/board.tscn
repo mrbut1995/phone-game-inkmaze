@@ -16,6 +16,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_v7f7a")
 layers = NodePath("Layers")
+PAPER_AVOID_MARGIN = true
+PAPER_MARGIN_GAP = 6.0
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="NinePatchRect" parent="." unique_id=1792955065]
@@ -103,6 +105,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Tape" type="NinePatchRect" parent="." unique_id=632233668]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.367

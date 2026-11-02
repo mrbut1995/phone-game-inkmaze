@@ -37,6 +37,10 @@
 [ext_resource uid="uid://dbegbtl7rlpf3" type="Texture2D" path="res://assets/images-png/settings/ic_info.png" id="ic_info"]
 [ext_resource uid="uid://ff2cgvot430q" type="Texture2D" path="res://assets/images-png/settings/ic_reset.png" id="ic_reset"]
 [ext_resource type="PackedScene" path="res://nodes/common/notebook_sheet.tscn" id="nbsheet"]
+[ext_resource type="Script" path="res://scripts/ui/widgets/settings/toggle_stamp.gd" id="stamp_script"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/stamp_on.png" id="stamp_on"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/stamp_off.png" id="stamp_off"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/tile_strip.png" id="tile_strip"]
 
 [node name="Landscape" node_paths=PackedStringArray("btn_back", "content_root", "bgm_slider", "bgm_value", "sfx_slider", "sfx_value", "chk_haptic", "chk_auto_mark", "chk_glow", "btn_language", "lbl_language", "lbl_player_id", "btn_guide", "btn_rules", "btn_credits", "btn_reset", "lbl_version") instance=ExtResource("parent")]
 script = ExtResource("layout_script")
@@ -700,7 +704,7 @@ mouse_filter = 2
 custom_minimum_size = Vector2(0, 62)
 layout_mode = 2
 mouse_filter = 2
-texture = ExtResource("tile_off")
+texture = ExtResource("tile_strip")
 patch_margin_left = 18
 patch_margin_top = 18
 patch_margin_right = 18
@@ -1044,3 +1048,59 @@ mouse_filter = 2
 process_mode = 4
 visible = false
 
+[node name="Stamp" type="TextureRect" parent="Panel/Content/Right/Toggles/Haptic" node_paths=PackedStringArray("button")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_top = 12.0
+offset_right = -6.0
+offset_bottom = 46.0
+grow_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("stamp_off")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("stamp_script")
+button = NodePath("..")
+tex_on = ExtResource("stamp_on")
+tex_off = ExtResource("stamp_off")
+
+[node name="Stamp" type="TextureRect" parent="Panel/Content/Right/Toggles/AutoMark" node_paths=PackedStringArray("button")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_top = 12.0
+offset_right = -6.0
+offset_bottom = 46.0
+grow_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("stamp_off")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("stamp_script")
+button = NodePath("..")
+tex_on = ExtResource("stamp_on")
+tex_off = ExtResource("stamp_off")
+
+[node name="Stamp" type="TextureRect" parent="Panel/Content/Right/Toggles/Glow" node_paths=PackedStringArray("button")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_top = 12.0
+offset_right = -6.0
+offset_bottom = 46.0
+grow_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("stamp_off")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("stamp_script")
+button = NodePath("..")
+tex_on = ExtResource("stamp_on")
+tex_off = ExtResource("stamp_off")

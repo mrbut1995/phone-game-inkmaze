@@ -345,7 +345,16 @@ func _rebuild() -> void:
 	_set_scroll_y(_focus_y() - _current_position_y(positions, sorted_ids))
 	if _pending_reveal_gate != 0:
 		_begin_reveal(sorted_ids)
-	call_deferred("scroll_to", _current_id, true)
+	call_deferred("_initial_scroll")
+	if not _anim_steps.is_empty():   # bản đồ dựng lại khi hàng đợi còn: về trạng thái TRƯỚC rồi chạy lại
+		_apply_anim_prestate()
+		_schedule_anim()
+
+
+## Cuộn ban đầu: tới màn đang chơi — hoặc màn đầu tiên của chuỗi animation đang chờ
+func _initial_scroll() -> void:
+	var first := _first_step_id()
+	scroll_to(first if first != 0 else _current_id, true)
 
 
 ## Khoảng cuộn sao cho bản đồ LẤP ĐẦY khung: kéo hết xuống thì hàng 1 nằm sát đáy khung, kéo hết lên thì
@@ -581,62 +590,196 @@ func _build_gate(gate_id: int, pos: Vector2, node_scale: float) -> void:
 
 
 # ---------------------------------------------------------------------------
-# Hoàn thành màn → sao đóng dấu → vệt dạ quang vẽ dần → màn kế mở khoá
+# ANIMATION TIẾN ĐỘ khi quay về bản đồ (sao đóng dấu → vệt dạ quang vẽ dần → mở khoá màn kế)
 # ---------------------------------------------------------------------------
-## Gọi NGAY SAU `build()` khi người chơi vừa thắng `level_id` được `stars` sao.
-## Bản đồ vừa dựng ở trạng thái CUỐI; hàm đưa nó về trạng thái TRƯỚC rồi chạy 3 nhịp:
-##   1) cuộn tới màn vừa xong · nhãn giấy bật + từng sao đóng dấu
-##   2) vệt dạ quang tô dần từ màn đó sang màn kế (bản đồ cuộn theo)
-##   3) màn kế: ổ khoá rung → bật ra thành nhãn "đang chơi"
-## Trong lúc chạy, `_busy` chặn chọn màn. Dựng lại bản đồ giữa chừng sẽ tự huỷ chuỗi.
-func play_complete_sequence(level_id: int, stars: int) -> void:
-	var node := node_for(level_id)
-	if node == null or _road == null or _busy or not _road_point_of.has(level_id):
-		return
-	var from_point: int = _road_point_of[level_id]
-	var index := _sorted_ids.find(level_id)
-	var next_id := _sorted_ids[index + 1] if index >= 0 and index + 1 < _sorted_ids.size() else 0
-	var to_point: int = int(_road_point_of.get(next_id, from_point))
-	var next_node: LevelMapNode = node_for(next_id) if next_id > 0 else null
-	var unlock_next := next_node != null and next_id <= _unlocked
-	var marker_was := marker != null and marker.visible
+## Nhận NHẬT KÝ sự kiện từ GameManager (`take_map_events`) ngay sau `build()` và quyết định phát gì.
+##
+## QUY TẮC (mỗi sự kiện: clear{id, stars, prev_stars, unlocked_before} · skip{id}):
+##  1. `skip` CẮT MẠCH: bỏ mọi màn thắng trước nó (Thắng → Skip → thoát = KHÔNG animation).
+##  2. Các màn thắng liên tiếp (Thắng → Continue → Thắng → …) chạy THÀNH CHUỖI từ màn xong đầu tiên đến
+##     màn vừa thoát; màn thứ 2 trở đi chạy nhanh hơn; chỉ giữ tối đa `anim_max_steps` màn cuối.
+##  3. Màn thắng LẦN ĐẦU (`prev_stars == 0`): đóng dấu sao → vệt dạ quang nối sang màn kế (cả khi màn kế
+##     đã xong từ trước — vd. quay lại chơi màn từng bị skip, vệt cam đổi thành vàng) → màn kế vừa được mở
+##     khoá (`id kế > unlocked_before`) thì ổ khoá rung rồi bật ra.
+##  4. Màn chơi lại được THÊM sao (`prev_stars > 0`): chỉ đóng dấu các sao mới (không nối đường / mở khoá).
+##  5. Chơi lại không thêm sao, thua, thoát giữa chừng, màn sự kiện / Daily / Dungeon: không có sự kiện ⇒ không animation.
+##  6. Màn kế là CỔNG chương hoặc hết màn: vệt nối tới cổng, không có bước mở khoá.
+##  7. Chạm màn hình trong lúc chạy ⇒ BỎ QUA animation, hiện ngay trạng thái cuối. Trong lúc chạy, không chọn được màn.
+##  8. Bản đồ bị dựng lại giữa chừng (đổi cỡ khung, đổi ngôn ngữ…) ⇒ hàng đợi được GIỮ và chạy lại sau khi ổn định.
+@export_group("Animation tiến độ")
+@export var anim_enabled := true
+## Chờ bố cục ổn định / hết hiệu ứng chuyển màn rồi mới chạy (giây)
+@export_range(0.0, 2.0, 0.05) var anim_start_delay := 0.5
+@export_range(1, 10, 1) var anim_max_steps := 5
 
-	# --- Trạng thái TRƯỚC ---
+var _anim_steps: Array[Dictionary] = []
+var _anim_token := 0
+var _marker_was_visible := false
+
+
+func queue_progress_animation(events: Array) -> void:
+	_anim_steps = _plan_steps(events) if anim_enabled else ([] as Array[Dictionary])
+	if _anim_steps.is_empty():
+		return
+	_apply_anim_prestate()
+	_schedule_anim()
+
+
+func _plan_steps(events: Array) -> Array[Dictionary]:
+	var chain: Array[Dictionary] = []
+	for event in events:
+		var entry: Dictionary = event
+		if str(entry.get("type", "")) == "skip":
+			chain.clear()
+			continue
+		var id := int(entry.get("id", 0))
+		var merged := false
+		for step in chain:
+			if int(step["id"]) == id:
+				step["stars"] = maxi(int(step["stars"]), int(entry.get("stars", 0)))
+				merged = true
+				break
+		if not merged:
+			chain.append(entry.duplicate())
+	if chain.size() > anim_max_steps:
+		chain = chain.slice(chain.size() - anim_max_steps)
+	# Chỉ giữ các màn có nút trên bản đồ đang xem
+	var out: Array[Dictionary] = []
+	for step in chain:
+		if node_for(int(step["id"])) != null and _road_point_of.has(int(step["id"])):
+			out.append(step)
+	return out
+
+
+func _next_id_of(id: int) -> int:
+	var index := _sorted_ids.find(id)
+	return _sorted_ids[index + 1] if index >= 0 and index + 1 < _sorted_ids.size() else 0
+
+
+## Các màn VỪA được mở khoá bởi chuỗi (màn kế của một lần thắng đầu tiên, vượt `unlocked_before`)
+func _unlock_ids() -> Array[int]:
+	var ids: Array[int] = []
+	for step in _anim_steps:
+		if int(step.get("prev_stars", 0)) > 0:
+			continue
+		var next_id := _next_id_of(int(step["id"]))
+		if next_id > 0 and next_id > int(step.get("unlocked_before", next_id)) \
+				and next_id <= _unlocked and node_for(next_id) != null and not ids.has(next_id):
+			ids.append(next_id)
+	return ids
+
+
+func _first_step_id() -> int:
+	return int(_anim_steps[0]["id"]) if not _anim_steps.is_empty() else 0
+
+
+## Đưa bản đồ về trạng thái TRƯỚC (bản đồ vừa dựng ở trạng thái cuối): sao cũ, đường chưa nối, màn kế còn khoá
+func _apply_anim_prestate() -> void:
 	_busy = true
-	node.prepare_complete()
-	if to_point > from_point:
-		_road.hide_range(from_point, to_point)
-	if unlock_next:
-		next_node.show_locked_preview()
+	var unlock_ids := _unlock_ids()
+	for step in _anim_steps:
+		var id := int(step["id"])
+		var node := node_for(id)
+		if node == null:
+			continue
+		node.prepare_complete(int(step.get("prev_stars", 0)))
+		if int(step.get("prev_stars", 0)) > 0 or _road == null:
+			continue
+		var from_point: int = _road_point_of.get(id, -1)
+		var to_point: int = _road_point_of.get(_next_id_of(id), -1)
+		if from_point >= 0 and to_point > from_point:
+			_road.hide_range(from_point, to_point)
+	for id in unlock_ids:
+		node_for(id).show_locked_preview()
 	if marker != null:
+		_marker_was_visible = marker.visible
 		marker.visible = false
-	var token := get_instance_id()
 
-	await get_tree().process_frame   # để lượt cuộn tự động của `_rebuild` chạy trước, rồi ta ghi đè
-	if not _busy:
+
+func _schedule_anim() -> void:
+	if _anim_steps.is_empty():
 		return
-	scroll_to(level_id, true)
-	await get_tree().create_timer(scroll_to_duration + 0.1).timeout
-	if not _busy or not is_instance_valid(node):
+	_anim_token += 1
+	var token := _anim_token
+	await get_tree().create_timer(anim_start_delay).timeout
+	# Chưa hiện ra (đang ở tab khác / chuyển màn) thì đợi thêm tối đa ~3 giây
+	var waited := 0.0
+	while is_inside_tree() and not is_visible_in_tree() and waited < 3.0 and token == _anim_token:
+		await get_tree().create_timer(0.2).timeout
+		waited += 0.2
+	if token != _anim_token or _anim_steps.is_empty() or not is_inside_tree():
 		return
-	await node.play_complete(stars)
-	if not _busy or not is_instance_valid(node):
+	if not is_visible_in_tree():
+		_abort_anim()
 		return
-	if to_point > from_point:
-		var reveal := _road.play_reveal_range(from_point, to_point, 0.75)
-		if next_id != 0:
-			scroll_to(next_id, true)
-		if reveal != null:
-			await reveal.finished
-		if not _busy or _road == null:
+	_run_anim()
+
+
+func _run_anim() -> void:
+	var unlock_ids := _unlock_ids()
+	var steps := _anim_steps
+	for i in steps.size():
+		var step := steps[i]
+		var id := int(step["id"])
+		var node := node_for(id)
+		if not _busy or node == null or not is_instance_valid(node):
 			return
-	if unlock_next and is_instance_valid(next_node):
-		await next_node.play_unlock()
-	if token != get_instance_id() or not _busy:
-		return
-	if marker != null and marker_was:
+		var speed := 1.0 if i == 0 else 1.6
+		scroll_to(id, true)
+		await get_tree().create_timer((scroll_to_duration + 0.1) / speed).timeout
+		if not _busy or not is_instance_valid(node):
+			return
+		await node.play_complete(int(step["stars"]), int(step.get("prev_stars", 0)), speed)
+		if not _busy:
+			return
+		if int(step.get("prev_stars", 0)) > 0:
+			continue   # chỉ thêm sao: không nối đường / mở khoá
+		var next_id := _next_id_of(id)
+		var from_point: int = _road_point_of.get(id, -1)
+		var to_point: int = _road_point_of.get(next_id, -1)
+		if _road != null and from_point >= 0 and to_point > from_point:
+			var reveal := _road.play_reveal_range(from_point, to_point, 0.75 / speed)
+			if next_id != 0:
+				scroll_to(next_id, true)
+			if reveal != null:
+				await reveal.finished
+			if not _busy:
+				return
+		if unlock_ids.has(next_id):
+			var next_node := node_for(next_id)
+			if next_node == null or not is_instance_valid(next_node):
+				return
+			var stamped_later := false
+			for j in range(i + 1, steps.size()):
+				if int(steps[j]["id"]) == next_id:
+					stamped_later = true
+			await next_node.play_unlock(stamped_later)
+			if not _busy:
+				return
+	_finish_anim()
+
+
+func _finish_anim() -> void:
+	_anim_steps = []
+	if marker != null and _marker_was_visible:
 		marker.visible = true
 	_busy = false
+
+
+## Bỏ qua animation: dựng lại bản đồ ở trạng thái cuối ngay lập tức
+func _abort_anim() -> void:
+	_anim_steps = []
+	_anim_token += 1
+	_rebuild()
+
+
+func _is_press_event(event: InputEvent) -> bool:
+	if event is InputEventScreenTouch:
+		return (event as InputEventScreenTouch).pressed
+	if event is InputEventMouseButton:
+		var button := event as InputEventMouseButton
+		return button.pressed and button.button_index == MOUSE_BUTTON_LEFT
+	return false
 
 
 # ---------------------------------------------------------------------------
@@ -795,6 +938,10 @@ func _set_scroll_y(value: float) -> void:
 # Kéo / cuộn (dọc, thân thiện cảm ứng)
 # ---------------------------------------------------------------------------
 func _input(event: InputEvent) -> void:
+	if _busy and not _anim_steps.is_empty() and _is_press_event(event):
+		get_viewport().set_input_as_handled()
+		_abort_anim()
+		return
 	_track_tap(event)
 	if event is InputEventScreenTouch and event.index == 0:
 		if event.pressed:
