@@ -22,6 +22,11 @@ extends Node2D
 ## ============================================================================
 
 signal pressed(level_id: int)
+## Đóng dấu xong ngôi sao thứ `index` (0..2) — nơi nghe có thể phát SFX
+signal star_stamped(index: int)
+## Kết thúc animation hoàn thành màn / mở khoá màn
+signal complete_finished
+signal unlock_finished
 
 enum State {
 	LOCKED,    ## Chưa mở khoá
@@ -35,11 +40,21 @@ enum State {
 @export var star_highlight: Texture2D = null
 @export var star_empty: Texture2D = null
 
-## Màu số màn theo trạng thái: nút COLORFUL — màn thường nền xanh/tím đậm ⇒ số TRẮNG có viền tối;
-## màn đang chơi nền vàng/hồng sáng ⇒ số navy
+## Màu số màn: nhãn giấy vở (nền kem / vàng) ⇒ số MỰC NAVY, không viền
 @export var color_number_current := Color(0.0863, 0.2745, 0.3882, 1.0)
-@export var color_number_normal := Color(1.0, 1.0, 1.0, 1.0)
-@export var color_number_outline := Color(0.05, 0.16, 0.30, 0.55)
+@export var color_number_normal := Color(0.0863, 0.2745, 0.3882, 1.0)
+@export var color_number_outline := Color(0.05, 0.16, 0.30, 0.0)
+@export_range(0, 12, 1) var number_outline_size := 0
+
+@export_group("Nhãn giấy")
+## Độ nghiêng tối đa của nhãn giấy (độ). Mỗi màn nghiêng khác nhau (theo số màn) cho tự nhiên; 0 = thẳng
+@export_range(0.0, 6.0, 0.1) var tilt_degrees := 2.5
+
+@export_group("Hiệu ứng hoàn thành màn")
+## Khoảng cách giữa 2 ngôi sao được đóng dấu (giây)
+@export_range(0.05, 0.6, 0.01) var star_stamp_interval := 0.24
+## Số tia sáng toả ra mỗi lần đóng dấu sao
+@export_range(0, 12, 1) var burst_count := 7
 
 @export_group("Bộ art theo trạng thái")
 ## Bộ art mặc định (normal · hover · pressed · disabled) lấy từ `Body/Button` trong scene.
@@ -73,6 +88,7 @@ var state: State = State.LOCKED
 var is_bonus := false
 
 var _skin_default: Array[Texture2D] = []
+var _stars_cached := 0
 
 
 ## Thiết lập node với dữ liệu từ LevelMap (`p_bonus` = màn BONUS cuối chương)
@@ -80,13 +96,133 @@ func setup(p_level_id: int, p_state: State, stars: int = 0, p_bonus: bool = fals
 	level_id = p_level_id
 	state = p_state
 	is_bonus = p_bonus
+	_stars_cached = stars
 	_apply_skin()
 	_apply_state_look()
 	_apply_number()
 	_apply_stars(stars)
+	_apply_tilt()
 	_play_enter_anim()
 	if state == State.CURRENT:
 		play_pulse()
+
+
+## Nghiêng cả khối nút (nhãn giấy dán băng dính không bao giờ thẳng tăm tắp)
+func _apply_tilt() -> void:
+	if button == null:
+		return
+	var body := button.get_parent() as Node2D
+	if body == null:
+		return
+	const PATTERN: Array[float] = [-1.0, 0.8, -0.6, 1.0, -0.8, 0.6]
+	body.rotation = deg_to_rad(tilt_degrees * PATTERN[absi(level_id) % PATTERN.size()])
+
+
+# ---------------------------------------------------------------------------
+# Animation HOÀN THÀNH MÀN: nhãn giấy bật nhẹ ⇒ từng ngôi sao được ĐÓNG DẤU (nảy + xoay + toả tia)
+# ---------------------------------------------------------------------------
+## Chuẩn bị trước khi phát: dừng "thở", đưa sao về trống (bản đồ vừa dựng xong ở trạng thái cuối)
+func prepare_complete() -> void:
+	if anim != null:
+		anim.stop()
+	for star in [star1, star2, star3]:
+		if star != null:
+			star.texture = star_empty
+
+
+func play_complete(stars: int) -> void:
+	if anim != null and anim.has_animation(&"stamp"):
+		anim.play(&"stamp")
+	await get_tree().create_timer(0.2).timeout
+	var list: Array[TextureRect] = [star1, star2, star3]
+	for index in mini(stars, list.size()):
+		var star := list[index]
+		if star == null or not is_instance_valid(star):
+			continue
+		star.texture = star_highlight
+		star.pivot_offset = star.size * 0.5
+		star.scale = Vector2.ZERO
+		star.rotation = -0.6
+		var tween := create_tween().set_parallel(true)
+		tween.tween_property(star, "scale", Vector2.ONE, 0.32).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		tween.tween_property(star, "rotation", 0.0, 0.32).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		_burst(star.global_position + star.size * 0.5 * star.get_global_transform().get_scale())
+		star_stamped.emit(index)
+		await get_tree().create_timer(star_stamp_interval).timeout
+	await get_tree().create_timer(0.25).timeout
+	complete_finished.emit()
+
+
+## Tia sáng nhỏ toả ra từ `global_pos` (tự dọn sau khi tan)
+func _burst(global_pos: Vector2) -> void:
+	if star_highlight == null or burst_count <= 0:
+		return
+	var texture_w := maxf(float(star_highlight.get_width()), 1.0)
+	for index in burst_count:
+		var spark := Sprite2D.new()
+		spark.texture = star_highlight
+		spark.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+		spark.z_index = 20
+		add_child(spark)
+		spark.global_position = global_pos
+		var base_scale := 9.0 / texture_w
+		spark.scale = Vector2.ONE * base_scale
+		var angle := TAU * float(index) / float(burst_count) + 0.4
+		var target := spark.position + Vector2.from_angle(angle) * (26.0 + 6.0 * float(index % 2))
+		var tween := create_tween().set_parallel(true)
+		tween.tween_property(spark, "position", target, 0.45).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		tween.tween_property(spark, "modulate:a", 0.0, 0.45)
+		tween.tween_property(spark, "scale", Vector2.ONE * base_scale * 0.3, 0.45)
+		tween.chain().tween_callback(spark.queue_free)
+
+
+# ---------------------------------------------------------------------------
+# Animation MỞ KHOÁ màn kế tiếp: đang khoá ⇒ ổ khoá rung ⇒ bật ra thành nhãn "đang chơi"
+# ---------------------------------------------------------------------------
+var _lock_base_scale := Vector2.ONE
+
+## Cho nút trông như ĐANG KHOÁ (dùng lúc bản đồ vừa dựng, trước khi mở khoá)
+func show_locked_preview() -> void:
+	if anim != null:
+		anim.stop()
+	if button != null:
+		button.disabled = true
+	if halo != null:
+		halo.visible = false
+	if label != null:
+		label.visible = false
+	if lock_icon != null:
+		lock_icon.visible = true
+		_lock_base_scale = lock_icon.scale
+	if lock_number != null:
+		lock_number.visible = true
+		lock_number.text = str(level_id)
+	if stars_pill != null:
+		stars_pill.visible = false
+
+
+func play_unlock() -> void:
+	if lock_icon != null and lock_icon.visible:
+		var shake := create_tween()
+		for angle in [0.28, -0.28, 0.2, -0.2, 0.0]:
+			shake.tween_property(lock_icon, "rotation", angle, 0.07)
+		await shake.finished
+		var out := create_tween().set_parallel(true)
+		out.tween_property(lock_icon, "scale", _lock_base_scale * 1.5, 0.16)
+		out.tween_property(lock_icon, "modulate:a", 0.0, 0.16)
+		await out.finished
+		lock_icon.rotation = 0.0
+		lock_icon.scale = _lock_base_scale
+		lock_icon.modulate.a = 1.0
+	_apply_skin()
+	_apply_state_look()
+	_apply_number()
+	_apply_stars(_stars_cached)
+	_burst(global_position)
+	if anim != null and anim.has_animation(&"unlock"):
+		anim.play(&"unlock")
+		await anim.animation_finished
+	unlock_finished.emit()
 
 
 ## Chọn bộ art cho nút theo (màn đang chơi / BONUS). Bộ mặc định nhớ từ scene ở lần gọi đầu.
@@ -146,7 +282,7 @@ func _apply_number() -> void:
 	var is_current := state == State.CURRENT
 	label.add_theme_color_override("font_color", color_number_current if is_current else color_number_normal)
 	label.add_theme_color_override("font_outline_color", color_number_outline)
-	label.add_theme_constant_override("outline_size", 0 if is_current else 5)
+	label.add_theme_constant_override("outline_size", 0 if is_current else number_outline_size)
 
 
 ## 3 sao của màn (màn khoá ẩn cả viên thuốc sao)
@@ -188,7 +324,7 @@ func _on_button_pressed() -> void:
 
 ## Hết animation bấm thì trả lại hiệu ứng "thở" cho màn đang chơi
 func _on_anim_finished(anim_name: StringName) -> void:
-	if anim_name == &"press" and state == State.CURRENT:
+	if (anim_name == &"press" or anim_name == &"unlock") and state == State.CURRENT:
 		play_pulse()
 
 

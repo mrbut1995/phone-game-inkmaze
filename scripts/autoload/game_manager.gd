@@ -823,6 +823,17 @@ func _change_scene(path: String) -> void:
 	Nav.change_scene(path)
 
 
+## Lần thắng màn thường gần nhất chưa được bản đồ phát animation: `{id, stars, first}` (rỗng = không có)
+var last_level_clear: Dictionary = {}
+
+
+## Bản đồ lấy (và xoá) lần thắng gần nhất để phát animation hoàn thành màn
+func take_last_level_clear() -> Dictionary:
+	var out: Dictionary = last_level_clear
+	last_level_clear = {}
+	return out
+
+
 ## Ghi nhận hoàn thành màn
 func record_level_clear(level_id: int, stars: int, clear_time: float) -> void:
 	# Ván SỰ KIỆN: chỉ báo cho EventManager, KHÔNG ghi Sao/mở khoá vào mạch màn thường (§B7)
@@ -834,7 +845,11 @@ func record_level_clear(level_id: int, stars: int, clear_time: float) -> void:
 		level_completed.emit(level_id, stars, int(clear_time))
 		return
 
+	var prev_stars: int = int(level_stars.get(level_id, 0))
 	_progress.record_clear(level_id, stars, clear_time)
+	# Nhớ lần thắng vừa rồi để bản đồ chọn màn chạy animation hoàn thành (chỉ khi mới qua / thêm sao)
+	if prev_stars == 0 or stars > prev_stars:
+		last_level_clear = {"id": level_id, "stars": maxi(stars, prev_stars), "first": prev_stars == 0}
 	# Lưu tiến trình (local, sẵn sàng đẩy lên Google Play sau này)
 	Save.queue_save()
 	level_completed.emit(level_id, stars, int(clear_time))

@@ -1,6 +1,2 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 141" width="91" height="91.65">
-  <rect x="1.5" y="7.5" width="137" height="124.5" rx="21" fill="#3D83AE"/>
-  <rect x="1.5" y="1.5" width="137" height="124.5" rx="21" fill="#FEFDFA" stroke="#3D83AE" stroke-width="3"/>
-  <rect x="5.5" y="5.5" width="129" height="116.5" rx="17" fill="none" stroke="#3D83AE" stroke-width="2" stroke-dasharray="5 3.5"/>
-  <g transform="translate(0,-2)"><path d="M 57 50 L 73 66 L 57 82" fill="none" stroke="#3D83AE" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M 83 50 V 82" fill="none" stroke="#3D83AE" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/></g>
-</svg>
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 91 92" width="91" height="92"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B491FF"/><stop offset="0.6" stop-color="#9B6BFF"/></linearGradient></defs><circle cx="45.5" cy="49.71" r="42.29" fill="#5F36B8"/><circle cx="45.5" cy="43.29" r="39.72" fill="url(#g)" stroke="#FFFFFF" stroke-width="5.13"/><g transform="translate(24.35 22.15) scale(1.7621)" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" opacity="1"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" x2="19" y1="5" y2="19"/></g></svg>
