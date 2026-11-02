@@ -160,6 +160,18 @@ func _build_map() -> void:
 			_view_chapter = _chapter_of(chapter_continue_level())
 	else:
 		map.build(_level_ids, _stars_dict(), _unlocked_level(), chapter_continue_level(), bonus_level_ids())
+	_play_pending_clear()
+
+
+## Vừa thắng màn ở ván trước ⇒ chạy animation hoàn thành màn trên bản đồ vừa dựng
+func _play_pending_clear() -> void:
+	var gm := _game_manager()
+	if map == null or gm == null or not gm.has_method("take_last_level_clear"):
+		return
+	var clear: Dictionary = gm.call("take_last_level_clear")
+	if clear.is_empty():
+		return
+	map.play_complete_sequence(int(clear.get("id", 0)), int(clear.get("stars", 0)))
 
 
 func _on_map_scrolled(delta_y: float) -> void:

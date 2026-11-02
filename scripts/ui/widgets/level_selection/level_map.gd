@@ -136,6 +136,12 @@ var _ordered := false             # true = giữ NGUYÊN thứ tự `level_ids` 
 var _min_scroll_y := 0.0
 var _max_scroll_y := 0.0
 
+# Đường nối hiện tại + animation hoàn thành màn
+var _road: LevelMapPath = null
+var _road_point_of: Dictionary = {}   # level_id / gate_id -> chỉ số ĐIỂM của nút trên đường nối
+var _sorted_ids: Array[int] = []
+var _busy := false                    # true = đang chạy animation hoàn thành màn (chặn chọn màn)
+
 # Kéo / cuộn
 var _drag_active := false
 var _drag_start_y := 0.0
@@ -316,6 +322,7 @@ func _rebuild() -> void:
 				sorted_ids = sorted_ids.slice(0, index + 1)
 				_truncated_at_gate = true
 				break
+	_sorted_ids = sorted_ids
 	var positions: Array[Vector2] = []
 	if cols >= 2:
 		positions = _snake_positions(sorted_ids.size(), center_x)
@@ -430,6 +437,13 @@ func _build_snake_paths(sorted_ids: Array[int], positions: Array[Vector2], cols:
 		states.append(int(_path_state_for(sorted_ids[id_index])))
 	var road := path_scene.instantiate() as LevelMapPath
 	items.add_child(road)
+	_road = road
+	road.width_scale = node_scale
+	var node_index := 0
+	for point_index in points.size():
+		if points[point_index].z == 0.0 and node_index < sorted_ids.size():
+			_road_point_of[sorted_ids[node_index]] = point_index
+			node_index += 1
 	var flat_points: Array[Vector2] = []
 	for point in points:
 		flat_points.append(Vector2(point.x, point.y + node_face_center_y * node_scale))
@@ -475,7 +489,11 @@ func _build_paths(sorted_ids: Array[int], positions: Array[Vector2]) -> void:
 		return
 	var road := path_scene.instantiate() as LevelMapPath
 	items.add_child(road)
+	_road = road
 	var node_scale := _node_scale()
+	road.width_scale = node_scale
+	for point_index in sorted_ids.size():
+		_road_point_of[sorted_ids[point_index]] = point_index
 	# Đường đi qua tâm MẶT nút (cao hơn tâm art vài px) + gờ đáy của đường theo tỉ lệ nút
 	var face_points: Array[Vector2] = []
 	for point in positions:
@@ -563,6 +581,65 @@ func _build_gate(gate_id: int, pos: Vector2, node_scale: float) -> void:
 
 
 # ---------------------------------------------------------------------------
+# Hoàn thành màn → sao đóng dấu → vệt dạ quang vẽ dần → màn kế mở khoá
+# ---------------------------------------------------------------------------
+## Gọi NGAY SAU `build()` khi người chơi vừa thắng `level_id` được `stars` sao.
+## Bản đồ vừa dựng ở trạng thái CUỐI; hàm đưa nó về trạng thái TRƯỚC rồi chạy 3 nhịp:
+##   1) cuộn tới màn vừa xong · nhãn giấy bật + từng sao đóng dấu
+##   2) vệt dạ quang tô dần từ màn đó sang màn kế (bản đồ cuộn theo)
+##   3) màn kế: ổ khoá rung → bật ra thành nhãn "đang chơi"
+## Trong lúc chạy, `_busy` chặn chọn màn. Dựng lại bản đồ giữa chừng sẽ tự huỷ chuỗi.
+func play_complete_sequence(level_id: int, stars: int) -> void:
+	var node := node_for(level_id)
+	if node == null or _road == null or _busy or not _road_point_of.has(level_id):
+		return
+	var from_point: int = _road_point_of[level_id]
+	var index := _sorted_ids.find(level_id)
+	var next_id := _sorted_ids[index + 1] if index >= 0 and index + 1 < _sorted_ids.size() else 0
+	var to_point: int = int(_road_point_of.get(next_id, from_point))
+	var next_node: LevelMapNode = node_for(next_id) if next_id > 0 else null
+	var unlock_next := next_node != null and next_id <= _unlocked
+	var marker_was := marker != null and marker.visible
+
+	# --- Trạng thái TRƯỚC ---
+	_busy = true
+	node.prepare_complete()
+	if to_point > from_point:
+		_road.hide_range(from_point, to_point)
+	if unlock_next:
+		next_node.show_locked_preview()
+	if marker != null:
+		marker.visible = false
+	var token := get_instance_id()
+
+	await get_tree().process_frame   # để lượt cuộn tự động của `_rebuild` chạy trước, rồi ta ghi đè
+	if not _busy:
+		return
+	scroll_to(level_id, true)
+	await get_tree().create_timer(scroll_to_duration + 0.1).timeout
+	if not _busy or not is_instance_valid(node):
+		return
+	await node.play_complete(stars)
+	if not _busy or not is_instance_valid(node):
+		return
+	if to_point > from_point:
+		var reveal := _road.play_reveal_range(from_point, to_point, 0.75)
+		if next_id != 0:
+			scroll_to(next_id, true)
+		if reveal != null:
+			await reveal.finished
+		if not _busy or _road == null:
+			return
+	if unlock_next and is_instance_valid(next_node):
+		await next_node.play_unlock()
+	if token != get_instance_id() or not _busy:
+		return
+	if marker != null and marker_was:
+		marker.visible = true
+	_busy = false
+
+
+# ---------------------------------------------------------------------------
 # Mở cổng → sang chương mới
 # ---------------------------------------------------------------------------
 ## Bước 1: chạy animation mở cổng `gate_id` TRÊN bản đồ hiện tại; trả về khi cửa mở xong
@@ -625,6 +702,9 @@ func _current_position_y(positions: Array[Vector2], sorted_ids: Array[int]) -> f
 
 
 func _clear_items() -> void:
+	_busy = false
+	_road = null
+	_road_point_of.clear()
 	_nodes.clear()
 	_gate_nodes.clear()
 	if items == null:
@@ -788,11 +868,15 @@ func _stop_scroll_tween() -> void:
 # Events
 # ---------------------------------------------------------------------------
 func _on_node_pressed(level_id: int) -> void:
+	if _busy:
+		return
 	_emit_selected(level_id)
 
 
 ## Phát `level_selected` đúng 1 lần cho mỗi cú bấm (nút tự bắt + bản đồ tự bắt có thể cùng báo)
 func _emit_selected(level_id: int) -> void:
+	if _busy:
+		return
 	var frame := Engine.get_process_frames()
 	if level_id == _last_emit_id and absf(float(frame - _last_emit_frame)) <= 2.0:
 		return
