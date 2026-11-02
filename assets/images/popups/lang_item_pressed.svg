@@ -1,7 +1,2 @@
-<?xml version='1.0' encoding='utf-8'?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-8 -8 616 106" width="308" height="53">
-  
-  <g transform="translate(0, 2)">
-    <rect width="600" height="90" rx="16" fill="#EDE6D8" stroke="#256286" stroke-width="2.5" />
-  </g>
-</svg>
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 308 53" width="308" height="53"><rect x="1" y="3" width="306" height="49" rx="14" fill="#BBD9EE"/><rect x="2.25" y="2.25" width="303.5" height="46.5" rx="12.75" fill="#F3F9FD" stroke="#9CC7E6" stroke-width="2.5"/></svg>

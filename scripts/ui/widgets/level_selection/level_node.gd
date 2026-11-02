@@ -121,21 +121,27 @@ func _apply_tilt() -> void:
 # ---------------------------------------------------------------------------
 # Animation HOÀN THÀNH MÀN: nhãn giấy bật nhẹ ⇒ từng ngôi sao được ĐÓNG DẤU (nảy + xoay + toả tia)
 # ---------------------------------------------------------------------------
-## Chuẩn bị trước khi phát: dừng "thở", đưa sao về trống (bản đồ vừa dựng xong ở trạng thái cuối)
-func prepare_complete() -> void:
+## Chuẩn bị trước khi phát: dừng "thở", đưa sao về trạng thái TRƯỚC (`prev_stars` sao đã có, còn lại trống)
+func prepare_complete(prev_stars: int = 0) -> void:
 	if anim != null:
 		anim.stop()
-	for star in [star1, star2, star3]:
-		if star != null:
-			star.texture = star_empty
+	_set_star_textures(prev_stars)
 
 
-func play_complete(stars: int) -> void:
+func _set_star_textures(filled: int) -> void:
+	var list: Array[TextureRect] = [star1, star2, star3]
+	for index in list.size():
+		if list[index] != null:
+			list[index].texture = star_highlight if index < filled else star_empty
+
+
+## Đóng dấu các sao MỚI (từ `prev_stars` tới `stars`); `speed` > 1 = chạy nhanh hơn (chuỗi nhiều màn)
+func play_complete(stars: int, prev_stars: int = 0, speed: float = 1.0) -> void:
 	if anim != null and anim.has_animation(&"stamp"):
 		anim.play(&"stamp")
-	await get_tree().create_timer(0.2).timeout
+	await get_tree().create_timer(0.2 / speed).timeout
 	var list: Array[TextureRect] = [star1, star2, star3]
-	for index in mini(stars, list.size()):
+	for index in range(clampi(prev_stars, 0, list.size()), mini(stars, list.size())):
 		var star := list[index]
 		if star == null or not is_instance_valid(star):
 			continue
@@ -148,8 +154,8 @@ func play_complete(stars: int) -> void:
 		tween.tween_property(star, "rotation", 0.0, 0.32).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 		_burst(star.global_position + star.size * 0.5 * star.get_global_transform().get_scale())
 		star_stamped.emit(index)
-		await get_tree().create_timer(star_stamp_interval).timeout
-	await get_tree().create_timer(0.25).timeout
+		await get_tree().create_timer(star_stamp_interval / speed).timeout
+	await get_tree().create_timer(0.25 / speed).timeout
 	complete_finished.emit()
 
 
@@ -201,7 +207,8 @@ func show_locked_preview() -> void:
 		stars_pill.visible = false
 
 
-func play_unlock() -> void:
+## `reset_stars` = true khi chính màn này sắp được đóng dấu sao ngay sau đó (chuỗi nhiều màn)
+func play_unlock(reset_stars: bool = false) -> void:
 	if lock_icon != null and lock_icon.visible:
 		var shake := create_tween()
 		for angle in [0.28, -0.28, 0.2, -0.2, 0.0]:
@@ -218,6 +225,8 @@ func play_unlock() -> void:
 	_apply_state_look()
 	_apply_number()
 	_apply_stars(_stars_cached)
+	if reset_stars:
+		_set_star_textures(0)
 	_burst(global_position)
 	if anim != null and anim.has_animation(&"unlock"):
 		anim.play(&"unlock")

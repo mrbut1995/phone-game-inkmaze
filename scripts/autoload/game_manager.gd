@@ -376,6 +376,7 @@ func is_known_mode(mode_id: String) -> bool:
 ## SKIP MÀN: mở khoá màn KẾ TIẾP trong cùng chương nhưng **KHÔNG ghi Sao / thời gian**
 ## (người chơi bỏ qua màn đang chơi). Trả về id màn kế tiếp, -1 nếu đây là màn cuối chương.
 func skip_level(level_id: int) -> int:
+	_push_map_event({"type": "skip", "id": level_id})   # Skip cắt mạch animation: không phát lại các màn thắng trước đó
 	var next_id := next_level_in_chapter(level_id)
 	if next_id <= 0:
 		return -1
@@ -823,15 +824,24 @@ func _change_scene(path: String) -> void:
 	Nav.change_scene(path)
 
 
-## Lần thắng màn thường gần nhất chưa được bản đồ phát animation: `{id, stars, first}` (rỗng = không có)
-var last_level_clear: Dictionary = {}
+## NHẬT KÝ SỰ KIỆN cho animation bản đồ (xem `LevelMap.queue_progress_animation`), theo thứ tự xảy ra kể từ
+## lần bản đồ được hiển thị gần nhất:
+##   {type:"clear", id, stars, prev_stars, unlocked_before}  — thắng màn lần đầu / thêm sao
+##   {type:"skip",  id}                                       — dùng công cụ Skip
+var map_events: Array[Dictionary] = []
 
 
-## Bản đồ lấy (và xoá) lần thắng gần nhất để phát animation hoàn thành màn
-func take_last_level_clear() -> Dictionary:
-	var out: Dictionary = last_level_clear
-	last_level_clear = {}
+## Bản đồ lấy (và xoá) toàn bộ nhật ký để phát animation
+func take_map_events() -> Array[Dictionary]:
+	var out: Array[Dictionary] = map_events
+	map_events = []
 	return out
+
+
+func _push_map_event(event: Dictionary) -> void:
+	map_events.append(event)
+	if map_events.size() > 40:
+		map_events.pop_front()
 
 
 ## Ghi nhận hoàn thành màn
@@ -846,10 +856,12 @@ func record_level_clear(level_id: int, stars: int, clear_time: float) -> void:
 		return
 
 	var prev_stars: int = int(level_stars.get(level_id, 0))
+	var unlocked_before: int = unlocked_levels
 	_progress.record_clear(level_id, stars, clear_time)
-	# Nhớ lần thắng vừa rồi để bản đồ chọn màn chạy animation hoàn thành (chỉ khi mới qua / thêm sao)
+	# Ghi nhật ký cho animation bản đồ (chỉ khi mới qua màn / được thêm sao)
 	if prev_stars == 0 or stars > prev_stars:
-		last_level_clear = {"id": level_id, "stars": maxi(stars, prev_stars), "first": prev_stars == 0}
+		_push_map_event({"type": "clear", "id": level_id, "stars": maxi(stars, prev_stars),
+			"prev_stars": prev_stars, "unlocked_before": unlocked_before})
 	# Lưu tiến trình (local, sẵn sàng đẩy lên Google Play sau này)
 	Save.queue_save()
 	level_completed.emit(level_id, stars, int(clear_time))

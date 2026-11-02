@@ -163,15 +163,16 @@ func _build_map() -> void:
 	_play_pending_clear()
 
 
-## Vừa thắng màn ở ván trước ⇒ chạy animation hoàn thành màn trên bản đồ vừa dựng
+## Vừa chơi xong (thắng / skip) ở ván trước ⇒ giao nhật ký sự kiện cho bản đồ; bản đồ tự quyết định có phát
+## animation hay không (xem `LevelMap.queue_progress_animation`)
 func _play_pending_clear() -> void:
 	var gm := _game_manager()
-	if map == null or gm == null or not gm.has_method("take_last_level_clear"):
+	if map == null or gm == null or not gm.has_method("take_map_events"):
 		return
-	var clear: Dictionary = gm.call("take_last_level_clear")
-	if clear.is_empty():
+	var events: Array = gm.call("take_map_events")
+	if events.is_empty():
 		return
-	map.play_complete_sequence(int(clear.get("id", 0)), int(clear.get("stars", 0)))
+	map.queue_progress_animation(events)
 
 
 func _on_map_scrolled(delta_y: float) -> void:

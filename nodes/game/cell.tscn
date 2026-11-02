@@ -17,6 +17,8 @@
 [ext_resource type="Texture2D" uid="uid://cowu67bwhbm4n" path="res://assets/images-png/game/cell_start.png" id="14_start"]
 [ext_resource type="Texture2D" uid="uid://dqyi8ijauyy0j" path="res://assets/images-png/game/cell_finish.png" id="15_finish"]
 
+[ext_resource type="Texture2D" path="res://assets/images-png/game/cell_normal_alt.png" id="16_alt"]
+
 [sub_resource type="Animation" id="Animation_cell_reset"]
 length = 0.001
 tracks/0/type = "value"
@@ -250,6 +252,7 @@ anim = NodePath("AnimationPlayer")
 entrance_timer = NodePath("EntranceTimer")
 win_timer = NodePath("WinTimer")
 texture_normal = ExtResource("1_pne7a")
+texture_alt = ExtResource("16_alt")
 texture_start = ExtResource("14_start")
 texture_finish = ExtResource("15_finish")
 
