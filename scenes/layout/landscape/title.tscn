@@ -7,6 +7,8 @@
 [ext_resource uid="uid://oalyje7bs0yo" type="Texture2D" path="res://assets/images-png/level_selector/icon_play_triangle.png" id="7_play_icon"]
 [ext_resource uid="uid://bt4mb18wc2rf2" type="Texture2D" path="res://assets/images-png/main/stamp_version.png" id="8_stamp"]
 [ext_resource type="Script" path="res://scripts/ui/layouts/title_layout.gd" id="2_layout"]
+[ext_resource type="Texture2D" path="res://assets/images-png/main/title_banner_torn.png" id="banner"]
+[ext_resource type="Texture2D" path="res://assets/images-png/main/title_stamp_play.png" id="pstamp"]
 
 [sub_resource type="Animation" id="Animation_reset_title"]
 length = 0.001
@@ -297,8 +299,8 @@ pencil = NodePath("Panel/LogoContainer/Pencil")
 title_label = NodePath("Panel/Title")
 subtitle_label = NodePath("Panel/Subtitle")
 tap_container = NodePath("Panel/TapContainer")
-play_icon = NodePath("Panel/TapContainer/PlayIcon")
-tap_label = NodePath("Panel/TapContainer/TapLabel")
+play_icon = NodePath("Panel/TapContainer/Content/PlayIcon")
+tap_label = NodePath("Panel/TapContainer/Content/TapLabel")
 stamp_label = NodePath("Panel/Stamp/Label")
 touch_button = NodePath("TouchButton")
 fade_overlay = NodePath("FadeOverlay")
@@ -348,69 +350,120 @@ texture = ExtResource("6_hiwto")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Title" type="Label" parent="Panel" index="1" unique_id=352020136]
+[node name="Banner" type="TextureRect" parent="Panel" index="1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.47
+anchor_right = 0.5
+anchor_bottom = 0.47
+offset_left = -190.0
+offset_top = 0.0
+offset_right = 190.0
+offset_bottom = 96.0
+mouse_filter = 2
+texture = ExtResource("banner")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="Panel" index="2" unique_id=352020136]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 0.47
 anchor_right = 0.5
-anchor_bottom = 0.62
-offset_left = -700.0
-offset_right = 700.0
+anchor_bottom = 0.47
+offset_left = -190.0
+offset_top = 6.0
+offset_right = 190.0
+offset_bottom = 90.0
+pivot_offset = Vector2(190, 42)
 theme_type_variation = &"MainTitle"
+theme_override_font_sizes/font_size = 48
 text = "Ink Maze"
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
 
-[node name="Subtitle" type="Label" parent="Panel" index="2" unique_id=512779228]
+[node name="Subtitle" type="Label" parent="Panel" index="3" unique_id=512779228]
 modulate = Color(0.35, 0.45, 0.55, 1)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.63
+anchor_top = 0.66
 anchor_right = 0.5
-anchor_bottom = 0.7
-offset_left = -700.0
-offset_right = 700.0
+anchor_bottom = 0.72
+offset_left = -300.0
+offset_top = 0.0
+offset_right = 300.0
+offset_bottom = 0.0
 theme_type_variation = &"MainTagline"
+theme_override_font_sizes/font_size = 14
 text = "STR_TITLE_SUBTITLE"
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
+autowrap_mode = 3
 
-[node name="TapContainer" type="HBoxContainer" parent="Panel" index="3" unique_id=551840619]
+[node name="TapContainer" type="Control" parent="Panel" index="4" unique_id=551840619]
 layout_mode = 1
+anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.78
+anchor_top = 0.74
 anchor_right = 0.5
-anchor_bottom = 0.88
-offset_left = -420.0
-offset_right = 420.0
-alignment = 1
-theme_override_constants/separation = 12
-metadata/_edit_use_anchors_ = true
+anchor_bottom = 0.74
+offset_left = -60.0
+offset_top = 0.0
+offset_right = 60.0
+offset_bottom = 120.0
+pivot_offset = Vector2(60.0, 60.0)
+mouse_filter = 2
 
-[node name="PlayIcon" type="TextureRect" parent="Panel/TapContainer" index="0" unique_id=275797762]
-modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+[node name="PlayStamp" type="TextureRect" parent="Panel/TapContainer" index="0"]
+modulate = Color(1, 1, 1, 0.95)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("pstamp")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Content" type="VBoxContainer" parent="Panel/TapContainer" index="1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 22.0
+offset_top = 22.0
+offset_right = -22.0
+offset_bottom = -22.0
+mouse_filter = 2
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="PlayIcon" type="TextureRect" parent="Panel/TapContainer/Content" index="0" unique_id=275797762]
+modulate = Color(0.80, 0.22, 0.22, 1)
+custom_minimum_size = Vector2(26, 24)
 layout_mode = 2
-custom_minimum_size = Vector2(24, 27)
 size_flags_vertical = 4
+mouse_filter = 2
 texture = ExtResource("7_play_icon")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TapLabel" type="Label" parent="Panel/TapContainer" index="1" unique_id=17935693]
-modulate = Color(0.18, 0.38, 0.54, 1)
+[node name="TapLabel" type="Label" parent="Panel/TapContainer/Content" index="1" unique_id=17935693]
+modulate = Color(0.80, 0.22, 0.22, 1)
 layout_mode = 2
-theme_type_variation = &"MainTitle"
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 10
 text = "STR_TITLE_TAP_TO_START"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 
-[node name="Stamp" type="TextureRect" parent="Panel" index="4" unique_id=1281241587]
+[node name="Stamp" type="TextureRect" parent="Panel" index="5" unique_id=1281241587]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
@@ -435,7 +488,7 @@ theme_type_variation = &"SettingsVersion"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="StudioLabel" type="Label" parent="Panel" index="5" unique_id=1866432788]
+[node name="StudioLabel" type="Label" parent="Panel" index="6" unique_id=1866432788]
 modulate = Color(0.35, 0.45, 0.55, 1)
 layout_mode = 1
 anchors_preset = -1

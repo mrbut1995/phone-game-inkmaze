@@ -15,3 +15,10 @@ extends BaseLayout
 @export var loading_box: Control = null
 @export var loading_label: Label = null
 @export var loading_bar: ProgressBar = null
+## Hai tờ ghi chú dán chứa mẹo / hướng dẫn xoay vòng (NoteA = "Mẹo nhỏ", NoteB = "Hướng dẫn")
+@export var note_a: Control = null
+@export var note_b: Control = null
+@export var note_a_head: Label = null
+@export var note_a_body: Label = null
+@export var note_b_head: Label = null
+@export var note_b_body: Label = null

@@ -3,6 +3,12 @@
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="Script" uid="uid://w5iv7tlodnrv" path="res://scripts/ui/layouts/splash_layout.gd" id="2_layout"]
 [ext_resource type="Texture2D" uid="uid://blf05s2jptgu0" path="res://company_logo.png" id="4_t1n67"]
+[ext_resource type="Texture2D" path="res://assets/images-png/splash/splash_note_yellow.png" id="note_y"]
+[ext_resource type="Texture2D" path="res://assets/images-png/splash/splash_note_blue.png" id="note_b"]
+[ext_resource type="Texture2D" path="res://assets/images-png/splash/splash_polaroid.png" id="pol"]
+[ext_resource type="Texture2D" path="res://assets/images-png/splash/loading_track_tape.png" id="trk"]
+[ext_resource type="Texture2D" path="res://assets/images-png/splash/loading_fill_tape.png" id="fil"]
+[ext_resource type="Texture2D" uid="uid://ruoaaeu82tl0" path="res://assets/images-png/popups/washi_tape.png" id="tape_wt"]
 
 [sub_resource type="Animation" id="Animation_reset_splash"]
 length = 0.001
@@ -166,26 +172,19 @@ _data = {
 &"play_exit": SubResource("Animation_exit_splash")
 }
 
-[sub_resource type="StyleBoxFlat" id="sb_load_track"]
-bg_color = Color(0.8980392, 0.87058824, 0.827451, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.7607843, 0.7137255, 0.6392157, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
+[sub_resource type="StyleBoxTexture" id="sb_load_track"]
+texture = ExtResource("trk")
+texture_margin_left = 8.0
+texture_margin_right = 8.0
+axis_stretch_horizontal = 1
 
-[sub_resource type="StyleBoxFlat" id="sb_load_fill"]
-bg_color = Color(0.23921569, 0.5137255, 0.68235296, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
+[sub_resource type="StyleBoxTexture" id="sb_load_fill"]
+texture = ExtResource("fil")
+texture_margin_left = 8.0
+texture_margin_right = 8.0
+axis_stretch_horizontal = 1
 
-[node name="Portrait" unique_id=1022756227 node_paths=PackedStringArray("studio_label", "logo_container", "logo", "title_label", "tagline_label", "touch_button", "fade_overlay", "anim_player", "loading_box", "loading_label", "loading_bar") instance=ExtResource("1_parent")]
+[node name="Portrait" unique_id=1022756227 node_paths=PackedStringArray("studio_label", "logo_container", "logo", "title_label", "tagline_label", "touch_button", "fade_overlay", "anim_player", "loading_box", "loading_label", "loading_bar", "note_a_head", "note_a_body", "note_b_head", "note_b_body", "note_a", "note_b") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
 studio_label = NodePath("")
 logo_container = NodePath("Panel/LogoContainer")
@@ -198,6 +197,12 @@ anim_player = NodePath("AnimationPlayer")
 loading_box = NodePath("Panel/LoadingBox")
 loading_label = NodePath("Panel/LoadingBox/LoadingLabel")
 loading_bar = NodePath("Panel/LoadingBox/LoadingBar")
+note_a_head = NodePath("Panel/NoteA/Head")
+note_a_body = NodePath("Panel/NoteA/Body")
+note_b_head = NodePath("Panel/NoteB/Head")
+note_b_body = NodePath("Panel/NoteB/Body")
+note_a = NodePath("Panel/NoteA")
+note_b = NodePath("Panel/NoteB")
 
 [node name="Panel" type="TextureRect" parent="." index="0" unique_id=125026115]
 layout_mode = 1
@@ -208,17 +213,32 @@ anchor_right = 0.98
 anchor_bottom = 0.964
 metadata/_edit_use_anchors_ = true
 
-[node name="LogoContainer" type="Control" parent="Panel" index="0" unique_id=1146882852]
+[node name="Polaroid" type="TextureRect" parent="Panel" index="0"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.27
+anchor_right = 0.5
+anchor_bottom = 0.27
+offset_left = -100.0
+offset_top = -130.0
+offset_right = 100.0
+offset_bottom = 110.0
+mouse_filter = 2
+texture = ExtResource("pol")
+
+[node name="LogoContainer" type="Control" parent="Panel" index="1" unique_id=1146882852]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchor_left = 0.5
-anchor_top = 0.245
+anchor_top = 0.27
 anchor_right = 0.5
-anchor_bottom = 0.495
-offset_left = -150.0
-offset_right = 150.0
+anchor_bottom = 0.27
+offset_left = -82.0
+offset_top = -114.0
+offset_right = 82.0
+offset_bottom = 50.0
 scale = Vector2(0.3, 0.3)
-metadata/_edit_use_anchors_ = true
 
 [node name="Logo" type="TextureRect" parent="Panel/LogoContainer" index="0" unique_id=1473174428]
 layout_mode = 1
@@ -232,27 +252,139 @@ expand_mode = 1
 stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
-[node name="Title" type="Label" parent="Panel" index="1" unique_id=853179373]
+[node name="Title" type="Label" parent="Panel" index="2" unique_id=853179373]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 0)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.1
-anchor_top = 0.5
-anchor_right = 0.9
-anchor_bottom = 0.58
+anchor_left = 0.5
+anchor_top = 0.27
+anchor_right = 0.5
+anchor_bottom = 0.27
+offset_left = -96.0
+offset_top = 56.0
+offset_right = 96.0
+offset_bottom = 102.0
 scale = Vector2(0.88, 0.88)
+pivot_offset = Vector2(96, 23)
 theme_type_variation = &"MainTitle"
+theme_override_font_sizes/font_size = 22
 text = "Invisible Gear"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LoadingBox" type="VBoxContainer" parent="Panel" index="2" unique_id=1712045566]
+[node name="NoteA" type="TextureRect" parent="Panel" index="3"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.43
+anchor_right = 0.5
+anchor_bottom = 0.43
+offset_left = -245
+offset_top = -10
+offset_right = -85
+offset_bottom = 140
+mouse_filter = 2
+pivot_offset = Vector2(80, 75)
+rotation = -0.1047
+texture = ExtResource("note_y")
+
+[node name="Tape" type="TextureRect" parent="Panel/NoteA" index="0"]
+modulate = Color(0.55, 0.78, 0.8, 1)
+layout_mode = 0
+offset_left = 48.0
+offset_top = -12.0
+offset_right = 112.0
+offset_bottom = 12.0
+mouse_filter = 2
+texture = ExtResource("tape_wt")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Head" type="Label" parent="Panel/NoteA" index="1"]
+modulate = Color(0.30, 0.22, 0.14, 1)
+layout_mode = 0
+offset_left = 14.0
+offset_top = 16.0
+offset_right = 146.0
+offset_bottom = 38.0
+theme_override_font_sizes/font_size = 15
+text = "Mẹo nhỏ"
+vertical_alignment = 1
+clip_text = true
+
+[node name="Body" type="Label" parent="Panel/NoteA" index="2"]
+modulate = Color(0.28, 0.25, 0.22, 1)
+layout_mode = 0
+offset_left = 14.0
+offset_top = 40.0
+offset_right = 146.0
+offset_bottom = 138.0
+theme_override_font_sizes/font_size = 13
+text = "..."
+autowrap_mode = 3
+clip_text = true
+
+[node name="NoteB" type="TextureRect" parent="Panel" index="4"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 85
+offset_top = -10
+offset_right = 245
+offset_bottom = 140
+mouse_filter = 2
+pivot_offset = Vector2(80, 75)
+rotation = 0.0873
+texture = ExtResource("note_b")
+
+[node name="Tape" type="TextureRect" parent="Panel/NoteB" index="0"]
+modulate = Color(0.95, 0.62, 0.7, 1)
+layout_mode = 0
+offset_left = 48.0
+offset_top = -12.0
+offset_right = 112.0
+offset_bottom = 12.0
+mouse_filter = 2
+texture = ExtResource("tape_wt")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Head" type="Label" parent="Panel/NoteB" index="1"]
+modulate = Color(0.30, 0.22, 0.14, 1)
+layout_mode = 0
+offset_left = 14.0
+offset_top = 16.0
+offset_right = 146.0
+offset_bottom = 38.0
+theme_override_font_sizes/font_size = 15
+text = "Mẹo nhỏ"
+vertical_alignment = 1
+clip_text = true
+
+[node name="Body" type="Label" parent="Panel/NoteB" index="2"]
+modulate = Color(0.28, 0.25, 0.22, 1)
+layout_mode = 0
+offset_left = 14.0
+offset_top = 40.0
+offset_right = 146.0
+offset_bottom = 138.0
+theme_override_font_sizes/font_size = 13
+text = "..."
+autowrap_mode = 3
+clip_text = true
+
+[node name="LoadingBox" type="VBoxContainer" parent="Panel" index="5" unique_id=1712045566]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.18
-anchor_top = 0.62
+anchor_top = 0.76
 anchor_right = 0.82
-anchor_bottom = 0.7
+anchor_bottom = 0.85
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -260,7 +392,7 @@ alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="LoadingBar" type="ProgressBar" parent="Panel/LoadingBox" index="0" unique_id=1300572119]
-custom_minimum_size = Vector2(0, 10)
+custom_minimum_size = Vector2(0, 34)
 layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
