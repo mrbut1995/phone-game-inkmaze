@@ -6,7 +6,7 @@ extends BasePopup
 ##
 ## Mở bằng `Popups.open(Popups.DAILY_MILESTONE, { "stars": <ngưỡng>, "reward": <def> })`
 ## trong đó `reward` là Dictionary của `DailyManager.MILESTONES`
-## (`{stars, coins, hint, undo, skip}`) — script chỉ HIỂN THỊ, không tự cộng gì.
+## (`{stars, coins, hint, teleport, skip}`) — script chỉ HIỂN THỊ, không tự cộng gì.
 ##
 ## RƯƠNG QUÀ: dùng `AnimatedSprite2D` + `SpriteFrames` sinh từ
 ## `assets/images/spritesheets/chest_spritesheet.png` (4 animation: `closed` ·

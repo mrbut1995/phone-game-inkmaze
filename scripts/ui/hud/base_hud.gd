@@ -6,7 +6,7 @@ extends Control
 ## Ai đang giữ HUD (GameScene · UIController · test) chỉ cần biết lớp này:
 ##   · Đồng hồ ván             : `update_hud(ctx)` · `set_time()`
 ##   · Thanh nút hành động     : `action_bar()` · `restart_btn()` · `submit_btn()` · `skip_btn()`
-##                               · `undo_btn()` · `hint_btn()`
+##                               · `teleport_btn()` · `hint_btn()`
 ##   · Thẻ NHIỆM VỤ           : `mission_card()` (HUD không xài thì trả null)
 ##   · Khung Hướng dẫn         : `hint_guide()`
 ##   · Nhường input cho bàn cờ : `allow_board_input()`
@@ -31,7 +31,7 @@ extends Control
 ## Gọi mỗi khi HUD cần vẽ lại (GameController._update_hud). ctx gồm:
 ##   title:String · subtitle:String · steps_remaining:int · elapsed_time:float
 ##   floor_number:int · extra:String · mode:BaseGameMode
-##   skip_left · undo_left · hint_left :int — số dư công cụ toàn tài khoản
+##   skip_left · teleport_left · hint_left :int — số dư công cụ toàn tài khoản
 func update_hud(ctx: Dictionary) -> void:
 	set_time(float(ctx.get("elapsed_time", 0.0)))
 	_sync_limits(ctx)
@@ -71,7 +71,7 @@ static func format_time(seconds: float) -> String:
 
 ## ---------------------------------------------------------------------------
 ## THANH NÚT HÀNH ĐỘNG (phương án A): mỗi HUD đều instance `nodes/hud/action_bar.tscn`
-## ngay trong scene của mình ⇒ nút CHƠI LẠI/GỬI BÀI/UNDO/HINT/REPLAY nằm TRONG HUD,
+## ngay trong scene của mình ⇒ nút CHƠI LẠI/GỬI BÀI/TELEPORT/HINT/REPLAY nằm TRONG HUD,
 ## màn chơi chỉ việc lấy ra để nối tín hiệu (không còn nút nào trong game.tscn).
 ## ---------------------------------------------------------------------------
 func action_bar() -> ActionBar:
@@ -84,7 +84,7 @@ func _sync_limits(ctx: Dictionary) -> void:
 	if bar != null:
 		bar.update_tool_counts(
 			int(ctx.get("skip_left", 0)),
-			int(ctx.get("undo_left", 0)),
+			int(ctx.get("teleport_left", 0)),
 			int(ctx.get("hint_left", 0)))
 
 
@@ -112,9 +112,9 @@ func skip_btn() -> LimitedButton:
 	return bar.skip_btn() if bar != null else null
 
 
-func undo_btn() -> BaseButton:
+func teleport_btn() -> BaseButton:
 	var bar := action_bar()
-	return bar.undo_btn() if bar != null else null
+	return bar.teleport_btn() if bar != null else null
 
 
 func hint_btn() -> BaseButton:

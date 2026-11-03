@@ -29,7 +29,7 @@ static func report(state: GameState, mode: BaseGameMode, won: bool,
 		"elapsed": floor_time,
 		"wall_hits": state.floor_wall_hits,
 		"hints_used": state.hints_used,
-		"undos_used": state.undos_used,
+		"teleports_used": state.teleports_used,
 		"hardcore": str(mode.difficulty).to_lower() == "hardcore",
 	})
 
@@ -49,7 +49,7 @@ static func report(state: GameState, mode: BaseGameMode, won: bool,
 		# --- Số liệu mở rộng cho bản Hồ sơ mới (Profiler stats) ---
 		"level_run": gm != null and bool(gm.get("level_run")),
 		"level_id": int(gm.get("current_level")) if gm != null else 0,
-		"undos": state.undos_used,
+		"teleports": state.teleports_used,
 		"hints": state.hints_used,
 		"wall_draws": state.wall_draws,
 		"wall_erases": state.wall_erases,

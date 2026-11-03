@@ -23,7 +23,7 @@ var _checks := 0
 
 func _init() -> void:
 	print("\n========================================================")
-	print("  TEST: CHALLENGE MODE (8 luat thu thach)")
+	print("  TEST: CHALLENGE MODE (9 luat thu thach)")
 	print("========================================================\n")
 
 	await process_frame
@@ -56,7 +56,7 @@ func _entry(ok: bool, label: String) -> void:
 # 1. Factory + danh sách luật
 # ---------------------------------------------------------------------------
 func _section_1_factory() -> void:
-	print("[1] Factory + 8 luat...")
+	print("[1] Factory + 9 luat...")
 	var controller := GameModeController.new()
 	var mode: BaseGameMode = controller.set_mode_by_name("challenge", "medium")
 	_entry(mode is ChallengeGameMode, "set_mode_by_name('challenge') -> ChallengeGameMode")
@@ -67,7 +67,9 @@ func _section_1_factory() -> void:
 	_entry(not ch.is_active(), "Mac dinh chua gan thu thach (is_active = false)")
 
 	var ids := ChallengeGameMode.CHALLENGE_IDS
-	_entry(ids.size() == 8, "Co dung 8 luat thu thach (dang %d)" % ids.size())
+	_entry(ids.size() == 9, "Co dung 9 luat thu thach (dang %d)" % ids.size())
+	# Fog of War khong con la che do rieng -> phai co trong danh sach luat
+	_entry(ids.has(ChallengeGameMode.FOG_OF_WAR), "Co luat FOG_OF_WAR (fog_of_war)")
 	var reasons := {}
 	for id in ids:
 		ch.set_challenge(str(id), 3)
@@ -160,7 +162,7 @@ func _section_3_run() -> void:
 	Popups.close_all()
 	await process_frame
 
-	# --- no_tool: bấm gợi ý HOẶC hoàn tác -> thua ---
+	# --- no_tool: bấm gợi ý HOẶC dịch chuyển -> thua ---
 	await _start_challenge_run(scene, ChallengeGameMode.NO_TOOL, 0)
 	scene.game_controller.hint()
 	await process_frame
@@ -170,10 +172,10 @@ func _section_3_run() -> void:
 	await process_frame
 
 	await _start_challenge_run(scene, ChallengeGameMode.NO_TOOL, 0)
-	scene.game_controller.undo()
+	scene.game_controller.teleport()
 	await process_frame
 	await process_frame
-	_entry(Popups.is_open(Popups.GAME_OVER_CHALLENGE), "No_tool: dung HOAN TAC -> mo popup thua thu thach")
+	_entry(Popups.is_open(Popups.GAME_OVER_CHALLENGE), "No_tool: dung DICH CHUYEN -> mo popup thua thu thach")
 	Popups.close_all()
 	await process_frame
 

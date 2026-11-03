@@ -85,10 +85,15 @@ func _on_open() -> void:
 
 	# 1. Đường đi
 	var progress := clampi(int(data.get("progress", 0)), 0, 100)
-	path.set_progress(progress / 100.0)
-	label_percent.text = "%d%%" % progress
-	label_walked.text = tr("STR_GO_WALKED")  # keep-code: chữ theo dữ liệu ván chơi (runtime)
-	label_stats.text = tr("STR_GO_STATS").format([_format_time(data.get("time", 0)), int(data.get("wall_hits", 0))])
+	if path != null:                       # popup dựng lại có thể chưa gắn GameOverPath ở node "Path"
+		path.set_progress(progress / 100.0)
+	# `GameOverChallengePopup` kế thừa hàm này nhưng KHÔNG có khối "đường đi" ⇒ phải kiểm null
+	if label_percent != null:
+		label_percent.text = "%d%%" % progress
+	if label_walked != null:
+		label_walked.text = tr("STR_GO_WALKED")  # keep-code: chữ theo dữ liệu ván chơi (runtime)
+	if label_stats != null:
+		label_stats.text = tr("STR_GO_STATS").format([_format_time(data.get("time", 0)), int(data.get("wall_hits", 0))])
 
 	# 2. Nhiệm vụ
 	var rows: Array = data.get("missions", [])
@@ -97,7 +102,10 @@ func _on_open() -> void:
 	for i in COUNT:
 		var row: Dictionary = rows[i] if i < rows.size() else {}
 		var ok := bool(row.get("done", false))
-		stars[i].texture = star_full if ok else star_empty
+		if stars[i] != null:
+			stars[i].texture = star_full if ok else star_empty
+		if names[i] == null:
+			continue
 		if row.has("title"):
 			names[i].text = str(row.get("title"))
 		names[i].add_theme_color_override("font_color", COLOR_MISSION_OK if ok else COLOR_MISSION_FAIL)
@@ -177,8 +185,10 @@ func _refresh_pencils() -> void:
 				next_unix = Time.get_unix_time_from_system() + float(wait)
 	# Bút vừa gãy = ô trống đầu tiên (đã bị trừ trước khi popup mở)
 	var lost := lives if _charged else -1
-	pencils.set_state(lives, maximum, next_unix, false, lost)
-	label_count.text = "%d/%d" % [lives, maximum]
+	if pencils != null:
+		pencils.set_state(lives, maximum, next_unix, false, lost)
+	if label_count != null:
+		label_count.text = "%d/%d" % [lives, maximum]
 	# Hết bút: làm mờ nút Chơi lại (bấm vẫn mở popup Hết bút)
 	if btn_retry != null:
 		btn_retry.modulate = Color.WHITE if _can_play() else Color(0.72, 0.72, 0.72, 1.0)
@@ -238,11 +248,13 @@ func _play_intro(progress: int) -> void:
 	# thẻ đường đi: hiện -> nét xanh chạy tới điểm thua (✕) -> % đếm lên -> giật nhẹ
 	var t_p := 0.5
 	_fade_in(fx_path_card, t_p, 0.95)
-	label_percent.text = "0%"  # keep-code: chữ theo dữ liệu ván chơi (runtime)
+	if label_percent != null:
+		label_percent.text = "0%"  # keep-code: chữ theo dữ liệu ván chơi (runtime)
 	var tr_ := _track(create_tween())
 	tr_.tween_interval(t_p + 0.15)
-	tr_.tween_property(path, "anim", 1.0, 0.8) \
-		.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	if path != null:
+		tr_.tween_property(path, "anim", 1.0, 0.8) \
+			.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	tr_.tween_callback(func() -> void:
 		Sfx.play(Sfx.BTN_WOOD_TAP)
 		_shake(3.0, 0.2))
@@ -254,13 +266,16 @@ func _play_intro(progress: int) -> void:
 	# 3 nhiệm vụ: lần lượt hiện; sao đạt nảy "tinh", sao hụt rung nhẹ
 	var t_m := t_p + 0.9
 	var rows: Array = data.get("missions", [])
-	var cards := fx_missions.get_children()
+	var cards: Array = fx_missions.get_children() if fx_missions != null else []
 	var stars: Array[TextureRect] = [row1_star, row2_star, row3_star]
 	for i in cards.size():
 		var card := cards[i] as Control
 		_fade_in(card, t_m, 0.9)
 		var ok := i < rows.size() and bool((rows[i] as Dictionary).get("done", false))
 		var star := stars[i]
+		if star == null:
+			t_m += 0.16
+			continue
 		var ts := _track(create_tween())
 		ts.tween_interval(t_m + 0.15)
 		star.pivot_offset = star.size * 0.5

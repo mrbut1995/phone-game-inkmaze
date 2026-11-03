@@ -39,12 +39,15 @@ def make_walk_number_level():
 
 class ChallengeRegistryTest(unittest.TestCase):
     def test_registry_matches_game_ids(self) -> None:
-        # 8 luật, id không trùng, mọi id trong ORDER đều hợp lệ + có nhãn
-        self.assertEqual(len(chrules.ORDER), 8)
+        # 9 luật, id không trùng, mọi id trong ORDER đều hợp lệ + có nhãn
+        self.assertEqual(len(chrules.ORDER), 9)
         self.assertEqual(len(chrules.ORDER), len(set(chrules.ORDER)))
         for rule_id in chrules.ORDER:
             self.assertTrue(chrules.is_valid(rule_id), rule_id)
             self.assertTrue(chrules.label(rule_id), rule_id)
+        # Fog of War không còn là chế độ riêng — nay là 1 luật thử thách
+        self.assertIn(chrules.FOG_OF_WAR, chrules.ORDER)
+        self.assertFalse(chrules.has_param(chrules.FOG_OF_WAR))
 
     def test_only_four_rules_take_param(self) -> None:
         paramed = sorted(r for r in chrules.ORDER if chrules.has_param(r))

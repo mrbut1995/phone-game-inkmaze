@@ -12,7 +12,7 @@ signal hint_provided(hint_type: String, data: Dictionary)
 func get_next_step_hint(maze: MazeData, current_pos: Vector2i) -> Vector2i:
 	if maze == null:
 		return current_pos
-	var path := maze.get_shortest_path(current_pos, maze.get_end())
+	var path := maze.get_play_path(current_pos, maze.get_end())   # có tính ô khoá + chìa
 	if path.size() >= 2:
 		var next_step: Vector2i = path[1]
 		hint_provided.emit("step", { "next_cell": next_step })

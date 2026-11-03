@@ -4,7 +4,7 @@
 
 | | |
 |---|---|
-| **Tài liệu** | Number Maze — Game Design Document| **Phiên bản** | v2.59 — 2026-10-29 (**BỘ NÚT EVENT v2 (§13.31)**: 20 bộ art 209×216 resize còn **128×132** → nút **58×60** giữ tỉ lệ 209:216, có `texture_disabled`; **`EventTheme` bỏ hẳn `back_art`/`front_art`/`art_offset_y`**, 15/15 theme được gắn `button_normal/pressed/disabled` bằng `tools/install_event_buttons_v2.py` (`--map dungeon=carnival`). Thẻ event (màn chi tiết) giờ chỉ còn nền gradient + chữ. Art lá lịch Daily được giữ lại. Trước đó: **LUẬT CHƠI SANG CÀI ĐẶT + EVENT DÙNG ART NÚT (§13.30)**: dock Main còn **4 nút** (Cửa hàng · Xếp hạng · Thử thách · Danh hiệu); nút **LUẬT CHƠI** chuyển vào khối Actions của **Cài đặt** (2×2 grid, icon `ic_rules.svg`), Back ở Danh sách hướng dẫn quay về **đúng màn đã mở** (`Nav.go_back()` lùi theo lịch sử). `EventTheme` có thêm **`button_normal`/`button_pressed`** — 15/15 theme được gắn art nút bằng `tools/patch_event_theme_buttons.py`, cột nút event đọc art **từ resource** thay vì dò tên file. Kèm: sinh lại 10 SVG nút màn **nhạt v8** bị hồi quy. Trước đó: **BẤM ĐƯỢC NÚT MÀN**: node gốc bố cục Main để `mouse_filter = STOP` nên nuốt cú bấm, `TextureButton2D` (Node2D) không nhận được sự kiện — đặt `IGNORE` cho `Portrait`/`Landscape` + test bấm thật 68 → 71; tiếp theo là **GIAO DIỆN V9 CHO MAIN BẢN GỘP (§13.29)**: mọi chương nối thành **ĐƯỜNG LIỀN** có **CỔNG VÒM** chắn giữa 2 chương — cổng `LOCKED`/`READY`/`OPEN` (ổ khoá + `own/need`, chữ `MỞ`, animation 2 cánh mở ra rồi bản đồ trượt sang chương mới); chương còn khoá thì đường **CẮT** ở cổng nên không cuộn qua và không thấy màn phía sau; bỏ chip `‹ CHƯƠNG n ›` nổi (nhãn nằm dưới cửa). Nút màn đổi sang bộ **nhạt v8** (10 ảnh `lv_node_*`), đường nối xám-xanh mảnh, `bottom_reserve 72` để pill Dungeon không che hàng nút đầu. **Dock nền NAVY `#1B4965`** + icon glyph trắng + chữ trắng; chấm trang dời sát phải. Kèm **SVG nguồn** cho 14 asset mới (`assets/images-png/**` bị gitignore) — regenerte bằng `tools/svg_to_png.py` vẫn ra đúng giao diện, IoU 0,98–0,99) |
+| **Tài liệu** | Number Maze — Game Design Document| **Phiên bản** | v2.60 — 2026-10-30 (**BỎ GẦN HẾT MODE · UNDO → TELEPORT · Ô KHOÁ & CHÌA (§13.32)**: chỉ còn **4 chế độ** (`play` · `blind_memory` · `wall_builder` · `challenge`) — xoá **6 chế độ** (Minesweeper · Sum Path · Countdown Cost · Fading Ink · One Stroke · Fog of War dạng mode riêng, **52 file sửa + 58 file xoá**); **Fog of War nay là luật thử thách `fog_of_war`** (9 luật); công cụ **HOÀN TÁC → DỊCH CHUYỂN** (`TOOL_TELEPORT`, tầm **2 ô Manhattan**, **xuyên tường**, 1 lượt + 1 bước, huỷ không mất gì — §5.14); **ô khoá + chìa khoá** `lock_cells`/`key_cells` (bộ ba `x,y,id`, id 1..30, BFS `(ô, tập chìa)` — §5.15); level designer Python theo kịp (4 chế độ · `REMOVED_MODE_IDS` · `NO_TELEPORT` · `fog_of_war` · validator khoá/chìa · màn mẫu ghi vào `resources/levels_samples/`), 170 test Python OK; sửa lỗi import CSV (`STR_TUT_TOOL_02`/`04` thiếu ngoặc kép). Trước đó: **BỘ NÚT EVENT v2 (§13.31)**: 20 bộ art 209×216 resize còn **128×132** → nút **58×60** giữ tỉ lệ 209:216, có `texture_disabled`; **`EventTheme` bỏ hẳn `back_art`/`front_art`/`art_offset_y`**, 15/15 theme được gắn `button_normal/pressed/disabled` bằng `tools/install_event_buttons_v2.py` (`--map dungeon=carnival`). Thẻ event (màn chi tiết) giờ chỉ còn nền gradient + chữ. Art lá lịch Daily được giữ lại. Trước đó: **LUẬT CHƠI SANG CÀI ĐẶT + EVENT DÙNG ART NÚT (§13.30)**: dock Main còn **4 nút** (Cửa hàng · Xếp hạng · Thử thách · Danh hiệu); nút **LUẬT CHƠI** chuyển vào khối Actions của **Cài đặt** (2×2 grid, icon `ic_rules.svg`), Back ở Danh sách hướng dẫn quay về **đúng màn đã mở** (`Nav.go_back()` lùi theo lịch sử). Kèm: sinh lại 10 SVG nút màn **nhạt v8** bị hồi quy. Trước đó: **BẤM ĐƯỢC NÚT MÀN**: node gốc bố cục Main để `mouse_filter = STOP` nên nuốt cú bấm, `TextureButton2D` (Node2D) không nhận được sự kiện — đặt `IGNORE` cho `Portrait`/`Landscape` + test bấm thật 68 → 71; tiếp theo là **GIAO DIỆN V9 CHO MAIN BẢN GỘP (§13.29)**: mọi chương nối thành **ĐƯỜNG LIỀN** có **CỔNG VÒM** chắn giữa 2 chương — cổng `LOCKED`/`READY`/`OPEN`; chương còn khoá thì đường **CẮT** ở cổng; nút màn đổi sang bộ **nhạt v8**, **Dock nền NAVY `#1B4965`**, kèm **SVG nguồn** cho 14 asset mới |
 | **Trạng thái** | Đang phát triển · build Godot 4.7 · màn hình dọc 1080×1920 |
 | **Cập nhật tính năng** | 2026-10-10: số lượt Skip/Eraser/Hint được lưu dùng chung toàn game, badge `PanelLimit` hiện số dư, và Debug Console cho phép chỉnh số lượng. |
 | **Nguồn sự thật** | **Code là nguồn sự thật cuối cùng**: `scripts/modes/*.gd` · `nodes/hud/*.tscn` · `scenes/game.tscn` · `resources/levels/*.tres`. Tài liệu này mô tả đúng theo code tại thời điểm cập nhật. |
@@ -32,7 +32,7 @@
 **Thể loại:** Puzzle / Logic, chơi trên di động
 **Ý tưởng cốt lõi:** Kết hợp lối suy luận kiểu Minesweeper (dùng số để đoán vị trí "tường vô hình") với việc vẽ đường đi trong mê cung, dưới áp lực số bước di chuyển hoặc thời gian có hạn.
 
-Game có **10 bộ luật chơi** (9 bộ luật cũ + **One Stroke** & **Wall Builder** — bổ sung 2026-09-18, đặc tả ở §5.12–5.13; **Time Attack Maze đã BỎ 2026-09-19**) dùng chung 1 bộ khung Grid / S-F / vẽ đường (mục 2–3), nhưng được tổ chức lại thành **3 cổng vào chính** trên Main Screen thay vì liệt kê cả 10 luật ngang hàng — xem mục 4.
+Game có **4 bộ luật chơi** sau đợt tái cấu trúc 2026-10-30 (**Play Mode · Dungeon Mode · Blind Memory · Wall Builder**, cộng thêm **Challenge** = chơi như Play nhưng gắn **1 luật thử thách**; đặc tả ở §5.1–5.1c và §13.32). **6 bộ luật cũ đã bị XOÁ** (Minesweeper · Sum Path · Countdown Cost · Fading Ink · One Stroke · Fog of War dạng chế độ riêng — Fog of War nay là **luật thử thách `fog_of_war`**; **Time Attack Maze đã BỎ 2026-09-19**). Mọi bộ luật dùng chung 1 bộ khung Grid / S-F / vẽ đường (mục 2–3), nhưng được tổ chức thành **2 cổng vào chính** trên Main Screen thay vì liệt kê ngang hàng — xem mục 4.
 
 Phần thưởng **Sao (Star)** của **mọi match-up** nay do **3 Thử thách (Challenge)** quyết định: hoàn thành 1 Thử thách = 1 Sao (tối đa 3 Sao), **KHÔNG còn tính theo thời gian còn lại** — xem mục 3.1.
 
@@ -89,10 +89,10 @@ Phần thưởng **Sao (Star)** của **mọi match-up** nay do **3 Thử thách
 | `len_max_percent` | Đi tối đa n% số ô của board | n (%) |
 | `sum_lt` · `sum_le` · `sum_gt` · `sum_ge` | Tổng số hiện trên các ô đã đi **<** / **≤** / **>** / **≥** N | N |
 | `no_hint` | Không dùng nút Gợi ý lần nào | – |
-| `no_undo` | Không dùng nút Hoàn tác lần nào | – |
+| `no_teleport` | Không dùng nút Dịch chuyển lần nào (trước đây là `no_undo` — công cụ Hoàn tác đã bị thay bằng **DỊCH CHUYỂN**) | – |
 | `no_wrong_submit` | **Gửi bàn tường đúng ngay lần GỬI đầu tiên** (chỉ dùng cho Wall Builder) — ĐÃ LẬP TRÌNH 2026-09-19 | – |
 
-> Ô **"có số"** = ô mà chế độ chơi đang hiện số (Play/Dungeon/Fog: số tường quanh ô > 0 · **Wall Builder: số tường quanh ô ≥ 0** · Minesweeper: số mìn · Sum Path / Countdown Cost: giá trị riêng). S và F **không** tính là ô có số — riêng **Wall Builder không có S/F**.
+> Ô **"có số"** = ô mà chế độ chơi đang hiện số (Play/Dungeon/Challenge fog: số tường quanh ô > 0 · **Wall Builder: số tường quanh ô ≥ 0**). S và F **không** tính là ô có số — riêng **Wall Builder không có S/F**. (Minesweeper · Sum Path · Countdown Cost đã bị xoá nên các định nghĩa "số mìn"/"giá trị riêng" không còn.)
 > **Level Designer kiểm tra trước khi lưu:** mâu thuẫn `only_numbered` + `avoid_numbered`, `steps_max` nhỏ hơn đường đi ngắn nhất, `len_max_percent` nhỏ hơn độ dài đường ngắn nhất, `visit_all` khi có ô không tới được, `sum_gt/ge` lớn hơn tổng số tối đa của board… và cảnh báo khi màn không có ô nào hiện số.
 
 ---
@@ -244,18 +244,15 @@ BaseLayout
 |---|---|---|---|---|
 | **Play Mode** | Play · Chọn màn | Số tường quanh ô (0..4) | **Game Over ngay** (hồi sinh: quay lại bước trước đó) | Đến F an toàn, xếp hạng theo thời gian nhanh nhất |
 | **Dungeon Mode** | Dungeon | Số tường quanh ô (0..4) | Về lại S, trừ 1 bước | Vượt qua càng nhiều Floor càng tốt (chế độ DUY NHẤT có bộ đếm bước còn lại) |
-| Minesweeper Maze | Daily Challenge | Số mìn quanh ô (0..8) | Đạp mìn: **THUA NGAY** (nổ, đứng nguyên tại ô, hiện biểu tượng Bomb, giữ nguyên số) | Tránh các ô mìn ẩn, đến đích F an toàn |
-| Fading Ink | Daily Challenge | **MỰC của ô** (giá trị riêng, KHÔNG liên quan tường) — giảm 1 mỗi bước đi | Không có tường; ô hết mực = không đi vào được (không mất bước) | Đến F trước khi mực phai hết; hết lối đi = THUA |
-| Sum Path | Daily Challenge | Điểm số của ô (1..9) | Không có tường | Đến F với tổng điểm thỏa `SUM < / > / = Target` |
-| Countdown Cost | Daily Challenge | **Chi phí bước** của ô (số riêng, KHÔNG liên quan tường) | Về lại S, trừ theo ô đích | Đến F với ngân sách bước hạn chế, tối ưu chi phí |
-| Blind Memory Maze | Daily Challenge | Không có số (ẩn hoàn toàn) | Tùy chọn (về S hoặc thua ngay) | Ghi nhớ tường khi Countdown (3..2..1) rồi đi khi tường ẩn |
-| Fog of War Maze | Daily Challenge | Số tường (chỉ hiện ô gần) | Về S + **trừ 1 LƯỢT THỬ** (3 lượt — §13.16) | Dò đường trong sương mù quanh vị trí nhân vật |
-| **One Stroke** | Daily Challenge | **KHÔNG có số** — tường **hiện rõ** | Không có tường vô hình (đi vào tường chỉ là nước đi bị từ chối) | Đi qua **TẤT CẢ các ô, mỗi ô đúng 1 lần**, rồi kết thúc ở **F** |
-| **Wall Builder** | Daily Challenge | Số tường quanh ô (0..4) — hiện trên **MỌI** ô | Không có di chuyển / đâm tường | **Vẽ đủ tường** khớp mọi con số rồi bấm **GỬI** (3 lượt gửi) |
+| **Blind Memory** | Màn Special (`mode_id = blind_memory`) | Không có số (tường bị ẨN) | Tùy chọn (đâm tường = thua như Play Mode) | Ghi nhớ tường khi đếm ngược 3..2..1 rồi đi khi tường ẩn |
+| **Wall Builder** | Màn Special (`mode_id = wall_builder`) | Số tường quanh ô (0..4) — hiện trên **MỌI** ô | Không có di chuyển / đâm tường | **Vẽ đủ tường** khớp mọi con số rồi bấm **GỬI** (3 lượt gửi) |
+| **Challenge** | Màn Special (`mode_id = challenge`) | Như Play Mode | Như Play Mode | Chơi như Play Mode nhưng phải theo **1 LUẬT THỬ THÁCH** — vi phạm là thua ngay (đọc ở `challenge`/`challenge_param` của màn) |
 > **Quy ước "Số tường quanh ô":** chỉ tính **4 cạnh bên trong board** (kể cả tường vô hình). **Tường viền bao quanh board KHÔNG tính vào ô** — nếu tính thì mọi ô sát biên đều bị cộng thêm (ô góc +2) và con số mất ý nghĩa. Viền ngoài vẫn **chặn đường đi như cũ**, chỉ không được đếm.
 > ⇒ Ô sát biên tối đa 3, ô giữa board tối đa 4, ô trống hoàn toàn = 0 (không hiện số).
 
-> **Quy ước "Số bước":** **CHỈ Dungeon Mode có bộ đếm số bước còn lại** (thẻ **SỐ BƯỚC** + thẻ **TẦNG** trên HUD — xem `matchup_dungeon.svg`). **Mọi chế độ khác KHÔNG giới hạn và KHÔNG hiển thị số bước còn lại** — Play Mode chỉ hiện thẻ **THỬ THÁCH** + **THỜI GIAN** (`matchup_level.svg`), các bộ luật Daily hiện tài nguyên riêng của chúng (đồng hồ, điểm, số mìn...). *Ngoại lệ duy nhất:* **Countdown Cost** vẫn dùng **ngân sách bước**, vì đó chính là cơ chế cốt lõi của bộ luật này (xem 5.3–5.9).
+> **Quy ước "Số bước":** **CHỈ Dungeon Mode có bộ đếm số bước còn lại** (thẻ **SỐ BƯỚC** + thẻ **TẦNG** trên HUD — xem `matchup_dungeon.svg`). **Mọi chế độ khác KHÔNG hiển thị số bước còn lại** — Play Mode chỉ hiện thẻ **THỬ THÁCH** + **THỜI GIAN** (`matchup_level.svg`); màn Special hiện tài nguyên riêng của chế độ (§10.2b). `max_steps` của màn vẫn được tôn trọng ở cấp dữ liệu: nó là ngân sách bước của **luật `steps_max`** và của luật thử thách `move_limit`.
+>
+> **6 bộ luật đã bị XOÁ (2026-10-30):** Minesweeper Maze · Sum Path · Countdown Cost · Fading Ink · One Stroke · **Fog of War (dạng chế độ riêng)** — xem §13.32. Fog of War nay là **luật thử thách** `fog_of_war` (§5c/§5.1c). Các mục §5.4, §5.6, §5.7, §5.8, §5.9, §5.12 dưới đây chỉ còn **ghi chú lịch sử**.
 
 > **Bố cục HUD màn chơi (bộ mockup matchup — xem mục 10):** khung thẻ rộng **980px** (x = 50 → 1030) nằm tại `y = 175..424`; mỗi chế độ có 1 mockup `mockup/matchup_<mode>.svg` vẽ đúng hàng thẻ của mình:
 > - **Play Mode** (`matchup_level.svg`): thẻ **THỜI GIAN** 250×138 bên trái + thẻ **THỬ THÁCH** 720×156 bên phải.
@@ -323,13 +320,13 @@ BaseLayout
 - Mỗi Tầng có **3 Thử thách**; hoàn thành 1 Thử thách = 1 Sao (tối đa 3 Sao) — xem 3.1.
 - Theo mockup `matchup_dungeon.svg`: màn chơi có thêm nút **UNDO** (hoàn tác bước vừa đi) và **GỢI Ý** (Hint) bên cạnh thao tác "VẼ ĐƯỜNG" (kéo từ tâm ô) và "GHI NHỚ" (nối 2 Anchor để đánh dấu tường nghi ngờ) — bổ sung so với bản thiết kế UX trước đó (mục 9).
 
-### 5.3–5.9 · 5.12–5.13. Chín bộ luật chỉ chơi được qua Daily Challenge
+### 5.3–5.9 · 5.12. CÁC BỘ LUẬT ĐÃ BỊ XOÁ (2026-10-30)
 
-Nội dung luật của từng bộ **giữ nguyên như bản thiết kế trước**, chỉ khác về **cách truy cập**: không còn là mục chọn độc lập trên Main Screen, mà là **nội dung xoay vòng theo ngày** trong Daily Challenge (`GameManager.DAILY_MODES`, xem mục 6).
+> Minesweeper Maze · Sum Path · Countdown Cost · Fading Ink · One Stroke và **Fog of War (chế độ riêng)** đã bị xoá khỏi game
+> trong đợt tái cấu trúc: **bỏ gần hết mode**, **Undo → Teleport** và **thêm ô khoá/chìa khoá**.
+> Fog of War nay là **luật thử thách `fog_of_war`** (xem §5.1c và §13.32).
 
-> **2 bộ luật mới (2026-09-18):** **One Stroke** (`one_stroke`) và **Wall Builder** (`wall_builder`) được đặc tả ở **§5.12–5.13** — đặt sau §5.10–5.11 để **không phải đánh số lại** các mục đang được tham chiếu ở nhiều nơi trong tài liệu.
-
-Mỗi bộ luật dưới đây được đặc tả theo **cùng một template**: Cổng vào · Bàn cờ · Số trên ô · Di chuyển · Thắng · Thua · Hồi sinh · HUD & mockup · Chi tiết.
+Các mục dưới đây được giữ lại **chỉ để tra cứu lịch sử** — đừng dùng làm đặc tả hiện hành.
 
 ### 5.3. ⏱ Time Attack Maze — ❌ ĐÃ BỎ (2026-09-19)
 
@@ -353,19 +350,9 @@ Mỗi bộ luật dưới đây được đặc tả theo **cùng một template
 
 </details>
 
-### 5.4. 💣 Minesweeper Maze
+### 5.4. 💣 Minesweeper Maze — ❌ ĐÃ XOÁ (2026-10-30, xem §13.32)
 
-| Trường | Nội dung |
-|---|---|
-| **Cổng vào** | Daily Challenge · **MÀN campaign** (màn khai `mode_id = minesweeper` trong LevelData → chơi TRÊN BÀN NHÀ THIẾT KẾ VẼ — §10.2f) |
-| **Bàn cờ** | Vuông **`2 + tầng`, kẹp 3..5** (tầng 1 = 3×3) · **không tường trong** · luôn có đường BFS **không mìn** từ S tới F · mật độ mìn `min(0.18 + tầng×0.03, 0.32)` |
-| **Số trên ô** | Số mìn trong **8 ô lân cận** (0..8) · S/F luôn an toàn |
-| **Di chuyển** | 4 hướng · mỗi bước 1 điểm · hồi sinh = quay lại ô trước đó |
-| **Thắng** | Tới F mà không đạp mìn |
-| **Thua** | **Đạp mìn = THUA NGAY** — đứng nguyên tại ô, hiện **icon Bomb** (giữ nguyên con số), HUD **BOM CÒN LẠI** giảm 1 rồi mở popup thua |
-| **Hồi sinh** | Quay lại ô ngay trước đó |
-| **HUD** | `nodes/hud/minesweep_hud.tscn` (`MinesweepHUD`): **BOM CÒN LẠI** + **THỜI GIAN** · mockup `mockup/matchup_minesweeper.svg` |
-| **Chi tiết** | ✨ **💣 Minesweeper Maze** — Số trên ô = số mìn trong 8 ô lân cận. S/F luôn an toàn, luôn tồn tại ít nhất 1 đường BFS không mìn. **Đạp mìn = THUA NGAY** (giống Play Mode đâm tường): nhân vật **đứng nguyên tại ô vừa nổ** (không bị đưa về S), trừ 1 bước rồi mở **popup thua**; ô đó hiện **biểu tượng Bomb to ở giữa ô** (icon `game/icon_bomb.svg`) nhưng **giữ nguyên con số** — số nằm ĐÈ LÊN icon (có viền màu giấy cho dễ đọc). HUD hiện thẻ **BOM CÒN LẠI** dạng `còn/tổng` (giảm 1 mỗi quả đã nổ). Hồi sinh = quay lại ô ngay trước đó. |
+> Chế độ này không còn trong game nên không còn đặc tả chi tiết. Code, HUD, tutorial và level mẫu tương ứng đã bị xoá.
 
 ### 5.5. 🧠 Blind Memory Maze
 
@@ -382,67 +369,22 @@ Mỗi bộ luật dưới đây được đặc tả theo **cùng một template
 | **Popup riêng** | `nodes/popups/memory_countdown.tscn` — mẩu giấy đếm ngược **3 → 2 → 1 → GO!**, **không nền mờ** (vẫn thấy mê cung) |
 | **Chi tiết** | * **🧠 Blind Memory Maze** — Không số. **Pha GHI NHỚ khi vào màn:** hiện **toàn bộ tường thật** + mở **popup giấy đếm ngược `3 → 2 → 1 → GO!`** (`nodes/popups/memory_countdown.tscn`, **không có nền mờ** nên vẫn nhìn rõ mê cung), **khoá tương tác** và **đồng hồ ĐỨNG YÊN** (thời gian ghi nhớ không tính vào giờ chơi). Hết đếm ngược: tường ẩn hoàn toàn, mở tương tác, đồng hồ bắt đầu chạy — người chơi đi bằng trí nhớ. **HUD riêng không có thẻ THỬ THÁCH** (`BlindMemoryHUD`): THỜI GIAN + thẻ nhắc GHI NHỚ. Tùy chọn Thường (về S) / Hardcore (thua ngay). |
 
-### 5.6. 🌫 Fog of War Maze
+### 5.6. 🌫 Fog of War Maze — ❌ ĐÃ XOÁ (2026-10-30, xem §13.32)
 
-| Trường | Nội dung |
-|---|---|
-| **Cổng vào** | Daily Challenge · **MÀN campaign** (`mode_id = fog_of_war` — §10.2f) |
-| **Bàn cờ** | Sinh theo tầng/độ khó, tường vô hình như Play Mode |
-| **Số trên ô** | Số tường quanh ô — **chỉ hiện ở các ô trong bán kính 1** quanh nhân vật; ô xa bị phủ mờ (modulate `0.6` / alpha `0.4`) |
-| **Di chuyển** | 4 hướng · sương mù cập nhật theo từng bước đi |
-| **Thắng** | Tới F |
-| **Thua** | Hết giờ · Hardcore: đâm tường = thua ngay (Thường: về S) |
-| **Hồi sinh** | Quay lại bước trước đó |
-| **HUD** | `nodes/hud/level_mode.tscn` (`LevelHUD`) · mockup `mockup/matchup_fog_of_war.svg` |
-| **Chi tiết** | * **🌫️ Fog of War Maze** — Có tường vô hình như Play Mode, nhưng chỉ hiện số ở các ô trong bán kính 1 quanh vị trí hiện tại; ô xa ẩn số. Tùy chọn Thường (về S) / Hardcore (thua ngay). |
+> Chế độ này không còn trong game nên không còn đặc tả chi tiết. Code, HUD, tutorial và level mẫu tương ứng đã bị xoá.
 
-### 5.7. ➕ Sum Path
+### 5.7. ➕ Sum Path — ❌ ĐÃ XOÁ (2026-10-30, xem §13.32)
 
-| Trường | Nội dung |
-|---|---|
-| **Cổng vào** | Daily Challenge · **MÀN campaign** (`mode_id = sum_path` — §10.2f) |
-| **Bàn cờ** | Theo độ khó: easy 3×3 · medium 4×4 · hard 5×5 · **không có tường** |
-| **Số trên ô** | **Điểm số của ô (1..9)** — không liên quan tường |
-| **Di chuyển** | 4 hướng · mỗi ô **chỉ tính điểm 1 lần** (quay lại ô cũ không cộng thêm) |
-| **Thắng** | Tới F với tổng điểm thỏa điều kiện `SUM < / > / = Target` (luôn tồn tại ít nhất 1 nghiệm đúng) |
-| **Thua** | Hết đường hợp lệ / hết thời gian (không có hazard) |
-| **HUD** | `nodes/hud/sum_path_hud.tscn` (`SumPathHUD`) — **thiết kế mới 2026-02**: **THỜI GIAN** (250×156) + thẻ **CÂN BẰNG TỔNG ĐIỂM ĐƯỜNG ĐI** (715×156) gồm **TỔNG HIỆN TẠI — con dấu TOÁN TỬ — MỤC TIÊU PHẢI ĐẠT** + thanh tiến độ + chip trạng thái (**KHÔNG có thẻ THỬ THÁCH** — thử thách chốt ở popup kết quả) · mockup `mockup/matchup_sum_path.svg` |
-| **Chi tiết** | ✨ **➕ Sum Path** — Không có tường. Số trên ô là điểm (1..9). Thắng khi tới F với tổng điểm thỏa `SUM < / > / = Target`. Mỗi ô chỉ tính điểm 1 lần. Luôn đảm bảo tồn tại ít nhất 1 nghiệm đúng. **HUD hiện 3 thẻ theo đúng thứ tự `TỔNG HIỆN TẠI — TOÁN TỬ — MỤC TIÊU`** (thẻ TOÁN TỬ nhỏ 112×112 nằm chính giữa, đè lên mép 2 thẻ kia; MỤC TIÊU chỉ hiện con số) thay cho panel MISSION cũ. **Không còn thắng được nữa** (tổng đã VƯỢT mục tiêu trong khi điều kiện là `<` hoặc `=` — đi thêm chỉ tăng điểm) → nút **CHƠI LẠI** tự hiện **DƯỚI hai nút Vẽ Đường / Ghi Nhớ** (2026-09-19); người chơi vẫn có thể **Undo** để lùi bước — tổng tính lại theo đường đã đi nên nút tự ẩn khi tổng về dưới mức chết. |
+> Chế độ này không còn trong game nên không còn đặc tả chi tiết. Code, HUD, tutorial và level mẫu tương ứng đã bị xoá.
 
-### 5.8. ⏳ Countdown Cost
+### 5.8. ⏳ Countdown Cost — ❌ ĐÃ XOÁ (2026-10-30, xem §13.32)
 
-| Trường | Nội dung |
-|---|---|
-| **Cổng vào** | Daily Challenge · **MÀN campaign** (`mode_id = countdown_cost` — §10.2f) |
-| **Bàn cờ** | Theo độ khó: easy 3×3 · medium 4×4 · hard 5×5 (xem bảng chi phí/ngân sách bên dưới) |
-| **Số trên ô** | **CHI PHÍ BƯỚC** khi bước vào ô đó (mọi ô trừ S/F đều có số ≥ 1) |
-| **Di chuyển** | 4 hướng · bước vào ô nào trừ đúng chi phí ô đó · đâm tường về S và trừ chi phí ô đích |
-| **Thắng** | Tới F trong ngân sách (ngân sách = đường rẻ nhất + dự phòng ⇒ luôn thắng được nếu chọn đường rẻ) |
-| **Thua** | **Hết bước** |
-| **HUD** | `nodes/hud/countdown_hud.tscn` (`CountdownHUD`) — **thiết kế mới 2026-02**: **THỜI GIAN** (250×156) + **SỔ THEO DÕI NGÂN SÁCH BƯỚC CHÂN** (715×156) gồm **NGÂN SÁCH CÒN** (`còn/tổng`) · **ĐÃ TIÊU TỐN** (`-N BƯỚC` + số ô đã đi) · **GIÁ CƯỚC MỖI Ô** (chip RẺ/ĐẮT theo độ khó + dự phòng) + **dải phân đoạn** (mỗi đoạn = 1 bước) — **KHÔNG có thẻ THỬ THÁCH** · mockup `mockup/matchup_countdown_cost.svg` |
-| **Chi tiết** | ✨ **⏳ Countdown Cost** — **Số trên ô = CHI PHÍ BƯỚC khi bước vào ô đó**, hoàn toàn **không liên quan tới số tường quanh ô** (khác Play / Dungeon / Fog of War). Mọi ô trừ S/F đều có số ≥ 1 và luôn hiện số. Bước vào ô nào thì trừ đúng chi phí của ô đó; đâm tường: về S và trừ chi phí của ô đích vừa đâm vào. Ngân sách bước được tính đủ cho **đường đi rẻ nhất + khoảng dự phòng**, nên màn luôn thắng được nếu chọn đúng đường ít tốn kém; đi lệch qua các ô đắt sẽ hết bước. **Hết ngân sách (0 bước còn lại) thì KHOÁ DI CHUYỂN** — người chơi phải bấm **UNDO** (nút được NHẤN MẠNH: ám vàng + nhịp phồng) để hoàn lại **đúng chi phí bước vừa đi** rồi mới đi tiếp (2026-09-19). |
+> Chế độ này không còn trong game nên không còn đặc tả chi tiết. Code, HUD, tutorial và level mẫu tương ứng đã bị xoá.
 
-  | Độ khó | Lưới | Chi phí mỗi ô | Dự phòng | Ngân sách tối thiểu |
-  |---|---|---|---|---|
-  | Easy | 3×3 | 1..2 bước | +6 | 12 bước |
-  | Medium | 4×4 | 1..3 bước | +4 | 14 bước |
-  | Hard | 5×5 | 1..4 bước | +3 | 15 bước |
+### 5.9. 💧 Fading Ink (Mực Phai) — ❌ ĐÃ XOÁ (2026-10-30, xem §13.32)
 
-  > Ngân sách thực tế = `max(ngân sách tối thiểu, chi phí đường đi rẻ nhất + dự phòng)`, tính bằng Dijkstra trên trọng số là chi phí ô đích — xem `scripts/modes/countdown_cost_game_mode.gd` (`cheapest_path_cost()` / `_ensure_budget()`).
+> Chế độ này không còn trong game nên không còn đặc tả chi tiết. Code, HUD, tutorial và level mẫu tương ứng đã bị xoá.
 
-### 5.9. 💧 Fading Ink (Mực Phai)
-
-| Trường | Nội dung |
-|---|---|
-| **Cổng vào** | Daily Challenge (thay chỗ **Area Maze** — đã BỎ từ 2026-11) · **MÀN campaign** (`mode_id = fading_ink` — §10.2f) |
-| **Bàn cờ** | Theo độ khó: easy 3×3 · medium 4×4 · hard 5×5 · **không có tường trong** |
-| **Số trên ô** | **MỰC của riêng ô đó** (ban đầu 2..9) — **giảm 1 mỗi bước đi** (mọi ô cùng phai một nhịp) |
-| **Di chuyển** | 4 hướng · **chỉ đi vào ô còn mực**; ô hết mực bị chặn (không mất bước), mất số và hiện **lớp gạch + huy hiệu CẠN**; ô còn đúng **1 mực** hiện **lớp SẮP PHAI** (nền hổ phách + chữ cảnh báo) |
-| **Thắng** | Tới F trước khi mực phai hết — phải đi **đường ngắn nhất** |
-| **Thua** | **Hết lối đi mà chưa tới F** → popup thua tiêu đề riêng `HẾT ĐƯỜNG ĐI!` (`STR_GAME_OVER_NO_PATH`) |
-| **Hồi sinh** | Quay lại bước trước đó — **mực hồi lại** đúng 1 điểm cho mọi ô |
-| **HUD** | `nodes/hud/fading_ink_hud.tscn` (`FadingInkHUD`) — **thiết kế mới 2026-02**: **THỜI GIAN** (250×156) + **TRẠM ĐO ĐỘ PHAI MỰC** (715×156) gồm **BƯỚC ĐÃ ĐI** (`N` + `-N MỰC`) · **QUANG PHỔ ĐẬM NHẠT CỦA MỰC** (4 mức) · cảnh báo **N Ô ĐÃ CẠN MỰC** (ẩn khi chưa có ô nào cạn) — **KHÔNG có thẻ THỬ THÁCH** · mockup `mockup/matchup_fading_ink.svg` |
-| **Chi tiết** | * **💧 Fading Ink (Mực Phai)** — *(thay cho Area Maze — đã BỎ từ 2026-11)* **Không có tường trong bàn.** Con số trên ô **KHÔNG phải số tường** mà là **MỰC của riêng ô đó** (mực ban đầu 2..9). **Người chơi chỉ được đi vào ô còn mực**; ô đã phai hết mực coi như ô trống — không đi vào được (bị chặn, KHÔNG mất bước, ô đó mất số và hiện **lớp gạch ngang + huy hiệu CẠN**). **MỖI BƯỚC ĐI làm MỌI ô trên bàn nhạt đi đúng 1 điểm mực** (không riêng ô vừa đi), nên phải tìm **đường ngắn nhất** tới F trước khi lối đi biến mất; đi vòng sẽ tự bịt đường của chính mình. Bàn luôn được sinh sao cho **đường ngắn nhất có đủ mực để tới F** (các ô trên đường đi được cấp mực theo số bước cần tới chúng, ô ngoài đường nhận mực thấp làm lối tắt dự phòng). **Đồng hồ đếm thời gian như thường**, không giới hạn số bước. **Hết lối đi mà chưa tới F = THUA** (popup thua hiện tiêu đề riêng `HẾT ĐƯỜNG ĐI!`). Nút **UNDO** lùi 1 bước thì **mực hồi lại** đúng 1 điểm cho mọi ô (trạng thái mực được tính lại từ số bước đã đi, không cần lưu lịch sử). HUD dùng bản **thiết kế mới**: thẻ **THỜI GIAN** + **TRẠM ĐO ĐỘ PHAI MỰC** (số bước đã đi · số mực đã phai · quang phổ đậm nhạt · cảnh báo ô cạn mực) — xem 10.2b. |
 ### 5.10. Popup kết quả & Hồi sinh khi thua (Revive)
 
 | Cổng chơi | Mockup popup thua | Nội dung chính | Con dấu (stamp) | Nút HỒI SINH |
@@ -620,29 +562,9 @@ ghi kỷ lục theo tầng, ván Play thì không**.
 
 ---
 
-### 5.12. ✍️ One Stroke (Một Nét)
+### 5.12. ✍️ One Stroke (Một Nét) — ❌ ĐÃ XOÁ (2026-10-30, xem §13.32)
 
-| Trường | Nội dung |
-|---|---|
-| **Cổng vào** | Daily Challenge · **MÀN campaign** (`mode_id = one_stroke` — §10.2f) · tên gọi: EN **ONE STROKE** · VI **MỘT NÉT** *(phương án khác: Full Page / KÍN TRANG · Cover All / PHỦ KÍN)* |
-| **Bàn cờ** | Theo độ khó — **luôn là bàn VUÔNG LẺ ô** để bảo đảm tồn tại đường Hamilton S→F: easy **3×3** · medium **5×5** · hard **7×7** · **tường NHÌN THẤY RÕ 100%** (mọi vách giữa 2 ô + viền ngoài board đều vẽ ra) |
-| **Số trên ô** | **KHÔNG hiện số** — bàn chỉ có tường + S/F. Không phải suy luận tường: toàn bộ độ khó nằm ở **thứ tự đi** |
-| **Di chuyển** | 4 hướng · kéo từ tâm ô · **ô đã đi qua bị KHOÁ VĨNH VIỄN** (hiện lớp tô xanh + gạch chéo + nhãn `ĐÃ ĐI`); kéo nét đè lên ô cũ ⇒ **THUA NGAY** (chất hazard `revisit`, xem mục *Thua*) |
-| **Mục tiêu** | Đi qua **TẤT CẢ các ô thuộc board, mỗi ô ĐÚNG 1 LẦN**, và **ô cuối cùng phải là F** ⇒ đường đi chính là một **đường Hamilton** từ S tới F (*"vẽ một nét kín trang rồi mới chạm đích"*) |
-| **Thắng** | Chạm F **sau khi đã phủ kín mọi ô** (còn ô chưa đi mà chạm F ⇒ nước đi bị chặn, màn chưa kết thúc) |
-| **Thua** | **(a) Đi đè lên ô đã đi ⇒ THUA NGAY** → popup thua tiêu đề riêng `ĐI LẠI Ô CŨ!` (`STR_GAME_OVER_REVISIT`) · **(b) Hết lối đi khi vẫn còn ô chưa đi** → `HẾT ĐƯỜNG ĐI!` (`STR_GAME_OVER_NO_PATH`, dùng chung với Fading Ink) · **(c) hết giờ** |
-| **Hồi sinh** | **Quay lại bước trước đó** (undo 1 bước — ô vừa rời được **mở lại**) |
-| **HUD** | `nodes/hud/one_stroke_hud.tscn` (`OneStrokeHUD`) — theo mockup `mockup/matchup_one_stroke.svg`: **THỜI GIAN** (270×156, chip `ĐANG TÍNH GIỜ`) + **BẢNG TIẾN ĐỘ PHỦ KÍN** (690×156, viền xanh `#2575A7`): cột trái `📐 ĐÃ PHỦ KÍN` · `13/25 Ô` · `CÒN LẠI 12 Ô` (đỏ); cột phải hàng `✍️ MỘT NÉT KHÔNG LẶP` + chip `52% KÍN` + **thanh tiến độ** (tô theo số ô đã đi) + 2 dòng nhắc luật (`Phải đi hết mọi ô mới được chạm đích F` · `✓ Không lùi ô`) — **KHÔNG có thẻ THỬ THÁCH** |
-| **Thanh công cụ** | **BỎ nút VẼ ĐƯỜNG/GHI NHỚ (2026-09-26)** — bàn cờ tự nhận thao tác; thanh hành động còn **CHƠI LẠI · UNDO · GỢI Ý** (mỗi nút UNDO/GỢI Ý có **badge `PanelLimit`** hiện số lượt còn lại) — xem §10.2e |
-| **Nội dung hướng dẫn** | `nodes/popups/instruction/one_stroke.tscn` (3 trang, kế thừa `content_instruction.tscn` — nạp bởi popup chung — xem §10.2d) · chip `ONE STROKE • MỘT NÉT` |
-| **Chi tiết** | Xem bên dưới |
-
-- **Sinh bàn (bắt buộc có nghiệm — ĐÃ LẬP TRÌNH):** `OneStrokeGameMode.setup_floor()` dựng **đường rắn bò (snake)** phủ kín board từ S=(0,0) tới F=(n-1,n-1) **trước**, rồi mới đặt tường ngẫu nhiên (mật độ 18% / 34% / 50% theo độ khó) **CHỈ trên các cạnh KHÔNG thuộc đường mẫu** ⇒ đường mẫu luôn còn nguyên ⇒ bàn luôn có ít nhất 1 lời giải phủ kín. Mọi vách đặt thêm đều được `maze.reveal_wall()` cho **hiện rõ 100%**.
-- **Ràng buộc chẵn/lẻ khi đặt S/F (bắt buộc):** tô lưới 2 màu như bàn cờ — đường Hamilton chỉ tồn tại khi **S và F KHÁC màu**. Vì S=(0,0) và F=(n-1,n-1) trên bàn **n lẻ** có **cùng màu đa số** nên chế độ **chỉ dùng bàn n lẻ** (3×3 · 5×5 · 7×7); board chẵn (4×4) bị loại vì cặp góc chéo đó cùng màu ⇒ vô nghiệm.
-- **GỢI Ý:** soi **1 ô đúng kế tiếp** — nếu người chơi còn đi đúng **đường mẫu** thì trả về ô kế tiếp của đường đó (tức thời); nếu đã đi lệch thì **tự giải lại** bài toán phủ kín bằng DFS cắt tỉa (bỏ F khỏi vùng đi xuyên, ưu tiên ô ít lối thoát kiểu Warnsdorff, ngân sách 60.000 nút) và trả về nước đi đầu của lời giải. Khi bế tắc hoàn toàn, hàm trả về ô hiện tại *(chưa có dòng chữ cảnh báo riêng)*.
-- **is_dead_end (HẾT ĐƯỜNG ĐI!):** coi **F như tường** khi xét vùng ô trống (vì F chỉ được là ô cuối) — nếu phần ô trống còn lại bị **cắt rời** (hoặc không còn chạm tới được, kể cả trường hợp chỉ còn F mà không kề) thì thua ngay với lý do `dead_end`.
-- **Thử thách mặc định** khi màn không khai báo gì: `time_max` · `no_hint` · `no_undo` — **không** dùng `visit_all`/`no_revisit` làm thử thách vì đó là **luật cứng của chế độ**.
-- **Không có hazard:** bàn không có tường vô hình ⇒ **không có "đâm tường"** và **không có LƯỢT THỬ**; mọi va chạm chỉ là nước đi bị từ chối (không mất bước).
+> Chế độ này không còn trong game nên không còn đặc tả chi tiết. Code, HUD, tutorial và level mẫu tương ứng đã bị xoá.
 
 ### 5.13. 🧱 Wall Builder (Xây Tường)
 
@@ -670,6 +592,38 @@ ghi kỷ lục theo tầng, ván Play thì không**.
 - **Không có S/F — ĐÃ LẬP TRÌNH:** `get_cell_text()` trả SỐ TƯỜNG cho **mọi** ô (kể cả S/F ẩn danh), nên bàn chỉ hiện số; `shows_player() = false` → board ẩn hẳn nhân vật và `evaluate_move()` luôn từ chối (không di chuyển, không mất bước).
 - **Chi tiết đã lập trình:** `WallBuilderGameMode` — `required_segments = Σ(số mọi ô)/2` (đếm bằng `count_true_segments()`); khe chỉ vẽ được khi có **2 ô thuộc board** kề nó (`can_draw_wall()`), đoạn vẽ ra hiện kiểu **`built`** (xanh lá, `wall_segment.gd`); `evaluate_submit()` trả `số đoạn CÒN LỆCH = Σ|chênh lệch từng ô| / 2` (khớp mọi con số ⇒ 0) — **nghiệm không bắt buộc trùng mê cung gốc**; GỬI sai ⇒ `register_failed_submit()` trừ 1 LƯỢT GỬI + `board.shake_board()` + chữ nổi `CÒN LỆCH n ĐOẠN!`; hết lượt ⇒ `GameController._game_over("out_of_submits")` → tiêu đề `HẾT LƯỢT GỬI!` (`STR_GAME_OVER_OUT_OF_SUBMITS`) + popup thua nói `STR_REVIVE_DESC_SUBMIT`; GỢI Ý ⇒ `hint_wall()` mở + **khoá** 1 đoạn tường thật (xoá không được, `is_wall_locked()`), UNDO ⇒ `undo_drawn_wall()` bỏ qua đoạn đã khoá; độ khó 3×3 / 4×4 / 5×5 và **loại bàn quá dễ** (quá nhiều ô 0/4 — sinh lại tối đa 12 lần).
 - **Khoá dịch đề xuất:** `STR_MODE_ONE_STROKE` · `STR_MODE_WALL_BUILDER` · `STR_HINT_ONE_STROKE` · `STR_HINT_WALL_BUILDER` · `STR_REVIVE_DESC_SUBMIT` · `STR_HUD_ONE_STROKE_*` · `STR_HUD_WALL_*` · `STR_GAME_OVER_NO_PATH` (dùng lại) · `STR_CHALLENGE_NO_WRONG_SUBMIT`.
+
+---
+
+### 5.14. 🌀 DỊCH CHUYỂN (Teleport) — thay hẳn công cụ HOÀN TÁC (Undo)
+
+| Trường | Nội dung |
+|---|---|
+| **Vị trí** | Nút thứ 2 trên **action bar** (portrait & landscape) — đúng chỗ nút **HOÀN TÁC** cũ; art `btn_teleport_{normal,pressed,disabled}.png` + badge `PanelLimit` (số lượt còn lại) |
+| **Lượt dùng** | **Dùng chung kho lượt toàn game** với SKIP và HINT (`GameManager.TOOL_TELEPORT = "teleport"`); hết lượt ⇒ nút bị **khoá** |
+| **Cách dùng** | Bấm **DỊCH CHUYỂN** → mọi ô **trong tầm 2 ô Manhattan** (|dx| + |dy| ≤ 2) sáng lên → **chạm 1 ô sáng** để nhảy thẳng tới đó. Chạm ra ngoài vùng sáng (hoặc bấm lại nút) = **HUỶ**: **không mất lượt, không mất bước** |
+| **Xuyên tường** | **Có** — bỏ qua toàn bộ tường/bàn cờ giữa 2 ô, chỉ cần ô đích **thuộc board** và **không bị khoá** |
+| **Giá** | **1 LƯỢT công cụ** + **1 BƯỚC** trong `max_steps` (tính như một nước đi bình thường) |
+| **Ô khoá** | **Không** nhảy được vào ô khoá chưa mở; **nhặt chìa** nếu ô đích có chìa |
+| **Chỗ KHÔNG có** | **Wall Builder** (chế độ dựng tường, không có nhân vật) — nút tự ẩn |
+| **Liên quan luật/mission** | Luật thử thách `no_tool` (bấm GỢI Ý **hoặc** DỊCH CHUYỂN lần đầu là **thua ngay**) · mission `no_teleport` (đếm `teleports_used`) |
+| **Hoàn tác** | `UndoController` **vẫn còn** nhưng **chỉ phục vụ HỒI SINH** (`undo_last_move()` · `on_move_undone`) — người chơi không còn nút hoàn tác |
+
+- Mã nguồn: `GameManager.TOOL_TELEPORT` · `GameController.teleport()` / `_on_teleport_chosen()` / `_cancel_teleport()` · `GridController.teleport_targets()` / `teleport_to()` · `BoardView.show_teleport_targets()` · `Sfx.TELEPORT`.
+- Vì sao đổi: Undo làm mọi màn "không thể thua" và triệt tiêu áp lực của số trên ô; Dịch chuyển giữ nguyên tinh thần **suy luận** nhưng cho người chơi một **cứu cánh có giá** (mất lượt + mất bước), và mở ra kiểu cell mới (ô khoá/chìa — §5.15).
+
+### 5.15. 🔐 Ô KHOÁ & CHÌA KHOÁ (`lock_cells` / `key_cells`)
+
+| Trường | Nội dung |
+|---|---|
+| **Dữ liệu** | `LevelData.lock_cells` / `LevelData.key_cells` — `PackedInt32Array`, mỗi ô **3 số `x, y, id`** (giống quy ước `mission_types`, không dùng Array lồng nhau). `id` trong **1..30** vì game mã hoá tập chìa đã nhặt bằng **bit mask** (`1 << id`) |
+| **Ô KHOÁ** | Không đi vào được khi chưa có chìa **cùng id**. Đâm vào ⇒ bàn cờ **rung** + hiện **ổ khoá** + hiệu ứng `Sfx.LOCK_BUMP`, **KHÔNG trừ bước/lượt**. Không đặt được trên **S/F** |
+| **Ô CHÌA** | Bước vào (đi bộ **hoặc** dịch chuyển) ⇒ **nhặt chìa** + `Sfx.KEY_PICKUP`, **mở TẤT CẢ ô khoá cùng id** trên bàn (ô khoá đổi sang trạng thái mở, đi qua được). Không đặt trên **S** và không đặt trên ô khoá |
+| **Bảo đảm giải được** | Level Designer kiểm bằng **BFS theo trạng thái `(ô, tập chìa)`** (`MazeData.get_play_path`) — y như lúc chơi; mỗi `id` khoá **buộc phải có ≥ 1 chìa**, nếu không ⇒ **lỗi** |
+| **Hiển thị** | Ô khoá: icon `icon_lock_cell.png` + số id; ô chìa: `icon_key.png` + số id (cùng bảng màu mực xanh). Chỉ là **lớp phủ**, không làm thay đổi con số "số tường quanh ô" |
+| **Ảnh hưởng** | Đường đi ngắn nhất thật sự phải **vòng qua chìa** ⇒ `max_steps` và 2 luật `walk_number_only` / `move_limit` phải tính theo đường **có chìa** (tool tự nới `max_steps`) |
+
+- Mã nguồn: `MazeData.add_lock()` / `add_key()` / `lock_id_at()` / `key_id_at()` / `collect_key()` / `is_locked()` / `get_play_path()` · `GridController._collect_key_at()` · `BoardView.on_key_collected()` / `show_lock_bump()` · màn mẫu `resources/levels_samples/level_17.tres` (1 khoá + 1 chìa, đường bắt buộc qua khoá).
 
 ---
 
@@ -3078,6 +3032,65 @@ chặn bấm vẫn chặn: `ChapterLockSheet` có `Dim` là `Button` STOP phủ 
 0,587) nếu không cú bấm rơi ngoài cửa sổ.
 
 **Việc chưa làm (đã báo user, không tự quyết).** Skip ở màn cuối chương (`next_level_in_chapter() == -1`) hiện về Main — nên vào thẳng chương sau khi cổng đã mở, hay cuộn tới cổng? Chương 1 không có cổng ⇒ không có nhãn "CHƯƠNG 1".
+---
+
+### 13.32. BỎ GẦN HẾT MODE · UNDO → TELEPORT · THÊM Ô KHOÁ & CHÌA KHOÁ (v2.60, 2026-10-30)
+
+**Yêu cầu (user):** *"Hiện tại, tôi thay đổi cấu trúc game: Xóa gần hết mode, thay thế tool, và thêm kiểu cell mới"*
+(`planning/LOCAL_AI_INSTRUCTIONS.md`, nhánh **`portrait_landscape_feature`**).
+
+**1. Xoá 6 chế độ (52 file sửa + 58 file xoá).**
+
+| Bị xoá | Gồm |
+|---|---|
+| **Minesweeper Maze** | `minesweeper_path_game_mode.gd` · `minesweep_hud.tscn/gd` (2 hướng) · tutorial `minesweeper.tscn/gd` |
+| **Sum Path** | `sum_path_game_mode.gd` · `sum_path_hud.*` · tutorial `sum_path.*` |
+| **Countdown Cost** | `countdown_cost_game_mode.gd` + `countdown_cost_*` · `countdown_hud.*` · `countdown_segment.*` · tutorial `how_to_play_countdown_cost.*` |
+| **Fading Ink** | `fading_ink_game_mode.gd` · `fading_ink_hud.*` · tutorial `fading_ink.*` |
+| **One Stroke** | `one_stroke_game_mode.gd` · `one_stroke_hud.*` · tutorial `one_stroke.*` |
+| **Fog of War (mode riêng)** | `fog_of_war_game_mode.gd` · `fog_of_war_hud.*` · tutorial `fog_of_war.*` |
+| **Achievement cũ** | `resources/achievements/sp_no_undo_10.tres` (nhiệm vụ "không dùng Hoàn tác" — công cụ không còn) |
+
+- `mode_id` còn lại **4**: `play` · `blind_memory` · `wall_builder` · `challenge` (`GameModeController` chỉ còn 4 nhánh).
+- **Fog of War nay là LUẬT thử thách** `fog_of_war` trong `ChallengeGameMode.CHALLENGE_IDS` (**9 luật**, `is_fog_rule()` → vào ván là **ẩn toàn bộ tường** + mở sương quanh nhân vật).
+- Mission `no_undo` → **`no_teleport`** (`mission_types.gd` `NO_TELEPORT`), luật `no_tool` gộp "không Gợi ý **và** không Dịch chuyển".
+- Level designer (Python) theo kịp: `MODE_IDS`/`MODE_LABELS`/`MODE_EDITS` chỉ còn 4 chế độ, `REMOVED_MODE_IDS` (6 id) + `RETIRED_MODE_IDS` để validator **báo LỖI** khi gặp màn cũ khai chế độ đã xoá, `challenge_rules.FOG_OF_WAR`, `missions.NO_TELEPORT`, trường **`lock_cells`/`key_cells`** (xem mục 3).
+
+**2. Công cụ: HOÀN TÁC → DỊCH CHUYỂN.** `GameManager.TOOL_UNDO` → **`TOOL_TELEPORT = "teleport"`** (`TOOL_IDS = [skip, teleport, hint]`) — chi tiết §5.14. Hồi sinh **vẫn dùng** `UndoController` (`undo_last_move()` / `on_move_undone`), nên cờ `undo` chỉ còn trong luồng hồi sinh + migrate save cũ (`tool_inventory.gd` · `player_profile_manager.gd`).
+
+**3. Kiểu cell mới: Ô KHOÁ + Ô CHÌA.** `MazeData.add_lock/add_key/lock_id_at/key_id_at/collect_key/is_locked` · `LevelData.lock_cells`/`key_cells` (**`PackedInt32Array`**, bộ ba `x,y,id`, id 1..30) · BFS `get_play_path()` theo trạng thái `(ô, tập chìa)` · UI: `BoardView.show_lock_bump()` (rung + `Sfx.LOCK_BUMP`), `on_key_collected()` (`Sfx.KEY_PICKUP`, mở mọi khoá cùng id) — chi tiết §5.15. Art: `icon_key.png` (64×64) · `icon_lock_cell.png` (96×96) · `cell_teleport_glow.png` (88×88).
+
+**4. Level designer — kiểm tra khoá/chìa.** `validator._validate_locks()`: id trong 1..30 · khoá/chìa phải thuộc board · khoá không trên S/F · chìa không trên S/khoá · **mỗi id khoá phải có ≥ 1 chìa** (thiếu ⇒ LỖI) · chìa không có khoá ⇒ CẢNH BÁO · vẫn còn đường S→F theo `min_steps_with_keys()` (BFS `(ô, keymask)`, y như `MazeData.get_play_path`).
+
+**5. Màn mẫu.** `make_samples.py` nay ghi vào **`resources/levels_samples/`** (mặc định mới, cờ `--dir` để đổi) vì id `10..17` **đã là màn thật** của game — ghi đè sẽ mất màn thật. 8 màn mẫu: 13 = `challenge` (`walk_number_only`) · 14 = `challenge` (`fog_of_war`) · 15 = `blind_memory` · 16 = `wall_builder` (12 tường ẩn) · 17 = `play` có **1 ô khoá + 1 chìa** (đường bắt buộc vòng qua chìa: 7 → **11 bước**).
+
+**6. Kiểm thử.**
+
+| Bộ test | Kết quả |
+|---|---|
+| Godot `--import` + boot headless + chạy thật `opengl3` 540×960 | **0** `SCRIPT ERROR` |
+| `test_level_special_modes` (viết lại: 4 chế độ + luật + khoá/chìa + màn mẫu) | **105/105** |
+| `test_wall_builder` (kéo lại đoạn đã nối = xoá; popup hết lượt gửi) | **49/49** |
+| `test_challenge_mode` (9 luật, thêm check `FOG_OF_WAR`, `no_tool` dùng DỊCH CHUYỂN) | **81/84** (3 lỗi art popup: con dấu + nút BackBtn — có từ trước) |
+| `test_all_game_modes` (5 mode còn lại) | **11/11** |
+| `test_debug_modes` (2 chế độ Special · ván TEST không ghi tiến trình · ép tầng) | **52/52** |
+| `test_mission_types` (`no_teleport` thay `no_undo`) | PASS (17 loại) |
+| `test_controllers_and_signals` (TOOL_TELEPORT + nút TELEPORT) | PASS |
+| `test_game_scene_integration` / `test_mission_controller` | PASS · 1 lỗi art popup (có từ trước) |
+| `test_shop` (gói `tool_teleport_x10` + icon `icon_tool_teleport.png`) | **223/229** (6 lỗi layout tab/thẻ Shop — có từ trước) |
+| `test_tutorial_flow` (2 tutorial chế độ · màn mẫu 15) | **86/88** (2 lỗi do **dữ liệu màn 3** hiện tại: không còn tường ẩn + đường không phải 6 bước) |
+| Xoá 5 file test của chế độ đã xoá (`test_countdown_cost` · `test_fading_ink` · `test_fog_of_war` · `test_one_stroke` · `test_hud_modes`) | — |
+| Level designer `python -m unittest discover -s tests -t .` | **170 OK** (1 skip) |
+
+**7. Sửa lỗi CSV phát hiện khi import.** `STR_TUT_TOOL_02` và `STR_TUT_TOOL_04` trong `string_extra.csv` có **dấu phẩy trong cột `vi` mà không bọc ngoặc kép** ⇒ Godot đọc thành **3 locale** và báo lỗi import. Đã bọc ngoặc kép cột `vi`. Kiểm lại toàn bộ: `string_extra.csv` (3 cột) và `string.csv` (**20 cột**) đều **0 dòng sai** — `STR_TOOL_TELEPORT` có đủ 20 cột, mọi khoá `*_TELEPORT*` đang dùng đều có bản dịch.
+
+**8. Popup thua màn hình: sửa lỗi null khiến popup dừng giữa `_on_open()`.** `GameOverChallengePopup` **kế thừa** `GameOverLevelPopup._on_open()` nhưng KHÔNG có khối "đường đi" của layout màn ⇒ `path.set_progress()`, `label_percent.text`, `label_walked.text`, `label_stats.text`, `pencils.set_state()`, `label_count.text`, `fx_missions.get_children()` ném lỗi trên `null` và popup **dừng giữa chừng** (không hiện tiêu đề/lý do). Đã thêm kiểm null từng chỗ, giữ nguyên hành vi popup màn. Đây là lỗi **có sẵn** từ đợt dựng lại popup, chỉ lộ ra khi test chạy tới.
+
+**9. Art thay thế (Việc 4).** Tạo mới + sinh PNG bằng `tools/svg_to_png.py`:
+`assets/images/game/btn_teleport_{normal,pressed,disabled}.svg` (nút tròn cyan `#5AD1E0→#1E8FAD`, glyph tia chớp, cùng khuôn 91×92 với `btn_undo_*`) và `assets/images/icons/icon_tool_teleport.svg` (mũi tên nhảy + vệt đứt + tia sáng, 32×32). Đã trỏ lại `nodes/hud/{portrait,landscape}/game/action_bar.tscn` + `nodes/tutorials/how_to_use_tool.tscn` (bỏ `uid` cũ để Godot tự sinh) và `scripts/ui/widgets/shop/item_row.gd` (`tool_teleport` → `icon_tool_teleport.png`, bỏ TODO).
+
+⚠️ **Cạm bẫy khi commit:** `assets/images-png/**` nằm trong `.gitignore` ⇒ 4 PNG mới (`btn_teleport_*` · `icon_tool_teleport`) **phải `git add -f`** hoặc commit kèm **SVG nguồn** (đã có) rồi chạy lại `tools/svg_to_png.py` trên máy khác.
+
 ---
 
 ### 13.31. BỘ NÚT EVENT v2 + BỎ HẲN ART THẺ KHỎI `EventTheme` (v2.59, 2026-10-29)

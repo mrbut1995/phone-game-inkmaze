@@ -60,12 +60,18 @@ class LevelModel:
     cell_mask: list[int] = field(default_factory=list)
 
     ## Dữ liệu riêng của chế độ theo từng ô: {(x, y): giá trị} — game đọc khoá "x,y".
-    ## Vd Sum Path = điểm ô (1..9) · Countdown Cost = chi phí bước (1..4) · Minesweeper = ghim mìn.
     custom_cell_values: dict = field(default_factory=dict)
     ## Chuỗi gốc của `custom_cell_values` trong .tres (giữ nguyên khi ghi lại)
     custom_cell_values_raw: str = "{}"
     ## True = trong file có phần tool KHÔNG hiểu → giữ nguyên chuỗi gốc, không ghi đè từ dict
     custom_raw_unknown: bool = False
+
+    ## Ô KHOÁ: danh sách bộ ba (x, y, id) — khớp `LevelData.lock_cells` (PackedInt32Array).
+    ## Ô khoá không đi vào được cho tới khi nhặt CHÌA cùng id. Không đặt trên S/F.
+    lock_cells: list[tuple[int, int, int]] = field(default_factory=list)
+    ## CHÌA KHOÁ: danh sách bộ ba (x, y, id) — bước vào ô chìa = nhặt, mở MỌI ô khoá cùng id.
+    ## Mỗi id khoá phải có ít nhất 1 chìa; mỗi id nằm trong 1..30 (game mã hoá tập chìa bằng bit).
+    key_cells: list[tuple[int, int, int]] = field(default_factory=list)
 
     ## NHIỆM VỤ của màn (tối đa 3): danh sách (type_id, param).
     ## Rỗng = game dùng 3 nhiệm vụ mặc định (no_wall · steps_max · time_max).
@@ -141,6 +147,7 @@ class LevelModel:
         self.start = self.clamp_cell(self.start)
         self.end = self.clamp_cell(self.end)
         self.prune_custom_values()
+        self.prune_lock_keys()
 
     # ------------------------------------------------------------------
     # DỮ LIỆU RIÊNG CỦA CHẾ ĐỘ (custom_cell_values) — xem app/config.py MODE_EDITS
@@ -179,6 +186,81 @@ class LevelModel:
         for cell in drop:
             self.custom_cell_values.pop(cell, None)
         return len(drop)
+
+    # ------------------------------------------------------------------
+    # Ô KHOÁ + CHÌA KHOÁ (khớp `MazeData.add_lock` / `add_key` bên game)
+    # ------------------------------------------------------------------
+    def add_lock(self, cell: Cell, lock_id: int = 1) -> bool:
+        """Đặt ô KHOÁ. Từ chối ô ngoài board / ô S / ô F / ô đã là chìa (giống game)."""
+        x, y = int(cell[0]), int(cell[1])
+        if not self.in_bounds((x, y)) or not self.is_cell_active((x, y)):
+            return False
+        if (x, y) == self.start or (x, y) == self.end:
+            return False
+        if any((int(k[0]), int(k[1])) == (x, y) for k in self.key_cells):
+            return False
+        self.lock_cells = [k for k in self.lock_cells if (int(k[0]), int(k[1])) != (x, y)]
+        self.lock_cells.append((x, y, max(int(lock_id), 1)))
+        self.sort_lock_keys()
+        return True
+
+    def add_key(self, cell: Cell, key_id: int = 1) -> bool:
+        """Đặt ô CHÌA. Từ chối ô ngoài board / ô S / ô đang là ô khoá (giống game)."""
+        x, y = int(cell[0]), int(cell[1])
+        if not self.in_bounds((x, y)) or not self.is_cell_active((x, y)):
+            return False
+        if (x, y) == self.start:
+            return False
+        if any((int(k[0]), int(k[1])) == (x, y) for k in self.lock_cells):
+            return False
+        self.key_cells = [k for k in self.key_cells if (int(k[0]), int(k[1])) != (x, y)]
+        self.key_cells.append((x, y, max(int(key_id), 1)))
+        self.sort_lock_keys()
+        return True
+
+    def clear_lock_keys(self) -> int:
+        """Xoá toàn bộ ô khoá + chìa; trả về tổng số ô đã xoá."""
+        total = len(self.lock_cells) + len(self.key_cells)
+        self.lock_cells = []
+        self.key_cells = []
+        return total
+
+    def sort_lock_keys(self) -> None:
+        """Sắp theo (id, y, x) cho file .tres ổn định giữa các lần lưu."""
+        self.lock_cells.sort(key=lambda k: (int(k[2]), int(k[1]), int(k[0])))
+        self.key_cells.sort(key=lambda k: (int(k[2]), int(k[1]), int(k[0])))
+
+    def prune_lock_keys(self) -> int:
+        """Bỏ ô khoá/chìa nằm ngoài lưới, ở ô trống, hoặc đè lên S/F (sau khi sửa board)."""
+        def ok(cell: Cell, forbid_end: bool) -> bool:
+            if not self.in_bounds(cell) or not self.is_cell_active(cell):
+                return False
+            if cell == self.start:
+                return False
+            if forbid_end and cell == self.end:
+                return False
+            return True
+
+        before = len(self.lock_cells) + len(self.key_cells)
+        self.lock_cells = [k for k in self.lock_cells if ok((int(k[0]), int(k[1])), True)]
+        keys = [k for k in self.key_cells if ok((int(k[0]), int(k[1])), False)]
+        locks_at = {(int(k[0]), int(k[1])) for k in self.lock_cells}
+        self.key_cells = [k for k in keys if (int(k[0]), int(k[1])) not in locks_at]
+        return before - (len(self.lock_cells) + len(self.key_cells))
+
+    def lock_id_at(self, cell: Cell) -> int:
+        """id khoá của ô (0 = không phải ô khoá)."""
+        for k in self.lock_cells:
+            if (int(k[0]), int(k[1])) == (int(cell[0]), int(cell[1])):
+                return int(k[2])
+        return 0
+
+    def key_id_at(self, cell: Cell) -> int:
+        """id chìa của ô (0 = không có chìa)."""
+        for k in self.key_cells:
+            if (int(k[0]), int(k[1])) == (int(cell[0]), int(cell[1])):
+                return int(k[2])
+        return 0
 
     # ------------------------------------------------------------------
     # Truy cập tường
@@ -304,6 +386,7 @@ class LevelModel:
                 if self.is_cell_active((nx, ny)):
                     self.set_wall(ref, False)
         self.ensure_borders()
+        self.prune_lock_keys()
         return True
 
     def toggle_cell_active(self, cell: Cell) -> bool:
@@ -516,6 +599,8 @@ class LevelModel:
             "cell_mask": list(self.cell_mask),
             "custom_cell_values": dict(self.custom_cell_values),
             "custom_cell_values_raw": self.custom_cell_values_raw,
+            "lock_cells": [tuple(item) for item in self.lock_cells],
+            "key_cells": [tuple(item) for item in self.key_cells],
             "missions": [tuple(item) for item in self.missions],
         }
 

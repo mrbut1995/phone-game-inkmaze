@@ -17,9 +17,9 @@ signal floor_record_changed(kind: String, floor_number: int)
 signal chapter_chest_claimed(chapter_id: int, index: int)
 
 const TOOL_SKIP := "skip"
-const TOOL_UNDO := "undo"
+const TOOL_TELEPORT := "teleport"
 const TOOL_HINT := "hint"
-const TOOL_IDS: Array[String] = [TOOL_SKIP, TOOL_UNDO, TOOL_HINT]
+const TOOL_IDS: Array[String] = [TOOL_SKIP, TOOL_TELEPORT, TOOL_HINT]
 const INITIAL_TOOL_USES := 3
 ## Scene của ván chơi (mọi chế độ đều vào đây)
 const GAME_SCENE := "res://scenes/game.tscn"
@@ -281,7 +281,7 @@ func start_dungeon() -> void:
 
 
 ## Khởi động 1 MÀN trong màn Chọn màn.
-## Màn có thể ghi CHẾ ĐỘ riêng trong LevelData (`mode_id`) — vd màn 13 = "minesweeper" —
+## Màn có thể ghi CHẾ ĐỘ riêng trong LevelData (`mode_id`) — vd màn 13 = "wall_builder" —
 ## khi đó ván chơi chạy bằng chế độ Special TRÊN BÀN DO NHÀ THIẾT KẾ VẼ (xem BaseGameMode.designed_maze).
 ## Màn không khai gì (hoặc khai id lạ) = chế độ Play như trước.
 func start_level(level_id: int) -> void:
@@ -545,7 +545,7 @@ func record_floor_reached(floor_number := 0) -> bool:
 # ---------------------------------------------------------------------------
 
 ## 3 định nghĩa rương của một chương có `stars_total` Sao tối đa.
-## Mỗi phần tử: `{ index, stars, coins, hint, undo, skip, life }` (`stars` = ngưỡng Sao cần).
+## Mỗi phần tử: `{ index, stars, coins, hint, teleport, skip, life }` (`stars` = ngưỡng Sao cần).
 func chapter_chest_defs(stars_total: int) -> Array[Dictionary]:
 	return _chests.defs(stars_total)
 

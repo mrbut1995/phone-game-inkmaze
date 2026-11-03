@@ -26,7 +26,7 @@ SUM_LE = "sum_le"
 SUM_GT = "sum_gt"
 SUM_GE = "sum_ge"
 NO_HINT = "no_hint"
-NO_UNDO = "no_undo"
+NO_TELEPORT = "no_teleport"
 # Riêng Wall Builder: GỬI đúng ngay lần đầu (gửi sai 1 lần là hỏng nhiệm vụ)
 NO_WRONG_SUBMIT = "no_wrong_submit"
 
@@ -84,7 +84,7 @@ MISSIONS: dict[str, tuple[str, str, str, str]] = {
     SUM_GT: ("Tổng số trên đường đi > N", PARAM_SUM, "", "Buộc đi qua ô số lớn"),
     SUM_GE: ("Tổng số trên đường đi >= N", PARAM_SUM, "", "Buộc đi qua ô số lớn"),
     NO_HINT: ("Không dùng gợi ý", PARAM_NONE, "", "Không bấm nút GỢI Ý lần nào"),
-    NO_UNDO: ("Không dùng hoàn tác", PARAM_NONE, "", "Không bấm nút UNDO lần nào"),
+    NO_TELEPORT: ("Không dùng dịch chuyển", PARAM_NONE, "", "Không bấm nút TELEPORT lần nào"),
     NO_WRONG_SUBMIT: (
         "Gửi đúng ngay lần đầu", PARAM_NONE, "",
         "Riêng Wall Builder: gửi SAI dù chỉ 1 lần là hỏng nhiệm vụ",
@@ -108,7 +108,7 @@ ORDER: list[str] = [
     SUM_GT,
     SUM_GE,
     NO_HINT,
-    NO_UNDO,
+    NO_TELEPORT,
     NO_WRONG_SUBMIT,
 ]
 
@@ -123,7 +123,7 @@ NO_PARAM_TYPES: set[str] = {
     VISIT_ALL,
     VISIT_ALL_NUMBERED,
     NO_HINT,
-    NO_UNDO,
+    NO_TELEPORT,
     NO_WRONG_SUBMIT,
 }
 

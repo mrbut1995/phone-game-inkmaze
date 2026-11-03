@@ -90,7 +90,7 @@ func refresh(ctx: MissionContext) -> void:
 		int(metrics["numbered_on_path"]),
 		int(metrics["submit_misses"]),
 		ctx.state.hints_used,
-		ctx.state.undos_used,
+		ctx.state.teleports_used,
 		str(int(ctx.elapsed)),
 		str(ctx.final),
 	]
@@ -377,10 +377,10 @@ func _evaluate(entry: Dictionary, ctx: MissionContext, m: Dictionary, is_final: 
 			var ok := used == 0
 			return _verdict(ok, _pass_fail(ok) if ok else tr("STR_MISSION_ST_HINT_USED").format([used]))
 
-		MissionTypes.NO_UNDO:
-			var used := state.undos_used
+		MissionTypes.NO_TELEPORT:
+			var used := state.teleports_used
 			var ok := used == 0
-			return _verdict(ok, _pass_fail(ok) if ok else tr("STR_MISSION_ST_UNDO_USED").format([used]))
+			return _verdict(ok, _pass_fail(ok) if ok else tr("STR_MISSION_ST_TELEPORT_USED").format([used]))
 
 		MissionTypes.NO_WRONG_SUBMIT:
 			# Wall Builder: GỬI ĐÚNG NGAY Ở LẦN GỬI ĐẦU TIÊN (không được nộp sai lần nào)

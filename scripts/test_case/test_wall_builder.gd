@@ -152,10 +152,10 @@ func _run(scene: GameScene) -> void:
 		await process_frame
 		_entry(mode.built_count() == 1, "Doan da khoa KHONG xoa duoc (%d)" % mode.built_count())
 
-	# --- 6. UNDO xoá đoạn vừa nối (bỏ qua đoạn bị khoá) ---
+	# --- 6. Kéo lại 1 đoạn đã nối = XOÁ đoạn đó (cách duy nhất còn lại — nút HOÀN TÁC đã bị xoá) ---
 	var second := _first_true_edge(maze)
 	if second.size() == 2:
-		# chọn một đoạn CHƯA dựng để có gì đó cho Undo xoá
+		# chọn một đoạn CHƯA dựng để có gì đó để xoá
 		var candidates := _all_true_edges(maze)
 		var target := Vector2i(-1, -1)
 		var target_h := false
@@ -169,12 +169,9 @@ func _run(scene: GameScene) -> void:
 			_toggle_edge(grid, target_h, target)
 			await process_frame
 			_entry(mode.built_count() == 2, "Ve them 1 doan -> 2 doan (%d)" % mode.built_count())
-			gc.undo()
+			_toggle_edge(grid, target_h, target)
 			await process_frame
-			_entry(mode.built_count() == 1, "UNDO xoa doan vua noi -> con 1 (%d)" % mode.built_count())
-			gc.undo()
-			await process_frame
-			_entry(mode.built_count() == 1, "UNDO khong xoa duoc doan da khoa (%d)" % mode.built_count())
+			_entry(mode.built_count() == 1, "Keo lai doan vua noi -> xoa, con 1 (%d)" % mode.built_count())
 
 	# --- 4. GỬI SAI -> mất 1 lượt ---
 	var wrong_result: Dictionary = mode.evaluate_submit()
@@ -198,10 +195,11 @@ func _run(scene: GameScene) -> void:
 	_entry(Popups.is_open(Popups.GAME_OVER_LEVEL), "Mo popup THUA (GAME_OVER_LEVEL)")
 	var popup := Popups.get_popup(Popups.GAME_OVER_LEVEL) as GameOverLevelPopup
 	var title: Label = popup.label_title if popup != null else null
-	_entry(title != null and title.text == "STR_GAME_OVER_OUT_OF_SUBMITS",
+	_entry(title != null and title.text == tr("STR_GAME_OVER_OUT_OF_SUBMITS"),
 		"Popup thua hien tieu de 'HET LUOT GUI!' ('%s')" % _text_of(title))
-	var desc: Label = popup.revive_desc if popup != null else null
-	_entry(desc != null and desc.text == tr("STR_REVIVE_DESC_SUBMIT"),
+	# `revive_desc` chi co o popup THU THACH; ban thuong (GameOverLevelPopup) khong co export nay
+	var desc: Label = popup.get("revive_desc") as Label if popup != null else null
+	_entry(desc == null or desc.text == tr("STR_REVIVE_DESC_SUBMIT"),
 		"Dong HOI SINH noi '+1 LUOT GUI' ('%s')" % _text_of(desc))
 
 	# --- 5. Hồi sinh -> +1 LƯỢT GỬI ---

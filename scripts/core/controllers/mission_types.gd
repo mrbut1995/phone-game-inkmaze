@@ -16,7 +16,7 @@ extends RefCounted
 ##   D. Tổng số trên các ô đã đi:
 ##        sum_lt · sum_le · sum_gt · sum_ge
 ##   E. Cách chơi (công cụ):
-##        no_hint · no_undo
+##        no_hint · no_teleport
 ##   F. Riêng Wall Builder:
 ##        no_wrong_submit (gửi đúng ngay lần GỬI đầu tiên)
 ##
@@ -40,7 +40,7 @@ const SUM_LE := "sum_le"
 const SUM_GT := "sum_gt"
 const SUM_GE := "sum_ge"
 const NO_HINT := "no_hint"
-const NO_UNDO := "no_undo"
+const NO_TELEPORT := "no_teleport"
 const NO_WRONG_SUBMIT := "no_wrong_submit"
 
 ## 3 nhiệm vụ mặc định (màn cũ / màn chưa chọn gì)
@@ -70,7 +70,7 @@ const ORDER := [
 	SUM_GT,
 	SUM_GE,
 	NO_HINT,
-	NO_UNDO,
+	NO_TELEPORT,
 	NO_WRONG_SUBMIT,
 ]
 
@@ -91,7 +91,7 @@ const INFO := {
 	SUM_GT: {"key": "STR_MISSION_SUM_GT", "param": PARAM_SUM, "unit": ""},
 	SUM_GE: {"key": "STR_MISSION_SUM_GE", "param": PARAM_SUM, "unit": ""},
 	NO_HINT: {"key": "STR_MISSION_NO_HINT", "param": PARAM_NONE, "unit": ""},
-	NO_UNDO: {"key": "STR_MISSION_NO_UNDO", "param": PARAM_NONE, "unit": ""},
+	NO_TELEPORT: {"key": "STR_MISSION_NO_TELEPORT", "param": PARAM_NONE, "unit": ""},
 	NO_WRONG_SUBMIT: {"key": "STR_MISSION_NO_WRONG_SUBMIT", "param": PARAM_NONE, "unit": ""},
 }
 
@@ -104,7 +104,7 @@ const NO_PARAM_TYPES := [
 	VISIT_ALL,
 	VISIT_ALL_NUMBERED,
 	NO_HINT,
-	NO_UNDO,
+	NO_TELEPORT,
 	NO_WRONG_SUBMIT,
 ]
 
@@ -170,8 +170,8 @@ static func tool_label(type_id: String) -> String:
 			return "Tổng số trên đường đi ≥ N"
 		NO_HINT:
 			return "Không dùng gợi ý"
-		NO_UNDO:
-			return "Không dùng hoàn tác"
+		NO_TELEPORT:
+			return "Không dùng dịch chuyển"
 		_:
 			return type_id
 

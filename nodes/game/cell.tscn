@@ -16,8 +16,9 @@
 [ext_resource uid="uid://cvm34mg2f0ngw" type="Texture2D" path="res://assets/images-png/game/cell_satisfied_wash.png" id="13_satisfied"]
 [ext_resource type="Texture2D" uid="uid://cowu67bwhbm4n" path="res://assets/images-png/game/cell_start.png" id="14_start"]
 [ext_resource type="Texture2D" uid="uid://dqyi8ijauyy0j" path="res://assets/images-png/game/cell_finish.png" id="15_finish"]
-
-[ext_resource type="Texture2D" path="res://assets/images-png/game/cell_normal_alt.png" id="16_alt"]
+[ext_resource type="Texture2D" path="res://assets/images-png/game/icon_key.png" id="16_key"]
+[ext_resource type="Texture2D" path="res://assets/images-png/game/icon_lock_cell.png" id="17_lock"]
+[ext_resource type="Texture2D" path="res://assets/images-png/game/cell_teleport_glow.png" id="18_tpglow"]
 
 [sub_resource type="Animation" id="Animation_cell_reset"]
 length = 0.001
@@ -218,6 +219,23 @@ tracks/0/keys = {
 "values": [Vector2(1, 1), Vector2(1.32, 1.32), Vector2(1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_cell_teleport_glow"]
+resource_name = "teleport_glow"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite/TeleportGlow:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.45, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.55), Color(1, 1, 1, 1), Color(1, 1, 1, 0.55)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cell"]
 _data = {
 &"RESET": SubResource("Animation_cell_reset"),
@@ -227,10 +245,11 @@ _data = {
 &"pulse": SubResource("Animation_cell_pulse"),
 &"shudder": SubResource("Animation_cell_shudder"),
 &"step": SubResource("Animation_cell_step"),
+&"teleport_glow": SubResource("Animation_cell_teleport_glow"),
 &"win": SubResource("Animation_cell_win")
 }
 
-[node name="Cell" type="Control" unique_id=1607724359 node_paths=PackedStringArray("button", "label", "bomb", "warn", "warn_label", "faded", "faded_badge", "faded_label", "visited", "visited_label", "satisfied", "anim", "entrance_timer", "win_timer")]
+[node name="Cell" type="Control" unique_id=1607724359 node_paths=PackedStringArray("button", "label", "bomb", "warn", "warn_label", "faded", "faded_badge", "faded_label", "visited", "visited_label", "satisfied", "lock", "key_icon", "teleport_glow", "anim", "entrance_timer", "win_timer")]
 layout_mode = 3
 anchors_preset = 0
 offset_right =  88
@@ -248,11 +267,13 @@ faded_label = NodePath("Sprite/FadedLabel")
 visited = NodePath("Sprite/Visited")
 visited_label = NodePath("Sprite/VisitedLabel")
 satisfied = NodePath("Sprite/Satisfied")
+lock = NodePath("Sprite/Lock")
+key_icon = NodePath("Sprite/Key")
+teleport_glow = NodePath("Sprite/TeleportGlow")
 anim = NodePath("AnimationPlayer")
 entrance_timer = NodePath("EntranceTimer")
 win_timer = NodePath("WinTimer")
 texture_normal = ExtResource("1_pne7a")
-texture_alt = ExtResource("16_alt")
 texture_start = ExtResource("14_start")
 texture_finish = ExtResource("15_finish")
 
@@ -407,6 +428,48 @@ text = "0"
 label_settings = ExtResource("2_cjyvu")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Lock" type="TextureRect" parent="Sprite" index="10"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.18
+anchor_top = 0.18
+anchor_right = 0.82
+anchor_bottom = 0.82
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("17_lock")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Key" type="TextureRect" parent="Sprite" index="11"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.56
+anchor_top = 0.04
+anchor_right = 0.96
+anchor_bottom = 0.44
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("16_key")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TeleportGlow" type="TextureRect" parent="Sprite" index="12"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("18_tpglow")
+expand_mode = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

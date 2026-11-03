@@ -81,46 +81,41 @@ DIFFICULTIES = ("easy", "medium", "hard")
 ## (file cũ lỡ khai `dungeon` sẽ bị game coi như "play" — xem RETIRED_MODE_IDS).
 MODE_IDS = (
     "play",
-    "minesweeper",
-    "sum_path",
-    "countdown_cost",
     "blind_memory",
-    "fog_of_war",
-    "fading_ink",
-    "one_stroke",
     "wall_builder",
     "challenge",
 )
+## 6 chế độ đã bị XOÁ khỏi game (đợt tái cấu trúc: bỏ gần hết mode). Màn cũ còn khai các id này thì
+## validator báo LỖI — phải đổi sang "play"/"challenge" (Fog of War nay là LUẬT thử thách `fog_of_war`).
+REMOVED_MODE_IDS = (
+    "minesweeper",
+    "sum_path",
+    "countdown_cost",
+    "fading_ink",
+    "one_stroke",
+    "fog_of_war",
+)
 ## Chế độ KHÔNG dùng được cho màn nhưng vẫn có thể gặp trong file cũ → validator báo LỖI rõ ràng
-RETIRED_MODE_IDS = ("dungeon",)
+RETIRED_MODE_IDS = ("dungeon",) + REMOVED_MODE_IDS
 
 # --- CHẾ ĐỘ SPECIAL chạy TRÊN MÀN (khớp scripts/modes/*.gd bên game) ----------
 # Màn khai `mode_id` khác "play" sẽ được game chạy bằng chế độ đó TRÊN ĐÚNG BÀN NÀY:
 #   · Dùng nguyên tường + hình dạng board (cell_mask) do tool vẽ.
-#   · Chế độ tự rắc phần dữ liệu riêng (mìn · điểm ô · chi phí · mực...) — CỐ ĐỊNH theo level_id
-#     nên chơi lại y hệt.
+#   · Chỉ còn 2 chế độ Special: Blind Memory · Wall Builder (Fog of War nay là LUẬT thử thách).
 PLAY_MODE_ID = "play"
 MODE_LABELS = {
     "play": "Play — mê cung thường (mặc định)",
-    "minesweeper": "Minesweeper — dò mìn theo số lân cận",
-    "sum_path": "Sum Path — tới F với tổng điểm ô theo điều kiện",
-    "countdown_cost": "Countdown Cost — mỗi ô tốn 1..N bước",
     "blind_memory": "Blind Memory — nhớ màn rồi đi (tường tự ẩn lại)",
-    "fog_of_war": "Fog of War — chỉ thấy quanh nhân vật",
-    "fading_ink": "Fading Ink — mực phai dần theo từng bước",
-    "one_stroke": "One Stroke — 1 nét phủ kín mọi ô, tường HIỆN RÕ",
     "wall_builder": "Wall Builder — suy luận lại toàn bộ tường từ các con số",
     "challenge": "Challenge — 1 luật thử thách, vi phạm là thua ngay",
 }
 # Mode mà game ÉP trạng thái hiện/ẩn của tường khi chơi trên màn (xem MazeData.set_all_walls_visible)
 MODE_WALL_VISIBILITY_OVERRIDE = {
-    "one_stroke": "visible",
     "blind_memory": "hidden",
-    "fog_of_war": "hidden",
     "wall_builder": "hidden",
 }
 # Mode mà người chơi BUỘC PHẢI thấy tường để tính đường (validator sẽ cảnh báo nếu màn còn tường ẩn)
-MODES_NEEDING_VISIBLE_WALLS = ("minesweeper", "sum_path", "countdown_cost", "fading_ink")
+MODES_NEEDING_VISIBLE_WALLS: tuple[str, ...] = ()
 
 # --- KIỂU EDIT RIÊNG THEO CHẾ ĐỘ -------------------------------------------
 # Mỗi chế độ có 1 "kiểu edit" — nhà thiết kế dùng công cụ 7 để tô dữ liệu riêng của chế độ đó
@@ -134,85 +129,9 @@ MODE_EDITS = {
         "kind": "none",
         "note": "Mê cung thường: tường (hiện/ẩn) + ô board + S/F + nhiệm vụ là đủ.",
     },
-    "minesweeper": {
-        "kind": "cell_value",
-        "tool": "Ghim mìn",
-        "min": 1,
-        "max": 1,
-        "default": 1,
-        "unit": "mìn",
-        "note": "Tô ô nào = GHIM MÌN ở đó (game giữ đúng, không rắc thêm vào ô ghim). "
-                "Ô không tô thì game rải mìn ngẫu nhiên (cố định theo ID màn).",
-    },
-    "sum_path": {
-        "kind": "cell_value",
-        "tool": "Điểm ô",
-        "min": 1,
-        "max": 9,
-        "default": 5,
-        "unit": "điểm",
-        "note": "Tô ĐIỂM (1..9) cho từng ô; ô không tô thì game random 1..9. "
-                "S/F KHÔNG tính điểm. Nút \"Sinh giá trị trên đường\" chia điểm theo TỔNG bạn muốn.",
-        "path": {
-            "action": "values",
-            "fill": "sum",
-            "sum_label": "Tổng điểm đường đi",
-            "sum_min": 1,
-            "sum_max": 999,
-            "sum_default": 36,
-        },
-    },
-    "countdown_cost": {
-        "kind": "cell_value",
-        "tool": "Chi phí ô",
-        "min": 1,
-        "max": 4,
-        "default": 2,
-        "unit": "bước",
-        "note": "Tô CHI PHÍ BƯỚC (1..4) cho từng ô; ô không tô thì game random theo độ khó "
-                "(easy 1..2 · medium 1..3 · hard 1..4). Nút \"Sinh giá trị trên đường\" chia chi phí "
-                "theo TỔNG bạn muốn (ngân sách game = đường RẺ NHẤT + dự phòng).",
-        "path": {
-            "action": "values",
-            "fill": "sum",
-            "sum_label": "Tổng chi phí đường đi",
-            "sum_min": 1,
-            "sum_max": 999,
-            "sum_default": 30,
-            "budget_from_sum": True,
-        },
-    },
     "blind_memory": {
         "kind": "none",
         "note": "Tường của màn dùng cho pha GHI NHỚ; game tự ẩn lại khi hết đếm ngược.",
-    },
-    "fog_of_war": {
-        "kind": "none",
-        "note": "Sương mù + lượt thử lại do game lo; màn chỉ quyết định tường/hình board.",
-    },
-    "fading_ink": {
-        "kind": "cell_value",
-        "tool": "Mực ô",
-        "min": 1,
-        "max": 9,
-        "default": 5,
-        "unit": "mực",
-        "note": "Tô MỰC BAN ĐẦU (1..9) cho từng ô: mỗi bước đi làm MỌI ô phai 1 mực, ô hết mực "
-                "không đi vào được. Ô không tô thì game tự cấp (đủ đi hết đường ngắn nhất + dư 2..3). "
-                "Nút \"Sinh giá trị trên đường\" cấp mực TĂNG DẦN theo bước (bước j + Mực dư).",
-        "path": {
-            "action": "values",
-            "fill": "step",
-            "sum_label": "Mực dư mỗi bước",
-            "sum_min": 0,
-            "sum_max": 4,
-            "sum_default": 3,
-        },
-    },
-    "one_stroke": {
-        "kind": "none",
-        "note": "Game tự dò đường PHỦ KÍN của bàn; màn vô nghiệm sẽ được thay bằng bàn tự sinh "
-                "(validator chỉ nhắc, không chặn). Nhớ để tường HIỆN.",
     },
     "wall_builder": {
         "kind": "none",

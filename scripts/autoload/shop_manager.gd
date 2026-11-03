@@ -6,7 +6,7 @@ extends Node
 ## 4 nhóm hàng (tab):
 ##   pen   · BÚT & MỰC  — skin ngòi bút (ĐỔI ĐƯỢC, xem ThemeManager.apply_pen)
 ##   theme · GIẤY VỞ    — chủ đề giấy/bàn cờ (ĐỔI ĐƯỢC, xem ThemeManager.apply_theme)
-##   tool  · DỤNG CỤ    — vật phẩm tiêu hao mua bằng Xu (undo · gợi ý · ...)
+##   tool  · DỤNG CỤ    — vật phẩm tiêu hao mua bằng Xu (dịch chuyển · gợi ý · ...)
 ##   coin  · NẠP XU     — gói nạp tiền thật (IAP) + gói xoá quảng cáo
 ##
 ## - Ví Xu dùng CHUNG với Sổ tay thành tựu (AchievementManager.coins) — mua hàng
@@ -96,8 +96,8 @@ const ITEMS: Array[Dictionary] = [
 	{"id": "life_x1", "category": "tool", "price": 300, "amount": 1, "color": "#D84444",
 		"icon": "life", "life": true, "name_key": "STR_SHOP_LIFE_NAME",
 		"desc_key": "STR_SHOP_LIFE_DESC", "badge_key": "STR_SHOP_BADGE_PACK"},
-	{"id": "tool_undo_x10", "category": "tool", "price": 150, "amount": 10, "color": "#3D83AE",
-		"icon": "tool_undo", "name_key": "STR_SHOP_TOOL_UNDO_NAME", "desc_key": "STR_SHOP_TOOL_UNDO_DESC",
+	{"id": "tool_teleport_x10", "category": "tool", "price": 150, "amount": 10, "color": "#3D83AE",
+		"icon": "tool_teleport", "name_key": "STR_SHOP_TOOL_TELEPORT_NAME", "desc_key": "STR_SHOP_TOOL_TELEPORT_DESC",
 		"badge_key": "STR_SHOP_BADGE_PACK"},
 	{"id": "tool_hint_x5", "category": "tool", "price": 200, "amount": 5, "color": "#F59E0B",
 		"icon": "tool_hint", "name_key": "STR_SHOP_TOOL_HINT_NAME", "desc_key": "STR_SHOP_TOOL_HINT_DESC",

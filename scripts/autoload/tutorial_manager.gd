@@ -10,7 +10,7 @@ extends Node
 ##   Vị trí bước lưu trong GameManager (`tutorial_flow_step` · `tutorial_flow_done`)
 ##   nên thoát giữa chừng vẫn chạy tiếp đúng chỗ ở lần mở sau.
 ##
-## TUTORIAL THEO CHẾ ĐỘ: chế độ Special (minesweeper · blind_memory · …) tự mở bài
+## TUTORIAL THEO CHẾ ĐỘ: chế độ Special (blind_memory · wall_builder) tự mở bài
 ## học của nó LẦN ĐẦU người chơi vào chế độ — dù vào từ Daily hay từ màn có `mode_id`
 ## (xem `GameManager.start_level` / `start_daily`).
 ## ============================================================================
@@ -38,13 +38,7 @@ const PRACTICE_TUTORIALS: Dictionary = {
 
 ## Chế độ Special → bài học mở LẦN ĐẦU khi người chơi vào chế độ đó
 const MODE_TUTORIALS: Dictionary = {
-	"minesweeper": "how_to_play_minesweeper",
-	"one_stroke": "how_to_play_one_stroke",
-	"sum_path": "how_to_play_sum_path",
-	"countdown_cost": "how_to_play_countdown_cost",
 	"blind_memory": "how_to_play_blind_memory",
-	"fog_of_war": "how_to_play_fog_of_war",
-	"fading_ink": "how_to_play_fading_ink",
 	"wall_builder": "how_to_play_wall_builder",
 }
 

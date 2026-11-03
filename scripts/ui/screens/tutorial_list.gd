@@ -71,13 +71,7 @@ func _list_buttons() -> Dictionary:
 		"first_time": layout.btn_first_time,
 		"how_to_play_move": layout.btn_move,
 		"how_to_play_checking_wall": layout.btn_checking_wall,
-		"how_to_play_minesweeper": layout.btn_minesweeper,
-		"how_to_play_one_stroke": layout.btn_one_stroke,
-		"how_to_play_sum_path": layout.btn_sum_path,
 		"how_to_play_wall_builder": layout.btn_wall_builder,
-		"how_to_play_countdown_cost": layout.btn_countdown_cost,
-		"how_to_play_fading_ink": layout.btn_fading_ink,
-		"how_to_play_fog_of_war": layout.btn_fog_of_war,
 		"how_to_play_blind_memory": layout.btn_blind_memory,
 		"how_to_use_tool": layout.btn_use_tool,
 	}

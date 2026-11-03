@@ -77,7 +77,7 @@ var runs_total := 0             # tổng số ván đã ghi
 var moves_total := 0            # tổng số bước
 var time_total := 0.0           # tổng thời gian (giây, mọi ván)
 var level_time_total := 0.0     # tổng thời gian các ván MÀN (giây)
-var undos_total := 0            # tổng lượt Hoàn tác
+var teleports_total := 0       # tổng lượt Dịch chuyển
 var wall_draws_total := 0       # tổng lượt VẼ tường nghi ngờ
 var wall_erases_total := 0      # tổng lượt GỠ tường đã vẽ (Revert)
 var skips_total := 0            # tổng lượt SKIP màn
@@ -350,7 +350,7 @@ func deep_stats() -> Dictionary:
 		"moves_total": moves_total,
 		"wall_draws": wall_draws_total,
 		"wall_erases": wall_erases_total,
-		"undos_total": undos_total,
+		"teleports_total": teleports_total,
 		"skips_total": skips_total,
 	}
 
@@ -381,7 +381,7 @@ func record_run(info: Dictionary) -> void:
 		mode_plays[mode_id] = int(mode_plays.get(mode_id, 0)) + 1
 	if bool(info.get("endless", false)):
 		dungeon_wall_hits += maxi(int(info.get("wall_hits", 0)), 0)
-	undos_total += maxi(int(info.get("undos", 0)), 0)
+	teleports_total += maxi(int(info.get("teleports", 0)), 0)
 	wall_draws_total += maxi(int(info.get("wall_draws", 0)), 0)
 	wall_erases_total += maxi(int(info.get("wall_erases", 0)), 0)
 	skips_total += maxi(int(info.get("skips", 0)), 0)
@@ -453,7 +453,7 @@ func export_progress() -> Dictionary:
 		"moves_total": moves_total,
 		"time_total": time_total,
 		"level_time_total": level_time_total,
-		"undos_total": undos_total,
+		"teleports_total": teleports_total,
 		"wall_draws_total": wall_draws_total,
 		"wall_erases_total": wall_erases_total,
 		"skips_total": skips_total,
@@ -482,7 +482,7 @@ func import_progress(data: Dictionary) -> void:
 	moves_total = int(data.get("moves_total", 0))
 	time_total = float(data.get("time_total", 0.0))
 	level_time_total = float(data.get("level_time_total", 0.0))
-	undos_total = int(data.get("undos_total", 0))
+	teleports_total = int(data.get("teleports_total", data.get("undos_total", 0)))
 	wall_draws_total = int(data.get("wall_draws_total", 0))
 	wall_erases_total = int(data.get("wall_erases_total", 0))
 	skips_total = int(data.get("skips_total", 0))
@@ -514,7 +514,7 @@ func reset_progress() -> void:
 	moves_total = 0
 	time_total = 0.0
 	level_time_total = 0.0
-	undos_total = 0
+	teleports_total = 0
 	wall_draws_total = 0
 	wall_erases_total = 0
 	skips_total = 0

@@ -157,7 +157,11 @@ func evaluate_move(from_pos: Vector2i, to_pos: Vector2i, maze: MazeData) -> Dict
 	var d := (from_pos - to_pos).abs()
 	if d.x + d.y != 1:
 		return { "allowed": false, "is_hazard": false, "hazard_type": "none" }
-	
+
+	# Ô KHOÁ chưa mở chìa: không đi vào được (không phải đâm tường — không trừ lượt/không thua)
+	if maze.is_locked(to_pos):
+		return { "allowed": false, "is_hazard": false, "hazard_type": "none", "reason": "locked", "to": to_pos }
+
 	return { "allowed": true, "is_hazard": false, "hazard_type": "none" }
 
 
@@ -178,7 +182,7 @@ func on_player_moved(_grid_view: Control, _new_pos: Vector2i, _maze: MazeData) -
 	pass
 
 
-## Người chơi vừa LÙI 1 bước (Undo). Mode nào có trạng thái riêng thì lùi theo
+## Người chơi vừa LÙI 1 bước (hồi sinh). Mode nào có trạng thái riêng thì lùi theo
 ## (VD Fading Ink hồi lại mực đã phai). `from_pos` = ô vừa rời, `to_pos` = ô quay về.
 func on_move_undone(_grid_view: Control, _from_pos: Vector2i, _to_pos: Vector2i, _maze: MazeData) -> void:
 	pass
@@ -246,11 +250,6 @@ func on_wall_toggled(_is_h: bool, _lattice: Vector2i, _active: bool) -> void:
 	pass
 
 
-## Lùi 1 đoạn tường đã nối (Undo riêng của Wall Builder). `true` = đã xoá 1 đoạn.
-func undo_drawn_wall(_anchor_controller: AnchorController) -> bool:
-	return false
-
-
 ## Gợi ý kiểu "mở 1 đoạn tường" (Wall Builder). `true` = đã mở/khoá 1 đoạn.
 func hint_wall(_anchor_controller: AnchorController, _maze: MazeData) -> bool:
 	return false
@@ -258,6 +257,19 @@ func hint_wall(_anchor_controller: AnchorController, _maze: MazeData) -> bool:
 
 ## Bàn chơi có hiện nhân vật không (Wall Builder: KHÔNG có nhân vật, không di chuyển)
 func shows_player() -> bool:
+	return true
+
+
+# ---------------------------------------------------------------------------
+# DỊCH CHUYỂN (công cụ Teleport)
+# ---------------------------------------------------------------------------
+## Chế độ có cho dùng công cụ Dịch chuyển không (mặc định: có nhân vật thì có — Wall Builder không)
+func allows_teleport() -> bool:
+	return shows_player()
+
+
+## Ô `pos` có được chọn làm điểm đến dịch chuyển không (luật riêng của chế độ; ô khoá do GridController loại)
+func can_teleport_to(_pos: Vector2i, _maze: MazeData) -> bool:
 	return true
 
 

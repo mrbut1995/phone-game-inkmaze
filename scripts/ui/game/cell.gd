@@ -21,8 +21,6 @@ extends Control
 
 ## Texture nền ô theo NỘI DUNG: thường / xuất phát S / đích F (gán trong `cell.tscn`)
 @export var texture_normal: Texture2D = null
-## Ô xen kẽ (ca-rô): ô có (x + y) lẻ dùng art này — để trống thì mọi ô dùng texture_normal
-@export var texture_alt: Texture2D = null
 @export var texture_start: Texture2D = null
 @export var texture_finish: Texture2D = null
 
@@ -44,6 +42,12 @@ extends Control
 @export var visited: TextureRect = null
 @export var visited_label: Label = null
 @export var satisfied: TextureRect = null
+## Ô KHOÁ: biểu tượng ổ khoá phủ giữa ô (cần nhặt chìa khoá ở ô khác trên mê cung để mở)
+@export var lock: TextureRect = null
+## Ô CHỨA CHÌA KHOÁ: biểu tượng chìa nhỏ ở góc ô
+@export var key_icon: TextureRect = null
+## Ô đang là ĐÍCH DỊCH CHUYỂN hợp lệ (Teleport): viền/nền tím nhấp nháy
+@export var teleport_glow: TextureRect = null
 ## AnimationPlayer của chính `cell.tscn` — mọi hiệu ứng nảy/rung/nháy (entrance · pulse · step ·
 ## win · shudder · fail · pop_text) khai trong scene; code chỉ set pose ban đầu + gọi play.
 @export var anim: AnimationPlayer = null
@@ -60,7 +64,17 @@ func _play_anim(anim_name: StringName) -> bool:
 	return true
 
 
+var _locked := false
+
+
 func set_text(text: String) -> void:
+	_set_text_raw(text)
+	# Ô khoá luôn ẩn số (nhãn chỉ hiện lại khi mở khoá)
+	if _locked and label != null:
+		label.visible = false
+
+
+func _set_text_raw(text: String) -> void:
 	if text == "S":
 		if button != null:
 			button.texture_normal = texture_start
@@ -75,8 +89,7 @@ func set_text(text: String) -> void:
 			label.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 	else:
 		if button != null:
-			var odd := (grid_pos.x + grid_pos.y) % 2 == 1
-			button.texture_normal = texture_alt if (odd and texture_alt != null) else texture_normal
+			button.texture_normal = texture_normal
 		if label != null:
 			label.text = text
 			label.visible = not text.is_empty()
@@ -219,6 +232,52 @@ func set_focused(active: bool) -> void:
 
 
 ## Hiện/ẩn biểu tượng Bomb đã nổ (Minesweeper) — icon to giữa ô, số trên ô vẽ ĐÈ LÊN icon.
+## Bật/tắt trạng thái KHOÁ: hiện ổ khoá, ẩn số, làm tối nền ô.
+func set_locked(on: bool) -> void:
+	_locked = on
+	if lock != null:
+		lock.visible = on
+	if label != null:
+		label.visible = (not on) and not label.text.is_empty()
+	if button != null:
+		button.self_modulate = Color(0.62, 0.64, 0.72, 1.0) if on else Color.WHITE
+
+
+func is_locked_visual() -> bool:
+	return _locked
+
+
+## Hiện/ẩn biểu tượng CHÌA KHOÁ trên ô.
+func set_key(on: bool) -> void:
+	if key_icon != null:
+		key_icon.visible = on
+
+
+func has_key_icon() -> bool:
+	return key_icon != null and key_icon.visible
+
+
+## Tô sáng ô như một ĐÍCH DỊCH CHUYỂN (nhấp nháy tím) — tắt khi huỷ/đã chọn xong.
+func set_teleport_target(on: bool) -> void:
+	if teleport_glow == null:
+		return
+	teleport_glow.visible = on
+	if anim != null and anim.has_animation(&"teleport_glow"):
+		if on:
+			anim.play(&"teleport_glow")
+		elif anim.current_animation == &"teleport_glow":
+			anim.play(&"RESET")
+	else:
+		teleport_glow.modulate = Color.WHITE
+
+
+## Ô KHOÁ vừa bị mở: ổ khoá bung ra + nảy số.
+func play_unlock() -> void:
+	set_locked(false)
+	pulse()
+	play_pop_text()
+
+
 func set_bomb(active: bool) -> void:
 	if bomb != null:
 		bomb.visible = active

@@ -137,7 +137,7 @@ func _build_tool_balances() -> void:
 		return
 	for tool_data in [
 		[GameManagerClass.TOOL_SKIP, "Skip"],
-		[GameManagerClass.TOOL_UNDO, "Eraser / Undo"],
+		[GameManagerClass.TOOL_TELEPORT, "Teleport"],
 		[GameManagerClass.TOOL_HINT, "Hint"],
 	]:
 		var tool_id := str(tool_data[0])
@@ -369,11 +369,11 @@ func _events_reset() -> void:
 	_build()
 
 # ---------------------------------------------------------------------------
-# SPECIAL MODES: vào thẳng 7 chế độ chỉ chơi được qua Daily để test
+# SPECIAL MODES: vào thẳng các chế độ Special còn lại (Blind Memory · Wall Builder) để test
 # ---------------------------------------------------------------------------
 func _build_special_modes() -> void:
 	_add_section("SPECIAL MODES (TEST)")
-	_add_label("7 luật chỉ mở qua Daily — ở đây vào thẳng để thử, kèm chọn độ khó / tầng bắt đầu:",
+	_add_label("Các chế độ Special còn lại — ở đây vào thẳng để thử, kèm chọn độ khó / tầng bắt đầu:",
 		&"PopupSubtitle")
 
 	_add_toggle("Test mode (không ghi tiến trình)",
@@ -385,7 +385,7 @@ func _build_special_modes() -> void:
 		_add_action(_choice_text("Độ khó", str(diff).to_upper(), diff == _difficulty),
 			"Cho các mode có tham số độ khó", _set_difficulty.bind(diff))
 
-	_add_label("Tầng bắt đầu (tầng càng cao bàn càng to ở minesweeper / fading ink...):", &"PopupSubtitle")
+	_add_label("Tầng bắt đầu:", &"PopupSubtitle")
 	for floor_number in TEST_FLOORS:
 		_add_action(_choice_text("Tầng", str(floor_number), floor_number == _floor),
 			"Bắt đầu ván ở tầng %d" % floor_number, _set_test_floor.bind(floor_number))
@@ -404,8 +404,8 @@ func _build_special_modes() -> void:
 		_add_action(title, mode.mode_description, _start_special_mode.bind(mode_id))
 	controller.free()
 
-	_add_action("Chế độ kế tiếp", "Xoay vòng qua 7 chế độ Special", _start_next_special_mode)
-	_add_action("Chế độ ngẫu nhiên", "Random 1 trong 7 chế độ Special", _start_random_special_mode)
+	_add_action("Chế độ kế tiếp", "Xoay vòng qua các chế độ Special", _start_next_special_mode)
+	_add_action("Chế độ ngẫu nhiên", "Random 1 trong các chế độ Special", _start_random_special_mode)
 
 # ---------------------------------------------------------------------------
 # TUTORIAL: vào thẳng từng bài + chạy lại chuỗi onboarding (không cần qua menu)
@@ -415,9 +415,6 @@ const TUTORIAL_LABELS := {
 	"first_time": "Chào mừng + hoạt cảnh 3 ô S · ? · F",
 	"how_to_play_move": "Bàn 1×3 — giữ & kéo đường S → F",
 	"how_to_play_checking_wall": "Bàn 2×2 — đoán tường vô hình từ con số",
-	"how_to_play_minesweeper": "Bàn 3×3 — né mìn theo số quanh ô",
-	"how_to_play_one_stroke": "Bàn 3×3 — đi hết mọi ô đúng 1 lần",
-	"how_to_play_sum_path": "Bàn 3×3 — tổng điểm khớp mục tiêu",
 	"how_to_play_wall_builder": "Bàn 2×2 — tự vẽ tường rồi GỬI BÀI",
 	"congrats_first_time": "Chúc mừng xong chuỗi mở đầu (về Main hoặc bàn kế)",
 }
@@ -670,10 +667,6 @@ func _special_mode_ids() -> Array[String]:
 	var ids: Array[String] = []
 	if gm != null and gm.has_method("special_mode_ids"):
 		ids.assign(gm.call("special_mode_ids"))
-	# One Stroke MỚI (2026-09-19): chưa gắn vào vòng xoay DAILY_MODES (chờ quyết định §6) nhưng
-	# vẫn cho vào thẳng từ Debug Console để chơi thử / kiểm thử trên máy thật.
-	if not ids.has("one_stroke"):
-		ids.append("one_stroke")
 	if not ids.has("wall_builder"):
 		ids.append("wall_builder")
 	return ids

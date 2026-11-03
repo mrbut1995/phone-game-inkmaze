@@ -4,29 +4,32 @@ Chạy:
     cd tools/level_designer
     python make_samples.py            # ghi các màn mẫu vào resources/levels/
     python make_samples.py --dry-run  # chỉ in kết quả kiểm tra, không ghi file
-    python make_samples.py --only 21  # chỉ ghi 1 (hoặc vài) màn mẫu: --only 21,22
+    python make_samples.py --only 13  # chỉ ghi 1 (hoặc vài) màn mẫu: --only 13,14
 
-Màn mẫu nằm ở chương 2 (level_10..level_21) nên không đụng 9 màn gốc của chương 1.
+Màn mẫu nằm ở chương 2 (level_10..level_17) nên không đụng 9 màn gốc của chương 1.
 Mỗi màn đều được kiểm tra bằng validator: PHẢI có đường đi từ S tới F.
 
 Khóa `"mode"` trong `SAMPLES` = CHẾ ĐỘ CHƠI của màn (mặc định "play"):
     · "play"          — mê cung thường.
     · id Special khác — game chạy chế độ đó TRÊN ĐÚNG BÀN NÀY (xem app/config.py + README).
-      Màn 13 = minesweeper, màn 14 = sum_path là 2 màn mẫu cho tính năng này.
+      Màn 15 = blind_memory, màn 16 = wall_builder là 2 màn mẫu cho tính năng này.
 
 Khóa `"challenge"` = LUẬT THỬ THÁCH (chỉ dùng khi "mode": "challenge"): (id_luật, tham_số).
     · id: countdown · move_limit · step_timer · no_tool · no_move_overlapped ·
-          walk_number_only · walk_empty_only · backtrack_limit (xem app/models/challenge_rules.py)
+          walk_number_only · walk_empty_only · backtrack_limit · fog_of_war
+          (xem app/models/challenge_rules.py)
     · tham số 0 = game tự tính theo luật/bàn cờ/độ khó.
-    Màn 21 = challenge "chỉ đi trên ô có số" — validator kiểm tra màn CÓ đường hợp lệ.
+    Màn 13 = challenge "chỉ đi trên ô có số" · màn 14 = challenge "fog_of_war" — validator kiểm tra
+    màn CÓ đường hợp lệ.
 
-Khóa `"custom_values"` = KIỂU EDIT RIÊNG của chế độ: {(x, y): giá trị} — vd minesweeper ghim mìn,
-sum_path/countdown_cost tô điểm ô/chi phí (ô không tô thì game tự sinh).
+Khóa `"custom_values"` = KIỂU EDIT RIÊNG của chế độ: {(x, y): giá trị} (hiện không chế độ nào dùng).
+
+Khóa `"lock_cells"` / `"key_cells"` = Ô KHOÁ + CHÌA: danh sách bộ ba (x, y, id) — xem README mục 5.
+Mỗi id khoá phải có ít nhất 1 chìa; khoá/chìa không đặt trên S/F; validator kiểm có đường S→F.
 
 Khóa `"path_values"` = TÔ GIÁ TRỊ THEO ĐƯỜNG ĐI (giống nút Ctrl+Enter của công cụ 8 trong tool):
     {"fill": "sum",  "value": N} — chia giá trị trên đường NGẮN NHẤT sao cho TỔNG = N
-                                     (Countdown Cost = tổng chi phí · Sum Path = tổng điểm)
-    {"fill": "step", "value": N} — MỰC tăng dần theo bước: ô ở bước j nhận j + N (Fading Ink)
+    {"fill": "step", "value": N} — giá trị tăng dần theo bước: ô ở bước j nhận j + N
 Ô S/F không tô (game cũng không tính 2 ô này).
 """
 
@@ -131,90 +134,58 @@ SAMPLES: dict[int, dict] = {
         ],
     },
     13: {
-        "title": "Level 2-4 · Chữ U 2 ô dày",
+        # M?N M?U CHALLENGE MODE: 1 lu?t th? th?ch ? vi ph?m l? thua ngay.
+        # Lu?t "ch? ?i tr?n ? C? s?": c?c ? tr?n ???ng S?F ??u c? ?1 t??ng quanh n?
+        # (? hi?n s?), c?n l?i ???ng n?o qua ? KH?NG s? c?ng kh?ng b? ch?n k?n.
+        "title": "Level 2-4 ? Challenge ? ch? ?i tr?n ? c? s?",
         "difficulty": "medium",
         "chapter": 2,
-        # MÀN MẪU chạy CHẾ ĐỘ SPECIAL: game dùng đúng bàn này rồi tự rải mìn lên
-        "mode": "minesweeper",
-        "shape": [
-            "######",
-            "##..##",
-            "##..##",
-            "######",
-        ],
-        "start": (0, 0),
-        "end": (5, 3),
-        "walls": [
-            ("v", 1, 0, True),     # tường hiện: chặn (0,0) - (1,0)
-            ("v", 1, 2, False),    # tường ẩn: chặn (0,2) - (1,2)
-            ("v", 4, 3, True),     # tường hiện: chặn (3,3) - (4,3)
-        ],
-        # KIỂU EDIT của chế độ minesweeper: tô ô = GHIM MÌN ở đó (game giữ đúng, không đè mìn random)
-        "custom_values": {
-            (0, 2): 1,
-            (2, 3): 1,
-        },
-        "missions": [
-            (chal.NO_WALL, 0),
-            (chal.LEN_MIN_PERCENT, 60),
-            (chal.NO_UNDO, 0),
-        ],
-    },
-    14: {
-        "title": "Level 2-5 · Bàn cờ lớn 11×11",
-        "difficulty": "hard",
-        "chapter": 2,
-        # MÀN MẪU chạy CHẾ ĐỘ SPECIAL: Sum Path — tới F với tổng điểm theo điều kiện
-        "mode": "sum_path",
-        # Lưới chữ nhật đầy đủ 11x11: để thử board nhiều ô (ô tự co cho vừa khung giấy)
-        "shape": ["###########"] * 11,
-        "start": (0, 10),
-        "end": (10, 0),
-        "walls": [
-            ("v", 2, 9, True),
-            ("h", 3, 6, True),
-            ("v", 6, 3, False),
-            ("h", 7, 7, True),
-            ("v", 4, 4, False),
-            ("h", 5, 2, True),
-            ("v", 8, 5, True),
-            ("h", 1, 8, False),
-        ],
-        # KIỂU EDIT của chế độ sum_path: tô ĐIỂM Ô (1..9) — chia theo TỔNG của đường ngắn nhất
-        "path_values": {"fill": "sum", "value": 60},
-        "missions": [
-            (chal.NO_WALL, 0),
-            (chal.STEPS_MAX, 0),
-            (chal.LEN_MAX_PERCENT, 45),
-        ],
-    },
-    # ------------------------------------------------------------------
-    # 15..20: MỖI CHẾ ĐỘ SPECIAL 1 MÀN — để test nhanh toàn bộ chế độ trên màn tự vẽ.
-    # Để trống "missions" ⇒ game dùng BỘ NHIỆM VỤ MẶC ĐỊNH RIÊNG của chế độ đó.
-    # ------------------------------------------------------------------
-    15: {
-        "title": "Level 2-6 · Countdown Cost — chi phí từng ô",
-        "difficulty": "hard",
-        "chapter": 2,
-        "mode": "countdown_cost",
+        "mode": "challenge",
+        # id lu?t + tham s? (0 = game t? t?nh; lu?t n?y kh?ng c?n tham s?)
+        "challenge": ("walk_number_only", 0),
         "shape": ["######"] * 5,
         "start": (0, 4),
         "end": (5, 0),
         "walls": [
-            ("v", 2, 4, True),
-            ("v", 2, 3, True),
-            ("h", 3, 3, True),
+            # Cho c?c ? h?ng d??i (1,4)..(3,4) m?i ? 1 t??ng ph?a tr?n ? c? s?
+            ("h", 1, 4, True),
+            ("h", 2, 4, True),
+            ("h", 3, 4, True),
+            # Ch?n l?i r? ph?i ? (4,4) + cho (4,4) c? s?
+            ("v", 5, 4, True),
+            # C?t x=4 ?i l?n: m?i ? 1 t??ng b?n tr?i ? c? s?; (4,0) r? ph?i t?i F
+            ("v", 4, 3, True),
             ("v", 4, 2, True),
-            ("h", 4, 4, True),
-            ("h", 1, 2, True),
-            ("v", 3, 1, True),
+            ("v", 4, 1, True),
+            ("v", 4, 0, True),
         ],
-        # KIỂU EDIT của chế độ countdown_cost: tô CHI PHÍ Ô (1..4) — chia theo TỔNG chi phí đường đi
-        "path_values": {"fill": "sum", "value": 30},
     },
-    16: {
-        "title": "Level 2-7 · Blind Memory — nhớ màn rồi đi",
+    14: {
+        # CHALLENGE "fog_of_war": tr??c ??y l? ch? ?? ri?ng, nay ch? l? LU?T th? th?ch
+        # (ch? th?y ? quanh nh?n v?t) ? b?n ch?i y nh? Play Mode.
+        "title": "Level 2-5 ? Challenge ? s??ng m? quanh nh?n v?t",
         "difficulty": "medium",
+        "chapter": 2,
+        "mode": "challenge",
+        "challenge": ("fog_of_war", 0),
+        "shape": ["######"] * 6,
+        "start": (0, 5),
+        "end": (5, 0),
+        "walls": [
+            ("v", 2, 5, True),
+            ("v", 2, 4, True),
+            ("h", 3, 4, True),
+            ("h", 1, 3, True),
+            ("v", 4, 3, True),
+            ("h", 4, 2, True),
+            ("v", 3, 1, True),
+            ("h", 2, 1, True),
+            ("h", 5, 5, True),
+        ],
+    },
+    15: {
+        "title": "Level 2-6 ? Blind Memory ? nh? m?n r?i ?i",
+        "difficulty": "hard",
         "chapter": 2,
         "mode": "blind_memory",
         "shape": ["######"] * 6,
@@ -231,67 +202,13 @@ SAMPLES: dict[int, dict] = {
             ("h", 2, 1, True),
             ("h", 5, 5, True),
         ],
-    },
-    17: {
-        "title": "Level 2-8 · Fog of War — sương mù quanh nhân vật",
-        "difficulty": "medium",
-        "chapter": 2,
-        "mode": "fog_of_war",
-        "shape": ["#######"] * 5,
-        "start": (0, 4),
-        "end": (6, 0),
-        "walls": [
-            ("v", 1, 4, True),
-            ("v", 3, 4, True),
-            ("v", 5, 4, True),
-            ("h", 2, 3, True),
-            ("h", 5, 3, True),
-            ("v", 2, 2, True),
-            ("v", 4, 2, True),
-            ("h", 1, 2, True),
-            ("h", 4, 2, True),
-            ("h", 6, 2, True),
-            ("v", 3, 1, True),
-            ("h", 2, 1, True),
+        "missions": [
+            (chal.NO_WALL, 0),
+            (chal.NO_HINT, 0),
         ],
     },
-    18: {
-        "title": "Level 2-9 · Fading Ink — mực phai theo bước đi",
-        "difficulty": "medium",
-        "chapter": 2,
-        "mode": "fading_ink",
-        "shape": ["######"] * 6,
-        "start": (0, 0),
-        "end": (5, 5),
-        "walls": [
-            ("v", 1, 5, True),
-            ("h", 1, 4, True),
-            ("v", 3, 4, True),
-            ("h", 4, 4, True),
-            ("v", 2, 3, True),
-            ("h", 3, 3, True),
-            ("v", 4, 2, True),
-            ("h", 4, 2, True),
-            ("v", 1, 1, True),
-            ("h", 2, 1, True),
-        ],
-        # KIỂU EDIT của chế độ fading_ink: MỰC Ô (1..9) — cấp mực theo bước đi + dư 3
-        "path_values": {"fill": "step", "value": 3},
-    },
-    19: {
-        # Bàn CHỮ NHẬT TRỐNG 6×4: luôn có đường "con rắn" phủ kín mọi ô và kết thúc ở F
-        # (S=(0,0) và F=(0,3) khác màu bàn cờ ⇒ thoả điều kiện của đường phủ kín).
-        "title": "Level 2-10 · One Stroke — một nét phủ kín",
-        "difficulty": "easy",
-        "chapter": 2,
-        "mode": "one_stroke",
-        "shape": ["######"] * 4,
-        "start": (0, 0),
-        "end": (0, 3),
-        "walls": [],
-    },
-    20: {
-        "title": "Level 2-11 · Wall Builder — suy luận lại tường",
+    16: {
+        "title": "Level 2-7 ? Wall Builder ? suy lu?n l?i t??ng",
         "difficulty": "hard",
         "chapter": 2,
         "mode": "wall_builder",
@@ -313,31 +230,30 @@ SAMPLES: dict[int, dict] = {
             ("h", 2, 1, False),
         ],
     },
-    21: {
-        # MÀN MẪU CHALLENGE MODE: 1 luật thử thách — vi phạm là thua ngay.
-        # Luật "chỉ đi trên ô CÓ số": các ô trên đường S→F đều có ≥1 tường quanh nó
-        # (→ hiện số), còn lại đường nào qua ô KHÔNG số cũng không bị chặn kín.
-        "title": "Level 2-12 · Challenge — chỉ đi trên ô có số",
+    17: {
+        # Ô KHOÁ + CHÌA: tường dọc chia bàn làm 2 nửa, chỉ chừa 1 cửa ở hàng y=2 và
+        # đặt Ô KHOÁ id 1 ngay cửa đó → buộc phải vòng về (0,0) nhặt chÌa rồi mới qua được.
+        "title": "Level 2-8 · Ô khoá & chìa khoá",
         "difficulty": "medium",
         "chapter": 2,
-        "mode": "challenge",
-        # id luật + tham số (0 = game tự tính; luật này không cần tham số)
-        "challenge": ("walk_number_only", 0),
-        "shape": ["######"] * 5,
-        "start": (0, 4),
-        "end": (5, 0),
+        "mode": "play",
+        "shape": ["#####"] * 4,
+        "start": (0, 3),
+        "end": (4, 0),
         "walls": [
-            # Cho các ô hàng dưới (1,4)..(3,4) mỗi ô 1 tường phía trên → có số
-            ("h", 1, 4, True),
-            ("h", 2, 4, True),
-            ("h", 3, 4, True),
-            # Chặn lối rẽ phải ở (4,4) + cho (4,4) có số
-            ("v", 5, 4, True),
-            # Cột x=4 đi lên: mỗi ô 1 tường bên trái → có số; (4,0) rẽ phải tới F
-            ("v", 4, 3, True),
-            ("v", 4, 2, True),
-            ("v", 4, 1, True),
-            ("v", 4, 0, True),
+            ("v", 2, 0, True),
+            ("v", 2, 1, True),
+            ("v", 2, 3, True),
+        ],
+        "lock_cells": [
+            (2, 2, 1),
+        ],
+        "key_cells": [
+            (0, 0, 1),
+        ],
+        "missions": [
+            (chal.NO_WALL, 0),
+            (chal.NO_TELEPORT, 0),
         ],
     },
 }
@@ -371,8 +287,21 @@ def build_sample(sample: dict) -> object:
     for kind, ix, iy, visible in sample["walls"]:
         level.set_wall((kind, int(ix), int(iy)), True, bool(visible))
 
+    # 3b. Ô KHOÁ + CHÌA KHOÁ (bộ ba x,y,id) — khớp LevelData.lock_cells / key_cells
+    for x, y, lock_id in sample.get("lock_cells", []):
+        if not level.add_lock((int(x), int(y)), int(lock_id)):
+            raise ValueError("ô khoá không hợp lệ: %s" % ((x, y, lock_id),))
+    for x, y, key_id in sample.get("key_cells", []):
+        if not level.add_key((int(x), int(y)), int(key_id)):
+            raise ValueError("ô chìa không hợp lệ: %s" % ((x, y, key_id),))
+    level.sort_lock_keys()
+
     # 4. Số bước = đường ngắn nhất + dự phòng, rồi kiểm tra lại toàn bộ
     level.max_steps = solver.auto_max_steps(level, extra=4)
+    # Ô khoá có thể buộc đi vòng ⇒ đường thật dài hơn đường BFS thường: nới ngân sách bước
+    min_with_keys = validator.min_steps_with_keys(level)
+    if min_with_keys:
+        level.max_steps = max(level.max_steps, int(min_with_keys) + 4)
     level.par_time = float(max(20, level.max_steps * 3))
 
     # 5. NHIỆM VỤ (tối đa 3): param 0 -> tự lấy theo max_steps/par_time vừa tính
@@ -397,6 +326,7 @@ def build_sample(sample: dict) -> object:
     # 7. DỮ LIỆU RIÊNG CỦA CHẾ ĐỘ (kiểu edit theo `mode`): {(x, y): giá trị} — xem app/config.py MODE_EDITS
     level.custom_cell_values.update({tuple(cell): int(value)
                                      for cell, value in sample.get("custom_values", {}).items()})
+
     return level
 
 
@@ -446,10 +376,26 @@ def _parse_only() -> set[int]:
     return {int(part) for part in args[index + 1].split(",") if part.strip()}
 
 
+## Thư mục mặc định của màn mẫu — CỐ Ý KHÁC `resources/levels/`: id 10..17 đã là MÀN THẬT của game,
+## ghi màn mẫu vào đó sẽ ĐÈ mất màn thật. Muốn ghi vào chỗ khác: `--dir resources/levels`.
+DEFAULT_SAMPLES_DIR = APP_DIR.parents[1] / "resources" / "levels_samples"
+
+
+def _parse_dir() -> Path:
+    """Đọc cờ `--dir <thư mục>` (mặc định DEFAULT_SAMPLES_DIR)."""
+    args = sys.argv
+    if "--dir" not in args:
+        return DEFAULT_SAMPLES_DIR
+    index = args.index("--dir")
+    if index + 1 >= len(args):
+        return DEFAULT_SAMPLES_DIR
+    return Path(args[index + 1]).resolve()
+
+
 def main() -> int:
     dry_run = "--dry-run" in sys.argv
     only = _parse_only()
-    repo = LevelRepository()
+    repo = LevelRepository(_parse_dir())
     print("Ghi màn mẫu vào: %s" % repo.levels_dir)
     failures = 0
     used_ids: set[int] = set()

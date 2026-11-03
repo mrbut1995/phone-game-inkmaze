@@ -14,6 +14,7 @@ from ..config import (
     MODE_WALL_VISIBILITY_OVERRIDE,
     MODES_NEEDING_VISIBLE_WALLS,
     PLAY_MODE_ID,
+    REMOVED_MODE_IDS,
     RETIRED_MODE_IDS,
     TOOL_VALUE_KEY,
     mode_edit_spec,
@@ -54,7 +55,14 @@ def _validate_mode(level: LevelModel, info: dict) -> list[Issue]:
     mode = str(level.mode_id or PLAY_MODE_ID).strip().lower()
 
     if mode not in MODE_IDS:
-        if mode in RETIRED_MODE_IDS:
+        if mode in REMOVED_MODE_IDS:
+            issues.append(Issue(
+                LEVEL_ERROR,
+                "'%s' là chế độ ĐÃ BỊ XOÁ khỏi game — màn này sẽ chạy như Play. Đổi sang 'play', "
+                "'challenge' (nếu chỉ cần luật sương mù: chọn luật 'fog_of_war'), 'blind_memory' "
+                "hoặc 'wall_builder'." % mode,
+            ))
+        elif mode in RETIRED_MODE_IDS:
             issues.append(Issue(
                 LEVEL_ERROR,
                 "'%s' là chế độ BẤT TẬN — KHÔNG dùng được cho màn (game sẽ chơi như Play). "
@@ -85,22 +93,6 @@ def _validate_mode(level: LevelModel, info: dict) -> list[Issue]:
         if visible == 0:
             issues.append(Issue(LEVEL_WARNING, "Màn chưa có tường nào — chế độ %s sẽ thành đi thẳng tới F" % mode))
 
-    if mode == "one_stroke":
-        issues.append(Issue(
-            LEVEL_INFO,
-            "One Stroke cần đường đi qua HẾT mọi ô rồi kết thúc ở F — hãy chơi thử; "
-            "bàn không có lời giải sẽ được game thay bằng bàn ngẫu nhiên",
-        ))
-    if mode == "wall_builder" and (hidden + visible) < 2:
-        issues.append(Issue(LEVEL_WARNING, "Wall Builder cần nhiều đoạn tường thì các con số mới đủ dữ kiện suy luận"))
-    if mode == "minesweeper" and int(info.get("blocked_cells", 0)) > 0:
-        issues.append(Issue(
-            LEVEL_INFO,
-            "%d ô thuộc board không tới được sẽ KHÔNG có mìn (mìn chỉ rải trên ô đi tới được)"
-            % int(info["blocked_cells"]),
-        ))
-    if mode == "sum_path":
-        issues.append(Issue(LEVEL_INFO, "Sum Path lấy đường NGẮN NHẤT của màn làm mốc tính mục tiêu tổng điểm"))
 
     issues.append(Issue(
         LEVEL_INFO,
@@ -167,44 +159,25 @@ def _validate_custom_values(level: LevelModel, info: dict) -> list[Issue]:
         if painted_on_path:
             total = sum(level.custom_value(cell) for cell in painted_on_path)
             if spec["path_fill"] == "step":
-                # FADING INK: tới ô ở bước thứ j thì mực đã phai j điểm ⇒ mực ban đầu phải > j
+                # Đi theo bước: giá trị ô phải đủ lớn để đi tới được ô đó
                 too_low = [cell for cell in painted_on_path
                            if level.custom_value(cell) < step_index[cell]]
                 if too_low:
                     issues.append(Issue(
                         LEVEL_WARNING,
-                        "%d ô trên đường ngắn nhất có MỰC quá thấp (mực < số bước phải đi để tới ô đó, "
-                        "vd ô %d,%d) — người chơi hết mực trước khi qua được"
-                        % (len(too_low), too_low[0][0], too_low[0][1]),
+                        "%d ô trên đường ngắn nhất có giá trị quá thấp (nhỏ hơn số bước phải đi để tới ô đó, "
+                        "vd ô %d,%d)" % (len(too_low), too_low[0][0], too_low[0][1]),
                     ))
                 issues.append(Issue(
                     LEVEL_INFO,
-                    "Đã tô mực cho %d ô trên đường ngắn nhất — mực mỗi ô tối thiểu BẰNG bước đi tới ô đó "
+                    "Đã tô giá trị cho %d ô trên đường ngắn nhất — giá trị mỗi ô tối thiểu BẰNG bước đi tới ô đó "
                     "(nên cho dư %d)." % (len(painted_on_path), spec["sum_default"]),
                 ))
-            elif spec["mode_id"] == "sum_path":
+            else:
                 issues.append(Issue(
                     LEVEL_INFO,
-                    "Tổng ĐIỂM đường ngắn nhất (chỉ tính %d ô đã tô) = %d — game lấy tổng này làm mốc mục tiêu."
-                    % (len(painted_on_path), total),
+                    "Tổng giá trị đường ngắn nhất (chỉ tính %d ô đã tô) = %d." % (len(painted_on_path), total),
                 ))
-            elif spec["mode_id"] == "countdown_cost":
-                issues.append(Issue(
-                    LEVEL_INFO,
-                    "Tổng CHI PHÍ đường ngắn nhất (chỉ tính %d ô đã tô) = %d bước — ngân sách game tính theo "
-                    "đường RẺ NHẤT + dự phòng; nên để max_steps (hiện %d) ≥ tổng này."
-                    % (len(painted_on_path), total, level.max_steps),
-                ))
-
-    # Minesweeper: mìn ghim nằm trên đường ngắn nhất có thể làm màn hết đường (game sẽ tự bỏ mìn ghim)
-    if spec["mode_id"] == "minesweeper" and path:
-        pinned = [cell for cell in path if level.custom_value(cell) > 0]
-        if pinned:
-            issues.append(Issue(
-                LEVEL_WARNING,
-                "%d mìn GHIM nằm ngay trên đường ngắn nhất (vd ô %d,%d) — nếu bàn không còn đường S→F khác, "
-                "game sẽ bỏ qua mìn ghim để màn vẫn thắng được" % (len(pinned), pinned[0][0], pinned[0][1]),
-            ))
     return issues
 
 
@@ -400,8 +373,109 @@ def validate(level: LevelModel) -> list[Issue]:
         "Đường ngắn nhất %d bước · dư %d bước · %d tường hiện / %d tường ẩn"
         % (path_length, max(0, level.max_steps - path_length), stats["visible_walls"], stats["hidden_walls"]),
     ))
+    issues.extend(_validate_locks(level, info))
     issues.extend(validate_missions(level, path_length=int(path_length), info=info))
     return issues
+
+
+# ---------------------------------------------------------------------------
+# Ô KHOÁ + CHÌA KHOÁ — xem LevelModel.lock_cells / key_cells
+# Bên game: `MazeData.add_lock` / `add_key` / `get_play_path` (BFS theo cặp ô + tập chìa).
+# ---------------------------------------------------------------------------
+MAX_LOCK_ID = 30   # game mã hoá tập chìa đã nhặt bằng bit (1 << id), id kẹp 0..30
+
+
+def _validate_locks(level: LevelModel, info: dict) -> list[Issue]:
+    """Kiểm tra ô khoá/chìa: mỗi id khoá phải có chìa, không đè S/F, và vẫn có đường S→F."""
+    issues: list[Issue] = []
+    locks, keys = level.lock_cells, level.key_cells
+    if not locks and not keys:
+        return issues
+
+    lock_ids: set[int] = set()
+    for x, y, lock_id in locks:
+        cell = (int(x), int(y))
+        if lock_id not in range(1, MAX_LOCK_ID + 1):
+            issues.append(Issue(LEVEL_ERROR, "Ô khoá %d,%d có id %d — id phải trong 1..%d"
+                                % (x, y, lock_id, MAX_LOCK_ID)))
+        if not level.in_bounds(cell) or not level.is_cell_active(cell):
+            issues.append(Issue(LEVEL_ERROR, "Ô khoá %d,%d không thuộc board — game sẽ bỏ qua ô này" % (x, y)))
+        elif cell == level.start or cell == level.end:
+            issues.append(Issue(LEVEL_ERROR, "Ô khoá không được đặt trên S/F (%d,%d)" % (x, y)))
+        lock_ids.add(int(lock_id))
+
+    key_ids: set[int] = set()
+    for x, y, key_id in keys:
+        cell = (int(x), int(y))
+        if not level.in_bounds(cell) or not level.is_cell_active(cell):
+            issues.append(Issue(LEVEL_ERROR, "Ô chìa %d,%d không thuộc board — game sẽ bỏ qua ô này" % (x, y)))
+        elif cell == level.start:
+            issues.append(Issue(LEVEL_ERROR, "Ô chìa không được đặt trên S (%d,%d)" % (x, y)))
+        elif level.lock_id_at(cell):
+            issues.append(Issue(LEVEL_ERROR, "Ô %d,%d vừa là khoá vừa là chìa — game chỉ nhận ô khoá" % (x, y)))
+        key_ids.add(int(key_id))
+
+    for lock_id in sorted(lock_ids - key_ids):
+        issues.append(Issue(
+            LEVEL_ERROR,
+            "Khoá id %d KHÔNG có chìa nào — màn sẽ không thắng được" % lock_id,
+        ))
+    for key_id in sorted(key_ids - lock_ids):
+        issues.append(Issue(
+            LEVEL_WARNING,
+            "Chìa id %d không mở ô khoá nào — vô dụng (có thể bạn quên đặt ô khoá)" % key_id,
+        ))
+
+    # Đường S→F theo trạng thái (ô, tập chìa) — giống `MazeData.get_play_path`
+    reachable = min_steps_with_keys(level)
+    if not reachable:
+        issues.append(Issue(
+            LEVEL_ERROR,
+            "KHÔNG có đường S→F khi tính ô khoá/chìa — thêm chìa hoặc bỏ bớt ô khoá",
+        ))
+    elif reachable > 0:
+        issues.append(Issue(LEVEL_INFO, "Có đường S→F khi tính ô khoá/chìa (%d bước ít nhất)" % reachable))
+    return issues
+
+
+## BFS theo (ô, tập chìa đã nhặt) — trả về số bước ngắn nhất tới F (0 = không tới được)
+def min_steps_with_keys(level: LevelModel) -> int:
+    start, end = (int(level.start[0]), int(level.start[1])), (int(level.end[0]), int(level.end[1]))
+    locks = {(int(k[0]), int(k[1])): int(k[2]) for k in level.lock_cells}
+    keys = {(int(k[0]), int(k[1])): int(k[2]) for k in level.key_cells}
+    start_state = (start, 0)
+    queue = [start_state]
+    dist = {start_state: 0}
+    while queue:
+        cell, mask = queue.pop(0)
+        if cell == end:
+            return dist[(cell, mask)]
+        for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            nxt = (cell[0] + dx, cell[1] + dy)
+            if not level.in_bounds(nxt) or not level.is_cell_active(nxt):
+                continue
+            if _wall_between(level, cell, nxt):
+                continue
+            lock_id = locks.get(nxt, 0)
+            if lock_id and not (mask & (1 << lock_id)):
+                continue
+            new_mask = mask
+            key_id = keys.get(nxt, 0)
+            if key_id:
+                new_mask |= 1 << key_id
+            state = (nxt, new_mask)
+            if state in dist:
+                continue
+            dist[state] = dist[(cell, mask)] + 1
+            queue.append(state)
+    return 0
+
+
+## Có tường giữa 2 ô cạnh nhau không (dùng đúng quy ước chỉ số của `LevelModel.v_index` / `h_index`)
+def _wall_between(level: LevelModel, a: Cell, b: Cell) -> bool:
+    if a[1] == b[1]:                      # cùng hàng -> tường DỌC
+        return level.has_wall(("v", max(a[0], b[0]), a[1]))
+    return level.has_wall(("h", a[0], max(a[1], b[1])))
 
 
 # ---------------------------------------------------------------------------

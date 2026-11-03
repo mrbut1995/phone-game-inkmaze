@@ -10,7 +10,7 @@ extends Control
 ## vật đi đường · kéo nối 2 Anchor để đánh dấu tường) nên thanh nút chỉ còn thao tác thật:
 ##   · `Restart` — CHƠI LẠI màn/tầng (DỜI từ thanh trạng thái xuống đây — có ở MỌI chế độ)
 ##   · `Submit`  — GỬI BÀI (chỉ Wall Builder; GameScene tự bật/tắt theo chế độ)
-##   · `Skip` / `Undo` / `Hint` — kèm `PanelLimit` hiện SỐ LƯỢT CÒN LẠI
+##   · `Skip` / `Teleport` / `Hint` — kèm `PanelLimit` hiện SỐ LƯỢT CÒN LẠI
 ##   · `Replay` — nút phụ ẩn sẵn, UIController hiện khi ván không còn thắng được (Sum Path)
 ##
 ## HUD bản dọc = `nodes/hud/<mode>.tscn` (kế thừa `portrait/portrait.tscn`)
@@ -47,8 +47,8 @@ func submit_btn() -> BaseButton:
 func skip_btn() -> LimitedButton:
 	return button("Skip") as LimitedButton
 
-func undo_btn() -> LimitedButton:
-	return button("Undo") as LimitedButton
+func teleport_btn() -> LimitedButton:
+	return button("Teleport") as LimitedButton
 
 
 func hint_btn() -> LimitedButton:
@@ -59,13 +59,13 @@ func hint_btn() -> LimitedButton:
 
 
 ## Cập nhật số dư toàn tài khoản + trạng thái khoá của các nút có giới hạn.
-func update_tool_counts(skip_left: int, undo_left: int, hint_left: int) -> void:
+func update_tool_counts(skip_left: int, teleport_left: int, hint_left: int) -> void:
 	var skip := skip_btn()
 	if skip != null:
 		skip.set_remaining(skip_left)
-	var undo := undo_btn()
-	if undo != null:
-		undo.set_remaining(undo_left)
+	var teleport := teleport_btn()
+	if teleport != null:
+		teleport.set_remaining(teleport_left)
 	var hint := hint_btn()
 	if hint != null:
 		hint.set_remaining(hint_left)

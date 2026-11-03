@@ -2,11 +2,11 @@
 
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="1_t30dy"]
 [ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tools/nine_patch/nine_patch_button.gd" id="4_tfbqo"]
-[ext_resource uid="uid://duvuocvoymd43" type="Texture2D" path="res://assets/images-png/game/btn_undo_normal.png" id="10_nytdo"]
-[ext_resource uid="uid://pvdjm7lb1xxc" type="Texture2D" path="res://assets/images-png/game/btn_undo_pressed.png" id="11_t30dy"]
+[ext_resource type="Texture2D" path="res://assets/images-png/game/btn_teleport_normal.png" id="10_nytdo"]
+[ext_resource type="Texture2D" path="res://assets/images-png/game/btn_teleport_pressed.png" id="11_t30dy"]
 [ext_resource uid="uid://dbhwrsi5ewmbg" type="Texture2D" path="res://assets/images-png/game/btn_skip_normal.png" id="11_vyd7l"]
 [ext_resource uid="uid://c1udpquhff0e1" type="Texture2D" path="res://assets/images-png/game/btn_skip_pressed.png" id="12_jbxlu"]
-[ext_resource uid="uid://bm1khrfv3tkx7" type="Texture2D" path="res://assets/images-png/game/btn_undo_disabled.png" id="12_srfk4"]
+[ext_resource type="Texture2D" path="res://assets/images-png/game/btn_teleport_disabled.png" id="12_srfk4"]
 [ext_resource uid="uid://c4louruvu6ijq" type="Texture2D" path="res://assets/images-png/game/btn_hint_normal.png" id="13_iyt1b"]
 [ext_resource uid="uid://cd1lfyfbiymhx" type="Texture2D" path="res://assets/images-png/game/btn_skip_disable.png" id="13_s4ykb"]
 [ext_resource uid="uid://c1rsbeag67ckp" type="Texture2D" path="res://assets/images-png/game/btn_hint_pressed.png" id="14_vyd7l"]
@@ -69,14 +69,14 @@ texture_margin_top = 18.0
 texture_margin_right = 30.0
 texture_margin_bottom = 20.0
 
-[sub_resource type="Animation" id="Animation_undo_pulse_l"]
-resource_name = "pulse_undo"
+[sub_resource type="Animation" id="Animation_teleport_pulse_l"]
+resource_name = "pulse_teleport"
 length = 0.7
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SubRow/Undo:scale")
+tracks/0/path = NodePath("SubRow/Teleport:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -86,9 +86,9 @@ tracks/0/keys = {
 "values": [Vector2(1, 1), Vector2(1.12, 1.12), Vector2(1, 1)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_undo_pulse_l"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_teleport_pulse_l"]
 _data = {
-&"pulse_undo": SubResource("Animation_undo_pulse_l")
+&"pulse_teleport": SubResource("Animation_teleport_pulse_l")
 }
 
 [node name="ActionBar" type="VBoxContainer" unique_id=834062236]
@@ -195,11 +195,11 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Undo" type="TextureButton" parent="SubRow" unique_id=293478108 node_paths=PackedStringArray("panel_limit", "limit_label")]
+[node name="Teleport" type="TextureButton" parent="SubRow" unique_id=293478108 node_paths=PackedStringArray("panel_limit", "limit_label")]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-tooltip_text = "STR_TOOL_UNDO"
+tooltip_text = "STR_TOOL_TELEPORT"
 texture_normal = ExtResource("10_nytdo")
 texture_pressed = ExtResource("11_t30dy")
 texture_hover = ExtResource("10_nytdo")
@@ -210,7 +210,7 @@ script = ExtResource("limit_btn")
 panel_limit = NodePath("PanelLimit")
 limit_label = NodePath("PanelLimit/Label")
 
-[node name="PanelLimit" type="Control" parent="SubRow/Undo" unique_id=1634305007]
+[node name="PanelLimit" type="Control" parent="SubRow/Teleport" unique_id=1634305007]
 layout_mode = 1
 anchor_left = 0.59300005
 anchor_top = -0.279
@@ -232,7 +232,7 @@ texture_pressed = ExtResource("18_7hpxb")
 texture_disabled = ExtResource("19_i0adw")
 metadata/_custom_type_script = "uid://blpdwtvxerh8h"
 
-[node name="Label" type="Label" parent="SubRow/Undo/PanelLimit" unique_id=307457561]
+[node name="Label" type="Label" parent="SubRow/Teleport/PanelLimit" unique_id=307457561]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.1521739
@@ -303,5 +303,5 @@ metadata/_edit_use_anchors_ = true
 
 [node name="PulseAnim" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_undo_pulse_l")
+"": SubResource("AnimationLibrary_teleport_pulse_l")
 }

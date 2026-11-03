@@ -11,15 +11,10 @@ extends RefCounted
 ## `special_mode_ids()` (uỷ thác), `DailyManager`/Debug dùng qua GameManager như cũ.
 ## ============================================================================
 
-## 8 chế độ Special xoay vòng cho Daily (thứ tự cũng là thứ tự xoay theo ngày)
+## Chế độ Special còn lại (xoay vòng cho Daily). Minesweeper · Sum Path · Countdown Cost ·
+## Fading Ink · One Stroke đã XOÁ; Fog of War đã GỘP vào Challenge (id `fog_of_war` của ChallengeGameMode).
 const SPECIAL_MODES: Array[String] = [
-	"minesweeper",
-	"sum_path",
-	"countdown_cost",
 	"blind_memory",
-	"fog_of_war",
-	"fading_ink",
-	"one_stroke",
 	"wall_builder",
 ]
 ## Id chế độ "không phải màn thường" nhưng vẫn hợp lệ
@@ -45,7 +40,7 @@ static func difficulty_of(data: LevelData) -> String:
 	return str(data.difficulty)
 
 
-## id chế độ có tồn tại không (Play · Dungeon · Daily Classic · 8 chế độ Special)
+## id chế độ có tồn tại không (Play · Dungeon · Daily Classic · các chế độ Special)
 static func is_known_mode(mode_id: String) -> bool:
 	if mode_id in BASE_MODES:
 		return true

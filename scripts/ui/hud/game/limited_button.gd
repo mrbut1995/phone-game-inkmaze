@@ -8,7 +8,7 @@ extends TextureButton
 ## khoá của chính mình, bên ngoài KHÔNG phải `find_child("PanelLimit")` rồi sửa node con.
 ## ============================================================================
 
-## Node binding: khai `node_paths` + NodePath cho TỪNG nút (Skip/Undo/Hint) trong
+## Node binding: khai `node_paths` + NodePath cho TỪNG nút (Skip/Teleport/Hint) trong
 ## `nodes/hud/portrait/game/action_bar.tscn` + `nodes/hud/landscape/game/action_bar.tscn`
 @export var panel_limit: Control = null
 @export var limit_label: Label = null

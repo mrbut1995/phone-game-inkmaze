@@ -15,5 +15,3 @@ dest_files=["res://resources/localization/string_extra.en.translation", "res://r
 
 compress=0
 delimiter=0
-unescape_keys=false
-unescape_translations=true
