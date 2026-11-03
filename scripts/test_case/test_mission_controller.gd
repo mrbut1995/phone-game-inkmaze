@@ -3,7 +3,7 @@ extends SceneTree
 ## Test Case: Hệ thống 3 Nhiệm vụ & Sao (MissionController) + popup thua.
 ##   - Mỗi màn có đúng 3 nhiệm vụ; hoàn thành 1 = 1 Sao (không tính theo thời gian còn lại).
 ##   - Hệ HUD tách theo chế độ: scripts/ui/hud/*.gd + nodes/hud/*.tscn
-##     (Play = LevelHUD thẻ Nhiệm vụ, Dungeon = DungeonHUD bước/tầng, Minesweeper/Sum Path riêng).
+##     (Play = LevelHUD thẻ Nhiệm vụ, Dungeon = DungeonHUD bước/tầng, Blind Memory/Wall Builder riêng).
 ##   - Popup thua: Level -> gameover_level.tscn (nhiệm vụ + số Sao), Dungeon -> gameover.tscn (bước).
 ##   - Hồi sinh: Level = quay lại bước trước đó, Endless = GIỮ NGUYÊN mê cung + cộng thêm bước.
 ## ============================================================================
@@ -55,15 +55,6 @@ func _init() -> void:
 	# 4. Logic tính Sao (không phụ thuộc thời gian còn lại)
 	_check_star_math(gc, cc)
 
-	# 5. HUD của 2 chế độ đặc biệt + hành vi mìn (Minesweeper) + Hồi sinh Endless
-	scene.switch_mode("minesweeper")
-	await process_frame
-	_check_minesweep_hud(scene)
-	await _check_minesweeper_hazards(scene, gc)
-
-	scene.switch_mode("sum_path")
-	await process_frame
-	_check_sum_path_hud(scene)
 
 	scene.switch_mode("dungeon")
 	await process_frame
@@ -145,107 +136,6 @@ func _check_dungeon_hud(scene: GameScene, cc: MissionController) -> void:
 		_fail("Dungeon HUD thieu gia tri TANG dang '%02d'")
 	print("[CHECK] Dungeon Mode HUD: SO BUOC (%s) + TANG (%s), khong dong ho" % [
 		step_val.text if step_val != null else "-", floor_val.text if floor_val != null else "-"])
-
-
-## Minesweeper: HUD CHỈ hiện THỜI GIAN (thẻ BOMB đã gỡ 2026-09-27)
-func _check_minesweep_hud(scene: GameScene) -> void:
-	var hud := scene.ui_controller.hud as MinesweepHUD
-	assert(hud != null, "Minesweeper phai dung MinesweepHUD (nodes/hud/minesweep_hud.tscn)")
-	var time_val := hud.time_value_node
-	if time_val == null or time_val.text.is_empty():
-		_fail("HUD Minesweeper thieu gia tri THOI GIAN")
-	if hud.get_node_or_null("Content/ModeInformation/Bomb") != null:
-		_fail("HUD Minesweeper da go the BOMB (chi con THOI GIAN)")
-	if hud.mission_card() != null:
-		_fail("HUD Minesweeper khong duoc co the THU THACH")
-	print("[CHECK] Minesweeper HUD: CHI THOI GIAN (%s)" % (time_val.text if time_val != null else "-"))
-
-
-## Sum Path: HUD CHỈ hiện TỔNG hiện tại · TOÁN TỬ (<, >, =) nằm GIỮA · MỤC TIÊU (con số)
-func _check_sum_path_hud(scene: GameScene) -> void:
-	var hud := scene.ui_controller.hud as SumPathHUD
-	assert(hud != null, "Sum Path phai dung SumPathHUD (nodes/hud/sum_path_hud.tscn)")
-	# Bố cục DỌC bọc 3 khối trong `HBoxContainer`, bản NGANG để trực tiếp trong `Sheet`
-	# ⇒ tra theo TÊN (find_child) để test đúng cho cả 2 hướng.
-	var sum_card := hud.find_child("BlockCurrent", true, false) as Control
-	var op_card := hud.find_child("Emblem", true, false) as Control
-	var target_card := hud.find_child("BlockTarget", true, false) as Control
-	var sum_val := hud.sum_value_node
-	var op_val := hud.operator_value_label
-	var target_val := hud.target_value_node
-	if sum_val == null or sum_val.text.is_empty():
-		_fail("HUD Sum Path thieu gia tri TONG hien tai")
-	if target_val == null or target_val.text.strip_edges().is_empty():
-		_fail("HUD Sum Path thieu gia tri MUC TIEU")
-	if op_card == null or op_val == null:
-		_fail("HUD Sum Path thieu panel TOAN TU (giua TONG va MUC TIEU)")
-	# 2026-09-27: thẻ chỉ còn 3 khối này — dòng tiêu đề + thanh tiến độ đã gỡ khỏi scene
-	if hud.find_child("Bar", true, false) != null:
-		_fail("HUD Sum Path da go thanh tien do (Bar)")
-	if hud.find_child("Title", true, false) != null:
-		_fail("HUD Sum Path da go dong tieu de the (Title)")
-	# Panel TOÁN TỬ phải nằm giữa panel TỔNG và panel MỤC TIÊU
-	if sum_card != null and op_card != null and target_card != null:
-		var sum_cx := sum_card.position.x + sum_card.size.x * 0.5
-		var op_cx := op_card.position.x + op_card.size.x * 0.5
-		var target_cx := target_card.position.x + target_card.size.x * 0.5
-		if not (sum_cx < op_cx and op_cx < target_cx):
-			_fail("Panel TOAN TU phai nam GIUA TONG va MUC TIEU (%.0f / %.0f / %.0f)" % [sum_cx, op_cx, target_cx])
-		if op_card.size.x < 40.0 or op_card.size.x > 200.0:
-			_fail("Panel TOAN TU phai la the nho (dang rong %.0fpx)" % op_card.size.x)
-	var mode := scene.game_mode_controller.game_mode as SumPathGameMode
-	if mode != null:
-		if op_val != null and op_val.text != mode.operator:
-			_fail("Panel TOAN TU phai hien '%s', dang la '%s'" % [mode.operator, op_val.text])
-		if target_val != null and target_val.text != str(mode.target_val):
-			_fail("Gia tri MUC TIEU phai la '%d', dang la '%s'" % [mode.target_val, target_val.text])
-		if target_val != null and target_val.text.contains(mode.operator):
-			_fail("MUC TIEU chi hien con so, toan tu da co panel rieng")
-	print("[CHECK] Sum Path HUD: TONG %s %s MUC TIEU %s (panel toan tu o giua)" % [
-		sum_val.text if sum_val != null else "-",
-		op_val.text if op_val != null else "-",
-		target_val.text if target_val != null else "-"])
-
-
-## Minesweeper: đạp mìn = THUA NGAY — đứng nguyên tại chỗ, không ghi đè số, số Bomb giảm
-func _check_minesweeper_hazards(scene: GameScene, gc: GameController) -> void:
-	var mode := scene.game_mode_controller.game_mode as MinesweeperPathGameMode
-	var grid: GridController = scene.grid_controller
-	if mode == null or grid == null or grid.maze == null:
-		_fail("Khong lay duoc MinesweeperPathGameMode / GridController")
-		return
-	var maze: MazeData = grid.maze
-	var start_pos: Vector2i = grid.current_pos
-	var mine_pos := Vector2i(-1, -1)
-	for dir in DIRS:
-		var t: Vector2i = start_pos + dir
-		if maze.is_in_bounds(t) and maze.is_cell_active(t) and mode.is_mine(t):
-			mine_pos = t
-			break
-	if mine_pos == Vector2i(-1, -1):
-		print("[CHECK] Minesweeper: diem S khong co min canh ben, bo qua kiem tra no min")
-		return
-
-	var mines_before := mode.get_mines_left()
-	grid.try_move_to(mine_pos)
-	await process_frame
-	if grid.current_pos != start_pos:
-		_fail("Minesweeper: dap min KHONG duoc doi vi tri nhan vat (%s -> %s)" % [str(start_pos), str(grid.current_pos)])
-	if mode.get_mines_left() != mines_before - 1:
-		_fail("So min con lai phai giam dung 1 (%d -> %d)" % [mines_before, mode.get_mines_left()])
-	if not mode.has_bomb_marker(mine_pos):
-		_fail("O da no min phai duoc danh dau Bomb")
-	if mode.get_cell_text(mine_pos, maze) == "X":
-		_fail("O da no min KHONG duoc ghi de bang chu X")
-
-	# Đạp mìn phải KẾT THÚC ván chơi (thua ngay) + mở popup thua
-	await process_frame
-	if gc._run_active:
-		_fail("Minesweeper: dap min phai KET THUC van choi (game over ngay)")
-	if not Popups.has_open():
-		_fail("Minesweeper: dap min phai mo popup thua")
-	print("[CHECK] Minesweeper: dap min = THUA NGAY (dung nguyen tai cho, con %d/%d min, popup thua da mo)" % [
-		mode.get_mines_left(), mode.get_total_mines()])
 
 
 ## Endless (Dungeon) hồi sinh: GIỮ NGUYÊN mê cung + vị trí + đường đã đi, chỉ cộng thêm bước

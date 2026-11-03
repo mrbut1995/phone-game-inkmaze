@@ -13,7 +13,7 @@ extends Resource
 
 ## CHALLENGE MODE: màn này gắn THỬ THÁCH nào ("" = không gắn). Id hợp lệ:
 ## scripts/modes/challenge_game_mode.gd — countdown · move_limit · step_timer · no_tool ·
-## no_move_overlapped · walk_number_only · walk_empty_only · backtrack_limit.
+## no_move_overlapped · walk_number_only · walk_empty_only · backtrack_limit · fog_of_war.
 ## `challenge_param` = số giây / số bước / số lượt tuỳ luật (0 = game tự tính mặc định).
 @export var challenge: String = ""
 @export var challenge_param: int = 0
@@ -40,7 +40,15 @@ extends Resource
 ## Để trống = chữ nhật đầy đủ (tương thích với các màn cũ).
 @export var cell_mask: PackedByteArray = PackedByteArray()
 
-## Dữ liệu mở rộng cho các mode khác (Minesweeper, Sum Path, ...)
+## Ô KHOÁ: các BỘ BA (x, y, id) nối tiếp nhau [x0, y0, id0, x1, y1, id1, ...] — id >= 1.
+## Ô khoá hiện hình ổ khoá, KHÔNG đi / dịch chuyển vào được cho tới khi người chơi nhặt CHÌA cùng id.
+## Không đặt khoá lên ô S / F / ô ngoài board (bị bỏ qua).
+@export var lock_cells: PackedInt32Array = PackedInt32Array()
+## CHÌA KHOÁ: các bộ ba (x, y, id) như `lock_cells`. Bước (hoặc dịch chuyển) vào ô chìa = nhặt chìa,
+## mở mọi ô khoá cùng id. Mỗi id khoá nên có ÍT NHẤT 1 chìa tới được mà không cần đi qua chính ô khoá đó.
+@export var key_cells: PackedInt32Array = PackedInt32Array()
+
+## Dữ liệu mở rộng cho các mode khác (hiện chưa chế độ nào dùng)
 @export var custom_cell_values: Dictionary = {}
 
 ## NHIỆM VỤ của màn (TỐI ĐA 3): mission_types[i] + mission_params[i] là 2 mảng song song.
@@ -110,6 +118,12 @@ func to_maze_data() -> MazeData:
 	# Nạp hình dạng board (polyomino) - rỗng = chữ nhật đầy đủ
 	# Hàm này tự ép tường bao quanh các ô ngoài board + tính lại số trên ô
 	maze.set_cell_mask(cell_mask)
+
+	# Ô khoá + chìa khoá (đặt SAU mask để biết ô nào thuộc board; khoá trước, chìa sau)
+	for i in range(0, lock_cells.size() - 2, 3):
+		maze.add_lock(Vector2i(lock_cells[i], lock_cells[i + 1]), lock_cells[i + 2])
+	for i in range(0, key_cells.size() - 2, 3):
+		maze.add_key(Vector2i(key_cells[i], key_cells[i + 1]), key_cells[i + 2])
 	return maze
 
 

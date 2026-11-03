@@ -74,8 +74,8 @@ Các cờ hữu ích khác (không mở cửa sổ):
   17 loại: xem bảng trong `Number_Maze_Game_Design.md` (mục 3.1) hoặc `app/models/missions.py`
   (mới 2026-10: `no_wrong_submit` — riêng Wall Builder, gửi đúng ngay lần đầu).
 - **CHALLENGE MODE — 1 LUẬT THỬ THÁCH / màn**: khối **“Thử thách (Challenge)”** ở bảng phải — chọn
-  `mode_id = "challenge"` rồi chọn **1 luật** (8 luật: countdown · move_limit · step_timer · no_tool ·
-  no_move_overlapped · walk_number_only · walk_empty_only · backtrack_limit) + tham số (0 = game tự tính).
+  `mode_id = "challenge"` rồi chọn **1 luật** (9 luật: countdown · move_limit · step_timer · no_tool ·
+  no_move_overlapped · walk_number_only · walk_empty_only · backtrack_limit · fog_of_war) + tham số (0 = game tự tính).
   Vi phạm luật (hoặc quá hạn) là **THUA NGAY**. Validator kiểm tra màn *có đường thắng được không* —
   vd `move_limit` nhỏ hơn đường ngắn nhất, hay luật “chỉ đi trên ô có số/không số” mà màn KHÔNG có
   đường hợp lệ ⇒ **LỖI** (chặn lưu). Xem **mục 5c**.
@@ -117,7 +117,7 @@ tools/level_designer/
 │   ├── models/                 # MODEL - dữ liệu thuần, không phụ thuộc GUI
 │   │   ├── level.py            #   LevelModel: tường, S/F, kích thước, mission + challenge, snapshot/undo
 │   │   ├── missions.py         #   registry 17 NHIỆM VỤ (khớp MissionTypes bên game)
-│   │   ├── challenge_rules.py  #   registry 8 LUẬT THỬ THÁCH (khớp ChallengeGameMode bên game)
+│   │   ├── challenge_rules.py  #   registry 9 LUẬT THỬ THÁCH (khớp ChallengeGameMode bên game)
 │   │   ├── chapter.py          #   ChapterModel (chương — resources/chapters/*.tres)
 │   │   ├── chapter_repository.py #  đọc/ghi/xoá các chương
 │   │   └── repository.py       #   đọc/ghi/xoá resources/levels/*.tres
@@ -201,91 +201,50 @@ Quy ước toạ độ (khớp `maze_data.gd` / `level_manager.gd`):
 
 ---
 
-## 5. MÀN CHẠY CHẾ ĐỘ SPECIAL (Minesweeper, Sum Path, One Stroke...)
+## 5. MÀN CHẠY CHẾ ĐỘ SPECIAL (Blind Memory · Wall Builder · Challenge)
 
-Từ 2026-09-26, **ngoài Daily Challenge, một MÀN trong campaign cũng chơi được chế độ Special**:
+Từ 2026-09-26, **ngoài Daily Challenge, một MÀN trong campaign cũng chạy được chế độ Special**:
 chọn `Chế độ` ở bảng phải (trường `mode_id` trong file `.tres`) khác `play` là xong.
+
+> Đã **còn đúng 2 chế độ Special: `blind_memory` · `wall_builder`** (cộng `play` và `challenge`).
+> 6 chế độ cũ — minesweeper · sum_path · countdown_cost · fading_ink · one_stroke · fog_of_war (mode riêng) —
+> **đã bị xoá khỏi game**; file cũ khai các id đó sẽ bị validator báo LỖI và game chơi như `play`.
+> **Fog of War nay là LUẬT THỬ THÁCH** (`challenge = "fog_of_war"`) — xem **mục 5c**.
 
 **Game sẽ làm gì với màn đó**
 
 | Việc | Chi tiết |
 |---|---|
 | Bàn chơi | Dùng **ĐÚNG bàn của màn**: tường + hình dạng board (`cell_mask`) do tool vẽ — KHÔNG tự sinh bàn |
-| Phần dữ liệu riêng của chế độ | Chế độ tự rắc: mìn (Minesweeper) · điểm ô (Sum Path) · chi phí bước (Countdown Cost) · mực (Fading Ink)… nhưng **CỐ ĐỊNH theo `level_id`** nên chơi lại y hệt |
 | Số bước | `max(max_steps của màn, ngân sách mặc định của chế độ)` — màn to không bị hết bước oan |
 | Tiêu đề HUD | Hiện `MÀN nn` + dòng phụ `TÊN CHẾ ĐỘ · CHƯƠNG n` (giống Play Mode) |
 | Nút SKIP | Có ở **mọi màn** (chỉ ẩn khi chơi Dungeon/Daily): bấm là mở khoá màn kế tiếp trong cùng chương mà **KHÔNG ghi Sao**, rồi vào luôn màn đó |
 
-**Tường hiện/ẩn — tool nhắc, game có ép riêng**
+**Tường hiện/ẩn ở game có ép riêng**
 
 | Chế độ | Trạng thái tường |
 |---|---|
-| `minesweeper` · `sum_path` · `countdown_cost` · `fading_ink` | **Cần THẤY tường** để tính đường — validator CẢNH BÁO nếu màn còn tường ẩn (bấm "Tường hiện" cho các đoạn đó) |
-| `one_stroke` | Game **ép HIỆN** toàn bộ tường khi chơi |
-| `blind_memory` · `fog_of_war` · `wall_builder` | Game **ép ẨN** toàn bộ tường khi chơi (màn ghi gì không quan trọng) |
+| `blind_memory` · `wall_builder` | Game **ép ẨN** toàn bộ tường khi chơi (màn ghi gì không quan trọng) |
 | `play` · `challenge` | Tôn trọng đúng thiết kế (tường ẩn là luật chơi gốc) |
-
-**KIỂU EDIT RIÊNG THEO CHẾ ĐỘ (công cụ 7 — mới 2026-09-27)**
-
-Mỗi chế độ có **1 kiểu edit** — chọn chế độ ở ô `mode_id` là thanh công cụ tự đổi theo
-(nút + ô giá trị + nút "Xoá giá trị" chỉ hiện khi chế độ có dữ liệu để tô). Giá trị lưu vào
-`custom_cell_values` của file `.tres` (khoá `"x,y"`), **ô nào không tô thì game tự sinh**.
-
-| Chế độ | Kiểu edit | Tô gì |
-|---|---|---|
-| `minesweeper` | Ô giá trị 1 | **GHIM MÌN**: tô ô nào = chắc chắn có mìn ở đó (game giữ đúng, không rắc random đè lên) |
-| `sum_path` | Ô giá trị 1..9 + ô **Tổng điểm đường đi** | **ĐIỂM Ô**: ô nào không tô thì random 1..9; S/F KHÔNG tính điểm |
-| `countdown_cost` | Ô giá trị 1..4 + ô **Tổng chi phí đường đi** | **CHI PHÍ BƯỚC** của ô (giữ đúng 1..4, không kẹp theo độ khó) |
-| `fading_ink` | Ô giá trị 1..9 + ô **Mực dư mỗi bước** | **MỰC BAN ĐẦU** của ô: mỗi bước đi làm mọi ô phai 1 mực, ô hết mực không đi vào được |
-| `play` · `blind_memory` · `fog_of_war` · `one_stroke` · `wall_builder` · `challenge` | Không có | Game tự sinh hết — chỉ vẽ tường/ô board/S/F (validator in ghi chú riêng cho từng chế độ) |
-
-Cách dùng: chọn `mode_id` → bấm nút công cụ **7** (hoặc phím `7`) → chọn giá trị ở ô nhập → tô/kéo
-trên lưới. **Chuột phải** xoá giá trị của ô (ưu tiên hơn xoá tường). Menu **Sửa → Xoá hết giá trị riêng
-của chế độ** để dọn sạch. Mọi thao tác đều hoàn tác được (Ctrl+Z).
-
-**TÔ GIÁ TRỊ THEO ĐƯỜNG ĐI (ô “Tổng …” + Ctrl+Enter) — mới 2026-09-27**
-
-Ba chế độ trên có thêm **1 ô nhập ở BẢNG PHẢI** (mục **Lưới & luật chơi**) + nút **“Tô theo đường đi”**
-ngay cạnh ô đó (giống hệt `Ctrl+Enter` trên thanh công cụ):
-
-| Chế độ | Ô nhập | Bấm Ctrl+Enter sẽ làm gì |
-|---|---|---|
-| `countdown_cost` | **Tổng chi phí đường đi** | Chia chi phí 1..4 cho các ô của đường sao cho **TỔNG = đúng số đó** (và nâng `max_steps` = tổng + 3) |
-| `sum_path` | **Tổng điểm đường đi** | Chia điểm 1..9 cho các ô của đường sao cho **TỔNG = đúng số đó** |
-| `fading_ink` | **Mực dư mỗi bước** | Cấp **MỰC tăng dần theo bước**: ô ở bước thứ j nhận `j + mực dư` (kẹp 1..9) ⇒ đi đúng đường thì luôn tới được F |
-
-- TỔNG chỉ tính các ô **GIỮA S và F** (game cũng không tính điểm/chi phí ở 2 ô S/F).
-**Thanh công cụ có 2 dòng** (dòng 1 = công cụ vẽ · dòng 2 = khối giá trị / khối đường đi + tuỳ chọn xem +
-zoom + Lưu) để cửa sổ hẹp không bị tràn. Khối **ĐƯỜNG ĐI** và khối **GIÁ TRỊ** **không bao giờ hiện cùng lúc**:
-đang có nét vẽ thì hiện khối ĐƯỜNG ĐI, xoá nét xong khối GIÁ TRỊ quay lại.
-
-- Ô “Tổng …” **tự hiện tổng đang có** trên đường bạn vẽ; muốn tổng khác thì sửa số rồi bấm Ctrl+Enter
-  (hoặc nút “Tô theo đường đi” ở bảng phải).
-- **Chưa vẽ đường nào?** Vẫn bấm được — tool tô theo **đường NGẮN NHẤT** của màn
-  (đúng đường mà game dùng làm đường mẫu).
-- Số nằm ngoài khoảng hợp lệ (vd tổng 40 cho 3 ô × 1..4) thì tool báo khoảng cho phép và không tô gì.
-
-> ⚠️ **`dungeon` KHÔNG dùng được cho màn** (chế độ bất tận, chỉ vào từ Main Screen): tool đã bỏ khỏi danh
-> sách chế độ và validator báo **LỖI** nếu file cũ còn khai `dungeon`; game cũng tự coi màn đó là `play`.
 
 **Riêng từng chế độ (validator cũng nhắc)**
 
-- `minesweeper`: mìn chỉ rải trên ô **đi tới được** từ S và **không** thuộc đường S→F (đường này cũng tránh mọi mìn GHIM) ⇒ màn luôn có đường an toàn; nếu mìn ghim chặn hết đường, game **bỏ mìn ghim** để màn vẫn thắng được.
-- `sum_path`: mục tiêu tổng điểm = **tổng điểm của đường NGẮN NHẤT** (S/F không tính); tô điểm ô bằng công cụ 7 hoặc chia theo ô “Tổng điểm đường đi”.
-- `countdown_cost`: chi phí ô tô tay giữ ĐÚNG 1..4; ngân sách game = **đường RẺ NHẤT + dự phòng**, và nếu màn khai `max_steps` lớn hơn thì game tôn trọng (tool tự đặt `max_steps` = tổng chi phí + 3).
-- `fading_ink`: **mực** của ô tô tay được giữ đúng; ô không tô thì game tự cấp (đủ đi hết đường ngắn nhất + dư 2..3). Ô ở bước thứ j cần mực ≥ j mới vào được.
-- `one_stroke`: màn phải có **đường đi qua HẾT mọi ô** và kết thúc ở F. Nếu không, game in cảnh báo và **tạm dùng bàn tự sinh** để màn vẫn thắng được.
-- `wall_builder`: các con số suy ra từ chính tường của màn; màn quá ít tường thì "đố" mất hay (validator cảnh báo).
+- `wall_builder`: các con số suy ra từ chính tường của màn; màn quá ít tường thì "dễ" một hay (validator cảnh báo).
+- `blind_memory`: màn càng nhiều tường ẩn càng khó ở thì chơi để còn lại `par_time`.
 - `challenge`: chơi y như Play Mode nhưng kèm **1 luật thử thách** — xem **mục 5c**.
-- `blind_memory` / `fog_of_war`: màn càng nhiều tường ẩn càng khó — thử chơi để cân lại `par_time`.
 
-Danh sách màn bên trái hiện nhãn `◆ tên_chế_độ` ở cuối dòng để nhìn là biết ngay màn nào đặc biệt.
-**Màn mẫu có sẵn CHO MỌI CHẾ ĐỘ** (chương 2, `make_samples.py` ghi lại được):
-**13** = minesweeper · **14** = sum_path (19 ô, tổng 60) · **15** = countdown_cost (8 ô, tổng 30 bước) ·
-**16** = blind_memory · **17** = fog_of_war · **18** = fading_ink (9 ô có mực tô tay) ·
-**19** = one_stroke (bàn trống 6×4) · **20** = wall_builder (12 tường ẩn) ·
-**21** = challenge (walk_number_only, S=(0,4)→F=(5,0), có đường chỉ qua ô có số).
+Danh sách màn bên trái hiện nhãn `ở tên_chế_độ` ở cuối dòng để nhìn là biết ngay màn nào đặc biệt.
+**Màn mẫu có sẵn** (`make_samples.py` ghi lại được vào **`resources/levels_samples/`** — cố ý TÁCH khỏi
+`resources/levels/` để không đè lên màn thật):
+**13** = challenge `walk_number_only` · **14** = challenge `fog_of_war` · **15** = blind_memory ·
+**16** = wall_builder (12 tường ẩn) · **17** = play có **Ô KHOÁ + CHÌA** (xem dưới).
 
+**Ô KHOÁ + CHÌA KHOÁ — `lock_cells` / `key_cells`**
+
+Màn có thể khoá vài ô; muốn đi qua phải nhặt **chìa cùng id**. Tool xuất 2 mảng phẳng bộ ba `(x, y, id)`
+đúng định dạng `LevelData.lock_cells` / `key_cells` của game; id nằm trong **1..30** (game mã hoá tập chìa
+đã nhặt bằng bit). Mỗi id khoá phải có **ít nhất 1 chìa**, khoá/chìa **không** đặt trên S/F, và validator
+vẫn kiểm **có đường S→F** bằng BFS theo trạng thái `(ô, tập chìa)` — y như `MazeData.get_play_path`.
 ---
 
 ## 5b. VẼ ĐƯỜNG ĐI RỒI SINH TƯỜNG (công cụ 8 — mới 2026-09-27)
@@ -296,8 +255,8 @@ Cách nhanh nhất để có một màn “đi được tới đích” mà khô
 2. **Công cụ 8** (phím `8`) — **kéo chuột** trên lưới để vẽ đường đi: bắt đầu ở ô nào cũng được
    (thường là ô S cũ) và kết thúc ở ô đích. Nét vẽ chỉ nối **ô kề**, không nhảy ô, không đi đè;
    kéo ngược về ô trước = lùi 1 ô. Nét vẽ hiện **màu tím** đè lên lưới.
-3. **Ctrl + Enter** (hoặc nút **“Sinh tường (Ctrl+Enter)” / “Sinh giá trị (Ctrl+Enter)”** trên thanh công cụ —
-   chỉ hiện khi đang có nét vẽ) → tool sinh màn chơi từ nét vẽ:
+3. **Ctrl + Enter** (hoặc nút **“Sinh tường (Ctrl+Enter)”** trên thanh công cụ — chỉ hiện khi đang có nét vẽ)
+   → tool sinh màn chơi từ nét vẽ:
 
 | Việc | Kết quả |
 |---|---|
@@ -307,9 +266,10 @@ Cách nhanh nhất để có một màn “đi được tới đích” mà khô
 | `max_steps` | Tự tính = số bước của nét vẽ + 2 nhịp thở |
 | Hoàn tác | Cả lần sinh tường là **1 bước** `Ctrl+Z` |
 
-> Ở chế độ CÓ dữ liệu ô (Countdown Cost · Sum Path · Fading Ink) thì nút này đổi thành **“Sinh giá trị
-(Ctrl+Enter)”**: tool **TÔ GIÁ TRỊ** cho các ô của đường thay vì dựng tường — xem chi tiết ở **mục 5**
->(ô “Tổng …” ở bảng phải + bảng chia giá trị).
+> **Không chế độ nào còn dùng giá trị ô** (minesweeper/sum_path/countdown_cost/fading_ink đã bị xoá) nên
+> nút này **luôn là “Sinh tường”**. Phần tô giá trị theo đường + ô “Tổng …” + công cụ 7 vẫn còn trong code
+> nhưng **bị ẩn** vì cả 4 chế độ trong `app/config.py` (`MODE_EDITS`) đều khai `kind: "none"`; muốn dùng lại
+> thì chỉ cần thêm `"kind": "cell_value"` và khối `"path"` cho chế độ mới.
 
 - Muốn vài đoạn tường **ẩn** cho đúng chất “mực”? Sinh tường xong, chọn **công cụ 2** rồi bấm/kéo
   lên đúng đoạn đó để đổi sang tường ẩn.
@@ -336,7 +296,7 @@ là THUA NGAY**; thắng màn mở popup “HOÀN THÀNH THỬ THÁCH”.
 | `countdown` | Về đích trước khi hết đếm ngược | giây (0 = 60 + 4×số ô, tối thiểu 75) |
 | `move_limit` | Đi tối đa N bước | bước (0 = đúng `max_steps` của màn) |
 | `step_timer` | MỖI bước phải đi trong X giây (đồng hồ con, reset mỗi bước) | giây (0 = dễ 30 · thường 20 · khó 15) |
-| `no_tool` | Bấm GỢI Ý hoặc HOÀN TÁC = thua ngay | — |
+| `no_tool` | Bấm GỢI Ý hoặc DỊCH CHUYỂN = thua ngay | — |
 | `no_move_overlapped` | Đi lại ô đã đi = thua ngay | — |
 | `walk_number_only` | Chỉ đi trên ô CÓ SỐ (ô 0 tường quanh nó = ô không số) | — |
 | `walk_empty_only` | Chỉ đi trên ô KHÔNG SỐ | — |
@@ -356,8 +316,8 @@ là THUA NGAY**; thắng màn mở popup “HOÀN THÀNH THỬ THÁCH”.
 | `mode_id = "challenge"` nhưng chưa chọn luật | cảnh báo — game sẽ chơi như Play thường |
 | `move_limit` ĐÚNG BẰNG đường ngắn nhất · `countdown` < 1 giây/bước · `step_timer` < 4 giây | cảnh báo (quá gắt) |
 
-- Màn mẫu: **level_21** (chương 2) = `walk_number_only` — mở thử để xem luật hoạt động trong game.
-- Nhiệm vụ hàng ngày (Daily) cũng dùng đúng 8 luật này để sinh 3 game/ngày cho mỗi ngày.
+- Màn mẫu: **level_13** = `move_limit` · **level_14** = `fog_of_war` (đều ở chương 2).
+- Nhiệm vụ hàng ngày (Daily) cũng dùng đúng 9 luật này để sinh 3 game/ngày cho mỗi ngày.
 
 ---
 
@@ -366,15 +326,17 @@ là THUA NGAY**; thắng màn mở popup “HOÀN THÀNH THỬ THÁCH”.
 ```powershell
 cd tools\level_designer
 
-# chạy test (190 test)
+# chạy test (170 test)
 python -m unittest discover -s tests -t .
 
 # self-test đọc/ghi các màn thật (kể cả màn polyomino) + kiểm tra đường đi
 python main.py --selftest
 
-# tạo lại các MÀN MẪU (level_10..level_21: polyomino + MỌI chế độ Special + challenge) - có sẵn trong repo
+# tạo lại các MÀN MẪU (level_10..level_17: polyomino + chế độ Special + challenge + ô khoá/chìa)
+# ⚠️ Ghi vào resources/levels_samples/ (KHÔNG phải resources/levels/) vì id 10..17 đã là MÀN THẬT —
+#    ghi đè sẽ mất màn thật. Muốn ghi chỗ khác: --dir resources/levels
 python make_samples.py             # thêm --dry-run để chỉ kiểm tra, không ghi file
-python make_samples.py --only 21   # chỉ ghi lại 1 (hoặc vài) màn mẫu: --only 21,22
+python make_samples.py --only 17   # chỉ ghi lại 1 (hoặc vài) màn mẫu: --only 13,14
 
 # build file .exe  ->  dist\LevelDesigner.exe
 python build_exe.py            # hoặc double-click build_exe.bat

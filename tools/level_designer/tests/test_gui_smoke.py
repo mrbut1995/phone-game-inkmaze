@@ -124,37 +124,32 @@ class GuiSmokeTest(unittest.TestCase):
             self.assertFalse(window._path_box.winfo_manager(),
                              "Xoá nét vẽ → khối 'Đường đi' tự ẩn")
 
-            # Chế độ CÓ "path" (Countdown Cost): ô "Tổng chi phí đường đi" nằm ở BẢNG PHẢI (Lưới & luật chơi),
-            # KHÔNG nằm trên thanh công cụ (trước đây để trên toolbar làm tràn ngang cửa sổ hẹp).
-            window.editor.set_property("mode_id", "countdown_cost")
-            window.update()
-            self.assertFalse(hasattr(window, "_sum_spin"), "Thanh công cụ KHÔNG còn ô 'Tổng …'")
-            self.assertTrue(window.inspector._path_sum_box.winfo_manager(),
-                            "Ô 'Tổng …' phải hiện trong mục Lưới & luật chơi")
-            self.assertIn("Tổng chi phí", window.inspector.lbl_path_sum.cget("text"))
-            self.assertIn("Sinh giá trị", window._path_apply_button.cget("text"))
+            # KHÔNG chế độ nào còn tô giá trị theo đường (minesweeper/sum_path/countdown_cost/
+            # fading_ink/fog_of_war/one_stroke đã bị xoá) -> ô "Tổng ..." và nút "Sinh giá trị" phải ẨN ở mọi chế độ.
+            for mode_id in ("play", "blind_memory", "wall_builder", "challenge"):
+                window.editor.set_property("mode_id", mode_id)
+                window.update()
+                self.assertFalse(window.inspector._path_sum_box.winfo_manager(),
+                                 "Chế độ %s không tô giá trị -> ô 'Tổng ...' phải Ẩn" % mode_id)
+            self.assertFalse(hasattr(window, "_sum_spin"), "Thanh công cụ KHÔNG còn ô 'Tổng ...'")
 
+            # VẬN vẽ được đường "ĐƯỜNG ĐI" bình thường (đặt S/F + sinh tường quanh nét)
+            window.editor.set_property("mode_id", "challenge")
             window.editor.begin_path((2, 1))
             window.editor.extend_path((3, 1))
             window.editor.extend_path((4, 1))
             window.editor.extend_path((4, 2))
             window.update()
-            self.assertTrue(window._path_box.winfo_manager(), "Đang vẽ → hiện khối ĐƯỜNG ĐI")
+            self.assertTrue(window._path_box.winfo_manager(), "Đang vẽ -> hiện khối ĐƯỜNG ĐI")
             self.assertFalse(window._value_box.winfo_manager(),
-                             "Đang vẽ → ẨN khối GIÁ TRỊ (2 khối không bao giờ cùng lúc)")
+                             "Đang vẽ -> ẨN khối GIÁ TRỊ (2 khối không bao giờ cùng lúc)")
             for index, row in enumerate(window._toolbar_rows, start=1):
                 self.assertLessEqual(
                     row.winfo_reqwidth(), window.winfo_width(),
                     "Thanh công cụ dòng %d bị TRÀN khi đang vẽ đường (cần %d px > %d px)"
                     % (index, row.winfo_reqwidth(), window.winfo_width()))
-            window.inspector.var_path_sum.set(6)
-            window.inspector._on_path_sum()
-            window.update()
             window.action_apply_path()
             window.update()
-            painted = sum(self.app.editor.level.custom_value(cell) for cell in [(3, 1), (4, 1)])
-            self.assertEqual(painted, 6, "Tổng chi phí tô trên đường = đúng ô 'Tổng …'")
-            self.assertEqual(window.editor.path_value_sum(), 6)
             self.assertEqual(window.editor.level.start, (2, 1))
             self.assertEqual(window.editor.level.end, (4, 2))
 
@@ -168,14 +163,6 @@ class GuiSmokeTest(unittest.TestCase):
                     % (index, row.winfo_reqwidth(), window.winfo_width()))
 
             # Nút "Tô theo đường đi" trong bảng phải tô đúng theo đường NGẮN NHẤT khi chưa vẽ nét
-            # (dọn tường để chắc chắn màn có đường S→F; đường 3 bước ⇒ 2 ô giữa 2 đầu ⇒ tổng phải trong 2..8)
-            window.action_clear_path_draft()
-            window.editor.clear_walls()
-            window.inspector.var_path_sum.set(5)
-            window.inspector._on_paint_path_sum()
-            window.update()
-            route = window.editor.resolve_path_for_values()[0]
-            self.assertEqual(sum(self.app.editor.level.custom_value(cell) for cell in route[1:-1]), 5)
 
             # CHALLENGE: gắn luật thử thách qua khối "Thử thách (Challenge)" trong bảng phải
             from app.models import challenge_rules as chrules

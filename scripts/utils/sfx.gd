@@ -18,7 +18,9 @@ const CELL_STEP := "cell_step"          # Chấm bút chì khi vào tâm 1 ô m�
 const ANCHOR_SNAP := "anchor_snap"      # "Tách" cơ học khi rê trúng điểm neo
 const WALL_MARK := "wall_mark"          # Nét chì dứt khoát khi vẽ tường nghi ngờ
 const WALL_HIT := "wall_hit"            # Gãy ngòi chì khi đâm tường vô hình
-const UNDO := "undo"                    # Gôm tẩy quẹt trên giấy
+const TELEPORT := "teleport"            # Dịch chuyển con trỏ
+const KEY_PICKUP := "key_pickup"        # Nhặt chìa khoá (mở ô khoá)
+const LOCK_BUMP := "lock_bump"          # Đâm vào ô còn khoá
 const HINT := "hint"                    # Chuông gió khi bấm Gợi ý
 const STAIRS_ENTER := "stairs_enter"    # Bước chân / lật giấy khi vào ô S - F
 const BTN_CLICK := "btn_click"          # Bấm bút bi (nút chính)
@@ -43,7 +45,9 @@ const LIBRARY := {
 	"anchor_snap": "sfx_anchor_snap.wav",
 	"wall_mark": "sfx_wall_mark.wav",
 	"wall_hit": "sfx_wall_hit.wav",
-	"undo": "sfx_undo.mp3",
+	"teleport": "sfx_stairs_enter.wav",    # TODO âm thanh riêng
+	"key_pickup": "sfx_star_pop.wav",      # TODO âm thanh riêng
+	"lock_bump": "sfx_wall_hit.wav",       # TODO âm thanh riêng
 	"hint": "sfx_hint.wav",
 	"stairs_enter": "sfx_stairs_enter.wav",
 	"btn_click": "sfx_btn_click.wav",

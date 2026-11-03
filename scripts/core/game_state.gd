@@ -16,7 +16,7 @@ var floor_moves: int = 0        # số bước dùng trong floor hiện tại
 var floor_wall_hits: int = 0    # số lần đâm tường trong floor hiện tại
 var perfect_floor: bool = true  # chưa đâm tường lần nào trong floor
 var hints_used: int = 0         # số lần bấm Gợi ý trong floor hiện tại (cho nhiệm vụ)
-var undos_used: int = 0         # số lần bấm Hoàn tác trong floor hiện tại (cho nhiệm vụ)
+var teleports_used: int = 0     # số lần DỊCH CHUYỂN trong floor hiện tại (cho nhiệm vụ)
 ## --- Số liệu Profiler (bản Hồ sơ mới) ---
 var wall_draws: int = 0         # số lần VẼ tường nghi ngờ (kéo nối 2 giao điểm)
 var wall_erases: int = 0        # số lần GỠ tường đã vẽ (kéo lại để tắt)
@@ -52,7 +52,7 @@ func _begin_floor() -> void:
 	floor_wall_hits = 0
 	perfect_floor = true
 	hints_used = 0
-	undos_used = 0
+	teleports_used = 0
 	wall_draws = 0
 	wall_erases = 0
 	skips_used = 0

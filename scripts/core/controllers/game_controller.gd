@@ -26,12 +26,12 @@ var _run_active := false
 
 ## Số dư công cụ toàn tài khoản, chép sang HUD khi vẽ lại.
 var skip_left := 0
-var undo_left := 0
+var teleport_left := 0
 var hint_left := 0
-## Chi phí từng bước đã đi (Countdown Cost thu 1..4 bước mỗi ô) — Undo hoàn lại ĐÚNG chi phí
+## Chi phí từng bước đã đi — hồi sinh hoàn lại ĐÚNG chi phí bước vừa lùi
 var _move_costs: Array[int] = []
-## Đang khoá tương tác vì Countdown Cost hết ngân sách (chỉ mở lại khi VỪA lùi bước để có thêm bước)
-var _countdown_locked := false
+## Đang ở bước CHỌN Ô để dịch chuyển (đã bấm nút Teleport, các ô đang được tô sáng)
+var _teleport_selecting := false
 ## Trạng thái + luật của Challenge Mode (xem `scripts/core/challenge_rules.gd`)
 var _challenge_rules := ChallengeRules.new()
 ## Đang ở pha GHI NHỚ (Blind Memory): đồng hồ dừng, tường hiện, popup đếm ngược đang chạy
@@ -105,6 +105,7 @@ func _start_floor(floor_number: int) -> void:
 
 	_floor_finished = false
 	_move_costs.clear()
+	_cancel_teleport()
 	# Challenge: cấp lại đồng hồ con "mỗi bước" + lượt quay đầu cho màn mới
 	_challenge_rules.reset()
 	if game_state != null:
@@ -125,7 +126,6 @@ func _start_floor(floor_number: int) -> void:
 		timer_controller.start_floor()
 	if grid_view != null:
 		grid_view.set_interaction_enabled(true)
-	_countdown_locked = false
 	_overlay_showing = false
 	if grid_view != null:
 		grid_view.show_no_moves_overlay(false)
@@ -200,24 +200,13 @@ func _update_hud() -> void:
 		return
 	var mode: BaseGameMode = game_mode_controller.game_mode if game_mode_controller != null else null
 	skip_left = _tool_uses_left(GameManagerClass.TOOL_SKIP)
-	undo_left = _tool_uses_left(GameManagerClass.TOOL_UNDO)
+	teleport_left = _tool_uses_left(GameManagerClass.TOOL_TELEPORT)
 	hint_left = _tool_uses_left(GameManagerClass.TOOL_HINT)
 	var extra_info := game_mode_controller.game_mode.get_hud_extra_info() if game_mode_controller.game_mode != null else ""
 	var title := game_mode_controller.game_mode.get_hud_floor_title(game_state.floor_number) if game_mode_controller.game_mode != null else "TẦNG %d" % game_state.floor_number
 	var subtitle := game_mode_controller.game_mode.get_hud_subtitle(game_state.floor_number) if game_mode_controller.game_mode != null else ""
 	var running := _run_active and not _floor_finished
-	# Countdown Cost: hết ngân sách -> KHOÁ di chuyển (người chơi phải lùi bước mới đi tiếp được).
-	# LƯU Ý: chỉ MỞ LẠI khi vừa hết khoá do ngân sách — KHÔNG bật tuỳ tiện, kẻo ghi đè khoá
-	# của hệ thống khác (VD pha GHI NHỚ của Blind Memory đang khoá tương tác).
-	var countdown_blocked := running and mode != null and mode.mode_id == "countdown_cost" \
-			and game_state.is_out_of_moves()
-	if grid_view != null:
-		if countdown_blocked:
-			grid_view.set_interaction_enabled(false)
-		elif running and _countdown_locked:
-			grid_view.set_interaction_enabled(true)
-	_countdown_locked = countdown_blocked
-	# Sum Path / Countdown Cost / Fading Ink: kiểm overlay "Hết nước đi" trên bàn
+	# Kiểm overlay "Hết nước đi" trên bàn (mode nào override `is_stuck` — hiện chưa chế độ nào dùng)
 	var was_overlay := _overlay_showing
 	var cur_pos := grid_controller.current_pos if grid_controller != null else Vector2i.ZERO
 	var cur_maze := grid_controller.maze if grid_controller != null else null
@@ -244,10 +233,10 @@ func _update_hud() -> void:
 			"steps_left": game_state.steps_remaining,
 			"steps_max": game_state.max_steps,
 			"mode_name": mode.mode_id if mode != null else "dungeon",
-			"undo_highlight": countdown_blocked,
+			"teleport_active": _teleport_selecting,
 			"replay_visible": replay_visible,
 			"skip_left": skip_left,
-			"undo_left": undo_left,
+			"teleport_left": teleport_left,
 			"hint_left": hint_left,
 			"guided": _guided_run(),
 		})
@@ -280,7 +269,7 @@ func _on_step_consumed(cost: int, hit_hazard: bool) -> void:
 	if game_state == null:
 		return
 	game_state.consume_step(cost)
-	# Nhớ chi phí bước ĐI ĐƯỢC để Undo hoàn lại đúng (Countdown Cost: mỗi ô 1..4 bước)
+	# Nhớ chi phí bước ĐI ĐƯỢC để hồi sinh hoàn lại đúng
 	if not hit_hazard:
 		_move_costs.append(cost)
 		# Challenge: reset đồng hồ con "mỗi bước" + soi vi phạm (vượt bước · giẫm lại · quay đầu).
@@ -297,8 +286,8 @@ func _on_step_consumed(cost: int, hit_hazard: bool) -> void:
 			_challenge_fail(ch.challenge_id)
 			return
 		game_state.record_wall_hit()
-		# Chế độ thua-ngay (Play / Daily Classic / Minesweeper...) -> mở popup thua.
-		# Chế độ có LƯỢT THỬ LẠI (Fog of War): trừ 1 lượt, hết lượt mới thua.
+		# Chế độ thua-ngay (Play / Daily Classic...) -> mở popup thua.
+		# Chế độ có LƯỢT THỬ LẠI (nếu có): trừ 1 lượt, hết lượt mới thua.
 		if game_mode_controller.game_mode != null and game_mode_controller.game_mode.register_hazard():
 			_game_over.call_deferred(_hazard_game_over_reason())
 			return
@@ -352,7 +341,7 @@ func _challenge_fail(id: String) -> void:
 	_game_over.call_deferred(ChallengeGameMode.fail_reason_for(id))
 
 
-## Luật "không công cụ": chặn CẢ gợi ý lẫn hoàn tác
+## Luật "không công cụ": chặn CẢ gợi ý lẫn dịch chuyển
 func _challenge_blocks_tool() -> bool:
 	var ch := _challenge()
 	return ch != null and ch.blocks_tool()
@@ -380,7 +369,8 @@ func _challenge_after_step() -> void:
 	if ch == null or not _run_active or game_state == null:
 		return
 	var path: Array[Vector2i] = grid_controller.path if grid_controller != null else []
-	var fail := _challenge_rules.after_step(ch, path, game_state.floor_moves)
+	var maze: MazeData = grid_controller.maze if grid_controller != null else null
+	var fail := _challenge_rules.after_step(ch, path, game_state.floor_moves, maze)
 	if fail != "":
 		_challenge_fail(fail)
 
@@ -402,6 +392,7 @@ func _on_reached_end() -> void:
 
 
 func _complete_floor() -> void:
+	_cancel_teleport()
 	if timer_controller != null:
 		timer_controller.pause()
 	if grid_view != null:
@@ -510,6 +501,7 @@ func _game_over(reason := "") -> void:
 	if not _run_active or _floor_finished:
 		return
 	_run_active = false
+	_cancel_teleport()
 	if timer_controller != null:
 		timer_controller.stop()
 	if grid_view != null:
@@ -796,37 +788,63 @@ func _tutorial_host() -> Node:
 	return host
 
 
-func undo() -> void:
-	# Challenge "không công cụ": bấm Hoàn tác = vi phạm -> thua ngay (popup thua thử thách)
+## Nút DỊCH CHUYỂN (Teleport) trên thanh công cụ:
+##   · Bấm lần 1 — tô sáng các ô trong tầm (`GridController.teleport_range`) quanh nhân vật.
+##   · Chạm 1 ô đã sáng — con trỏ NHẢY thẳng tới đó (kể cả có tường chắn), trừ 1 lượt Teleport.
+##   · Bấm lại nút / chạm ô khác — huỷ, KHÔNG mất lượt.
+func teleport() -> void:
+	# Challenge "không công cụ": bấm Dịch chuyển = vi phạm -> thua ngay (popup thua thử thách)
 	if _challenge_blocks_tool():
 		_challenge_fail(ChallengeGameMode.NO_TOOL)
 		return
-	# Hết lượt hoàn tác toàn tài khoản (nút đã bị khoá ở HUD) → không làm gì
-	if _tool_uses_left(GameManagerClass.TOOL_UNDO) <= 0:
+	if not _run_active or _floor_finished or _memorize_active or _overlay_showing:
 		return
-	# Wall Builder: Undo xoá ĐOẠN TƯỜNG vừa nối (chế độ không có nước đi để lùi)
-	if grid_controller != null and game_mode_controller != null \
-			and game_mode_controller.game_mode != null \
-			and game_mode_controller.game_mode.undo_drawn_wall(grid_controller.anchor_controller):
-		Sfx.play(Sfx.UNDO)
-		if game_state != null:
-			game_state.undos_used += 1     # nhiệm vụ "không dùng hoàn tác"
-		_consume_tool_use(GameManagerClass.TOOL_UNDO)
+	if _teleport_selecting:
+		_cancel_teleport()
 		_update_hud()
 		return
-	if grid_controller != null and grid_controller.undo_last_move():
-		# SFX: tiếng gôm tẩy quẹt trên giấy
-		Sfx.play(Sfx.UNDO)
-		if game_state != null:
-			# Hoàn lại ĐÚNG chi phí bước vừa đi (Countdown Cost thu 1..4 bước mỗi ô,
-			# các chế độ khác luôn là 1 -> giống hành vi cũ)
-			var refund := 1
-			if not _move_costs.is_empty():
-				refund = _move_costs.pop_back()
-			game_state.refund_step(refund)
-			game_state.undos_used += 1     # nhiệm vụ "không dùng hoàn tác"
-		_consume_tool_use(GameManagerClass.TOOL_UNDO)
+	# Hết lượt toàn tài khoản (nút đã bị khoá ở HUD) → không làm gì
+	if _tool_uses_left(GameManagerClass.TOOL_TELEPORT) <= 0:
+		return
+	if grid_controller == null or grid_view == null:
+		return
+	var targets := grid_controller.teleport_targets()
+	if targets.is_empty():
+		return
+	Sfx.play(Sfx.BTN_WOOD_TAP)
+	_teleport_selecting = true
+	grid_view.show_teleport_targets(targets)
+	_update_hud()
+
+
+## Người chơi chạm 1 ô đang sáng (Board phát `teleport_chosen`)
+func _on_teleport_chosen(pos: Vector2i) -> void:
+	if not _teleport_selecting:
+		return
+	_cancel_teleport()
+	if grid_controller == null or not grid_controller.teleport_to(pos):
 		_update_hud()
+		return
+	Sfx.play(Sfx.TELEPORT)
+	if game_state != null:
+		game_state.teleports_used += 1     # nhiệm vụ "không dùng dịch chuyển"
+	_consume_tool_use(GameManagerClass.TOOL_TELEPORT)
+	_update_hud()
+
+
+## Chạm ra ngoài các ô sáng → huỷ chọn (không mất lượt)
+func _on_teleport_cancelled() -> void:
+	if _teleport_selecting:
+		_cancel_teleport()
+		_update_hud()
+
+
+func _cancel_teleport() -> void:
+	if not _teleport_selecting:
+		return
+	_teleport_selecting = false
+	if grid_view != null:
+		grid_view.clear_teleport_targets()
 
 
 func hint() -> void:

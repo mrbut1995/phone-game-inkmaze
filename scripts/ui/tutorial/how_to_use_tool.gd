@@ -3,23 +3,23 @@ extends BaseInteractivePathTutorial
 
 ## ============================================================================
 ## HowToUseToolTutorial: Dạy dùng 2 nút CÔNG CỤ (thanh hành động) —
-## QUAY LẠI (undo) và GỢI Ý (hint) — mỗi nút 3 lượt mỗi màn.
-## Bàn 3×3 không tường. Bước 1 giới thiệu · bước 2 demo undo · bước 3 demo hint
+## DỊCH CHUYỂN (teleport) và GỢI Ý (hint) — mỗi nút 3 lượt mỗi màn.
+## Bàn 3×3 không tường. Bước 1 giới thiệu · bước 2 demo teleport · bước 3 demo hint
 ## · bước 4 luyện tập (tự đi + tự bấm 2 nút) · bước 5 chúc mừng.
 ## Kế thừa BaseInteractivePathTutorial (SOLID - OCP/SRP).
 ## ============================================================================
 
 @export var lbl_hud_tools: Label = null
-@export var btn_undo: BaseButton = null
+@export var btn_teleport: BaseButton = null
 @export var btn_hint: BaseButton = null
-@export var lbl_undo_count: Label = null
+@export var lbl_teleport_count: Label = null
 @export var lbl_hint_count: Label = null
 
 @export var START_POS := Vector2i(0, 0)
 @export var FINISH_POS := Vector2i(2, 2)
 @export var TOOL_USES := 3
 
-var _undo_left: int = TOOL_USES
+var _teleport_left: int = TOOL_USES
 var _hint_left: int = TOOL_USES
 var _demo_tween: Tween = null
 
@@ -51,12 +51,12 @@ func _get_default_steps() -> Array:
 	return [
 		{
 			"message_key": "STR_TUT_TOOL_01",
-			"fallback_text": "Thanh công cụ có 2 nút: QUAY LẠI và GỢI Ý — mỗi nút dùng được 3 lượt mỗi màn. Cùng xem cách dùng nhé!",
+			"fallback_text": "Thanh công cụ có 2 nút: DỊCH CHUYỂN và GỢI Ý — mỗi nút dùng được 3 lượt mỗi màn. Cùng xem cách dùng nhé!",
 			"advance_mode": "MANUAL",
 		},
 		{
 			"message_key": "STR_TUT_TOOL_02",
-			"fallback_text": "Ví dụ: đi 1 bước rồi nhấn QUAY LẠI — con trỏ tự lùi về ô cũ.",
+			"fallback_text": "Ví dụ: nhấn DỊCH CHUYỂN — các ô trong tầm 2 ô sáng lên, chạm 1 ô để nhảy thẳng tới đó, kể cả có tường chắn.",
 			"advance_mode": "MANUAL",
 		},
 		{
@@ -66,7 +66,7 @@ func _get_default_steps() -> Array:
 		},
 		{
 			"message_key": "STR_TUT_TOOL_04",
-			"fallback_text": "Giờ tự thử — đi tới F, dùng QUAY LẠI và GỢI Ý khi cần nhé!",
+			"fallback_text": "Giờ tự thử — đi tới F, dùng DỊCH CHUYỂN và GỢI Ý khi cần nhé!",
 			"advance_mode": "AUTO",
 			"required_action": "DRAG_PATH",
 		},
@@ -82,7 +82,7 @@ func _on_step_entered(index: int, _data: Dictionary) -> void:
 	_stop_demo()
 	match index:
 		1:
-			_start_undo_demo()
+			_start_teleport_demo()
 		2:
 			_start_hint_demo()
 		3:
@@ -98,20 +98,20 @@ func _stop_demo() -> void:
 
 
 func _update_tools(animated: bool = true) -> void:
-	if lbl_undo_count != null:
-		lbl_undo_count.text = str(_undo_left)
+	if lbl_teleport_count != null:
+		lbl_teleport_count.text = str(_teleport_left)
 	if lbl_hint_count != null:
 		lbl_hint_count.text = str(_hint_left)
-	if btn_undo != null:
-		btn_undo.disabled = _undo_left <= 0
+	if btn_teleport != null:
+		btn_teleport.disabled = _teleport_left <= 0
 	if btn_hint != null:
 		btn_hint.disabled = _hint_left <= 0
 	if lbl_hud_tools == null:
 		return
 	var fmt := str(tr("STR_TUT_TOOL_HUD"))
 	if fmt == "STR_TUT_TOOL_HUD":
-		fmt = "Quay lại: {0} lượt · Gợi ý: {1} lượt"
-	lbl_hud_tools.text = fmt.format([_undo_left, _hint_left])
+		fmt = "Dịch chuyển: {0} lượt · Gợi ý: {1} lượt"
+	lbl_hud_tools.text = fmt.format([_teleport_left, _hint_left])
 	if not animated:
 		return
 	UIAnim.play_pop_in(lbl_hud_tools, 0.0, 0.88, 0.2)
@@ -139,58 +139,80 @@ func _button_center(btn: Control) -> Vector2:
 	return btn.global_position + btn.size * 0.5 - board_host.global_position
 
 
-## Bước 2: demo QUAY LẠI — đi 1 bước rồi lùi về, huy hiệu 3 → 2 bằng Tween
-func _start_undo_demo() -> void:
+## Bước 2: demo DỊCH CHUYỂN — nhấn nút, các ô trong tầm 2 sáng lên, con trỏ nhảy tới 1 ô
+func _start_teleport_demo() -> void:
 	if board_tutorial == null:
 		return
-	_run_undo_demo_cycle()
+	_run_teleport_demo_cycle()
 
 
-func _run_undo_demo_cycle() -> void:
+func _teleport_range_cells(from: Vector2i) -> Array[Vector2i]:
+	var out: Array[Vector2i] = []
+	for dy in range(-2, 3):
+		for dx in range(-2, 3):
+			var d := absi(dx) + absi(dy)
+			if d == 0 or d > 2:
+				continue
+			var p := from + Vector2i(dx, dy)
+			if p.x < 0 or p.y < 0 or p.x > 2 or p.y > 2:
+				continue
+			out.append(p)
+	return out
+
+
+func _set_teleport_glow(cells: Array[Vector2i], on: bool) -> void:
+	if board_tutorial == null:
+		return
+	for p in cells:
+		var c := board_tutorial.get_cell(p)
+		if c != null and c.has_method("set_teleport_target"):
+			c.set_teleport_target(on)
+
+
+func _run_teleport_demo_cycle() -> void:
 	if current_step_index != 1 or not is_inside_tree() or board_tutorial == null:
 		return
 	reset_path()
-	_undo_left = TOOL_USES
+	_teleport_left = TOOL_USES
 	_hint_left = TOOL_USES
 	_update_tools(false)
+	var glow := _teleport_range_cells(START_POS)
+	var target := Vector2i(1, 1)
 
 	_demo_tween = create_tween()
-	# Đi mẫu 1 bước: S → (0,1)
-	_demo_tween.tween_interval(0.45)
+	# Nhấn DỊCH CHUYỂN -> các ô trong tầm sáng lên
+	_demo_tween.tween_interval(0.5)
+	_demo_tween.tween_callback(func() -> void:
+		if current_step_index != 1: return
+		_flash_tool_button(btn_teleport)
+		_set_teleport_glow(glow, true)
+	)
+	# Chọn ô (1,1): con trỏ nhảy tới, huy hiệu 3 -> 2
+	_demo_tween.tween_interval(1.3)
 	_demo_tween.tween_callback(func() -> void:
 		if current_step_index != 1 or board_tutorial == null: return
-		_visited_cells = [START_POS, Vector2i(0, 1)]
-		_current_cell = Vector2i(0, 1)
+		_set_teleport_glow(glow, false)
+		_visited_cells = [target]
+		_current_cell = target
 		board_tutorial.set_path(_visited_cells)
 		board_tutorial.set_player_cell(_current_cell, true)
 		var c := board_tutorial.get_cell(_current_cell)
 		if c != null:
 			c.play_step()
-	)
-	# Nhấn QUAY LẠI (huy hiệu 3 → 2)
-	_demo_tween.tween_interval(1.25)
-	_demo_tween.tween_callback(func() -> void:
-		if current_step_index != 1: return
-		_flash_tool_button(btn_undo)
-		_undo_left = TOOL_USES - 1
+		_teleport_left = TOOL_USES - 1
 		_update_tools(true)
-		spawn_board_text("-1", _button_center(btn_undo) + Vector2(0, -30), Color(0.78, 0.22, 0.22))
+		spawn_board_text("-1", _button_center(btn_teleport) + Vector2(0, -30), Color(0.78, 0.22, 0.22))
 	)
-	# Lùi lại ô cũ
-	_demo_tween.tween_interval(0.7)
-	_demo_tween.tween_callback(func() -> void:
-		if current_step_index != 1 or board_tutorial == null: return
-		reset_path()
-	)
-	# Trả huy hiệu về 3 cho vòng lặp sau
+	# Về lại ô xuất phát cho vòng lặp sau
 	_demo_tween.tween_interval(1.6)
 	_demo_tween.tween_callback(func() -> void:
 		if current_step_index != 1: return
-		_undo_left = TOOL_USES
+		reset_path()
+		_teleport_left = TOOL_USES
 		_update_tools(true)
 	)
 	_demo_tween.tween_interval(0.7)
-	_demo_tween.tween_callback(_run_undo_demo_cycle)
+	_demo_tween.tween_callback(_run_teleport_demo_cycle)
 
 
 ## Bước 3: demo GỢI Ý — nhấn nút, ô kế tiếp sáng nhịp 3 lần bằng Tween
@@ -204,7 +226,7 @@ func _run_hint_demo_cycle() -> void:
 	if current_step_index != 2 or not is_inside_tree() or board_tutorial == null:
 		return
 	reset_path()
-	_undo_left = TOOL_USES
+	_teleport_left = TOOL_USES
 	_hint_left = TOOL_USES
 	_update_tools(false)
 
@@ -245,7 +267,7 @@ func _pulse_hint_cell(pos: Vector2i) -> void:
 
 func _start_practice() -> void:
 	reset_path()
-	_undo_left = TOOL_USES
+	_teleport_left = TOOL_USES
 	_hint_left = TOOL_USES
 	_update_tools(true)
 
@@ -262,19 +284,29 @@ func _on_goal_reached(next: Vector2i) -> void:
 	show_step(4)
 
 
-func _on_undo_pressed() -> void:
-	if current_step_index != 3 or _undo_left <= 0:
+## Luyện tập: nhảy tới ô trong tầm 2 gần ô F nhất (tutorial không cần bước chọn ô)
+func _on_teleport_pressed() -> void:
+	if current_step_index != 3 or _teleport_left <= 0:
 		return
-	if _visited_cells.size() <= 1:
-		show_fail_feedback("STR_TUT_TOOL_FAIL_UNDO", "Chưa có bước nào để quay lại!")
+	var best := Vector2i(-1, -1)
+	var best_d := 1 << 20
+	for p in _teleport_range_cells(_current_cell):
+		var d := absi(p.x - FINISH_POS.x) + absi(p.y - FINISH_POS.y)
+		if d < best_d:
+			best_d = d
+			best = p
+	if best == Vector2i(-1, -1):
+		show_fail_feedback("STR_TUT_TOOL_FAIL_TELEPORT", "Không có ô nào để dịch chuyển tới!")
 		return
-	_undo_left -= 1
-	_visited_cells.pop_back()
-	_current_cell = _visited_cells.back()
+	_teleport_left -= 1
+	_visited_cells = [best]
+	_current_cell = best
 	if board_tutorial != null:
 		board_tutorial.set_path(_visited_cells)
 		board_tutorial.set_player_cell(_current_cell, true)
 	_update_tools(true)
+	if best == FINISH_POS:
+		_on_goal_reached(best)
 
 
 func _on_hint_pressed() -> void:

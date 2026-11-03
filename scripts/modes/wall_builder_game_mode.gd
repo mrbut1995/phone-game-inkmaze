@@ -15,7 +15,7 @@ extends BaseGameMode
 ##   báo **số đoạn còn lệch** (chỉ số lượng) + rung bàn cờ. Hết lượt gửi ⇒ THUA.
 ## - Hồi sinh (xem quảng cáo): **+1 LƯỢT GỬI** (dùng chung cơ chế LƯỢT THỬ §13.16).
 ## - GỢI Ý: mở + **KHOÁ** 1 đoạn tường THẬT (luôn là một nghiệm hợp lệ, không xoá được).
-## - UNDO: xoá đoạn tường vừa nối (bỏ qua các đoạn đã bị khoá).
+## - Muốn gỡ đoạn đã nối: kéo nối lại đúng khe đó (đoạn do GỢI Ý khoá thì không gỡ được).
 ## ============================================================================
 
 ## Số LƯỢT GỬI mỗi màn (hết lượt là thua)
@@ -427,26 +427,8 @@ func _drawn_count(pos: Vector2i) -> int:
 
 
 # ---------------------------------------------------------------------------
-# Undo / Hint riêng của chế độ
+# Hint riêng của chế độ
 # ---------------------------------------------------------------------------
-## Xoá đoạn tường vừa nối (bỏ qua đoạn đã bị Gợi ý khoá)
-func undo_drawn_wall(anchor_controller: AnchorController) -> bool:
-	if anchor_controller == null:
-		return false
-	var index := -1
-	for i in range(_draw_order.size() - 1, -1, -1):
-		if not locked.has(_draw_order[i]):
-			index = i
-			break
-	if index < 0:
-		return false
-	var key: String = _draw_order[index]
-	_draw_order.remove_at(index)
-	built.erase(key)
-	_apply_to_anchor(anchor_controller, key, false)
-	return true
-
-
 ## Gợi ý: mở + KHOÁ 1 đoạn tường THẬT chưa dựng (đoạn này không xoá được nữa)
 func hint_wall(anchor_controller: AnchorController, maze: MazeData) -> bool:
 	if anchor_controller == null or maze == null:

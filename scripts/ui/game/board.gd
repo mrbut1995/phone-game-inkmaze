@@ -13,6 +13,10 @@ signal anchor_tapped(anchor_id: int)
 signal anchor_connected(corner_a: Vector2i, corner_b: Vector2i)
 ## Người chơi bấm nút retry trên overlay "Hết nước đi" (game_controller lắng nghe để restart)
 signal no_moves_retry_pressed
+## Người chơi chạm 1 ô đang được tô sáng khi chọn Teleport (GameController lắng nghe)
+signal teleport_chosen(pos: Vector2i)
+## Người chơi chạm ra ngoài các ô sáng khi đang chọn Teleport -> huỷ chọn
+signal teleport_cancelled
 
 const CRASH_SFX_SCENE := preload("res://nodes/sfx/crash.tscn")
 const MINE_SFX_SCENE := preload("res://nodes/sfx/mine_explosion.tscn")
@@ -95,6 +99,8 @@ var _interaction_enabled := true
 # Player drag movement
 var _dragging_player := false
 var _player_current_cell := Vector2i.ZERO
+## Các ô đang sáng làm đích Teleport (rỗng = không ở bước chọn)
+var _teleport_targets: Array[Vector2i] = []
 var _drag_draw_sfx_on := false    # Đã phát tiếng miết bút trong lượt kéo này chưa
 
 # Cell tap tracking
@@ -277,6 +283,7 @@ func setup_maze(p_maze: MazeData, p_mode: BaseGameMode = null) -> void:
 	_width = maze.width
 	_height = maze.height
 	_interaction_enabled = true
+	_teleport_targets.clear()
 	_dragging_player = false
 	_pressed_cell = Vector2i(-1, -1)
 	_press_start_pos = Vector2.ZERO
@@ -635,7 +642,16 @@ func _build_cells() -> void:
 
 			c.set_text(text)
 			_sync_bomb_marker(c, pos)
+			_sync_lock_key(c, pos)
 			c.set_focused(false)
+
+## Đồng bộ biểu tượng KHOÁ / CHÌA KHOÁ của ô theo trạng thái trong MazeData.
+func _sync_lock_key(cell_node: MazeCell, pos: Vector2i) -> void:
+	if cell_node == null or maze == null:
+		return
+	cell_node.set_locked(maze.is_locked(pos))
+	cell_node.set_key(maze.key_id_at(pos) > 0)
+
 
 ## Đồng bộ biểu tượng Bomb cho ô (mode nào có mìn đã nổ — xem MinesweeperPathGameMode).
 func _sync_bomb_marker(cell_node: MazeCell, pos: Vector2i) -> void:
@@ -979,6 +995,70 @@ func show_mine_hit(pos: Vector2i) -> void:
 
 	_play_grid_shake()
 
+## Đi vào ô KHOÁ bị chặn: ô rung + con trỏ giật lùi nhẹ + tiếng gõ khoá.
+func show_lock_bump(pos: Vector2i) -> void:
+	var node := _cell_node(pos)
+	if node != null:
+		node.play_fail()
+	_snap_pen_for_impact()
+	if _cursor != null:
+		var recoil := (Vector2(_player_current_cell) - Vector2(pos)).normalized()
+		_cursor.play_bonk_recoil(recoil)
+	Sfx.play(Sfx.LOCK_BUMP)
+
+
+## Nhặt được chìa: biểu tượng chìa biến mất, các ô vừa mở khoá bung ra.
+func on_key_collected(pos: Vector2i, unlocked: Array) -> void:
+	var key_node := _cell_node(pos)
+	if key_node != null:
+		key_node.set_key(false)
+		key_node.pulse()
+	for u in unlocked:
+		var n := _cell_node(u as Vector2i)
+		if n != null:
+			n.play_unlock()
+	Sfx.play(Sfx.KEY_PICKUP)
+	spawn_floating_popup(tr("STR_KEY_PICKED"), pos, Color(0.78, 0.52, 0.04, 1.0))
+
+
+# ----------------------------------------------------------------------------
+# TELEPORT
+# ----------------------------------------------------------------------------
+## Tô sáng các ô đích; từ giờ lần chạm kế tiếp chọn đích (hoặc huỷ), KHÔNG vẽ nét.
+func show_teleport_targets(cells: Array[Vector2i]) -> void:
+	clear_teleport_targets()
+	_teleport_targets = cells.duplicate()
+	for p in _teleport_targets:
+		var n := _cell_node(p)
+		if n != null:
+			n.set_teleport_target(true)
+
+
+func clear_teleport_targets() -> void:
+	for p in _teleport_targets:
+		var n := _cell_node(p)
+		if n != null:
+			n.set_teleport_target(false)
+	_teleport_targets.clear()
+
+
+func is_selecting_teleport() -> bool:
+	return not _teleport_targets.is_empty()
+
+
+## Con trỏ NHẢY thẳng tới ô `pos` (bỏ qua tường): đặt lại đầu bút, hiệu ứng rơi xuống.
+func teleport_cursor_to(pos: Vector2i) -> void:
+	if _cursor == null or maze == null:
+		return
+	_player_current_cell = pos
+	var target_pos := cursor_pos_at(_cell_center(pos))
+	_cursor.position = target_pos
+	_snap_tip_to_center()
+	if DisplayServer.get_name() != "headless":
+		_cursor.play_spawn_drop(target_pos)
+	pulse_cell(pos)
+
+
 func pulse_cell(pos: Vector2i) -> void:
 	var node := _cell_node(pos)
 	if node != null:
@@ -1019,6 +1099,15 @@ func hide_all_walls() -> void:
 func refresh_cell_texts(dim_unwalkable: bool = false) -> void:
 	BoardCellsView.refresh_texts(_width, _height, _cell_node, maze, game_mode,
 			dim_unwalkable, _sync_bomb_marker)
+	_resync_lock_keys()
+
+func _resync_lock_keys() -> void:
+	if maze == null:
+		return
+	for y in _height:
+		for x in _width:
+			_sync_lock_key(_cell_node(Vector2i(x, y)), Vector2i(x, y))
+
 
 func apply_fog_of_war(_center: Vector2i, _radius: int, explored: Dictionary) -> void:
 	BoardCellsView.apply_fog(_width, _height, _cell_node, maze, game_mode,
@@ -1257,6 +1346,15 @@ func _on_press(local_pos: Vector2) -> void:
 	_has_dragged = false
 	_pressed_cell = Vector2i(-1, -1)
 	_drag_draw_sfx_on = false
+
+	# Đang chọn đích Teleport: lần chạm này chỉ để CHỌN ô sáng hoặc huỷ — không bắt đầu kéo nét
+	if not _teleport_targets.is_empty():
+		var tc := _hit_cell(local_pos)
+		if tc != Vector2i(-1, -1) and _teleport_targets.has(tc):
+			teleport_chosen.emit(tc)
+		else:
+			teleport_cancelled.emit()
+		return
 
 	var anchor_info := _hit_anchor_info(local_pos)
 	if not anchor_info.is_empty() and anchor_info.has("node"):

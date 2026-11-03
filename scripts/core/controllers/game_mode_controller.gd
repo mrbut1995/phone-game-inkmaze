@@ -2,7 +2,7 @@ class_name GameModeController
 extends Node
 ## ============================================================================
 ## Controller: Quản lý và chuyển đổi chiến lược chế độ chơi (GameMode Strategy).
-## Cung cấp khả năng chuyển đổi linh hoạt giữa 9 Game Modes của game.
+## Các chế độ còn lại: Play · Challenge · Daily · Dungeon · Blind Memory · Wall Builder.
 ## ============================================================================
 
 signal mode_changed(new_mode: BaseGameMode)
@@ -35,20 +35,8 @@ func set_mode_by_name(mode_name: String, difficulty: String = "medium") -> BaseG
 			new_mode = DailyChallengeGameMode.new(difficulty)
 		"dungeon":
 			new_mode = DungeonGameMode.new()
-		"minesweeper":
-			new_mode = MinesweeperPathGameMode.new()
-		"sum_path":
-			new_mode = SumPathGameMode.new(difficulty)
-		"countdown_cost":
-			new_mode = CountdownCostGameMode.new(difficulty)
 		"blind_memory":
 			new_mode = BlindMemoryGameMode.new(difficulty)
-		"fog_of_war":
-			new_mode = FogOfWarGameMode.new(difficulty)
-		"fading_ink":
-			new_mode = FadingInkGameMode.new(difficulty)
-		"one_stroke":
-			new_mode = OneStrokeGameMode.new(difficulty)
 		"wall_builder":
 			new_mode = WallBuilderGameMode.new(difficulty)
 		_:

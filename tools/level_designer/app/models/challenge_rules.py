@@ -22,6 +22,7 @@ NO_MOVE_OVERLAPPED = "no_move_overlapped"
 WALK_NUMBER_ONLY = "walk_number_only"
 WALK_EMPTY_ONLY = "walk_empty_only"
 BACKTRACK_LIMIT = "backtrack_limit"
+FOG_OF_WAR = "fog_of_war"
 
 PARAM_NONE = ""
 PARAM_SECONDS = "seconds"
@@ -47,8 +48,8 @@ RULES: dict[str, tuple[str, str, str, str]] = {
         "dễ 30 · thường 20 · khó 15",
     ),
     NO_TOOL: (
-        "Không dùng công cụ (Gợi ý / Hoàn tác)", PARAM_NONE, "",
-        "Bấm GỢI Ý hoặc HOÀN TÁC lần đầu là thua ngay (gộp no_hint + no_undo cũ)",
+        "Không dùng công cụ (Gợi ý / Dịch chuyển)", PARAM_NONE, "",
+        "Bấm GỢI Ý hoặc DỊCH CHUYỂN lần đầu là thua ngay (gộp no_hint + no_teleport cũ)",
     ),
     NO_MOVE_OVERLAPPED: (
         "Không đi lại trên đường đã đi", PARAM_NONE, "",
@@ -66,6 +67,10 @@ RULES: dict[str, tuple[str, str, str, str]] = {
         "Quay đầu tối đa N lần", PARAM_TURNS, "lượt",
         "Lùi về ô vừa rời quá N lần = thua. Tham số 0 = 3 lượt",
     ),
+    FOG_OF_WAR: (
+        "Sương mù: chỉ thấy ô quanh nhân vật", PARAM_NONE, "",
+        "Chỉ nhìn thấy các ô trong bán kính quanh nhân vật (trước đây là chế độ riêng fog_of_war_mode)",
+    ),
 }
 
 # Thứ tự hiển thị trong combobox (khớp CHALLENGE_IDS của game)
@@ -78,6 +83,7 @@ ORDER: list[str] = [
     WALK_NUMBER_ONLY,
     WALK_EMPTY_ONLY,
     BACKTRACK_LIMIT,
+    FOG_OF_WAR,
 ]
 
 # Luật cần tham số (còn lại tham số luôn = 0)

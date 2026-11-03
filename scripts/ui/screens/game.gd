@@ -22,10 +22,10 @@ var restart_btn: BaseButton = null
 var submit_btn: BaseButton = null
 ## Nút SKIP LEVEL — chỉ hiện khi ván này là ván chơi MÀN trong màn Chọn màn (`_apply_mode_buttons`)
 var skip_btn: BaseButton = null
-var undo_btn: BaseButton = null
+var teleport_btn: BaseButton = null
 var hint_btn: BaseButton = null
-## Nút CHƠI LẠI ẩn sẵn DƯỚI thanh nút — UIController hiện khi ván không còn thắng được nữa (Sum Path)
-var replay_btn: BaseButton = null
+### Nút CHƠI LẠI ẩn sẵn DƯỚI thanh nút — UIController hiện khi ván không còn thắng được nữa (Sum Path)
+#var replay_btn: BaseButton = null
 ## Panel HƯỚNG DẪN LUẬT CHƠI TÓM TẮT dưới bàn cờ (đổi nội dung theo chế độ)
 var hint_guide: HintGuide = null
 ## Mã chế độ đang chơi (để ghi lại nhãn nút công cụ mỗi khi gắn lại HUD)
@@ -44,21 +44,18 @@ var _mode_id := "level"
 @export var mission_controller : MissionController = null
 
 ## HUD theo chế độ chơi — mỗi chế độ có 2 scene HUD: bản DỌC (nodes/hud/<mode>.tscn, kế thừa
+## portrait/portrait.tscn) và bản NGANG (nodes/hud/landscape/game/<mode>.tscn). Xem scripts/ui/hud/base.gd
 const HUD_LEVEL := preload("res://nodes/hud/portrait/game/level_mode.tscn")
 const HUD_DUNGEON := preload("res://nodes/hud/portrait/game/dungeon_mode.tscn")
-const HUD_MINESWEEP := preload("res://nodes/hud/portrait/game/minesweep_hud.tscn")
-const HUD_SUM_PATH := preload("res://nodes/hud/portrait/game/sum_path_hud.tscn")
 const HUD_BLIND_MEMORY := preload("res://nodes/hud/portrait/game/blind_memory_hud.tscn")
-const HUD_COUNTDOWN := preload("res://nodes/hud/portrait/game/countdown_hud.tscn")
-const HUD_FADING_INK := preload("res://nodes/hud/portrait/game/fading_ink_hud.tscn")
-## Fog of War: THỜI GIAN + BẢNG SƯƠNG MÙ (lượt thử lại · tầm nhìn · cảnh báo) — không có thẻ Nhiệm vụ
-const HUD_FOG_OF_WAR := preload("res://nodes/hud/portrait/game/fog_of_war_hud.tscn")
-## One Stroke: THỜI GIAN + BẢNG TIẾN ĐỘ PHỦ KÍN (số ô đã đi · thanh tiến độ) — không có thẻ Nhiệm vụ
-const HUD_ONE_STROKE := preload("res://nodes/hud/portrait/game/one_stroke_hud.tscn")
 ## Wall Builder: THỜI GIAN + BẢNG TƯỜNG ĐÃ VẼ (đoạn đã dựng · lượt gửi) — không có thẻ Nhiệm vụ
 const HUD_WALL_BUILDER := preload("res://nodes/hud/portrait/game/wall_builder_hud.tscn")
 const HUD_CHALLENGE := preload("res://nodes/hud/portrait/game/challenge_hud.tscn")
+
+## Bản NGANG của từng chế độ (thẻ nằm trên · action bar 2 hàng nằm dưới, trong cùng HUD)
 #@export var game_mode : BaseGameMode
+## HUD đang gắn thuộc bản NGANG hay bản DỌC (đổi hướng màn hình là phải đổi cả biến thể HUD)
+var _hud_variant_landscape := false
 
 
 ## Gắn node UI của BỐ CỤC ĐANG HIỂN THỊ.
@@ -126,6 +123,8 @@ func _wire_controllers() -> void:
 	_connect_once(board_view, "anchor_connected", grid_controller, "handle_anchor_connected")
 	# Bàn cờ → GameController (overlay retry)
 	_connect_once(board_view, "no_moves_retry_pressed", game_controller, "_on_no_moves_retry_pressed")
+	_connect_once(board_view, "teleport_chosen", game_controller, "_on_teleport_chosen")
+	_connect_once(board_view, "teleport_cancelled", game_controller, "_on_teleport_cancelled")
 	# GridController → GameController (đếm bước · đâm tường · tới đích · hết đường)
 	_connect_once(grid_controller, "step_consumed", game_controller, "_on_step_consumed")
 	_connect_once(grid_controller, "wall_hit", game_controller, "_on_wall_hit")
@@ -151,7 +150,7 @@ func _wire_controllers() -> void:
 	_connect_once(ui_controller, "back_requested", game_controller, "_on_back_requested")
 	_connect_once(ui_controller, "pause_toggled", game_controller, "_on_pause_toggled")
 	_connect_once(ui_controller, "memorize_finished", game_controller, "_on_memorize_finished")
-	# Nút trên thanh Status — dây khai trong `scenes/game.tscn` (bản dọc);
+	# Nút trên thanh Status — dây khai trong `scenes/game.tscn` (cả 2 hướng);
 	# guard chỉ nối lại nếu dây bị mất: nút Pause → script màn, nút "?" → GameController
 	if layout != null and layout.pause_btn != null:
 		ensure_signal(layout.pause_btn, &"pressed", &"_on_pause_pressed")
@@ -159,12 +158,13 @@ func _wire_controllers() -> void:
 		ensure_signal(layout.instruction_btn, &"pressed", &"open_instruction", [], game_controller)
 
 
-## Mọi nút của màn chơi: 3 nút trên THANH TRẠNG THÁI (layout) + 5 nút trong THANH HÀNH ĐỘNG (HUD)
+## Mọi nút của màn chơi: 2 nút trên THANH TRẠNG THÁI (layout) + các nút trong THANH HÀNH ĐỘNG (HUD)
+## (nút CHƠI LẠI giờ nằm trong thanh hành động của HUD — không còn trên thanh trạng thái)
 func _all_buttons() -> Array:
 	return [
 		layout.pause_btn if layout != null else null,
 		layout.instruction_btn if layout != null else null,
-		restart_btn, submit_btn, skip_btn, undo_btn, hint_btn, replay_btn,
+		restart_btn, submit_btn, skip_btn, teleport_btn, hint_btn,
 	]
 
 
@@ -179,7 +179,8 @@ func _connect_once(source: Object, signal_name: String, target: Object, method: 
 		source.connect(signal_name, cb)
 
 
-## Khởi động (và đổi bố cục nếu có): gắn lại refs rồi gắn lại HUD + thanh nút.
+## Xoay màn hình: chuyển bàn cờ sang `BoardSlot` của bố cục mới rồi gắn lại HUD + thanh nút.
+## Controllers + Board DÙNG CHUNG (ngoài layout) nên ván đang chơi KHÔNG bị mất khi xoay.
 func _on_orientation_changed(_is_landscape_now: bool) -> void:
 	_rebind_after_orientation.call_deferred()
 
@@ -203,8 +204,8 @@ func _mount_board() -> void:
 	_layout_call("mount_board", [board_view])
 
 
-## Gọi hàm của SCRIPT BỐ CỤC đang hiển thị (gắn bàn cờ · cỡ HUD · nút công cụ —
-## xem `scripts/layout/portrait/game.gd`).
+## Gọi hàm của SCRIPT BỐ CỤC đang hiển thị — mỗi hướng tự lo phần khác biệt của mình
+## (gắn bàn cờ · cỡ HUD · nút công cụ · chọn biến thể HUD: xem scripts/orientation/*/game.gd).
 func _layout_call(method: String, args: Array = []) -> Variant:
 	var holder: Node = active_layout()
 	if holder == null or not holder.has_method(method):
@@ -212,9 +213,16 @@ func _layout_call(method: String, args: Array = []) -> Variant:
 	return holder.callv(method, args)
 
 
-## (PORTRAIT-ONLY) Giữ hàm cho tương thích — không còn bố cục ngang.
+## Bố cục đang hiển thị có phải bản NGANG không (do chính script bố cục trả lời)
 func _layout_is_landscape() -> bool:
-	return false
+	var answer: Variant = _layout_call("is_landscape_layout")
+	return bool(answer) if answer != null else is_landscape
+
+
+## Chọn biến thể HUD (dọc/ngang) theo bố cục đang hiển thị
+func _hud_variant(portrait_scene: PackedScene, landscape_scene: PackedScene) -> PackedScene:
+	var picked: Variant = _layout_call("hud_variant", [portrait_scene, landscape_scene])
+	return picked as PackedScene if picked != null else portrait_scene
 
 
 ## Cỡ HUD do BỐ CỤC quyết định — dọc giữ nguyên 980 thiết kế, ngang co theo bề rộng sidebar
@@ -243,7 +251,7 @@ func _ready() -> void:
 		UIAnim.play_slide_in(layout.status_bar, Vector2(0, -25), 0.0, 0.25)
 	if layout != null and layout.hud_slot != null:
 		UIAnim.play_slide_in(layout.hud_slot, Vector2(0, -15), 0.04, 0.25)
-	var button_bar := undo_btn.get_parent() as Control if undo_btn != null else null
+	var button_bar := teleport_btn.get_parent() as Control if teleport_btn != null else null
 	if button_bar != null:
 		UIAnim.play_slide_in(button_bar, Vector2(0, 30), 0.08, 0.25)
 
@@ -299,11 +307,6 @@ func resume_after_tutorial() -> void:
 	_resume_timer_if_paused()
 
 
-func _on_undo_pressed() -> void:
-	if game_controller != null:
-		game_controller.undo()
-
-
 func _on_hint_pressed() -> void:
 	if game_controller != null:
 		game_controller.hint()
@@ -321,6 +324,10 @@ func _apply_mode_buttons(mode_name: String) -> void:
 		submit_btn.visible = mode_name.to_lower() == "wall_builder"
 	if skip_btn != null:
 		skip_btn.visible = _is_level_run()
+	# Wall Builder dựng tường chứ không đi con trỏ -> không có Teleport
+	if teleport_btn != null:
+		teleport_btn.visible = mode_name.to_lower() != "wall_builder"
+
 	# Dungeon: ẩn nút "?" (không có tutorial cho dungeon).
 	# LUỒNG HỌC LẦN ĐẦU: các màn M1..M4 tự mở đúng bài học theo trình tự — ẩn nút "?"
 	# để người chơi mới không mở bài sai nhịp của luồng.
@@ -397,7 +404,8 @@ func _start_floor_for(mode_name: String) -> int:
 # ---------------------------------------------------------------------------
 # HUD theo chế độ chơi
 # ---------------------------------------------------------------------------
-## Scene HUD ứng với từng chế độ (bản portrait-only: dùng thẳng scene HUD dọc)
+## Scene HUD ứng với từng chế độ — biến thể (dọc/ngang) do BỐ CỤC quyết định qua `hud_variant()`
+## (xem nodes/hud/*.tscn + nodes/hud/landscape/game/*.tscn + scripts/orientation/*/game.gd)
 func _hud_scene_for(mode_name: String) -> PackedScene:
 	match mode_name.to_lower():
 		"dungeon":
@@ -406,20 +414,8 @@ func _hud_scene_for(mode_name: String) -> PackedScene:
 			return HUD_LEVEL
 		"daily_challenge":
 			return HUD_CHALLENGE
-		"minesweeper":
-			return HUD_MINESWEEP
-		"sum_path":
-			return HUD_SUM_PATH
 		"blind_memory":
 			return HUD_BLIND_MEMORY
-		"countdown_cost":
-			return HUD_COUNTDOWN
-		"fading_ink":
-			return HUD_FADING_INK
-		"fog_of_war":
-			return HUD_FOG_OF_WAR
-		"one_stroke":
-			return HUD_ONE_STROKE
 		"wall_builder":
 			return HUD_WALL_BUILDER
 		"challenge":
@@ -436,20 +432,8 @@ func _hud_class_for(mode_name: String) -> GDScript:
 			return LevelHUD
 		"daily_challenge":
 			return ChallengeHUD
-		"minesweeper":
-			return MinesweepHUD
-		"sum_path":
-			return SumPathHUD
 		"blind_memory":
 			return BlindMemoryHUD
-		"countdown_cost":
-			return CountdownHUD
-		"fading_ink":
-			return FadingInkHUD
-		"fog_of_war":
-			return FogOfWarHUD
-		"one_stroke":
-			return OneStrokeHUD
 		"wall_builder":
 			return WallBuilderHUD
 		"challenge":
@@ -462,6 +446,7 @@ func _hud_class_for(mode_name: String) -> GDScript:
 ## cả 2 thao tác (kéo nhân vật đi đường · kéo nối 2 Anchor để đánh dấu tường), GỬI BÀI của Wall
 ## Builder nằm ở nút `Submit` trên thanh hành động (xem `_apply_mode_buttons` / `_wire_action_bar`).
 
+
 ## Thay khung Information bằng HUD của chế độ đang chơi rồi gắn lại cho UIController /
 ## MissionController (thẻ Nhiệm vụ nằm trong HUD nên phải trỏ lại node mới).
 func _apply_hud_for_mode(mode_name: String) -> void:
@@ -471,10 +456,12 @@ func _apply_hud_for_mode(mode_name: String) -> void:
 	var slot: Control = layout.hud_slot if layout != null and is_instance_valid(layout) else null
 	if slot == null or not is_instance_valid(slot):
 		return
-	# Đủ chỗ khi HUD hiện tại THUỘC layout đang hiển thị và ĐÚNG chế độ
+	var want_landscape := _layout_is_landscape()
+	# Đủ chỗ khi HUD hiện tại THUỘC layout đang hiển thị, ĐÚNG chế độ VÀ đúng biến thể (dọc ↔ ngang)
 	if hud_host != null and is_instance_valid(hud_host) \
 			and layout.is_ancestor_of(hud_host) \
-			and hud_host.get_script() == _hud_class_for(mode_name):
+			and hud_host.get_script() == _hud_class_for(mode_name) \
+			and _hud_variant_landscape == want_landscape:
 		_bind_hud_nodes()
 		return
 	var scene := _hud_scene_for(mode_name)
@@ -492,9 +479,10 @@ func _apply_hud_for_mode(mode_name: String) -> void:
 	# trong sidebar do layout dàn) ⇒ chép khung của KHUNG GỐC sang HUD mới, nếu không HUD sẽ nhảy
 	# về góc trái canvas.
 	_copy_layout_from(slot, new_hud)
+	_hud_variant_landscape = want_landscape
 	# ⚠️ KHÔNG xoá khung gốc (`layout.hud_slot`): mỗi lần xoay màn hình `_bind_refs()` cần nó làm
 	# mốc để đặt HUD mới. Xoá nó ⇒ `layout.hud_slot` thành node đã free ⇒ xoay/resize
-	# tiếp theo là lỗi "Trying to cast a freed object" (tái hiện: xoay dọc→ngang ở mode Minesweeper).
+	# tiếp theo là lỗi "Trying to cast a freed object" (tái hiện: xoay dọc→ngang ở mode Blind Memory).
 	if hud_host != null and is_instance_valid(hud_host) and hud_host != slot:
 		hud_host.queue_free()
 	slot.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
@@ -545,10 +533,16 @@ func _bind_hud_nodes() -> void:
 	# HUD phủ toàn khung nên phải NHƯỜNG chạm/kéo cho bàn cờ phía sau (nút bên trong vẫn ăn)
 	# — HUD tự lo việc này, màn chơi không đụng node con của nó.
 	hud.allow_board_input()
+	# Bản NGANG: ActionBar nằm trong LAYOUT (cùng cột với bàn cờ), không nằm trong HUD —
+	# gán TRƯỚC khi hỏi nút, nếu không các getter dưới đây trả null ⇒ nút không được nối tín hiệu.
+	if _layout_is_landscape():
+		var gl := layout as GameLayout
+		if gl != null and gl.landscape_action_bar != null:
+			hud.action_bar_node = gl.landscape_action_bar
 	restart_btn = hud.restart_btn()
 	submit_btn = hud.submit_btn()
 	skip_btn = hud.skip_btn()
-	undo_btn = hud.undo_btn()
+	teleport_btn = hud.teleport_btn()
 	hint_btn = hud.hint_btn()
 	#replay_btn = hud.replay_btn()
 	# HintGuide nằm TRONG HUD (đầu `ActionBar` bản dọc / `Content` bản ngang) ⇒ gắn lại theo HUD mới,
@@ -579,12 +573,12 @@ func _wire_action_bar() -> void:
 			skip_btn.pressed.connect(_on_skip_pressed)
 		if submit_btn != null and not submit_btn.pressed.is_connected(game_controller.submit_build):
 			submit_btn.pressed.connect(game_controller.submit_build)
-		if undo_btn != null and not undo_btn.pressed.is_connected(game_controller.undo):
-			undo_btn.pressed.connect(game_controller.undo)
+		if teleport_btn != null and not teleport_btn.pressed.is_connected(game_controller.teleport):
+			teleport_btn.pressed.connect(game_controller.teleport)
 		if hint_btn != null and not hint_btn.pressed.is_connected(game_controller.hint):
 			hint_btn.pressed.connect(game_controller.hint)
-		if replay_btn != null and not replay_btn.pressed.is_connected(game_controller.restart_run):
-			replay_btn.pressed.connect(game_controller.restart_run)
+		#if replay_btn != null and not replay_btn.pressed.is_connected(game_controller.restart_run):
+			#replay_btn.pressed.connect(game_controller.restart_run)
 	if ui_controller != null:
-		ui_controller.undo_button = undo_btn
-		ui_controller.replay_button = replay_btn
+		ui_controller.teleport_button = teleport_btn
+		#ui_controller.replay_button = replay_btn

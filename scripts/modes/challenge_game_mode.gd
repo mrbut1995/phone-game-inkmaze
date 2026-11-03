@@ -8,15 +8,17 @@ extends StandardGameMode
 ## Người chơi phải HOÀN THÀNH yêu cầu thử thách để thắng — VI PHẠM quy tắc (hoặc quá hạn)
 ## là THUA NGAY, mở popup `gameover_challenge.tscn`. Thắng màn mở `winning_challenge.tscn`.
 ##
-## 8 thử thách (id trong CHALLENGE_IDS):
+## 9 thử thách (id trong CHALLENGE_IDS):
 ##   countdown           — hoàn thành TRƯỚC khi hết đếm ngược (giây)
 ##   move_limit          — hoàn thành trong TỐI ĐA N bước (vượt N = thua)
 ##   step_timer          — MỖI BƯỚC phải đi trong X giây (đồng hồ con, reset sau mỗi bước)
-##   no_tool             — KHÔNG dùng CÔNG CỤ: bấm GỢI Ý hoặc HOÀN TÁC = thua (gộp no_hint + no_undo)
+##   no_tool             — KHÔNG dùng CÔNG CỤ: bấm GỢI Ý hoặc DỊCH CHUYỂN = thua
 ##   no_move_overlapped  — KHÔNG đi lại trên đường đã đi (thay luật cũ no_revisit, tên rõ hơn)
 ##   walk_number_only    — CHỈ đi trên ô CÓ SỐ (bước vào ô không số = thua)
 ##   walk_empty_only     — CHỈ đi trên ô KHÔNG SỐ (bước vào ô có số = thua)
 ##   backtrack_limit     — quay đầu (lùi về ô vừa rời) tối đa N lần (vượt N = thua)
+##   fog_of_war          — SƯƠNG MÙ: chỉ thấy số ở các ô quanh nhân vật (bán kính 1), tường ẩn hết
+##                         (gộp từ chế độ Special "Fog of War" cũ — đâm tường vẫn = thua như Play)
 ##
 ## HUD (ChallengeHUD): Head = tên luật · Value = số chính · Sub = chú thích nhỏ.
 ## Phần THEO DÕI VI PHẠM nằm ở GameController (xem `_challenge_tick/_challenge_after_step`).
@@ -30,10 +32,11 @@ const NO_MOVE_OVERLAPPED := "no_move_overlapped"
 const WALK_NUMBER_ONLY := "walk_number_only"
 const WALK_EMPTY_ONLY := "walk_empty_only"
 const BACKTRACK_LIMIT := "backtrack_limit"
+const FOG_OF_WAR := "fog_of_war"
 
 const CHALLENGE_IDS: PackedStringArray = [
 	COUNTDOWN, MOVE_LIMIT, STEP_TIMER, NO_TOOL,
-	NO_MOVE_OVERLAPPED, WALK_NUMBER_ONLY, WALK_EMPTY_ONLY, BACKTRACK_LIMIT,
+	NO_MOVE_OVERLAPPED, WALK_NUMBER_ONLY, WALK_EMPTY_ONLY, BACKTRACK_LIMIT, FOG_OF_WAR,
 ]
 
 ## Khoá dịch TÊN LUẬT (Head HUD + chữ trong popup)
@@ -46,6 +49,7 @@ const HEAD_KEYS := {
 	WALK_NUMBER_ONLY: "STR_CHALLENGE_HEAD_WALK_NUMBER",
 	WALK_EMPTY_ONLY: "STR_CHALLENGE_HEAD_WALK_EMPTY",
 	BACKTRACK_LIMIT: "STR_CHALLENGE_HEAD_BACKTRACK",
+	FOG_OF_WAR: "STR_CHALLENGE_HEAD_FOG",
 }
 const NAME_KEYS := {
 	COUNTDOWN: "STR_CHALLENGE_NAME_COUNTDOWN",
@@ -56,6 +60,7 @@ const NAME_KEYS := {
 	WALK_NUMBER_ONLY: "STR_CHALLENGE_NAME_WALK_NUMBER",
 	WALK_EMPTY_ONLY: "STR_CHALLENGE_NAME_WALK_EMPTY",
 	BACKTRACK_LIMIT: "STR_CHALLENGE_NAME_BACKTRACK",
+	FOG_OF_WAR: "STR_CHALLENGE_NAME_FOG",
 }
 ## Khoá dịch CHÚ THÍCH NHỎ dưới Value (Sub)
 const SUB_KEYS := {
@@ -67,6 +72,7 @@ const SUB_KEYS := {
 	WALK_NUMBER_ONLY: "STR_CHALLENGE_SUB_WALK_NUMBER",
 	WALK_EMPTY_ONLY: "STR_CHALLENGE_SUB_WALK_EMPTY",
 	BACKTRACK_LIMIT: "STR_CHALLENGE_SUB_BACKTRACK",
+	FOG_OF_WAR: "STR_CHALLENGE_SUB_FOG",
 }
 ## Khoá dịch LÝ DO THUA (popup GameOver thử thách) — theo `reason` GameController gửi
 const FAIL_KEYS := {
@@ -87,11 +93,17 @@ const DEFAULT_BACKTRACK_LIMIT := 3
 const COUNTDOWN_BASE := 60
 const COUNTDOWN_PER_CELL := 4
 const COUNTDOWN_MIN := 75
+## Fog of War: bán kính nhìn thấy số quanh nhân vật (1 = 3×3 ô)
+const FOG_RADIUS := 1
 
 ## Thử thách đang gắn (rỗng = ván này chơi như Play Mode thường)
 var challenge_id := ""
 ## Tham số thử thách: số giây / số bước / số lượt tuỳ luật (0 = lấy mặc định)
 var challenge_param := 0
+
+## Fog of War: vị trí nhân vật + các ô đã được "soi sáng" (để Board làm mờ ô chưa khám phá)
+var _fog_pos: Vector2i = Vector2i.ZERO
+var _fog_explored: Dictionary = {}
 
 
 func _init(p_difficulty := "medium") -> void:
@@ -130,6 +142,10 @@ func blocks_tool() -> bool:
 
 
 ## 2 luật "đi trên ô ...": kiểm ô ĐÍCH trước khi bước (xem `evaluate_move`)
+func is_fog_rule() -> bool:
+	return challenge_id == FOG_OF_WAR
+
+
 func is_walk_rule() -> bool:
 	return challenge_id == WALK_NUMBER_ONLY or challenge_id == WALK_EMPTY_ONLY
 
@@ -176,7 +192,19 @@ func setup_floor(floor_number: int) -> MazeData:
 		set_challenge(lvl.challenge, lvl.challenge_param)
 	if is_active() and challenge_param <= 0:
 		challenge_param = _default_param(maze)
+	prepare_rule(maze)
 	return maze
+
+
+## Chuẩn bị riêng của từng luật SAU khi có bàn (Fog of War: ẩn mọi tường + mở sương quanh S).
+## `DailyChallengeGameMode` (tự sinh bàn) cũng gọi hàm này.
+func prepare_rule(maze: MazeData) -> void:
+	if not is_fog_rule() or maze == null:
+		return
+	maze.set_all_walls_visible(false)
+	_fog_explored.clear()
+	_fog_pos = maze.get_start()
+	_fog_reveal(_fog_pos, maze)
 
 
 ## Param mặc định khi màn không ghi (countdown theo diện tích bàn · move_limit = ngân sách bước)
@@ -223,6 +251,52 @@ func cell_allowed_by_rule(pos: Vector2i, maze: MazeData) -> bool:
 	return has_number if challenge_id == WALK_NUMBER_ONLY else not has_number
 
 
+## Fog of War: số chỉ hiện ở ô trong tầm nhìn quanh nhân vật (S/F luôn hiện)
+func get_cell_text(pos: Vector2i, maze: MazeData) -> String:
+	if maze == null or not is_fog_rule():
+		return super.get_cell_text(pos, maze)
+	if pos == maze.get_start():
+		return "S"
+	if pos == maze.get_end():
+		return "F"
+	var d := (pos - _fog_pos).abs()
+	if d.x <= FOG_RADIUS and d.y <= FOG_RADIUS:
+		var count := maze.get_wall_count(pos)
+		return "" if count == 0 else str(count)
+	return ""
+
+
+func on_grid_setup(grid_view: Control, maze: MazeData) -> void:
+	if is_fog_rule() and maze != null:
+		prepare_rule(maze)
+		_fog_apply(grid_view)
+
+
+func on_player_moved(grid_view: Control, new_pos: Vector2i, maze: MazeData) -> void:
+	if is_fog_rule() and maze != null:
+		_fog_pos = new_pos
+		_fog_reveal(new_pos, maze)
+		_fog_apply(grid_view)
+
+
+## Hồi sinh / về lại ô: mở sương quanh vị trí mới
+func on_respawned(grid_view: Control, pos: Vector2i, maze: MazeData) -> void:
+	on_player_moved(grid_view, pos, maze)
+
+
+func _fog_reveal(center: Vector2i, maze: MazeData) -> void:
+	for dy in range(-FOG_RADIUS, FOG_RADIUS + 1):
+		for dx in range(-FOG_RADIUS, FOG_RADIUS + 1):
+			var p := center + Vector2i(dx, dy)
+			if maze.is_in_bounds(p):
+				_fog_explored[p] = true
+
+
+func _fog_apply(grid_view: Control) -> void:
+	if grid_view != null and grid_view.has_method("apply_fog_of_war"):
+		grid_view.apply_fog_of_war(_fog_pos, FOG_RADIUS, _fog_explored)
+
+
 ## Dòng phụ dưới tiêu đề màn = tên luật thử thách (chưa có thử thách -> như Play Mode)
 func get_hud_subtitle(_floor_number: int) -> String:
 	if not is_active():
@@ -250,6 +324,8 @@ func hud_state(seconds_left: float, moves_used: int, step_seconds_left: float, b
 		BACKTRACK_LIMIT:
 			value = str(backtracks_left)
 			low = backtracks_left <= 1
+		FOG_OF_WAR:
+			value = str(FOG_RADIUS)
 	var sub := tr(sub_key())
 	# 2 luật "đếm số" hiện kèm hạn mức: "12  /20 BƯỚC" · "2  /3 LƯỢT"
 	if challenge_id == MOVE_LIMIT or challenge_id == BACKTRACK_LIMIT:

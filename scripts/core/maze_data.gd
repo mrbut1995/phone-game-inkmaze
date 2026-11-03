@@ -32,6 +32,13 @@ var _h_visible: Array = []
 var _wall_count: Array = []      # _wall_count[y][x]
 var _tree_edges: Dictionary = {} # key cạnh thuộc cây khung (bắt buộc mở)
 
+## Ô KHOÁ: pos -> id khoá (>= 1). Ô khoá KHÔNG đi vào được cho tới khi nhặt CHÌA cùng id.
+var _locks: Dictionary = {}
+## Ô CHÌA: pos -> id chìa (>= 1). Chìa được nhặt khi nhân vật bước vào ô (kể cả khi dịch chuyển tới).
+var _keys: Dictionary = {}
+## id chìa đã nhặt trong ván này (id -> true) — mở mọi ô khoá cùng id
+var _opened: Dictionary = {}
+
 
 func generate(p_width: int, p_height: int, p_visible_ratio: float) -> void:
 	width = maxi(2, p_width)
@@ -379,6 +386,120 @@ func get_shortest_path(from_pos: Vector2i, to_pos: Vector2i) -> Array[Vector2i]:
 				parent[nxt] = cur
 				queue.append(nxt)
 
+	return []
+
+
+# ---------------------------------------------------------------------------
+# Ô KHOÁ + CHÌA KHOÁ
+# ---------------------------------------------------------------------------
+## Đặt 1 ô khoá (id >= 1). Ô S/F và ô ngoài board không được khoá.
+func add_lock(pos: Vector2i, lock_id := 1) -> void:
+	if not is_cell_active(pos) or pos == start or pos == end:
+		return
+	_locks[pos] = maxi(lock_id, 1)
+
+
+## Đặt 1 chìa khoá (id >= 1) lên ô. Ô S không đặt chìa (nhặt ngay từ đầu thì vô nghĩa).
+func add_key(pos: Vector2i, key_id := 1) -> void:
+	if not is_cell_active(pos) or pos == start or _locks.has(pos):
+		return
+	_keys[pos] = maxi(key_id, 1)
+
+
+func has_locks() -> bool:
+	return not _locks.is_empty()
+
+
+## id khoá của ô (0 = ô không phải ô khoá). KHÔNG xét đã mở hay chưa — xem `is_locked()`.
+func lock_id_at(pos: Vector2i) -> int:
+	return int(_locks.get(pos, 0))
+
+
+## id chìa còn nằm trên ô (0 = không có chìa — chưa từng có hoặc đã nhặt)
+func key_id_at(pos: Vector2i) -> int:
+	return int(_keys.get(pos, 0))
+
+
+## Ô đang BỊ KHOÁ (có khoá và chưa nhặt chìa cùng id) — không đi / dịch chuyển vào được
+func is_locked(pos: Vector2i) -> bool:
+	return _locks.has(pos) and not _opened.has(int(_locks[pos]))
+
+
+## Toạ độ mọi ô khoá còn đóng (để Board vẽ)
+func locked_cells() -> Array[Vector2i]:
+	var out: Array[Vector2i] = []
+	for pos: Vector2i in _locks:
+		if is_locked(pos):
+			out.append(pos)
+	return out
+
+
+func key_cells() -> Array[Vector2i]:
+	var out: Array[Vector2i] = []
+	for pos: Vector2i in _keys:
+		out.append(pos)
+	return out
+
+
+## Nhân vật vừa bước vào `pos`: có chìa thì NHẶT + mở mọi ô khoá cùng id.
+## Trả về `{ "key_id": int, "unlocked": Array[Vector2i] }`, rỗng nếu ô không có chìa.
+func collect_key(pos: Vector2i) -> Dictionary:
+	if not _keys.has(pos):
+		return {}
+	var key_id := int(_keys[pos])
+	_keys.erase(pos)
+	var unlocked: Array[Vector2i] = []
+	if not _opened.has(key_id):
+		_opened[key_id] = true
+		for lock_pos: Vector2i in _locks:
+			if int(_locks[lock_pos]) == key_id:
+				unlocked.append(lock_pos)
+	return {"key_id": key_id, "unlocked": unlocked}
+
+
+## Đường đi ngắn nhất `from_pos -> to_pos` CÓ TÍNH ô khoá/chìa (BFS theo cặp ô + tập chìa đã nhặt):
+## đường có thể đi vòng qua ô chìa trước rồi mới vào ô khoá. Dùng cho Gợi ý; mê cung không có
+## khoá thì kết quả giống `get_shortest_path()`. Rỗng = hiện không có đường (VD thiết kế thiếu chìa).
+func get_play_path(from_pos: Vector2i, to_pos: Vector2i) -> Array[Vector2i]:
+	if _locks.is_empty():
+		return get_shortest_path(from_pos, to_pos)
+	if not is_cell_active(from_pos) or not is_cell_active(to_pos):
+		return []
+	var opened_mask := 0
+	for kid: int in _opened:
+		opened_mask |= 1 << clampi(kid, 0, 30)
+	var cells := width * height
+	var start_state := from_pos.y * width + from_pos.x + cells * opened_mask
+	var parent: Dictionary = {start_state: -1}
+	var queue: Array[int] = [start_state]
+	while not queue.is_empty():
+		var state: int = queue.pop_front()
+		var mask := floori(float(state) / float(cells))
+		var cell_index := state % cells
+		var cur := Vector2i(cell_index % width, floori(float(cell_index) / float(width)))
+		if cur == to_pos:
+			var rev: Array[Vector2i] = []
+			var walk := state
+			while walk != -1:
+				var wi := walk % cells
+				rev.append(Vector2i(wi % width, floori(float(wi) / float(width))))
+				walk = int(parent[walk])
+			rev.reverse()
+			return rev
+		for d: Vector2i in [Vector2i.LEFT, Vector2i.RIGHT, Vector2i.UP, Vector2i.DOWN]:
+			var nxt := cur + d
+			if not is_in_bounds(nxt) or not is_cell_active(nxt) or has_wall(cur, nxt):
+				continue
+			if _locks.has(nxt) and not _opened.has(int(_locks[nxt])) \
+					and (mask & (1 << clampi(int(_locks[nxt]), 0, 30))) == 0:
+				continue
+			var nmask := mask
+			if _keys.has(nxt):
+				nmask |= 1 << clampi(int(_keys[nxt]), 0, 30)
+			var nstate := nxt.y * width + nxt.x + cells * nmask
+			if not parent.has(nstate):
+				parent[nstate] = state
+				queue.append(nstate)
 	return []
 
 

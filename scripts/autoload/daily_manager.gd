@@ -36,12 +36,12 @@ const DAY_STARS_MAX := PLAY_STARS_MAX + CHALLENGE_STARS_MAX
 const UNLOCK_COST := 50
 
 ## Mốc thưởng THÁNG — đúng như mockup `daily_challenge.svg` (15★ · 30★ · 45★ · 60★).
-## `coins`/`hint`/`undo`/`skip` = số lượng thưởng (0 = không thưởng loại đó).
+## `coins`/`hint`/`teleport`/`skip` = số lượng thưởng (0 = không thưởng loại đó).
 const MILESTONES: Array[Dictionary] = [
-	{"stars": 15, "coins": 100, "hint": 0, "undo": 0, "skip": 0},
-	{"stars": 30, "coins": 0, "hint": 2, "undo": 0, "skip": 0},
-	{"stars": 45, "coins": 250, "hint": 0, "undo": 2, "skip": 0},
-	{"stars": 60, "coins": 500, "hint": 3, "undo": 0, "skip": 0},
+	{"stars": 15, "coins": 100, "hint": 0, "teleport": 0, "skip": 0},
+	{"stars": 30, "coins": 0, "hint": 2, "teleport": 0, "skip": 0},
+	{"stars": 45, "coins": 250, "hint": 0, "teleport": 2, "skip": 0},
+	{"stars": 60, "coins": 500, "hint": 3, "teleport": 0, "skip": 0},
 ]
 
 ## "YYYY_MM" -> { "days": { ngày: {"play": int, "challenge": int} }, "claimed": Array[int] }
@@ -245,7 +245,7 @@ func reward_text(def: Dictionary) -> String:
 	var coins := int(def.get("coins", 0))
 	if coins > 0:
 		parts.append(tr("STR_DAILY_REWARD_COINS").format([coins]))
-	for tool_id in ["hint", "undo", "skip"]:
+	for tool_id in ["hint", "teleport", "skip"]:
 		var amount := int(def.get(tool_id, 0))
 		if amount > 0:
 			parts.append(tr("STR_DAILY_TOOL_%s" % tool_id.to_upper()).format([amount]))
@@ -261,7 +261,7 @@ func _grant(def: Dictionary) -> void:
 	var gm: Node = Svc.game()
 	if gm == null or not gm.has_method("grant_tool_uses"):
 		return
-	for tool_id in ["hint", "undo", "skip"]:
+	for tool_id in ["hint", "teleport", "skip"]:
 		var amount := int(def.get(tool_id, 0))
 		if amount > 0:
 			gm.call("grant_tool_uses", tool_id, amount, "daily_milestone")

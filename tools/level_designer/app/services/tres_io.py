@@ -62,6 +62,9 @@ def dumps(level: LevelModel) -> str:
         "h_walls = %s" % _gd_bytes(level.h_walls),
         "h_walls_visible = %s" % _gd_bytes(level.h_walls_visible),
         "cell_mask = %s" % _gd_mask(level),
+        # Ô KHOÁ + CHÌA KHOÁ — bộ ba (x, y, id), khớp LevelData.lock_cells / key_cells
+        "lock_cells = %s" % _gd_int_array(_flatten_triples(level.lock_cells)),
+        "key_cells = %s" % _gd_int_array(_flatten_triples(level.key_cells)),
         "mission_types = %s" % _gd_string_array([c[0] for c in level.missions]),
         "mission_params = %s" % _gd_int_array([c[1] for c in level.missions]),
         "custom_cell_values = %s" % _gd_custom_values(level),
@@ -168,6 +171,10 @@ def loads(text: str) -> LevelModel:
             level.h_walls_visible = _parse_bytes(value)
         elif key == "cell_mask":
             level.cell_mask = _parse_bytes(value)
+        elif key == "lock_cells":
+            level.lock_cells = _parse_triples(value)
+        elif key == "key_cells":
+            level.key_cells = _parse_triples(value)
         elif key == "mission_types":
             mission_types = _parse_string_array(value)
         elif key == "mission_params":
@@ -188,6 +195,8 @@ def loads(text: str) -> LevelModel:
     level.normalize_arrays()
     level.ensure_borders()
     level.prune_custom_values()
+    level.prune_lock_keys()
+    level.sort_lock_keys()
     return level
 
 
@@ -306,3 +315,20 @@ def _parse_int_array(value: str) -> list[int]:
         except ValueError:
             out.append(0)
     return out
+
+
+## Bộ ba (x, y, id) <-> mảng số nguyên phẳng (đúng định dạng LevelData.lock_cells / key_cells)
+def _flatten_triples(items: list[tuple[int, int, int]]) -> list[int]:
+    flat: list[int] = []
+    for item in items:
+        flat.extend((int(item[0]), int(item[1]), int(item[2])))
+    return flat
+
+
+def _parse_triples(value: str) -> list[tuple[int, int, int]]:
+    """`PackedInt32Array(x0, y0, id0, x1, y1, id1, ...)` -> [(x, y, id), ...]."""
+    flat = _parse_int_array(value)
+    triples: list[tuple[int, int, int]] = []
+    for index in range(0, len(flat) - 2, 3):
+        triples.append((flat[index], flat[index + 1], max(1, flat[index + 2])))
+    return triples

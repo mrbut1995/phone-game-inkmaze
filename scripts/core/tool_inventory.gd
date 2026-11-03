@@ -1,7 +1,7 @@
 class_name ToolInventory
 extends RefCounted
 ## ============================================================================
-## KHO DỤNG CỤ (skip · undo · hint) — tách khỏi `GameManager` (autoload).
+## KHO DỤNG CỤ (skip · teleport · hint) — tách khỏi `GameManager` (autoload).
 ##
 ## Số lượt dùng là TÀI NGUYÊN TOÀN CỤC: không cấp lại theo màn/tầng, chỉ tăng khi
 ## mua ở Cửa hàng / thưởng nhiệm vụ / mốc thưởng Daily / rương mốc chương.
@@ -14,16 +14,16 @@ extends RefCounted
 signal changed(tool_id: String, remaining: int)
 
 const SKIP := "skip"
-const UNDO := "undo"
+const TELEPORT := "teleport"
 const HINT := "hint"
-const IDS: Array[String] = [SKIP, UNDO, HINT]
+const IDS: Array[String] = [SKIP, TELEPORT, HINT]
 const INITIAL_USES := 3
 ## Nguồn hợp lệ khi cấp lượt dùng: mua ở Shop · thưởng nhiệm vụ · thưởng mốc Sao Daily · rương chương
 const GRANT_SOURCES: Array[String] = ["purchase", "mission", "daily_milestone", "chapter_chest"]
 
 var uses: Dictionary = {
 	SKIP: INITIAL_USES,
-	UNDO: INITIAL_USES,
+	TELEPORT: INITIAL_USES,
 	HINT: INITIAL_USES,
 }
 
@@ -69,6 +69,9 @@ func load_state(value: Variant) -> void:
 	if not (value is Dictionary):
 		return
 	var saved: Dictionary = value
+	# Save cũ: công cụ "undo" đã đổi thành "teleport" -> giữ nguyên số dư
+	if saved.has("undo") and not saved.has(TELEPORT):
+		uses[TELEPORT] = maxi(int(saved["undo"]), 0)
 	for tool_id in IDS:
 		if saved.has(tool_id):
 			uses[tool_id] = maxi(int(saved[tool_id]), 0)

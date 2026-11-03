@@ -106,14 +106,14 @@ func _init() -> void:
 	var submit_btn := game_scene.submit_btn as BaseButton
 	assert(submit_btn != null, "Nut GUI BAI (Submit) phai co trong thanh hanh dong")
 	assert(submit_btn.visible == false, "Nut GUI BAI AN o che do khong phai Wall Builder")
-	var undo_btn := game_scene.undo_btn
+	var teleport_btn := game_scene.teleport_btn
 	var hint_btn := game_scene.hint_btn
 	var skip_btn := game_scene.skip_btn
-	assert(undo_btn != null and hint_btn != null, "Thanh hanh dong phai co nut UNDO + HINT")
-	assert(undo_btn.find_child("PanelLimit", true, false) != null
+	assert(teleport_btn != null and hint_btn != null, "Thanh hanh dong phai co nut TELEPORT + HINT")
+	assert(teleport_btn.find_child("PanelLimit", true, false) != null
 			and hint_btn.find_child("PanelLimit", true, false) != null
 			and skip_btn.find_child("PanelLimit", true, false) != null,
-			"Moi nut SKIP/UNDO/HINT phai co badge PanelLimit")
+			"Moi nut SKIP/TELEPORT/HINT phai co badge PanelLimit")
 	assert(restart_btn.pressed.is_connected(game_scene._on_restart_pressed),
 			"Nut CHOI LAI phai duoc noi toi _on_restart_pressed")
 	assert(submit_btn.pressed.is_connected(gc.submit_build),
@@ -130,15 +130,16 @@ func _init() -> void:
 			"Nhiem vu co the cap them luot cong cu")
 	assert(int(manager.call("tool_uses_left", GameManagerClass.TOOL_HINT)) == hint_before_grant + 1,
 			"Cap thuong cong cu phai tang dung so luot")
-	manager.call("debug_set_tool_uses", GameManagerClass.TOOL_UNDO, 0)
+	manager.call("debug_set_tool_uses", GameManagerClass.TOOL_TELEPORT, 0)
 	manager.call("debug_set_tool_uses", GameManagerClass.TOOL_HINT, 1)
 	manager.call("debug_set_tool_uses", GameManagerClass.TOOL_SKIP, 0)
 	gc._update_hud()
-	game_scene._on_undo_pressed()
-	assert(int(manager.call("tool_uses_left", GameManagerClass.TOOL_UNDO)) == 0,
-			"Het luot hoan tac thi bam UNDO khong tru them luot")
+	gc.teleport()
+	assert(int(manager.call("tool_uses_left", GameManagerClass.TOOL_TELEPORT)) == 0,
+			"Het luot dich chuyen thi bam TELEPORT khong tru them luot")
+	assert(gc._teleport_selecting == false, "Het luot -> bam TELEPORT khong vao che do chon o")
 	gc._update_hud()
-	assert(undo_btn.disabled == true, "Het luot -> nut UNDO bi KHOA")
+	assert(teleport_btn.disabled == true, "Het luot -> nut TELEPORT bi KHOA")
 	assert(hint_btn.disabled == false, "Con luot -> nut HINT khong bi khoa")
 	game_scene._on_hint_pressed()
 	assert(int(manager.call("tool_uses_left", GameManagerClass.TOOL_HINT)) == 0,
@@ -154,7 +155,7 @@ func _init() -> void:
 	for tool_id in saved_tool_uses:
 		manager.call("debug_set_tool_uses", str(tool_id), int(saved_tool_uses[tool_id]))
 	gc._update_hud()
-	print("[SUCCESS] So du SKIP/UNDO/HINT dung chung va duoc luu; het luot = khoa nut!")
+	print("[SUCCESS] So du SKIP/TELEPORT/HINT dung chung va duoc luu; het luot = khoa nut!")
 
 	# 6. Kiem tra Player Cursor Running Animation
 	var cursor = game_scene.board_view._cursor
@@ -245,7 +246,7 @@ func _init() -> void:
 	root.add_child(debug_scene)
 	await process_frame
 	var tool_spinners := debug_scene.find_children("*", "SpinBox", true, false)
-	# 3 SpinBox công cụ (SKIP · UNDO · HINT) + 1 SpinBox LƯỢT CHƠI (lives)
+	# 3 SpinBox công cụ (SKIP · TELEPORT · HINT) + 1 SpinBox LƯỢT CHƠI (lives)
 	assert(tool_spinners.size() == 4, "Debug Console phai co SpinBox chinh 3 cong cu + luot choi")
 	var hint_spinner := tool_spinners[2] as SpinBox
 	var hint_balance := int(manager.call("tool_uses_left", GameManagerClass.TOOL_HINT))
@@ -255,7 +256,7 @@ func _init() -> void:
 	hint_spinner.value = hint_balance
 	debug_scene.queue_free()
 	await process_frame
-	print("[SUCCESS] Debug Console co SpinBox chinh duoc so du SKIP/UNDO/HINT!")
+	print("[SUCCESS] Debug Console co SpinBox chinh duoc so du SKIP/TELEPORT/HINT!")
 
 	print("\n========================================================")
 	print("  TAT CA TEST DEU VUOT QUA THANH CONG!")

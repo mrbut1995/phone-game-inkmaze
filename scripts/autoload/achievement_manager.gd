@@ -32,9 +32,9 @@ const STAT_DEFAULTS := {
 	"dungeon_best_score": 0,
 	"wins_total": 0,
 	"wins_no_hint": 0,
-	"wins_no_undo": 0,
+	"wins_no_teleport": 0,
 	"hints_total": 0,
-	"undos_total": 0,
+	"teleports_total": 0,
 	"hardcore_wins": 0,
 	"play_seconds": 0,
 }
@@ -249,16 +249,16 @@ func _daily_manager() -> Node:
 # ---------------------------------------------------------------------------
 # Game báo kết quả 1 màn/tầng -> cập nhật số liệu tích luỹ
 # ---------------------------------------------------------------------------
-## `results` = { mode_id, won, endless, floor, score, elapsed, wall_hits, hints_used, undos_used, hardcore }
+## `results` = { mode_id, won, endless, floor, score, elapsed, wall_hits, hints_used, teleports_used, hardcore }
 func notify_run_result(results: Dictionary) -> void:
 	var won := bool(results.get("won", false))
 	var endless := bool(results.get("endless", false))
 	var floor := maxi(int(results.get("floor", 1)), 1)
 	var hints := maxi(int(results.get("hints_used", 0)), 0)
-	var undos := maxi(int(results.get("undos_used", 0)), 0)
+	var teleports := maxi(int(results.get("teleports_used", 0)), 0)
 
 	_bump("hints_total", hints)
-	_bump("undos_total", undos)
+	_bump("teleports_total", teleports)
 	_bump("play_seconds", int(round(float(results.get("elapsed", 0.0)))))
 
 	if endless:
@@ -274,8 +274,8 @@ func notify_run_result(results: Dictionary) -> void:
 		_bump("wins_total", 1)
 		if hints == 0:
 			_bump("wins_no_hint", 1)
-		if undos == 0:
-			_bump("wins_no_undo", 1)
+		if teleports == 0:
+			_bump("wins_no_teleport", 1)
 		if bool(results.get("hardcore", false)):
 			_bump("hardcore_wins", 1)
 

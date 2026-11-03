@@ -46,7 +46,7 @@ const ICONS := {
 	"route": preload("res://assets/images-png/profiler/ic_route.png"),
 	"pencil": preload("res://assets/images-png/profiler/ic_pencil.png"),
 	"revert": preload("res://assets/images-png/profiler/ic_revert.png"),
-	"undo": preload("res://assets/images-png/profiler/ic_undo.png"),
+	"teleport": preload("res://assets/images-png/profiler/ic_undo.png"),   # TODO art: thay ic_undo bằng icon dịch chuyển
 	"skip": preload("res://assets/images-png/profiler/ic_skip.png"),
 }
 
@@ -244,7 +244,7 @@ func _refresh_info() -> void:
 		_card("feet", "STR_PROFILE_STAT_TOTAL_MOVE", str(int(data.get("moves_total", 0)))),
 		_card("pencil", "STR_PROFILE_STAT_WALL_DRAW", str(int(data.get("wall_draws", 0)))),
 		_card("revert", "STR_PROFILE_STAT_REVERT_USED", str(int(data.get("wall_erases", 0)))),
-		_card("undo", "STR_PROFILE_STAT_UNDO_USED", str(int(data.get("undos_total", 0)))),
+		_card("teleport", "STR_PROFILE_STAT_TELEPORT_USED", str(int(data.get("teleports_total", 0)))),
 		_card("skip", "STR_PROFILE_STAT_SKIP_USED", str(int(data.get("skips_total", 0)))),
 	])
 

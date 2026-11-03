@@ -30,8 +30,8 @@ signal memorize_finished
 @export var level_label: Label = null
 ## Dòng phụ nhỏ dưới tiêu đề (VD "PLAY MODE · CHƯƠNG 1"). Rỗng = ẩn.
 @export var subtitle_label: Label = null
-## Nút UNDO của thanh nút dưới — được NHẤN MẠNH khi Countdown Cost hết ngân sách (phải lùi bước)
-@export var undo_button: TextureButton = null
+## Nút TELEPORT của thanh nút dưới — được NHẤN MẠNH khi đang chọn ô đích dịch chuyển
+@export var teleport_button: TextureButton = null
 ## Nút CHƠI LẠI (ẩn sẵn dưới thanh nút) — hiện khi Sum Path không còn thắng được nữa
 @export var replay_button: TextureButton = null
 
@@ -41,53 +41,53 @@ var hud: BaseHUD = null
 ## Thông tin ván đang chơi (GameController cập nhật) - dùng cho popup tạm dừng
 var run_info: Dictionary = {}
 
-var _undo_highlight_on := false
+var _teleport_highlight_on := false
 var _replay_shown := false
-var _undo_highlight_tween: Tween = null
+var _teleport_highlight_tween: Tween = null
 
 
 func set_run_info(info: Dictionary) -> void:
 	run_info = info
 	# Cờ trạng thái đặc biệt của ván (GameController tính trong _update_hud):
-	#  - undo_highlight: Countdown Cost hết ngân sách -> khoá di chuyển, NHẤN MẠNH nút Undo
+	#  - teleport_active: đang chọn ô đích -> NHẤN MẠNH nút Teleport
 	#  - replay_visible: Sum Path không thể thắng nữa -> hiện nút CHƠI LẠI dưới thanh nút
-	set_undo_highlight(bool(info.get("undo_highlight", false)))
+	set_teleport_highlight(bool(info.get("teleport_active", false)))
 	set_replay_visible(bool(info.get("replay_visible", false)))
 
 
 # ---------------------------------------------------------------------------
-# Cờ trạng thái nút (Countdown Cost hết ngân sách · Sum Path hết đường thắng)
+# Cờ trạng thái nút (đang chọn Teleport · hết đường thắng)
 # ---------------------------------------------------------------------------
-## Nhấn mạnh nút UNDO: ám vàng + nhịp phồng nhẹ để người chơi biết cần lùi bước để tiếp tục
-func set_undo_highlight(on: bool) -> void:
-	_undo_highlight_on = on
-	if undo_button == null:
+## Nhấn mạnh nút TELEPORT: ám tím + nhịp phồng nhẹ khi đang chọn ô đích
+func set_teleport_highlight(on: bool) -> void:
+	_teleport_highlight_on = on
+	if teleport_button == null:
 		return
-	if _undo_highlight_tween != null and _undo_highlight_tween.is_valid():
-		_undo_highlight_tween.kill()
-	_undo_highlight_tween = null
+	if _teleport_highlight_tween != null and _teleport_highlight_tween.is_valid():
+		_teleport_highlight_tween.kill()
+	_teleport_highlight_tween = null
 	# Nhịp "thở" khai trong `action_bar.tscn` (player `PulseAnim`); thiếu thì fallback tween
-	var bar := _undo_pulse_bar()
+	var bar := _teleport_pulse_bar()
 	if on:
-		undo_button.modulate = Color(1.25, 1.15, 0.55)  # keep-code: hoạt cảnh/trạng thái runtime (tween)
-		if bar == null or not UIAnim.play_layout_anim(bar, "PulseAnim", &"pulse_undo", undo_button):
-			_undo_highlight_tween = UIAnim.play_pulse(undo_button, 1.12, 0.7)
+		teleport_button.modulate = Color(0.85, 0.7, 1.25)  # keep-code: hoạt cảnh/trạng thái runtime (tween)
+		if bar == null or not UIAnim.play_layout_anim(bar, "PulseAnim", &"pulse_teleport", teleport_button):
+			_teleport_highlight_tween = UIAnim.play_pulse(teleport_button, 1.12, 0.7)
 	else:
-		undo_button.modulate = Color.WHITE  # keep-code: hoạt cảnh/trạng thái runtime (tween)
+		teleport_button.modulate = Color.WHITE  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 		if bar != null:
 			UIAnim.stop_layout_anim(bar, "PulseAnim")
-		undo_button.scale = Vector2.ONE  # keep-code: hoạt cảnh/trạng thái runtime (tween)
+		teleport_button.scale = Vector2.ONE  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 
 
-## Thanh công cụ của HUD đang dùng (chứa player `PulseAnim` cho nhịp nút Undo)
-func _undo_pulse_bar() -> Node:
+## Thanh công cụ của HUD đang dùng (chứa player `PulseAnim` cho nhịp nút Teleport)
+func _teleport_pulse_bar() -> Node:
 	if hud == null:
 		return null
 	return hud.action_bar()
 
 
-func undo_highlighted() -> bool:
-	return _undo_highlight_on
+func teleport_highlighted() -> bool:
+	return _teleport_highlight_on
 
 
 ## Hiện/ẩn nút CHƠI LẠI nằm DƯỚI hai nút "Vẽ Đường" + "Ghi Nhớ"
@@ -145,7 +145,7 @@ func update_hud(
 			# Số dư công cụ toàn tài khoản (GameController gửi qua set_run_info)
 			# → HUD hiện trên badge PanelLimit + khoá nút khi hết lượt
 			"skip_left": int(run_info.get("skip_left", 0)),
-			"undo_left": int(run_info.get("undo_left", 0)),
+			"teleport_left": int(run_info.get("teleport_left", 0)),
 			"hint_left": int(run_info.get("hint_left", 0)),
 		})
 

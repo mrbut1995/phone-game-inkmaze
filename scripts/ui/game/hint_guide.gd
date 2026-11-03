@@ -11,13 +11,7 @@ extends Control
 const HINT_KEYS := {
 	"play": "STR_HINT_PLAY",
 	"dungeon": "STR_HINT_DUNGEON",
-	"minesweeper": "STR_HINT_MINESWEEPER",
 	"blind_memory": "STR_HINT_BLIND_MEMORY",
-	"fog_of_war": "STR_HINT_FOG_OF_WAR",
-	"sum_path": "STR_HINT_SUM_PATH",
-	"countdown_cost": "STR_HINT_COUNTDOWN_COST",
-	"fading_ink": "STR_HINT_FADING_INK",
-	"one_stroke": "STR_HINT_ONE_STROKE",
 	"wall_builder": "STR_HINT_WALL_BUILDER",
 	"challenge": "STR_HINT_CHALLENGE",
 	"daily_challenge": "STR_HINT_CHALLENGE",

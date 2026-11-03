@@ -15,7 +15,7 @@ const RATIOS: Array[float] = [0.33, 0.67, 1.0]
 ## Thưởng theo planning §2 (Xu · lượt công cụ · 1 lượt chơi ở rương cuối)
 const REWARDS: Array[Dictionary] = [
 	{"coins": 50},
-	{"hint": 2, "undo": 1},
+	{"hint": 2, "teleport": 1},
 	{"coins": 150, "life": 1},
 ]
 
@@ -24,7 +24,7 @@ var claimed: Dictionary = {}
 
 
 ## 3 định nghĩa rương của một chương có `stars_total` Sao tối đa.
-## Mỗi phần tử: `{ index, stars, coins, hint, undo, skip, life }` (`stars` = ngưỡng Sao cần).
+## Mỗi phần tử: `{ index, stars, coins, hint, teleport, skip, life }` (`stars` = ngưỡng Sao cần).
 func defs(stars_total: int) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	var total := maxi(stars_total, 0)

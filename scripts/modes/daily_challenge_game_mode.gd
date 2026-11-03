@@ -41,6 +41,7 @@ func setup_floor(_floor_number: int) -> MazeData:
 	# Bàn tự sinh: nới hạn mức sao cho LUÔN thắng được bằng đường ngắn nhất + dự phòng
 	if challenge_id == MOVE_LIMIT:
 		challenge_param = maxi(challenge_param, _shortest_moves(maze) + 3)
+	prepare_rule(maze)      # Fog of War: ẩn tường + mở sương quanh S
 	return maze
 
 

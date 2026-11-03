@@ -38,16 +38,13 @@ func _init() -> void:
 	if test_undo_and_hint():
 		passed += 1
 
-	# 2. Test 8 Game Modes
+	# 2. Test cac Game Mode con lai (minesweeper/sum_path/countdown_cost/fading_ink/fog_of_war/one_stroke da bi xoa)
 	var modes: Array[BaseGameMode] = [
 		StandardGameMode.new("medium"),
 		DungeonGameMode.new(),
-		MinesweeperPathGameMode.new(),
-		SumPathGameMode.new("medium", "="),
-		CountdownCostGameMode.new("medium"),
 		BlindMemoryGameMode.new("normal"),
-		FogOfWarGameMode.new("normal"),
-		FadingInkGameMode.new("medium")
+		WallBuilderGameMode.new("easy"),
+		ChallengeGameMode.new("medium")
 	]
 
 	for mode in modes:
@@ -201,8 +198,9 @@ func test_single_mode(mode: BaseGameMode) -> bool:
 	assert(adjacent_valid, "Phai co it nhat 1 o lien ke hop le")
 
 	# Kiem tra tinh toan hoan thanh
+	# (Wall Builder thang bang cach GUI BAI chu khong phai den F -> bo qua kiem tra nay)
 	var anchor_ctrl := AnchorController.new()
-	if not (mode is SumPathGameMode):
+	if not (mode is WallBuilderGameMode):
 		assert(mode.check_completion(maze.get_end(), maze, anchor_ctrl), "Den F phai hoan thanh man")
 		assert(not mode.check_completion(maze.get_start(), maze, anchor_ctrl), "O S chua the hoan thanh man")
 

@@ -21,13 +21,7 @@ const IDS := {
 	"challenge": ["how_to_play_move", "how_to_play_checking_wall", "how_to_use_tool"],
 	"daily_classic": ["how_to_play_move", "how_to_play_checking_wall", "how_to_use_tool"],
 	"daily_challenge": ["how_to_play_move", "how_to_play_checking_wall", "how_to_use_tool"],
-	"minesweeper": ["how_to_play_minesweeper"],
-	"sum_path": ["how_to_play_sum_path"],
-	"countdown_cost": ["how_to_play_countdown_cost"],
 	"blind_memory": ["how_to_play_blind_memory"],
-	"fog_of_war": ["how_to_play_fog_of_war"],
-	"fading_ink": ["how_to_play_fading_ink"],
-	"one_stroke": ["how_to_play_one_stroke"],
 	"wall_builder": ["how_to_play_wall_builder"],
 }
 ## Chế độ không có nút "?" (Dungeon — luật đã hiện trong popup hướng dẫn riêng)

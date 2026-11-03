@@ -3,7 +3,7 @@ extends RefCounted
 ## ============================================================================
 ## LUẬT CỦA CHẾ ĐỘ THỬ THÁCH (Challenge Mode) — tách khỏi `GameController`.
 ##
-## 8 luật nằm trong `ChallengeGameMode`; file này chỉ SOI vi phạm và trả về id luật
+## 9 luật nằm trong `ChallengeGameMode`; file này chỉ SOI vi phạm và trả về id luật
 ## (chuỗi rỗng = không vi phạm). `GameController` quyết định khi nào soi + mở popup thua.
 ##
 ## Luật có ĐỒNG HỒ: đếm ngược tổng · "mỗi bước trong X giây".
@@ -43,10 +43,14 @@ func tick(ch: ChallengeGameMode, elapsed: float) -> String:
 	return ""
 
 
-## Soi 3 luật theo NƯỚC ĐI (gọi ngay sau khi bước thành công — `path` đã có vị trí mới).
-func after_step(ch: ChallengeGameMode, path: Array[Vector2i], moves: int) -> String:
+## Soi các luật theo NƯỚC ĐI (gọi ngay sau khi bước thành công — `path` đã có vị trí mới).
+func after_step(ch: ChallengeGameMode, path: Array[Vector2i], moves: int, maze: MazeData = null) -> String:
 	if ch == null:
 		return ""
+	# Dịch chuyển tới ô SAI LOẠI (luật walk_*) cũng là vi phạm — bước thường đã bị chặn từ evaluate_move
+	if ch.is_walk_rule() and maze != null and not path.is_empty() \
+			and not ch.cell_allowed_by_rule(path[path.size() - 1], maze):
+		return ch.challenge_id
 	match ch.challenge_id:
 		ChallengeGameMode.MOVE_LIMIT:
 			if moves > ch.challenge_param:

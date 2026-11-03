@@ -19,7 +19,10 @@ const TUTORIAL_SCENE_PATH := "res://scenes/tutorial.tscn"
 const TUTORIAL_LIST_SCENE_PATH := "res://scenes/tutorial_list.tscn"
 const GAME_SCENE_PATH := "res://scenes/game.tscn"
 const MAIN_SCENE_PATH := "res://scenes/main.tscn"
-const BLIND_MEMORY_LEVEL := 16
+const BLIND_MEMORY_LEVEL := 15
+## Màn mẫu (tools/level_designer/make_samples.py) — level 15 = blind_memory. Màn THẬT id 15 là
+## 'play' nên section 4 phải trỏ LevelManager vào thư mục màn mẫu.
+const SAMPLES_DIR := "res://resources/levels_samples/"
 
 var _failed := 0
 var _checks := 0
@@ -99,8 +102,8 @@ func _section_1_manager() -> void:
 		"Buoc CUOI cua luong la bai CHUC MUNG (dang '%s')" % str((flow[8] as Dictionary).get("id", "")))
 
 	var mode_tutorials: Dictionary = consts.get("MODE_TUTORIALS", {})
-	_check(mode_tutorials.size() == 8 and str(mode_tutorials.get("blind_memory", "")) == "how_to_play_blind_memory",
-		"8 che do Special co tutorial rieng (blind_memory -> how_to_play_blind_memory)")
+	_check(mode_tutorials.size() == 2 and str(mode_tutorials.get("blind_memory", "")) == "how_to_play_blind_memory",
+		"2 che do Special con lai co tutorial rieng (blind_memory -> how_to_play_blind_memory)")
 
 	_gm.set("tutorial_flow_done", false)
 	_check(bool(_tm.call("needs_onboarding")), "Luong chua xong -> can onboarding")
@@ -338,11 +341,11 @@ func _section_2e_list() -> void:
 
 	var layout: Node = current_scene.get("layout") if current_scene != null else null
 	var btn_seen: BaseButton = layout.get("btn_first_time") if layout != null else null
-	var btn_new: BaseButton = layout.get("btn_minesweeper") if layout != null else null
+	var btn_new: BaseButton = layout.get("btn_wall_builder") if layout != null else null
 	_check(btn_seen != null and not btn_seen.disabled,
 		"Bai DA XEM (first_time): nut ACTIVE")
 	_check(btn_new != null and btn_new.disabled and btn_new.modulate.a < 0.9,
-		"Bai CHUA XEM (minesweeper): nut KHOA (mo)")
+		"Bai CHUA XEM (wall_builder): nut KHOA (mo)")
 
 	# Bấm bài CHƯA XEM → không mở gì cả (vẫn đứng ở DANH SÁCH)
 	if btn_new != null:
@@ -504,6 +507,12 @@ func _section_4_mode_tutorial() -> void:
 	_gm.call("set_tutorial_completed", "how_to_play_blind_memory", false)
 	_gm.set("debug_run", false)
 
+	# Màn mẫu 15 (blind_memory) nằm ở resources/levels_samples/ -> cho LevelManager trỏ vào đó
+	var lm: Node = root.get_node_or_null("LevelManager")
+	var saved_dir := str(lm.call("get_levels_dir")) if lm != null else ""
+	if lm != null:
+		lm.call("set_levels_dir", SAMPLES_DIR)
+
 	# Lần đầu vào màn blind_memory -> mở bài học TRƯỚC, chưa vào màn
 	_gm.call("start_level", BLIND_MEMORY_LEVEL)
 	await _settle(4)
@@ -527,6 +536,9 @@ func _section_4_mode_tutorial() -> void:
 	await _settle(4)
 	_check(_scene_path() == GAME_SCENE_PATH,
 		"Da hoc roi -> lan sau vao thang man choi (dang '%s')" % _scene_path())
+
+	if lm != null and not saved_dir.is_empty():
+		lm.call("set_levels_dir", saved_dir)
 
 
 # ---------------------------------------------------------------------------

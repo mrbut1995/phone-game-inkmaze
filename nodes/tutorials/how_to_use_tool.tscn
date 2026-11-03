@@ -4,9 +4,9 @@
 [ext_resource type="Script" uid="uid://vyd3sdsonxhc" path="res://scripts/ui/tutorial/how_to_use_tool.gd" id="2_script"]
 [ext_resource type="PackedScene" uid="uid://334hk6vbotgi" path="res://nodes/tutorials/board_tutorial.tscn" id="3_board"]
 [ext_resource type="Script" uid="uid://b5k5fxlkk626p" path="res://scripts/data/blueprint_step.gd" id="4_step"]
-[ext_resource type="Texture2D" uid="uid://duvuocvoymd43" path="res://assets/images-png/game/btn_undo_normal.png" id="5_undo_n"]
-[ext_resource type="Texture2D" uid="uid://pvdjm7lb1xxc" path="res://assets/images-png/game/btn_undo_pressed.png" id="6_undo_p"]
-[ext_resource type="Texture2D" uid="uid://bm1khrfv3tkx7" path="res://assets/images-png/game/btn_undo_disabled.png" id="7_undo_d"]
+[ext_resource type="Texture2D" path="res://assets/images-png/game/btn_teleport_normal.png" id="5_undo_n"]
+[ext_resource type="Texture2D" path="res://assets/images-png/game/btn_teleport_pressed.png" id="6_undo_p"]
+[ext_resource type="Texture2D" path="res://assets/images-png/game/btn_teleport_disabled.png" id="7_undo_d"]
 [ext_resource type="Texture2D" uid="uid://c4louruvu6ijq" path="res://assets/images-png/game/btn_hint_normal.png" id="8_hint_n"]
 [ext_resource type="Texture2D" uid="uid://c1rsbeag67ckp" path="res://assets/images-png/game/btn_hint_pressed.png" id="9_hint_p"]
 [ext_resource type="Texture2D" uid="uid://dybqvaw2rmp7w" path="res://assets/images-png/game/btn_hint_disabled.png" id="10_hint_d"]
@@ -21,7 +21,7 @@ spotlight_node = NodePath("BoardHost/ToolRow")
 script = ExtResource("4_step")
 message_key = "STR_TUT_TOOL_02"
 fallback_text = "Ví dụ: đi 1 bước rồi nhấn QUAY LẠI — con trỏ tự lùi về ô cũ."
-spotlight_node = NodePath("BoardHost/ToolRow/BtnUndo")
+spotlight_node = NodePath("BoardHost/ToolRow/BtnTeleport")
 
 [sub_resource type="Resource" id="Resource_03"]
 script = ExtResource("4_step")
@@ -71,12 +71,12 @@ corner_radius_top_right = 9
 corner_radius_bottom_right = 9
 corner_radius_bottom_left = 9
 
-[node name="HowToUseTool" unique_id=1481527487 node_paths=PackedStringArray("lbl_hud_tools", "btn_undo", "btn_hint", "lbl_undo_count", "lbl_hint_count", "board_tutorial") instance=ExtResource("1_base")]
+[node name="HowToUseTool" unique_id=1481527487 node_paths=PackedStringArray("lbl_hud_tools", "btn_teleport", "btn_hint", "lbl_teleport_count", "lbl_hint_count", "board_tutorial") instance=ExtResource("1_base")]
 script = ExtResource("2_script")
 lbl_hud_tools = NodePath("BoardHost/HudPanel/ToolsLabel")
-btn_undo = NodePath("BoardHost/ToolRow/BtnUndo")
+btn_teleport = NodePath("BoardHost/ToolRow/BtnTeleport")
 btn_hint = NodePath("BoardHost/ToolRow/BtnHint")
-lbl_undo_count = NodePath("BoardHost/ToolRow/BtnUndo/Count")
+lbl_teleport_count = NodePath("BoardHost/ToolRow/BtnTeleport/Count")
 lbl_hint_count = NodePath("BoardHost/ToolRow/BtnHint/Count")
 START_POS = Vector2i(0, 0)
 FINISH_POS = Vector2i(2, 2)
@@ -131,14 +131,14 @@ grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
 
-[node name="BtnUndo" type="TextureButton" parent="BoardHost/ToolRow" index="0" unique_id=394739118]
+[node name="BtnTeleport" type="TextureButton" parent="BoardHost/ToolRow" index="0" unique_id=394739118]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 8.0
 offset_top = 6.0
 offset_right = 92.0
 offset_bottom = 64.0
-tooltip_text = "STR_TOOL_UNDO"
+tooltip_text = "STR_TOOL_TELEPORT"
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("5_undo_n")
 texture_pressed = ExtResource("6_undo_p")
@@ -146,7 +146,7 @@ texture_disabled = ExtResource("7_undo_d")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Count" type="Label" parent="BoardHost/ToolRow/BtnUndo" index="0" unique_id=1493195486]
+[node name="Count" type="Label" parent="BoardHost/ToolRow/BtnTeleport" index="0" unique_id=1493195486]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -196,5 +196,5 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [connection signal="cell_step_attempted" from="BoardHost/BoardTutorial" to="." method="_on_cell_step_attempted"]
-[connection signal="pressed" from="BoardHost/ToolRow/BtnUndo" to="." method="_on_undo_pressed"]
+[connection signal="pressed" from="BoardHost/ToolRow/BtnTeleport" to="." method="_on_teleport_pressed"]
 [connection signal="pressed" from="BoardHost/ToolRow/BtnHint" to="." method="_on_hint_pressed"]

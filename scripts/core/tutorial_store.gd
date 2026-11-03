@@ -17,9 +17,6 @@ var progress: Dictionary = {
 	"how_to_play_checking_wall": false,
 	"how_to_play_writting_hint": false,
 	"core_completed": false,
-	"how_to_play_minesweeper": false,
-	"how_to_play_one_stroke": false,
-	"how_to_play_sum_path": false,
 	"how_to_play_wall_builder": false,
 }
 ## Bước hiện tại trong luồng onboarding (0 = chưa bắt đầu)

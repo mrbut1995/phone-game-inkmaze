@@ -159,15 +159,15 @@ func _check_sum() -> void:
 
 func _check_tools() -> void:
 	_state.hints_used = 0
-	_state.undos_used = 0
+	_state.teleports_used = 0
 	_expect("no_hint · chưa dùng", ["no_hint"], [0], [], 0.0, false, [true])
-	_expect("no_undo · chưa dùng", ["no_undo"], [0], [], 0.0, false, [true])
+	_expect("no_teleport · chưa dùng", ["no_teleport"], [0], [], 0.0, false, [true])
 	_state.hints_used = 1
-	_state.undos_used = 2
+	_state.teleports_used = 2
 	_expect("no_hint · đã dùng 1", ["no_hint"], [0], [], 0.0, false, [false])
-	_expect("no_undo · đã dùng 2", ["no_undo"], [0], [], 0.0, false, [false])
+	_expect("no_teleport · đã dùng 2", ["no_teleport"], [0], [], 0.0, false, [false])
 	_state.hints_used = 0
-	_state.undos_used = 0
+	_state.teleports_used = 0
 
 
 func _check_limits_and_level_data() -> void:

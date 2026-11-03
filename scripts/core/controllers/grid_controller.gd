@@ -5,7 +5,8 @@ extends Node
 ## - Nhận gesture input từ View: handle_drag_updated / handle_anchor_connected.
 ## - Thẩm định tính hợp lệ của nước đi và chướng ngại vật qua GameMode Strategy.
 ## - Quản lý AnchorController cho logic Tường Nghi Ngờ.
-## - Quản lý UndoController và HintController.
+## - Quản lý UndoController (lịch sử bước đi — chỉ dùng cho HỒI SINH) và HintController.
+## - DỊCH CHUYỂN (công cụ Teleport) + nhặt CHÌA mở ô KHOÁ.
 ## - Emit signal cho GameController: step_consumed / wall_hit / reached_end.
 ## ============================================================================
 
@@ -26,6 +27,8 @@ var maze: MazeData = null
 @export var undo_controller: UndoController = null
 @export var hint_controller: HintController = null
 @export var game_mode_controller: GameModeController = null
+## Tầm DỊCH CHUYỂN: các ô cách nhân vật tối đa N ô (khoảng cách Manhattan), bỏ qua tường chắn
+@export var teleport_range := 2
 
 var current_pos: Vector2i = Vector2i.ZERO
 var path: Array[Vector2i] = []
@@ -158,6 +161,7 @@ func try_move_to(pos: Vector2i) -> void:
 		board_view.set_moving_path(path)
 
 		game_mode_controller.game_mode.on_player_moved(board_view, pos, maze)
+		_collect_key_at(pos)
 		step_consumed.emit(step_cost, false)
 
 		if game_mode_controller.game_mode.check_completion(current_pos, maze, anchor_controller):
@@ -167,12 +171,77 @@ func try_move_to(pos: Vector2i) -> void:
 	else:
 		# Nước đi hợp lệ về hình học nhưng bị LUẬT của mode chặn (VD One Stroke còn ô trống
 		# nên chưa được chạm F) -> mode tự phản hồi (hiện chữ nổi cảnh báo...)
-		game_mode_controller.game_mode.on_move_blocked(
-			board_view, current_pos, pos, str(eval_result.get("reason", "")))
+		var reason := str(eval_result.get("reason", ""))
+		if reason == "locked":
+			# Ô KHOÁ: rung + hiện ổ khoá, KHÔNG trừ bước/lượt
+			Sfx.play(Sfx.LOCK_BUMP)
+			board_view.show_lock_bump(pos)
+		game_mode_controller.game_mode.on_move_blocked(board_view, current_pos, pos, reason)
 
 
 # ---------------------------------------------------------------------------
-# Undo & Hint Support
+# CHÌA KHOÁ
+# ---------------------------------------------------------------------------
+## Nhân vật vừa tới `pos`: có chìa thì nhặt, mở mọi ô khoá cùng id + cập nhật bàn cờ
+func _collect_key_at(pos: Vector2i) -> void:
+	if maze == null:
+		return
+	var got := maze.collect_key(pos)
+	if got.is_empty():
+		return
+	Sfx.play(Sfx.KEY_PICKUP)
+	if board_view != null:
+		board_view.on_key_collected(pos, got.get("unlocked", []))
+
+
+# ---------------------------------------------------------------------------
+# DỊCH CHUYỂN (Teleport)
+# ---------------------------------------------------------------------------
+## Các ô có thể dịch chuyển tới: trong tầm `teleport_range`, thuộc board, KHÔNG bị khoá,
+## chế độ cho phép. Tường chắn giữa đường KHÔNG ảnh hưởng.
+func teleport_targets() -> Array[Vector2i]:
+	var out: Array[Vector2i] = []
+	var mode: BaseGameMode = game_mode_controller.game_mode if game_mode_controller != null else null
+	if maze == null or mode == null or not mode.allows_teleport():
+		return out
+	for dy in range(-teleport_range, teleport_range + 1):
+		for dx in range(-teleport_range, teleport_range + 1):
+			var dist := absi(dx) + absi(dy)
+			if dist == 0 or dist > teleport_range:
+				continue
+			var p := current_pos + Vector2i(dx, dy)
+			if not maze.is_in_bounds(p) or not maze.is_cell_active(p) or maze.is_locked(p):
+				continue
+			if not mode.can_teleport_to(p, maze):
+				continue
+			out.append(p)
+	return out
+
+
+## Nhảy thẳng tới `pos` (bỏ qua tường). Tính như 1 nước đi: ghi vào đường đi + lịch sử hồi sinh,
+## nhặt chìa nếu có, báo `step_consumed` / `reached_end`. Trả false nếu ô không hợp lệ.
+func teleport_to(pos: Vector2i) -> bool:
+	if board_view == null or not teleport_targets().has(pos):
+		return false
+	var mode := game_mode_controller.game_mode
+	var prev_pos := current_pos
+	var step_cost := 1
+	current_pos = pos
+	path.append(pos)
+	if undo_controller != null:
+		undo_controller.record_move(prev_pos, pos, step_cost)
+	board_view.teleport_cursor_to(pos)
+	board_view.set_moving_path(path)
+	mode.on_player_moved(board_view, pos, maze)
+	_collect_key_at(pos)
+	step_consumed.emit(step_cost, false)
+	if mode.check_completion(current_pos, maze, anchor_controller):
+		reached_end.emit()
+	return true
+
+
+# ---------------------------------------------------------------------------
+# Lùi bước (chỉ dùng khi HỒI SINH) & Hint Support
 # ---------------------------------------------------------------------------
 func undo_last_move() -> bool:
 	if undo_controller == null or not undo_controller.can_undo():

@@ -20,7 +20,7 @@ const ICONS := {
 	"ink": preload("res://assets/images-png/icons/icon_ink.png"),
 	"paper": preload("res://assets/images-png/icons/icon_paper.png"),
 	"coin": preload("res://assets/images-png/icons/icon_coin.png"),
-	"tool_undo": preload("res://assets/images-png/icons/icon_tool_undo.png"),
+	"tool_teleport": preload("res://assets/images-png/icons/icon_tool_teleport.png"),
 	"tool_hint": preload("res://assets/images-png/icons/icon_tool_hint.png"),
 	"tool_reveal": preload("res://assets/images-png/icons/icon_tool_reveal.png"),
 	"tool_time": preload("res://assets/images-png/icons/icon_tool_time.png"),
