@@ -30,6 +30,26 @@ var _advance_pending := false
 ## Mốc thời gian bắt đầu màn Splash (để giữ đủ MIN_DISPLAY_SEC)
 var _started_ms := 0
 
+## ---- Ghi chú dán trên Splash: mẹo / hướng dẫn xoay vòng ----
+## Mỗi phần tử = [khoá dịch, chữ dự phòng tiếng Việt]. Khoá chưa có trong bảng dịch ⇒ dùng chữ dự phòng.
+const TIP_HEAD := ["STR_SPLASH_TIP_HEAD", "Mẹo nhỏ"]
+const GUIDE_HEAD := ["STR_SPLASH_GUIDE_HEAD", "Hướng dẫn"]
+const TIPS := [
+	["STR_SPLASH_TIP_1", "Con số trên mỗi ô cho biết có bao nhiêu bức tường bao quanh ô đó."],
+	["STR_SPLASH_TIP_2", "Đi va vào tường là tường sẽ hiện ra. Hãy ghi nhớ vị trí nó!"],
+	["STR_SPLASH_TIP_3", "Bị kẹt rồi? Bấm nút bóng đèn để được gợi ý."],
+	["STR_SPLASH_TIP_4", "Đi nhầm đường? Nút hoàn tác sẽ lùi lại một bước."],
+]
+const GUIDES := [
+	["STR_SPLASH_GUIDE_1", "Xuất phát từ ô S và tìm đường tới ô F để thắng."],
+	["STR_SPLASH_GUIDE_2", "Kéo giữa hai chấm góc để đánh dấu bức tường nghi ngờ."],
+	["STR_SPLASH_GUIDE_3", "Cầu thang đi xuống là điểm bắt đầu, cầu thang đi lên là lối ra."],
+]
+const NOTE_SWAP_SEC := 3.6
+var _tip_index := 0
+var _guide_index := 0
+var _note_tween: Tween = null
+
 
 ## Ngòi bút chì phác họa quanh logo — animation "pencil_idle" (loop) khai trong layout
 ## `scenes/layout/<hướng>/splash.tscn` (node `PencilAnim`). Trả về false nếu scene thiếu.
@@ -56,6 +76,61 @@ func _ready() -> void:
 	ensure_signal(layout.touch_button, &"pressed", &"_on_touch_pressed")
 	_bind_loading()
 	_setup_animations()
+	_start_notes()
+
+
+## `tr()` trả về chính khoá khi chưa có bản dịch ⇒ dùng chữ dự phòng
+func _tr_or(entry: Array) -> String:
+	var key := str(entry[0])
+	var txt := tr(key)
+	return str(entry[1]) if txt == key else txt
+
+
+## Hiện 2 ghi chú dán (mờ dần vào), rồi cứ NOTE_SWAP_SEC giây đổi sang mẹo / hướng dẫn kế tiếp
+func _start_notes() -> void:
+	if layout.note_a == null and layout.note_b == null:
+		return
+	_fill_notes()
+	var delays := [0.35, 0.6]
+	var notes: Array = [layout.note_a, layout.note_b]
+	for i in notes.size():
+		var n := notes[i] as Control
+		if n == null:
+			continue
+		n.modulate.a = 0.0
+		var tw := create_tween()
+		tw.tween_property(n, "modulate:a", 1.0, 0.4).set_delay(float(delays[i])).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	_note_tween = create_tween().set_loops()
+	_note_tween.tween_interval(NOTE_SWAP_SEC)
+	_note_tween.tween_callback(_swap_notes)
+
+
+func _fill_notes() -> void:
+	if layout.note_a_head != null:
+		layout.note_a_head.text = _tr_or(TIP_HEAD)
+	if layout.note_a_body != null:
+		layout.note_a_body.text = _tr_or(TIPS[_tip_index % TIPS.size()])
+	if layout.note_b_head != null:
+		layout.note_b_head.text = _tr_or(GUIDE_HEAD)
+	if layout.note_b_body != null:
+		layout.note_b_body.text = _tr_or(GUIDES[_guide_index % GUIDES.size()])
+
+
+## Mờ chữ cũ → đổi sang mẹo kế → hiện lại
+func _swap_notes() -> void:
+	if _transitioning:
+		return
+	_tip_index += 1
+	_guide_index += 1
+	var bodies: Array = [layout.note_a_body, layout.note_b_body]
+	var tw := create_tween()
+	for b in bodies:
+		if b != null:
+			tw.parallel().tween_property(b, "modulate:a", 0.0, 0.18)
+	tw.tween_callback(_fill_notes)
+	for b in bodies:
+		if b != null:
+			tw.parallel().tween_property(b, "modulate:a", 1.0, 0.25)
 
 
 ## Thanh tiến trình nạp: theo dõi `LoadingManager` (xem scripts/autoload/LoadingManager.gd).
@@ -232,6 +307,8 @@ func _advance_to_title() -> void:
 	if _transitioning:
 		return
 	_transitioning = true
+	if _note_tween != null and _note_tween.is_valid():
+		_note_tween.kill()
 	if _pencil_tween != null and _pencil_tween.is_valid():
 		_pencil_tween.kill()
 	var pencil_anim := layout.get_node_or_null("PencilAnim") as AnimationPlayer
