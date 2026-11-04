@@ -23,9 +23,9 @@
 [ext_resource type="Texture2D" uid="uid://c4louruvu6ijq" path="res://assets/images-png/game/btn_hint_normal.png" id="bar_hint_n"]
 [ext_resource type="Texture2D" uid="uid://c1rsbeag67ckp" path="res://assets/images-png/game/btn_hint_pressed.png" id="bar_hint_p"]
 [ext_resource type="Script" uid="uid://bbq8fo18vt532" path="res://scripts/ui/hud/game/action_bar.gd" id="bar_script"]
-[ext_resource type="Texture2D" path="res://assets/images-png/game/btn_teleport_disabled.png" id="bar_undo_d"]
-[ext_resource type="Texture2D" path="res://assets/images-png/game/btn_teleport_normal.png" id="bar_undo_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/game/btn_teleport_pressed.png" id="bar_undo_p"]
+[ext_resource uid="uid://cokoietwvdpeo" type="Texture2D" path="res://assets/images-png/game/btn_teleport_disabled.png" id="bar_undo_d"]
+[ext_resource uid="uid://w4vmljypjtn" type="Texture2D" path="res://assets/images-png/game/btn_teleport_normal.png" id="bar_undo_n"]
+[ext_resource uid="uid://18tyqqpebj34" type="Texture2D" path="res://assets/images-png/game/btn_teleport_pressed.png" id="bar_undo_p"]
 [ext_resource type="Script" uid="uid://6o5plv3ncq4w" path="res://scripts/ui/hud/game/limited_button.gd" id="limit_btn"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7v77u"]

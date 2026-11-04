@@ -16,9 +16,9 @@
 [ext_resource uid="uid://cvm34mg2f0ngw" type="Texture2D" path="res://assets/images-png/game/cell_satisfied_wash.png" id="13_satisfied"]
 [ext_resource type="Texture2D" uid="uid://cowu67bwhbm4n" path="res://assets/images-png/game/cell_start.png" id="14_start"]
 [ext_resource type="Texture2D" uid="uid://dqyi8ijauyy0j" path="res://assets/images-png/game/cell_finish.png" id="15_finish"]
-[ext_resource type="Texture2D" path="res://assets/images-png/game/icon_key.png" id="16_key"]
-[ext_resource type="Texture2D" path="res://assets/images-png/game/icon_lock_cell.png" id="17_lock"]
-[ext_resource type="Texture2D" path="res://assets/images-png/game/cell_teleport_glow.png" id="18_tpglow"]
+[ext_resource uid="uid://b6p2na2vyeyvm" type="Texture2D" path="res://assets/images-png/game/icon_key.png" id="16_key"]
+[ext_resource uid="uid://j10m0igc4go5" type="Texture2D" path="res://assets/images-png/game/icon_lock_cell.png" id="17_lock"]
+[ext_resource uid="uid://df6sexipy7iqu" type="Texture2D" path="res://assets/images-png/game/cell_teleport_glow.png" id="18_tpglow"]
 
 [sub_resource type="Animation" id="Animation_cell_reset"]
 length = 0.001

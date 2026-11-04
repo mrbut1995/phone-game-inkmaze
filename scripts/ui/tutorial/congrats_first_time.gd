@@ -38,6 +38,10 @@ func _on_step_entered(_index: int, _data: Dictionary) -> void:
 		btn_main.text = _tr_key("STR_TUT_CONGRATS_MAIN", "VỀ MÀN HÌNH CHÍNH")
 	nav_bar.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 	btn_skip.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
+	if lbl_step_num != null:
+		lbl_step_num.get_parent().visible = false  # keep-code: ẩn huy hiệu số bước ở màn chúc mừng
+	if lbl_step_of != null:
+		lbl_step_of.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 	if dots_container != null:
 		dots_container.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 	# Pose ban đầu đặt NGAY bằng code (khung hình đầu đã đúng dáng, trước khi AnimationPlayer chạy);

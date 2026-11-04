@@ -149,6 +149,13 @@ func hide_range(from_point: int, to_point: int) -> void:
 	queue_redraw()
 
 
+## Hiện NGAY (không animation) các đoạn [from_point, to_point)
+func show_range(from_point: int, to_point: int) -> void:
+	for index in range(maxi(from_point, 0), mini(to_point, _progress.size())):
+		_progress[index] = 1.0
+	queue_redraw()
+
+
 ## Tô dần các đoạn [from_point, to_point) lần lượt từ đầu tới cuối; trả về Tween để `await`
 func play_reveal_range(from_point: int, to_point: int, duration: float = 0.7) -> Tween:
 	var first := maxi(from_point, 0)

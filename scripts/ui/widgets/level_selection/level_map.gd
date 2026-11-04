@@ -343,9 +343,11 @@ func _rebuild() -> void:
 		min_y = minf(min_y, point.y)
 	_update_scroll_range(min_y, node_scale)
 	_set_scroll_y(_focus_y() - _current_position_y(positions, sorted_ids))
+	var revealing := false
 	if _pending_reveal_gate != 0:
-		_begin_reveal(sorted_ids)
-	call_deferred("_initial_scroll")
+		revealing = _begin_reveal(sorted_ids)
+	if not revealing:
+		call_deferred("_initial_scroll")
 	if not _anim_steps.is_empty():   # bản đồ dựng lại khi hàng đợi còn: về trạng thái TRƯỚC rồi chạy lại
 		_apply_anim_prestate()
 		_schedule_anim()
@@ -790,8 +792,11 @@ func play_gate_open(gate_id: int) -> void:
 	var gate: ChapterGateNode = _gate_nodes.get(gate_id, null)
 	if gate == null or not is_instance_valid(gate):
 		return
-	scroll_to(gate_id, true)
-	await get_tree().create_timer(scroll_to_duration).timeout
+	var gate_target := clampf(_focus_y() - _node_y(gate_id), _min_scroll_y, _max_scroll_y)
+	if absf(gate_target - scroll_offset_y()) > 1.0:   # cổng đã ở tiêu điểm thì mở ngay, khỏi chờ cuộn
+		scroll_to(gate_id, true)
+		if _scroll_tween != null and _scroll_tween.is_valid():
+			await _scroll_tween.finished
 	gate.play_open()
 	await gate.opened
 
@@ -803,31 +808,164 @@ func reject_gate(gate_id: int) -> void:
 		gate.play_reject()
 
 
-## Bước 2 (gọi TRƯỚC `build`): lần dựng kế tiếp sẽ đặt cổng ở tiêu điểm, ẩn các nút phía sau cổng,
-## rồi cuộn lên màn kế tiếp và cho chúng SÁNG DẦN
+## Bước 2 (gọi TRƯỚC `build`): lần dựng kế tiếp sẽ giữ cổng ở tiêu điểm, ẨN các nút + đường nối phía sau cổng,
+## rồi CUỘN LÊN dần: từng đoạn đường được vẽ nối sang nút kế → nút bật ra → cuộn tiếp (xem `_run_reveal`)
 func prepare_reveal(gate_id: int) -> void:
 	_pending_reveal_gate = gate_id
 
 
-func _begin_reveal(sorted_ids: Array) -> void:
+@export_group("Animation mở chương mới")
+## Thời gian tối đa cho mỗi nút (giây); chương dài thì tự nhanh hơn để tổng không quá `reveal_max_total`
+@export_range(0.05, 0.8, 0.01) var reveal_step_sec := 0.26
+@export_range(0.5, 8.0, 0.1) var reveal_max_total := 3.4
+@export_range(0.0, 1.0, 0.05) var reveal_start_delay := 0.2
+@export_range(0.1, 0.8, 0.01) var reveal_pop_sec := 0.32
+## Chỉ diễn từng nút cho tối đa chừng này nút đầu chương; phần còn lại (ngoài tầm nhìn) hiện luôn
+@export_range(1, 40, 1) var reveal_max_nodes := 12
+## Khi nút mới nằm cao hơn mức này (tỉ lệ chiều cao khung, 0 = đỉnh) thì bản đồ cuộn lên để đón nó
+@export_range(0.05, 0.6, 0.01) var reveal_camera_top := 0.3
+
+var _reveal_active := false
+var _reveal_token := 0
+var _reveal_gate_id := 0
+var _reveal_list: Array[Dictionary] = []   # {id, node, scale: Vector2, instant: bool}
+var _reveal_tweens: Array[Tween] = []
+var _reveal_goal_was_visible := false
+var _reveal_marker_was_visible := false
+
+
+## Trả về true nếu đã nhận quyền điều khiển cuộn (khi đó `_rebuild` không tự cuộn tới màn đang chơi)
+func _begin_reveal(sorted_ids: Array) -> bool:
 	var gate_id := _pending_reveal_gate
 	_pending_reveal_gate = 0
 	var gate_index := sorted_ids.find(gate_id)
-	if gate_index < 0:
-		return
+	if gate_index < 0 or gate_index >= sorted_ids.size() - 1:
+		return false
 	_set_scroll_y(_focus_y() - _node_y(gate_id))   # bắt đầu ngay tại cổng (đã mở)
-	var fade_nodes: Array[Node] = []
+	_reveal_gate_id = gate_id
+	_reveal_list.clear()
 	for index in range(gate_index + 1, sorted_ids.size()):
 		var id: int = sorted_ids[index]
-		var node: Node = _gate_nodes.get(id, null) if id < 0 else _nodes.get(id, null)
-		if node != null:
-			fade_nodes.append(node)
-	for node in fade_nodes:
-		(node as CanvasItem).modulate.a = 0.0
-	var tween := create_tween()
-	tween.tween_interval(scroll_to_duration * 0.6)   # chờ bản đồ trượt lên một chút
-	for i in fade_nodes.size():
-		tween.parallel().tween_property(fade_nodes[i], "modulate:a", 1.0, 0.35).set_delay(0.05 * float(i))
+		var node: Node2D = _gate_nodes.get(id, null) if id < 0 else _nodes.get(id, null)
+		if node == null:
+			continue
+		var instant := _reveal_list.size() >= reveal_max_nodes
+		_reveal_list.append({"id": id, "node": node, "scale": node.scale, "instant": instant})
+		if not instant:
+			node.modulate.a = 0.0
+			node.scale = node.scale * 0.4
+	if _reveal_list.is_empty():
+		return false
+	var from_point: int = _road_point_of.get(gate_id, -1)
+	if _road != null and from_point >= 0:
+		var first_instant := -1
+		for entry in _reveal_list:
+			if bool(entry["instant"]):
+				first_instant = _road_point_of.get(int(entry["id"]), -1)
+				break
+		# Ẩn đường nối từ cổng tới hết phần sẽ diễn; phần "hiện luôn" giữ nguyên
+		_road.hide_range(from_point, first_instant if first_instant >= 0 else 1000000)
+	_reveal_goal_was_visible = goal != null and goal.visible
+	_reveal_marker_was_visible = marker != null and marker.visible
+	if goal != null:
+		goal.visible = false
+	if marker != null:
+		marker.visible = false
+	_busy = true
+	_reveal_active = true
+	_reveal_token += 1
+	_run_reveal(_reveal_token)
+	return true
+
+
+func _run_reveal(token: int) -> void:
+	await get_tree().create_timer(reveal_start_delay).timeout
+	if token != _reveal_token:
+		return
+	var shown: Array[Dictionary] = []
+	for entry in _reveal_list:
+		if not bool(entry["instant"]):
+			shown.append(entry)
+	var step := clampf(reveal_max_total / float(maxi(shown.size(), 1)), 0.09, reveal_step_sec)
+	var prev_id := _reveal_gate_id
+	for entry in shown:
+		if token != _reveal_token:
+			return
+		var id: int = entry["id"]
+		var node: Node2D = entry["node"]
+		if not is_instance_valid(node):
+			continue
+		# 1) Nút mới cao quá mức ⇒ bản đồ cuộn lên đón nó (tốc độ đều, liền mạch giữa các nút)
+		var top_target := area_top_offset(id)
+		var target := clampf(maxf(scroll_offset_y(), top_target), _min_scroll_y, _max_scroll_y)
+		if target > scroll_offset_y() + 0.5:
+			_stop_scroll_tween()
+			_scroll_tween = create_tween()
+			_scroll_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+			_scroll_tween.tween_method(_set_scroll_y, scroll_offset_y(), target, step * 1.15)
+		# 2) Vệt dạ quang vẽ nối từ nút trước sang nút này
+		var from_point: int = _road_point_of.get(prev_id, -1)
+		var to_point: int = _road_point_of.get(id, -1)
+		var draw_time := step * 0.7
+		if _road != null and from_point >= 0 and to_point > from_point:
+			var road_tween := _road.play_reveal_range(from_point, to_point, draw_time)
+			if road_tween != null:
+				_reveal_tweens.append(road_tween)
+		await get_tree().create_timer(draw_time).timeout
+		if token != _reveal_token:
+			return
+		# 3) Nút bật ra khi vệt chạm tới
+		if is_instance_valid(node):
+			var pop := create_tween()
+			pop.set_parallel(true)
+			pop.tween_property(node, "modulate:a", 1.0, 0.14)
+			pop.tween_property(node, "scale", entry["scale"], reveal_pop_sec) \
+				.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+			_reveal_tweens.append(pop)
+		prev_id = id
+		await get_tree().create_timer(maxf(step - draw_time, 0.01)).timeout
+	if token != _reveal_token:
+		return
+	await get_tree().create_timer(reveal_pop_sec * 0.8).timeout
+	if token != _reveal_token:
+		return
+	_finish_reveal(false)
+
+
+## Offset cuộn để nút `id` nằm ở mức `reveal_camera_top` của khung (chỉ dùng khi nút cao hơn mức đó)
+func area_top_offset(id: int) -> float:
+	return _area_size().y * reveal_camera_top - _node_y(id)
+
+
+## Kết thúc mở chương: hiện đủ mọi nút + đường, trả cờ/mũi chỉ, cuộn về màn đang chơi
+func _finish_reveal(skipped: bool) -> void:
+	if not _reveal_active:
+		return
+	_reveal_active = false
+	_reveal_token += 1
+	for tween in _reveal_tweens:
+		if tween != null and tween.is_valid():
+			tween.kill()
+	_reveal_tweens.clear()
+	_stop_scroll_tween()
+	for entry in _reveal_list:
+		var node: Node2D = entry["node"]
+		if is_instance_valid(node):
+			node.modulate.a = 1.0
+			node.scale = entry["scale"]
+	if _road != null:
+		var from_point: int = _road_point_of.get(_reveal_gate_id, -1)
+		if from_point >= 0:
+			_road.show_range(from_point, 1000000)
+	if goal != null:
+		goal.visible = _reveal_goal_was_visible
+	if marker != null:
+		marker.visible = _reveal_marker_was_visible
+	_reveal_list.clear()
+	_busy = false
+	var target_id := _current_id if node_for(_current_id) != null else 0
+	if target_id != 0:
+		scroll_to(target_id, not skipped)
 
 
 func _set_decor_visible(visible_now: bool) -> void:
@@ -846,6 +984,10 @@ func _current_position_y(positions: Array[Vector2], sorted_ids: Array[int]) -> f
 
 func _clear_items() -> void:
 	_busy = false
+	_reveal_active = false
+	_reveal_token += 1
+	_reveal_list.clear()
+	_reveal_tweens.clear()
 	_road = null
 	_road_point_of.clear()
 	_nodes.clear()
@@ -938,6 +1080,10 @@ func _set_scroll_y(value: float) -> void:
 # Kéo / cuộn (dọc, thân thiện cảm ứng)
 # ---------------------------------------------------------------------------
 func _input(event: InputEvent) -> void:
+	if _busy and _reveal_active and _is_press_event(event):
+		get_viewport().set_input_as_handled()
+		_finish_reveal(true)   # chạm ⇒ bỏ qua animation mở chương, hiện ngay trạng thái cuối
+		return
 	if _busy and not _anim_steps.is_empty() and _is_press_event(event):
 		get_viewport().set_input_as_handled()
 		_abort_anim()

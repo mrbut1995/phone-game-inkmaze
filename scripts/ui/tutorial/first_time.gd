@@ -15,6 +15,7 @@ extends BaseTutorial
 
 func _init_tutorial() -> void:
 	tutorial_id = "first_time"
+	btn_skip.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 	btn_skip_all.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 
 

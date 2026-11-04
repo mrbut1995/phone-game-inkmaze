@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" path="res://scripts/ui/widgets/main/chapter_gate.gd" id="1_gate"]
 [ext_resource type="Script" uid="uid://5833lhk0ggnb" path="res://scripts/tools/texture_button_2d.gd" id="2_tbtn2d"]
-[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/lv_gate_normal.png" id="3_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/lv_gate_hover.png" id="4_h"]
-[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/lv_gate_pressed.png" id="5_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/lv_gate_open.png" id="6_open"]
-[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/lv_gate_open_sheet.png" id="7_sheet"]
+[ext_resource uid="uid://brbqm6woha5py" type="Texture2D" path="res://assets/images-png/level_selector/lv_gate_normal.png" id="3_n"]
+[ext_resource uid="uid://ctdbxba1eq4dq" type="Texture2D" path="res://assets/images-png/level_selector/lv_gate_hover.png" id="4_h"]
+[ext_resource uid="uid://djmc6x56wcqor" type="Texture2D" path="res://assets/images-png/level_selector/lv_gate_pressed.png" id="5_p"]
+[ext_resource uid="uid://b36va5c6awkbg" type="Texture2D" path="res://assets/images-png/level_selector/lv_gate_open.png" id="6_open"]
+[ext_resource uid="uid://bpqdr5k7ervvt" type="Texture2D" path="res://assets/images-png/level_selector/lv_gate_open_sheet.png" id="7_sheet"]
 
 [sub_resource type="Animation" id="Animation_gate_reset"]
 length = 0.001

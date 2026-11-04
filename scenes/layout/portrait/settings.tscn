@@ -38,9 +38,9 @@
 [ext_resource uid="uid://ff2cgvot430q" type="Texture2D" path="res://assets/images-png/settings/ic_reset.png" id="ic_reset"]
 [ext_resource type="PackedScene" path="res://nodes/common/notebook_sheet.tscn" id="nbsheet"]
 [ext_resource type="Script" path="res://scripts/ui/widgets/settings/toggle_stamp.gd" id="stamp_script"]
-[ext_resource type="Texture2D" path="res://assets/images-png/settings/stamp_on.png" id="stamp_on"]
-[ext_resource type="Texture2D" path="res://assets/images-png/settings/stamp_off.png" id="stamp_off"]
-[ext_resource type="Texture2D" path="res://assets/images-png/settings/tile_strip.png" id="tile_strip"]
+[ext_resource uid="uid://din3uerr5f02h" type="Texture2D" path="res://assets/images-png/settings/stamp_on.png" id="stamp_on"]
+[ext_resource uid="uid://dl4hhaypwglq3" type="Texture2D" path="res://assets/images-png/settings/stamp_off.png" id="stamp_off"]
+[ext_resource uid="uid://cuf5t751kanl1" type="Texture2D" path="res://assets/images-png/settings/tile_strip.png" id="tile_strip"]
 
 [node name="Portrait" node_paths=PackedStringArray("btn_back", "content_root", "bgm_slider", "bgm_value", "sfx_slider", "sfx_value", "chk_haptic", "chk_auto_mark", "chk_glow", "btn_language", "lbl_language", "lbl_player_id", "btn_guide", "btn_rules", "btn_credits", "btn_reset", "lbl_version") instance=ExtResource("parent")]
 script = ExtResource("layout_script")

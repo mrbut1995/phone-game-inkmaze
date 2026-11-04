@@ -6,7 +6,7 @@
 [ext_resource uid="uid://bjujt0gsrxiqg" type="Texture2D" path="res://assets/images-png/game/anchor_disabled.png" id="3_6q3p4"]
 [ext_resource uid="uid://cch54lvvo0xn6" type="Texture2D" path="res://assets/images-png/game/anchor_focus.png" id="3_fgv2j"]
 
-[ext_resource type="Texture2D" path="res://assets/images-png/game/anchor_selected.png" id="9_selected"]
+[ext_resource uid="uid://db4ernbnph6ud" type="Texture2D" path="res://assets/images-png/game/anchor_selected.png" id="9_selected"]
 
 [sub_resource type="Animation" id="Animation_anchor_reset"]
 length = 0.001

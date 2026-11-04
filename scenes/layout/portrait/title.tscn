@@ -6,9 +6,9 @@
 [ext_resource uid="uid://bjey8neasfcau" type="Texture2D" path="res://assets/images-png/game/pen_type/pen_fountain_pen_nib.png" id="6_hiwto"]
 [ext_resource uid="uid://bmgu413g834wp" type="Texture2D" path="res://assets/images-png/icons/icon_play_triangle_large.png" id="6_tcygh"]
 [ext_resource uid="uid://bt4mb18wc2rf2" type="Texture2D" path="res://assets/images-png/main/stamp_version.png" id="8_stamp"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/title_paper_stack.png" id="stack"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/title_banner_torn.png" id="banner"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/title_stamp_play.png" id="pstamp"]
+[ext_resource uid="uid://ch1gi0l8ionn3" type="Texture2D" path="res://assets/images-png/main/title_paper_stack.png" id="stack"]
+[ext_resource uid="uid://iq83gbidk8m5" type="Texture2D" path="res://assets/images-png/main/title_banner_torn.png" id="banner"]
+[ext_resource uid="uid://xq8f6uyiwtjw" type="Texture2D" path="res://assets/images-png/main/title_stamp_play.png" id="pstamp"]
 
 [sub_resource type="Animation" id="Animation_reset_title"]
 length = 0.001
