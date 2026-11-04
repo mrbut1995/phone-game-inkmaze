@@ -16,7 +16,7 @@
 [ext_resource uid="uid://b5tms3l64tlpv" type="Texture2D" path="res://assets/images-png/achievements/tab_ico_special.png" id="35_i4"]
 [ext_resource type="PackedScene" path="res://nodes/achievements/card_big_land.tscn" id="22_card"]
 [ext_resource type="PackedScene" path="res://nodes/achievements/thumb.tscn" id="23_thumb"]
-[ext_resource type="Texture2D" path="res://assets/images-png/achievements/seg_track_land.png" id="seg_land"]
+[ext_resource uid="uid://cooh1bfrmp5t" type="Texture2D" path="res://assets/images-png/achievements/seg_track_land.png" id="seg_land"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_segland"]
 texture = ExtResource("seg_land")

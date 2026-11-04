@@ -463,14 +463,16 @@ anchor_bottom = 0.94600004
 mouse_filter = 2
 texture = ExtResource("5_sheet")
 
-[node name="Tape" type="TextureRect" parent="Sheet" index="0" unique_id=1081332614]
+[node name="Tape" type="NinePatchRect" parent="Sheet" index="0" unique_id=1081332614]
 layout_mode = 0
-offset_left = 173.5
-offset_top = -12.5
-offset_right = 286.5
-offset_bottom = 14.5
+offset_left = 60.0
+offset_top = -38.0
+offset_right = 400.0
+offset_bottom = 12.0
 mouse_filter = 2
 texture = ExtResource("6_tape")
+patch_margin_left = 14
+patch_margin_right = 14
 
 [node name="Clip" type="TextureRect" parent="Sheet" index="1" unique_id=522270127]
 layout_mode = 0
@@ -709,13 +711,19 @@ vertical_alignment = 1
 z_index = 5
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.04
-anchor_top = 0.078
-anchor_right = 0.96
-anchor_bottom = 0.128
+anchor_left = 0.5
+anchor_top = 0.135
+anchor_right = 0.5
+anchor_bottom = 0.135
+offset_left = -160.0
+offset_top = -38.0
+offset_right = 160.0
+offset_bottom = 12.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_type_variation = &"LevelsTitle"
+theme_override_font_sizes/font_size = 26
 text = "STR_ACH_TITLE"
 horizontal_alignment = 1
 vertical_alignment = 1

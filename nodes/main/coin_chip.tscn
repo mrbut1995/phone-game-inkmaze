@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://h74t0sknqj0p" path="res://scripts/ui/widgets/coin_chip.gd" id="1_coin"]
 [ext_resource type="Texture2D" uid="uid://bsenhucno4lsr" path="res://assets/images-png/icons/icon_coin.png" id="2_ico"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/btn_plus_normal.png" id="plus_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/btn_plus_pressed.png" id="plus_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/icon_plus.png" id="plus_i"]
+[ext_resource uid="uid://d1fbgm80ceuk1" type="Texture2D" path="res://assets/images-png/common/btn_plus_normal.png" id="plus_n"]
+[ext_resource uid="uid://b1paqyjesn5lp" type="Texture2D" path="res://assets/images-png/common/btn_plus_pressed.png" id="plus_p"]
+[ext_resource uid="uid://r6uicda1isap" type="Texture2D" path="res://assets/images-png/common/icon_plus.png" id="plus_i"]
 
 [sub_resource type="StyleBoxFlat" id="sb_panel"]
 bg_color = Color(1, 1, 1, 0.55)

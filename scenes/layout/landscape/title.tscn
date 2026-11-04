@@ -7,8 +7,8 @@
 [ext_resource uid="uid://oalyje7bs0yo" type="Texture2D" path="res://assets/images-png/level_selector/icon_play_triangle.png" id="7_play_icon"]
 [ext_resource uid="uid://bt4mb18wc2rf2" type="Texture2D" path="res://assets/images-png/main/stamp_version.png" id="8_stamp"]
 [ext_resource type="Script" path="res://scripts/ui/layouts/title_layout.gd" id="2_layout"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/title_banner_torn.png" id="banner"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/title_stamp_play.png" id="pstamp"]
+[ext_resource uid="uid://iq83gbidk8m5" type="Texture2D" path="res://assets/images-png/main/title_banner_torn.png" id="banner"]
+[ext_resource uid="uid://xq8f6uyiwtjw" type="Texture2D" path="res://assets/images-png/main/title_stamp_play.png" id="pstamp"]
 
 [sub_resource type="Animation" id="Animation_reset_title"]
 length = 0.001

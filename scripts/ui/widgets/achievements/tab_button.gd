@@ -41,6 +41,9 @@ const J_ROW_H := 92.0          ## cao tab thiết kế; art co theo `cao thực 
 const J_IDLE_TOP := 22.0       ## đỉnh art huy hiệu (đỉnh tab = đỉnh vòng lò xo); tab chưa chọn KHÔNG nhãn ⇒ huy hiệu nằm giữa giấy
 const J_FOCUS_BOTTOM := 88.0   ## đáy thẻ focus ⇒ thẻ nhô lên trên vòng lò xo
 const J_FOCUS_LABEL_FRAC := 0.60
+## Chiều rộng LOGIC của art (bằng width trong SVG) — PNG xuất 1× hay 2× đều quy đổi đúng (tool svg_to_png xuất 1×)
+const J_IDLE_LOGIC_W := 54.0
+const J_FOCUS_LOGIC_W := 73.0
 ## (bản NGANG) ô vuông trắng của tab chưa chọn
 const J_BADGE_ICON := 0.62     ## icon / cạnh ô vuông
 ## Màu ĐẬM của icon khi chưa chọn (trùng màu gờ đáy trong art) — theo category; thiếu ⇒ navy
@@ -162,12 +165,12 @@ func _layout_j(on: bool) -> void:
 	if _j_art != null:
 		_j_art.texture = tex
 		if tex != null:
-			var sz := tex.get_size() * 0.5 * k
+			var sz := _j_logic(tex, on) * k
 			_j_center(_j_art, sz, (J_FOCUS_BOTTOM * k - sz.y) if on else J_IDLE_TOP * k)
 	if label != null:
 		label.visible = on         # NHIỀU TAB ⇒ chỉ tab đang chọn hiện chữ
 		if on and tex != null:
-			var csz := tex.get_size() * 0.5 * k
+			var csz := _j_logic(tex, true) * k
 			_j_center(label, Vector2(csz.x, csz.y * 0.26), J_FOCUS_BOTTOM * k - csz.y + csz.y * J_FOCUS_LABEL_FRAC)
 			_fit_label(csz.x - 6.0)
 
@@ -202,7 +205,7 @@ func set_label_text(text: String) -> void:
 
 ## Thu nhỏ chữ nhãn cho VỪA bề rộng `max_w` (vd "TẤT CẢ (28)"); cỡ gốc nhớ lại ở lần đầu
 var _label_base := 0
-func _fit_label(max_w: float, min_size := 7) -> void:
+func _fit_label(max_w: float, min_size := 8) -> void:
 	if label == null:
 		return
 	if _label_base <= 0:
@@ -247,3 +250,9 @@ func set_active(on: bool) -> void:
 		var tw := create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 		tw.tween_property(self, "scale", Vector2(1.06, 1.06), 0.10)
 		tw.tween_property(self, "scale", Vector2.ONE, 0.12)
+
+
+## Cỡ logic của art tab (không giả định PNG = 2×)
+func _j_logic(tex: Texture2D, focus: bool) -> Vector2:
+	var px := tex.get_size()
+	return px * ((J_FOCUS_LOGIC_W if focus else J_IDLE_LOGIC_W) / maxf(px.x, 1.0))

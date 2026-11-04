@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://dy7pg6bsg4d51" path="res://assets/images-png/shop/nav_paper.png" id="nav_paper"]
 [ext_resource type="Texture2D" uid="uid://boypfmedvt21m" path="res://assets/images-png/shop/nav_pen.png" id="nav_pen"]
 [ext_resource type="Texture2D" uid="uid://dfyys4rb7hcss" path="res://assets/images-png/shop/nav_tool.png" id="nav_tool"]
+[ext_resource type="Texture2D" uid="uid://ruoaaeu82tl0" path="res://assets/images-png/popups/washi_tape.png" id="tape_title"]
 
 [sub_resource type="Animation" id="Animation_wallet_pop_psh"]
 resource_name = "wallet_pop"
@@ -262,6 +263,7 @@ vertical_alignment = 1
 text_overrun_behavior = 3
 
 [node name="Title" type="Label" parent="TopBar/HeaderRow" index="2" unique_id=199879350]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -287,7 +289,7 @@ anchors_preset = -1
 anchor_left = 0.0444
 anchor_right = 0.9556
 anchor_bottom = 1.0
-offset_top = 100.0
+offset_top = 128.0
 offset_bottom = -270.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -567,6 +569,39 @@ offset_right = 1.0
 offset_bottom = 1.0
 mouse_filter = 2
 color = Color(0.2392, 0.5137, 0.6824, 1)
+
+[node name="TitleTape" type="NinePatchRect" parent="." index="11"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -140.0
+offset_top = 84.0
+offset_right = 140.0
+offset_bottom = 132.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("tape_title")
+patch_margin_left = 14
+patch_margin_right = 14
+
+[node name="TitleOnTape" type="Label" parent="." index="12"]
+z_index = 5
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -140.0
+offset_top = 84.0
+offset_right = 140.0
+offset_bottom = 132.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_type_variation = &"ShopTitle"
+theme_override_font_sizes/font_size = 30
+text = "STR_SHOP_TITLE"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="WalletAnim" type="AnimationPlayer" parent="." index="8" unique_id=1722495398]
 libraries/ = SubResource("AnimationLibrary_wallet_psh")

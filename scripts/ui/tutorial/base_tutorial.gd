@@ -35,6 +35,12 @@ var is_active: bool = false
 @export var dialog_bubble: Control = null
 @export var lbl_title: Label = null
 @export var dots_container: HBoxContainer = null
+## Số bước trong huy hiệu tròn + dòng "Bước N trong M" (kiểu AO4) — bind trong base_tutorial.tscn
+@export var lbl_step_num: Label = null
+@export var lbl_step_of: Label = null
+## Sao tiến độ: sáng = đã tới / đang ở bước này, xám = chưa tới
+@export var tex_star_on: Texture2D = null
+@export var tex_star_off: Texture2D = null
 @export var lbl_message: Label = null
 @export var nav_bar: Control = null
 @export var btn_skip_all: BaseButton = null
@@ -104,6 +110,7 @@ func _ready() -> void:
 		if defaults.size() > 0:
 			setup_steps(defaults)
 	_wire_button_effects()
+	_localize_skip_buttons()
 	play_entrance()
 
 
@@ -135,6 +142,25 @@ func _init_tutorial() -> void:
 ## Editor blueprint_steps luôn được ưu tiên hơn kết quả của hàm này.
 func _get_default_steps() -> Array:
 	return []
+
+
+## Nút Bỏ qua: nếu bảng dịch chưa có khoá thì dùng chữ tiếng Việt dự phòng (không lộ khoá thô)
+func _localize_skip_buttons() -> void:
+	if btn_skip != null and tr("STR_TUT_COMMON_SKIP") == "STR_TUT_COMMON_SKIP":
+		(btn_skip as Button).text = "Bỏ qua"
+	if btn_skip_all != null and tr("STR_TUT_COMMON_SKIP_ALL") == "STR_TUT_COMMON_SKIP_ALL":
+		(btn_skip_all as Button).text = "Bỏ qua tất cả"
+
+
+## Cập nhật huy hiệu số bước + dòng "Bước N trong M"
+func _update_step_labels() -> void:
+	if lbl_step_num != null:
+		lbl_step_num.text = str(current_step_index + 1)
+	if lbl_step_of != null:
+		var fmt := tr("STR_TUT_STEP_OF")
+		if fmt == "STR_TUT_STEP_OF":
+			fmt = "Bước {0} trong {1}"
+		lbl_step_of.text = fmt.format([current_step_index + 1, steps_data.size()])
 
 
 ## Gắn hiệu ứng nhấn nảy cho 3 nút điều hướng (giống mọi nút khác trong game)
@@ -332,20 +358,17 @@ func _update_dots() -> void:
 		return
 	var dots := dots_container.get_children()
 	for i in dots.size():
-		var dot := dots[i] as Label
+		var dot := dots[i] as TextureRect
 		if dot == null:
 			continue
 		dot.visible = i < steps_data.size()
-		dot.text = "●"  # keep-code: chữ theo dữ liệu ván chơi (runtime)
-		dot.add_theme_color_override(
-			"font_color",
-			Color("#2A2E33") if i == current_step_index else Color("#D4D8DD")
-		)
+		dot.texture = tex_star_on if i <= current_step_index else tex_star_off
 		dot.scale = Vector2.ONE  # keep-code: pose hoạt cảnh runtime (tween)
 		dot.modulate = Color.WHITE  # keep-code: màu theo dữ liệu (runtime)
-		# Chấm đang ở bước hiện tại nảy lên cho dễ thấy
+		# Sao ở bước hiện tại nảy lên cho dễ thấy
 		if i == current_step_index and i < steps_data.size():
 			UIAnim.play_pop_in(dot, 0.0, 0.55, 0.22)
+	_update_step_labels()
 
 
 func show_step(index: int) -> void:

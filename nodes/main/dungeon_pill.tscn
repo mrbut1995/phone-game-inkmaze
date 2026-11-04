@@ -1,9 +1,9 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/widgets/main/dungeon_pill.gd" id="1_pill"]
-[ext_resource type="Texture2D" path="res://assets/images-png/dungeon/dungeon_ticket.png" id="2_ticket"]
-[ext_resource type="Texture2D" path="res://assets/images-png/dungeon/dungeon_icon.png" id="3_icon"]
-[ext_resource type="Texture2D" path="res://assets/images-png/dungeon/dungeon_ticket_pressed.png" id="4_ticket_down"]
+[ext_resource uid="uid://bv1g3g6uf4i68" type="Texture2D" path="res://assets/images-png/dungeon/dungeon_ticket.png" id="2_ticket"]
+[ext_resource uid="uid://1tj20n550tg7" type="Texture2D" path="res://assets/images-png/dungeon/dungeon_icon.png" id="3_icon"]
+[ext_resource uid="uid://ch6wfk6dil6oa" type="Texture2D" path="res://assets/images-png/dungeon/dungeon_ticket_pressed.png" id="4_ticket_down"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0"]
 

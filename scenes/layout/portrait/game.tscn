@@ -2,13 +2,13 @@
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="Script" uid="uid://hw0s8tromsjw" path="res://scripts/ui/layouts/game_layout_portrait.gd" id="2_bgd8i"]
-[ext_resource type="Texture2D" path="res://assets/images-png/game/btn_pause_chip_normal.png" id="3_5newe"]
-[ext_resource type="Texture2D" path="res://assets/images-png/game/btn_pause_chip_pressed.png" id="4_37s47"]
-[ext_resource type="Texture2D" path="res://assets/images-png/game/btn_pause_chip_disabled.png" id="5_bt5mj"]
+[ext_resource uid="uid://d25r76ii2rmgm" type="Texture2D" path="res://assets/images-png/game/btn_pause_chip_normal.png" id="3_5newe"]
+[ext_resource uid="uid://b3hedxw3x2brm" type="Texture2D" path="res://assets/images-png/game/btn_pause_chip_pressed.png" id="4_37s47"]
+[ext_resource uid="uid://3248n6sv34y8" type="Texture2D" path="res://assets/images-png/game/btn_pause_chip_disabled.png" id="5_bt5mj"]
 [ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/game/game_hud.tscn" id="14_nepv3"]
-[ext_resource type="Texture2D" path="res://assets/images-png/game/btn_help_chip_normal.png" id="47_help_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/game/btn_help_chip_pressed.png" id="48_help_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/game/btn_help_chip_disabled.png" id="49_help_d"]
+[ext_resource uid="uid://cqnbjrmogy3ut" type="Texture2D" path="res://assets/images-png/game/btn_help_chip_normal.png" id="47_help_n"]
+[ext_resource uid="uid://c6x746gj44e10" type="Texture2D" path="res://assets/images-png/game/btn_help_chip_pressed.png" id="48_help_p"]
+[ext_resource uid="uid://dgyndat5d1775" type="Texture2D" path="res://assets/images-png/game/btn_help_chip_disabled.png" id="49_help_d"]
 
 [node name="Portrait" unique_id=1240041642 node_paths=PackedStringArray("status_bar", "hud_slot", "board_holder", "pause_btn", "instruction_btn", "level_label", "subtitle_label", "header_anchor") instance=ExtResource("1_parent")]
 script = ExtResource("2_bgd8i")

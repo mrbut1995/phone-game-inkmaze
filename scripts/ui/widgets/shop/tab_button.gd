@@ -14,6 +14,10 @@ const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 const ART_DIR := "res://assets/images-png/shop/"
 ## Chiều cao hàng tab thiết kế (cao tab ở màn dọc) — art co theo `hàng thực / ROW_H`
 const ROW_H := 84.0
+## Cỡ LOGIC (đơn vị thiết kế) của art — bằng width/height trong SVG. Cỡ PNG có thể là 1× hay 2× tuỳ lần xuất
+## (tool svg_to_png xuất đúng cỡ SVG = 1×) ⇒ script quy đổi theo chiều rộng, KHÔNG giả định "PNG = 2×".
+const IDLE_LOGIC_W := 56.0
+const FOCUS_LOGIC_W := 81.0
 
 signal tab_pressed(category: String)
 
@@ -147,17 +151,23 @@ func _apply_own_size() -> void:
 	if _art != null:
 		_art.texture = tex
 		if tex != null:
-			var sz := tex.get_size() * 0.5 * k          # PNG 2× ⇒ cỡ logic = nửa PNG
+			var sz := _logic_size(tex, active) * k
 			var y := (FOCUS_BOTTOM * k - sz.y) if active else IDLE_TOP * k
 			_set_centered(_art, sz, y)
 	if label != null:
 		label.visible = true
 		if active and tex != null:
-			var csz := tex.get_size() * 0.5 * k
+			var csz := _logic_size(tex, true) * k
 			var top := FOCUS_BOTTOM * k - csz.y + csz.y * FOCUS_LABEL_FRAC
-			_set_centered(label, Vector2(csz.x, csz.y * 0.26), top)
-			_fit_label(csz.x - 8.0)
+			# Thẻ focus HẸP: nhãn dài ("BÚT & MỰC") XUỐNG DÒNG thay vì co chữ/cắt "BÚT & M…"
+			_set_centered(label, Vector2(csz.x, csz.y * 0.36), top - csz.y * 0.04)
+			label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			label.text_overrun_behavior = TextServer.OVERRUN_NO_TRIMMING
+			label.clip_text = false
+			_fit_label_words(csz.x - 8.0)
 		else:
+			label.autowrap_mode = TextServer.AUTOWRAP_OFF
+			label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 			label.anchor_left = 0.0
 			label.anchor_right = 1.0
 			label.anchor_top = 0.0
@@ -183,7 +193,7 @@ func _set_centered(c: Control, sz: Vector2, top: float) -> void:
 
 ## Thu nhỏ chữ nhãn cho VỪA bề rộng `max_w` (tên tab dài / dịch ngôn ngữ khác); cỡ gốc nhớ lại ở lần đầu
 var _label_base := 0
-func _fit_label(max_w: float, min_size := 7) -> void:
+func _fit_label(max_w: float, min_size := 10) -> void:
 	if label == null:
 		return
 	if _label_base <= 0:
@@ -193,3 +203,29 @@ func _fit_label(max_w: float, min_size := 7) -> void:
 	while fs > min_size and font.get_string_size(label.text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x > max_w:
 		fs -= 1
 	label.add_theme_font_size_override("font_size", fs)
+
+
+## Nhãn nhiều dòng: chỉ co chữ khi TỪ DÀI NHẤT vẫn rộng hơn `max_w` (không bao giờ nhỏ hơn 10)
+func _fit_label_words(max_w: float, min_size := 10) -> void:
+	if label == null:
+		return
+	if _label_base <= 0:
+		_label_base = label.get_theme_font_size("font_size")
+	var font := label.get_theme_font("font")
+	var fs := _label_base
+	var longest := 0.0
+	for word in label.text.split(" ", false):
+		longest = maxf(longest, font.get_string_size(word, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x)
+	while fs > min_size and longest > max_w:
+		fs -= 1
+		longest = 0.0
+		for word in label.text.split(" ", false):
+			longest = maxf(longest, font.get_string_size(word, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x)
+	label.add_theme_font_size_override("font_size", fs)
+
+
+## Cỡ logic của art tab: PNG 1× (bằng SVG) hay 2× đều cho cùng kết quả
+func _logic_size(tex: Texture2D, focus: bool) -> Vector2:
+	var logic_w := FOCUS_LOGIC_W if focus else IDLE_LOGIC_W
+	var px := tex.get_size()
+	return px * (logic_w / maxf(px.x, 1.0))

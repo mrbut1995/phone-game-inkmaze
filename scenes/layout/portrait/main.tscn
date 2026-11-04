@@ -5,10 +5,10 @@
 [ext_resource type="PackedScene" uid="uid://kk7tudhk7r3m" path="res://nodes/main/profile_card.tscn" id="3_profile"]
 [ext_resource type="PackedScene" uid="uid://dxm1sm66f5qi1" path="res://nodes/main/star_chip.tscn" id="5_star"]
 [ext_resource type="PackedScene" uid="uid://xuj64d8yo0mg" path="res://nodes/main/event_header.tscn" id="6_header"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/settings_btn_normal.png" id="6_settings_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/settings_btn_pressed.png" id="7_settings_p"]
+[ext_resource uid="uid://dne2dakefjwwd" type="Texture2D" path="res://assets/images-png/common/settings_btn_normal.png" id="6_settings_n"]
+[ext_resource uid="uid://y87cylmhadlo" type="Texture2D" path="res://assets/images-png/common/settings_btn_pressed.png" id="7_settings_p"]
 [ext_resource type="PackedScene" uid="uid://k2k3skjevrxy" path="res://nodes/main/dock_button.tscn" id="9_dock"]
-[ext_resource type="Texture2D" path="res://assets/images-png/dock/dock_panel.png" id="tex_dock_panel"]
+[ext_resource uid="uid://dp0k1h7hbrked" type="Texture2D" path="res://assets/images-png/dock/dock_panel.png" id="tex_dock_panel"]
 [ext_resource type="PackedScene" uid="uid://7haijnwmq3kt" path="res://nodes/main/level_section.tscn" id="L_section"]
 [ext_resource type="PackedScene" path="res://nodes/level_selection/chapter_lock_sheet.tscn" id="L_sheet"]
 

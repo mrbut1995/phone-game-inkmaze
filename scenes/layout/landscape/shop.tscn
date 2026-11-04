@@ -18,7 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://dy7pg6bsg4d51" path="res://assets/images-png/shop/nav_paper.png" id="nav_paper"]
 [ext_resource type="Texture2D" uid="uid://boypfmedvt21m" path="res://assets/images-png/shop/nav_pen.png" id="nav_pen"]
 [ext_resource type="Texture2D" uid="uid://dfyys4rb7hcss" path="res://assets/images-png/shop/nav_tool.png" id="nav_tool"]
-[ext_resource type="Texture2D" path="res://assets/images-png/shop/nav_bar.png" id="nav_bar_land"]
+[ext_resource uid="uid://dcbbwmnwhhy4a" type="Texture2D" path="res://assets/images-png/shop/nav_bar.png" id="nav_bar_land"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_navland"]
 texture = ExtResource("nav_bar_land")

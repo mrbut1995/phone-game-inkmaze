@@ -65,6 +65,10 @@ enum State {
 @export var color_progress_locked := Color(0.0863, 0.2745, 0.3882, 1.0)
 @export var color_progress_ready := Color(0.2431, 0.5608, 0.1137, 1.0)
 
+@export_group("Mở cổng")
+## Tốc độ phát animation `open` (1.0 = nguyên bản 3,5 giây; 2.0 ≈ 1,75 giây)
+@export_range(0.5, 4.0, 0.1) var open_speed := 2.0
+
 @export_group("Nội dung trôi theo nút")
 ## Art nút vẽ sẵn độ lệch: pressed chìm 10 đơn vị thiết kế = 5px hiển thị; hover nâng 3 = 1.5px.
 ## Bù đúng chừng đó cho `Cover` để chữ dính chặt vào bìa.
@@ -212,7 +216,7 @@ func play_open() -> void:
 	if button != null:
 		button.disabled = true
 	if anim != null and anim.has_animation(&"open"):
-		anim.play(&"open")
+		anim.play(&"open", -1.0, open_speed)
 	else:
 		_finish_open()
 
