@@ -45,9 +45,20 @@ func _init() -> void:
 	var expected_items := built_ids.size() + (1 if built_ids.size() >= 2 else 0)
 	assert(items != null and items.get_child_count() == expected_items,
 		"Items phai co %d con (nut man + cong + duong noi lien mach)" % expected_items)
-	var current_node: LevelMapNode = section.map.node_for(section.chapter_continue_level())
-	assert(current_node != null and current_node.state == LevelMapNode.State.CURRENT,
-		"Man nen choi tiep phai co nut o trang thai CURRENT")
+	# Màn "nên chơi tiếp": nếu còn màn CHƯA có sao thì nút đó phải CURRENT;
+	# nếu đã xong hết chuỗi đang mở thì điểm tiếp theo là màn cuối (đã DONE).
+	var current_id := section.chapter_continue_level()
+	var current_node: LevelMapNode = section.map.node_for(current_id)
+	var stars_now := section.call("_stars_dict") as Dictionary
+	var has_pending := false
+	for id in built_ids:
+		if int(id) > 0 and int(stars_now.get(int(id), 0)) <= 0:
+			has_pending = true
+			break
+	var want_state := LevelMapNode.State.CURRENT if has_pending else LevelMapNode.State.DONE
+	assert(current_node != null and current_node.state == want_state,
+		"Man nen choi tiep phai co nut o trang thai CURRENT/DONE (id=%d, state=%d, muon=%d)"
+			% [current_id, current_node.state if current_node != null else -1, want_state])
 	assert(section.map.marker != null and section.map.marker.visible,
 		"Mui chi 'man tiep theo' phai hien tren ban do")
 	print("[CHECK] LevelSection: %d man -> %d nut ban do, mui chi o man %d."
