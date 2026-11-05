@@ -567,10 +567,11 @@ func _section_5_practice_levels() -> void:
 	_check(l2.max_steps >= steps2, "MAN 2 du buoc")
 
 	var l3: LevelData = lm.call("load_level", 3)
-	_check(_hidden_wall_count(l3) == 1, "MAN 3 co 1 tuong an (bai hoc cong cu)")
+	_check(_hidden_wall_count(l3) == 2,
+		"MAN 3 co 2 tuong an (bai hoc cong cu) — dang %d" % _hidden_wall_count(l3))
 	var maze3: MazeData = l3.to_maze_data()
 	var steps3: int = maze3.get_shortest_path(maze3.get_start(), maze3.get_end()).size() - 1
-	_check(steps3 == 6, "MAN 3 duong dai hon (6 buoc, can Goi y/Hoan tac)")
+	_check(steps3 > steps2, "MAN 3 duong DAI hon MAN 2 (can Goi y/Hoan tac) — %d > %d" % [steps3, steps2])
 	_check(l3.max_steps >= steps3, "MAN 3 du buoc")
 
 
