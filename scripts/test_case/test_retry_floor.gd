@@ -146,23 +146,24 @@ func _init() -> void:
 		print("[CHECK] Hoi sinh Dungeon: tang %d giu nguyen, buoc %d -> %d (+%d)."
 			% [floor_before, steps_before, steps_after, bonus])
 
-	# --- 7. Popup thua Dungeon: dòng mô tả nút HỒI SINH hiện đúng số bước của tham số ---
-	var over_popup := (load("res://nodes/popups/gameover.tscn") as PackedScene).instantiate() as GameOverPopup
-	root.add_child(over_popup)
+	# --- 7. Popup HỒI SINH (Retry) hiện đúng số bước cộng thêm của Dungeon ---
+	# Luồng thua mới: popup RETRY hiện trước (mô tả cách hồi sinh), bấm BỎ QUA mới tới Game Over.
+	var revive_popup := (load("res://nodes/popups/retry.tscn") as PackedScene).instantiate() as RetryPopup
+	root.add_child(revive_popup)
 	await process_frame
-	over_popup.call("open", {
+	revive_popup.call("open", {
 		"floor": 2, "progress": 40, "wall_hits": 0, "score": 120,
-		"steps_left": 0, "steps_max": 15, "revive_steps": 8,
+		"steps_left": 0, "steps_max": 15, "revive_steps": 8, "endless": true,
 	})
 	await process_frame
-	var desc := over_popup.revive_desc
+	var desc := revive_popup.label_subtitle
 	if desc == null or not desc.text.contains("8"):
 		print("[FAIL] Dong mo ta nut HOI SINH phai hien so buoc 8 (dang la '%s')"
 			% (desc.text if desc != null else "<null>"))
 		failures += 1
 	else:
-		print("[CHECK] Popup thua hien dung so buoc hoi sinh: '%s'" % desc.text)
-	over_popup.queue_free()
+		print("[CHECK] Popup hoi sinh hien dung so buoc cong them: '%s'" % desc.text)
+	revive_popup.queue_free()
 	await process_frame
 
 	# --- Kết luận ---
