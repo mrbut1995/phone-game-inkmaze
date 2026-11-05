@@ -211,28 +211,34 @@ func _section_5_scene(manager: Node) -> void:
 	await process_frame
 
 	_entry(scene.entry_count() == total, "Tab TAT CA hien thi du %d danh hieu" % total)
+	# Thiết kế "thẻ bài lớn": mỗi trang 1 thẻ (layout khai `cards_per_page`) ⇒ số trang = số danh hiệu
+	var per_page := scene.layout.cards_per_page if scene.layout != null and scene.layout.cards_per_page > 0 else CARDS_PER_PAGE
 	var pages := scene.page_count()
-	var expect_pages := int(ceil(float(total) / float(CARDS_PER_PAGE)))
+	var expect_pages := int(ceil(float(total) / float(per_page)))
 	_entry(pages == expect_pages, "So trang = ceil(%d/%d) = %d (dang %d)"
-		% [total, CARDS_PER_PAGE, expect_pages, pages])
+		% [total, per_page, expect_pages, pages])
 
 	var sum := 0
 	var full_pages := 0
 	for index in pages:
 		var count := scene.cards_on_page(index)
 		sum += count
-		if count == CARDS_PER_PAGE:
+		if count == per_page:
 			full_pages += 1
 	_entry(sum == total, "Tong so the tren cac trang = %d danh hieu" % total)
-	_entry(scene.cards_on_page(0) == CARDS_PER_PAGE,
-		"Trang dau co dung %d the (mockup)" % CARDS_PER_PAGE)
+	_entry(scene.cards_on_page(0) == per_page,
+		"Trang dau co dung %d the (mockup)" % per_page)
 	_entry(full_pages >= pages - 1, "Cac trang deu day the (tru trang cuoi)")
 
-	var dots := scene.ui_path("Sheet/Dots")
-	_entry(dots != null, "Co cum dots phan trang")
-	if dots != null:
-		_entry(dots.get_child_count() == pages, "So dots = so trang (%d)" % pages)
-		_entry(dots.visible == (pages > 1), "Dots chi hien khi co > 1 trang")
+	# Bố cục MỚI: dải ẢNH THU NHỎ (cửa sổ trượt tối đa `thumb_count`) thay cho chấm trang
+	var thumbs := scene.ui_path("Sheet/Thumbs")
+	_entry(thumbs != null, "Co dai anh thu nho phan trang")
+	if thumbs != null:
+		var want_thumbs := mini(maxi(scene.layout.thumb_count, 1), scene.entry_count())
+		_entry(thumbs.get_child_count() == want_thumbs,
+			"So anh thu nho = %d (dang %d)" % [want_thumbs, thumbs.get_child_count()])
+		_entry(thumbs.visible == (want_thumbs > 0), "Anh thu nho chi hien khi co trang")
+		_entry(scene.ui_path("Sheet/Dots").visible == false, "Cham trang cu da an")
 
 	# Điều hướng trang
 	scene.go_to_page(1, false)
@@ -246,7 +252,7 @@ func _section_5_scene(manager: Node) -> void:
 	_entry(scene.current_category() == "dungeon", "set_category('dungeon')")
 	_entry(scene.entry_count() == dungeon_count,
 		"Tab DUNGEON co %d danh hieu" % dungeon_count)
-	_entry(scene.page_count() == int(ceil(float(dungeon_count) / float(CARDS_PER_PAGE))),
+	_entry(scene.page_count() == int(ceil(float(dungeon_count) / float(per_page))),
 		"So trang cua tab DUNGEON dung theo so luong")
 	var tab_label := scene.ui_path("Sheet/Tabs/Tab2/Label") as Label
 	_entry(tab_label != null and not tab_label.text.is_empty(),
@@ -255,9 +261,10 @@ func _section_5_scene(manager: Node) -> void:
 	scene.set_category("", false)
 	_entry(scene.entry_count() == total, "Quay lai tab TAT CA")
 
+	# Khối "tổng quan" (thanh + %) của thiết kế cũ đã bỏ khỏi CẢ 2 bố cục ⇒ không còn export nào bind.
 	var summary := scene.overview_text()
-	_entry(summary.contains("/") and summary.contains("AP"),
-		"The tong ket hien thi tien do + AP ('%s')" % summary)
+	_entry(summary.is_empty() and scene.layout.overview_summary == null,
+		"Khong con khoi tong quan o bo cuc ('%s')" % summary)
 
 	# Bấm NHẬN trên ĐÚNG thẻ 'dn_floors_25'
 	# (không dùng "thẻ claimable đầu tiên" vì dữ liệu save thật có thể có thẻ khác
