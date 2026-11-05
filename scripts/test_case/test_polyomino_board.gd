@@ -8,12 +8,18 @@ extends SceneTree
 ## - Board thật: cell node chỉ có ở ô thuộc board, anchor chỉ ở góc dính board.
 ## ============================================================================
 
-# level_id -> { shape, board_cells, path_length }
+# level_id -> { shape, board_cells, path_length, empty }
 const SAMPLES := {
-	10: {"name": "Chữ H", "board_cells": 10, "path_length": 5, "empty": [Vector2i(0, 1), Vector2i(3, 1)]},
-	11: {"name": "Thập tự", "board_cells": 12, "path_length": 4, "empty": [Vector2i(0, 0), Vector2i(3, 3)]},
-	12: {"name": "Vòng có lỗ", "board_cells": 32, "path_length": 14, "empty": [Vector2i(2, 2), Vector2i(3, 3)]},
-	13: {"name": "Chữ U 2 ô", "board_cells": 20, "path_length": 10, "empty": [Vector2i(2, 1), Vector2i(3, 2)]},
+	6: {"name": "Chữ H", "board_cells": 12, "path_length": 8,
+		"empty": [Vector2i(2, 0), Vector2i(3, 0)]},
+	7: {"name": "Chữ U", "board_cells": 10, "path_length": 6,
+		"empty": [Vector2i(1, 0), Vector2i(2, 0)]},
+	8: {"name": "Thập tự", "board_cells": 12, "path_length": 6,
+		"empty": [Vector2i(0, 0), Vector2i(3, 0)]},
+	9: {"name": "Vòng có lỗ", "board_cells": 12, "path_length": 7,
+		"empty": [Vector2i(2, 1), Vector2i(3, 1)]},
+	10: {"name": "Kim cương", "board_cells": 13, "path_length": 4,
+		"empty": [Vector2i(0, 0), Vector2i(1, 0)]},
 }
 
 
@@ -37,7 +43,7 @@ func _init() -> void:
 	for level_id in SAMPLES.keys():
 		failures += _check_sample(lm, int(level_id), SAMPLES[level_id])
 
-	# --- 2. Board thật (node) khi chơi màn chữ H ---
+	# --- 2. Board thật (node) khi chơi màn polyomino nhỏ nhất ---
 	failures += await _check_board_scene(gm, 10, SAMPLES[10])
 
 	gm.set("current_level", backup_level)
