@@ -13,6 +13,8 @@ extends BaseScene
 ## ============================================================================
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 const EventButtonColumnScene := preload("res://nodes/main/event_button_column.tscn")
+## Dock kiểu "J": art khai trong `.tscn` (panel + `dock_button.tscn`); ở đây chỉ gọi phần co giãn runtime
+const DockStyleJ := preload("res://scripts/ui/widgets/main/dock_style_j.gd")
 
 var layout: MainLayout = null
 ## Cột nút event nổi trên bản đồ (dựng 1 lần, chuyển theo bố cục đang hiện)
@@ -49,6 +51,16 @@ func _bind_layout() -> void:
 	if section != null:
 		ensure_signal(section, &"scrolled", &"_on_map_scrolled")
 		ensure_signal(section, &"chest_claimed", &"_on_chest_claimed")
+	_apply_dock_style()
+
+
+## Nền giấy lò xo của dock: `PaperArt` bám đúng cỡ panel thật của bố cục đang hiện
+func _apply_dock_style() -> void:
+	if layout == null or layout.dock_shop == null:
+		return
+	var row := layout.dock_shop.get_parent()
+	if row != null:
+		DockStyleJ.apply_panel(row.get_parent() as Control)
 
 
 ## Kéo bản đồ ⇒ nền giấy (parallax) trượt theo, như màn Levels cũ

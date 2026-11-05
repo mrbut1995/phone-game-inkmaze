@@ -11,36 +11,6 @@
 [ext_resource uid="uid://dp0k1h7hbrked" type="Texture2D" path="res://assets/images-png/dock/dock_panel.png" id="tex_dock_panel"]
 [ext_resource type="PackedScene" uid="uid://7haijnwmq3kt" path="res://nodes/main/level_section.tscn" id="L_section"]
 [ext_resource type="PackedScene" path="res://nodes/level_selection/chapter_lock_sheet.tscn" id="L_sheet"]
-[ext_resource type="Texture2D" path="res://assets/images-png/dock/dock_shop.png" id="ic_shop"]
-[ext_resource type="Texture2D" path="res://assets/images-png/dock/dock_ranking.png" id="ic_rank"]
-[ext_resource type="Texture2D" path="res://assets/images-png/dock/dock_badges.png" id="ic_badges"]
-[ext_resource type="Texture2D" path="res://assets/images-png/dock/dock_daily.png" id="ic_daily"]
-[ext_resource type="StyleBox" path="res://resources/settings/styles/dock/dock_btn_shop_normal.tres" id="sb_shop_n"]
-[ext_resource type="StyleBox" path="res://resources/settings/styles/dock/dock_btn_shop_pressed.tres" id="sb_shop_p"]
-[ext_resource type="StyleBox" path="res://resources/settings/styles/dock/dock_btn_rank_normal.tres" id="sb_rank_n"]
-[ext_resource type="StyleBox" path="res://resources/settings/styles/dock/dock_btn_rank_pressed.tres" id="sb_rank_p"]
-[ext_resource type="StyleBox" path="res://resources/settings/styles/dock/dock_btn_badges_normal.tres" id="sb_badges_n"]
-[ext_resource type="StyleBox" path="res://resources/settings/styles/dock/dock_btn_badges_pressed.tres" id="sb_badges_p"]
-[ext_resource type="StyleBox" path="res://resources/settings/styles/dock/dock_btn_daily_normal.tres" id="sb_daily_n"]
-[ext_resource type="StyleBox" path="res://resources/settings/styles/dock/dock_btn_daily_pressed.tres" id="sb_daily_p"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar"]
-content_margin_left = 8.0
-content_margin_top = 6.0
-content_margin_right = 8.0
-content_margin_bottom = 6.0
-bg_color = Color(1, 1, 1, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 5
-border_color = Color(0.894118, 0.862745, 0.776471, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-expand_margin_left = -6.0
-expand_margin_right = -6.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dock"]
 
@@ -104,11 +74,30 @@ size_flags_vertical = 3
 lock_sheet = NodePath("../../LockSheet")
 
 [node name="Dock" type="PanelContainer" parent="Body" index="4" unique_id=1319287755]
-custom_minimum_size = Vector2(0, 116)
+custom_minimum_size = Vector2(0, 106)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_bar")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_dock")
+
+[node name="PaperHolder" type="Control" parent="Body/Dock"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="PaperArt" type="NinePatchRect" parent="Body/Dock/PaperHolder"]
+layout_mode = 0
+offset_top = -12.0
+offset_right = 640.0
+offset_bottom = 200.0
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+texture = ExtResource("tex_dock_panel")
+patch_margin_left = 56
+patch_margin_top = 60
+patch_margin_right = 56
+patch_margin_bottom = 60
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 0
 
 [node name="Row" type="HBoxContainer" parent="Body/Dock" index="1" unique_id=1964936121]
 layout_mode = 2
@@ -117,43 +106,23 @@ theme_override_constants/separation = 4
 
 [node name="DockShop" parent="Body/Dock/Row" index="0" unique_id=1428109260 instance=ExtResource("9_dock")]
 layout_mode = 2
-theme_override_styles/normal = ExtResource("sb_shop_n")
-theme_override_styles/pressed = ExtResource("sb_shop_p")
-theme_override_styles/hover = ExtResource("sb_shop_n")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_dock")
-icon_texture = ExtResource("ic_shop")
+art_key = &"shop"
 label_key = &"STR_BTN_SHOP"
-outline_color = Color(0.7255, 0.3922, 0, 1)
 
 [node name="DockRanking" parent="Body/Dock/Row" index="1" unique_id=988222034 instance=ExtResource("9_dock")]
 layout_mode = 2
-theme_override_styles/normal = ExtResource("sb_rank_n")
-theme_override_styles/pressed = ExtResource("sb_rank_p")
-theme_override_styles/hover = ExtResource("sb_rank_n")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_dock")
-icon_texture = ExtResource("ic_rank")
+art_key = &"rank"
 label_key = &"STR_BTN_LEADERBOARD"
-outline_color = Color(0.1137, 0.3529, 0.6392, 1)
 
 [node name="DockDaily" parent="Body/Dock/Row" index="2" unique_id=1700000201 instance=ExtResource("9_dock")]
 layout_mode = 2
-theme_override_styles/normal = ExtResource("sb_daily_n")
-theme_override_styles/pressed = ExtResource("sb_daily_p")
-theme_override_styles/hover = ExtResource("sb_daily_n")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_dock")
-icon_texture = ExtResource("ic_daily")
+art_key = &"daily"
 label_key = &"STR_MAIN_DOCK_DAILY"
-outline_color = Color(0.6196, 0.1412, 0.1412, 1)
 
 [node name="DockBadges" parent="Body/Dock/Row" index="3" unique_id=959157184 instance=ExtResource("9_dock")]
 layout_mode = 2
-theme_override_styles/normal = ExtResource("sb_badges_n")
-theme_override_styles/pressed = ExtResource("sb_badges_p")
-theme_override_styles/hover = ExtResource("sb_badges_n")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_dock")
-icon_texture = ExtResource("ic_badges")
+art_key = &"badges"
 label_key = &"STR_BTN_ACHIEVEMENT"
-outline_color = Color(0.349, 0.2078, 0.5882, 1)
 
 [node name="Stamp" type="Control" parent="Body" index="5" unique_id=915123778]
 visible = false
