@@ -104,7 +104,7 @@ func _build_j() -> void:
 	else:
 		_j_idle = _jload("tab_idle_%s.png" % _j_key())
 		_j_focus = _jload("tab_focus_%s.png" % _j_key())
-		_j_art = TextureRect.new()
+		_j_art = TextureRect.new()  # keep-code: art tab kiểu J sinh theo DỮ LIỆU (category → file art)
 		_j_art.name = "JArt"
 		_j_art.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_j_art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -115,7 +115,7 @@ func _build_j() -> void:
 
 
 func _j_patch(node_name: String, tex: Texture2D) -> NinePatchRect:
-	var patch := NinePatchRect.new()
+	var patch := NinePatchRect.new()  # keep-code: art kiểu J sinh theo DỮ LIỆU (texture truyền vào)
 	patch.name = node_name
 	patch.texture = tex
 	patch.mouse_filter = Control.MOUSE_FILTER_IGNORE

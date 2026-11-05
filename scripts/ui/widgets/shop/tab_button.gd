@@ -47,6 +47,8 @@ var _art: TextureRect = null
 
 @export var label: Label = null
 @export var icon: TextureRect = null
+## Node hiển thị art tab (khai sẵn trong `tab_button.tscn`, nằm DƯỚI nhãn)
+@export var art: TextureRect = null
 
 
 func _ready() -> void:
@@ -66,13 +68,12 @@ func _build_art() -> void:
 	var key := category if not category.is_empty() else "pen"
 	_tex_idle = _load(ART_DIR + "tab_idle_%s.png" % key)
 	_tex_focus = _load(ART_DIR + "tab_focus_%s.png" % key)
-	_art = TextureRect.new()
-	_art.name = "TabArt"
+	_art = art
+	if _art == null:
+		return
 	_art.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_art.stretch_mode = TextureRect.STRETCH_SCALE
-	add_child(_art)
-	move_child(_art, 0)
 
 
 static func _load(path: String) -> Texture2D:

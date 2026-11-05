@@ -302,7 +302,7 @@ func _decorated_entry(list_index: int) -> Dictionary:
 
 
 func _make_pad(pad_name: String) -> Control:
-	var pad := Control.new()
+	var pad := Control.new()  # keep-code: ô đệm sinh theo DỮ LIỆU trang, không khai tĩnh trong scene
 	pad.name = pad_name
 	pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return pad
@@ -371,7 +371,7 @@ func _fly_coins(from: Vector2) -> void:
 	var to := target.get_global_rect().get_center() if target != null else from + Vector2(0, -300)
 	var half := Vector2(13, 13)
 	for i in FX_COIN_COUNT:
-		var coin := TextureRect.new()
+		var coin := TextureRect.new()  # keep-code: hiệu ứng xu bay, số lượng theo FX_COIN_COUNT
 		coin.texture = FX_COIN
 		coin.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		coin.stretch_mode = TextureRect.STRETCH_SCALE
