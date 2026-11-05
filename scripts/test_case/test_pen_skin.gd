@@ -151,7 +151,11 @@ func _section_2_game(shop: Node) -> void:
 	await _check_pen(shop, board, cursor, line, "pen_highlighter")
 	_entry(line.begin_cap_mode == Line2D.LINE_CAP_BOX,
 		"Dạ quang có đầu nét VUÔNG (lưỡi đục)")
-	_entry(line.texture == null and line.material == null, "Dạ quang không dùng nét đứt")
+	_entry(line.texture == null, "Dạ quang không dùng nét đứt (không có texture lặp)")
+	# Bút dạ quang dùng blend NHÂN để số/ô bên dưới vẫn đọc được — vẫn là nét LIỀN, không phải nét đứt
+	var hl_material := line.material as CanvasItemMaterial
+	_entry(hl_material == null or hl_material.blend_mode == CanvasItemMaterial.BLEND_MODE_MUL,
+		"Dạ quang chỉ dùng blend NHÂN (không phải vật liệu nét đứt)")
 
 	scene.queue_free()
 	await process_frame
