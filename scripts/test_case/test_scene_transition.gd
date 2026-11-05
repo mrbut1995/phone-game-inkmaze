@@ -52,7 +52,6 @@ func _init() -> void:
 		"TransitionRoot/PaperPage/PaperBg",
 		"TransitionRoot/PaperPage/ShadowLeft",
 		"TransitionRoot/PaperPage/ShadowRight",
-		"TransitionRoot/PaperPage/Watermark",
 		"TransitionRoot/InkCircleDrawer",
 		"TransitionRoot/FadeRect",
 	]
