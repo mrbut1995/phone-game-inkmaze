@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 130" width="1020" height="130">
+  <defs>
+    <!-- Mẫu vệt rơi cơ bản -->
+    <g id="drop_bright">
+      <line x1="0" y1="-14" x2="0" y2="0" stroke="#ffffff" stroke-width="2.0" stroke-linecap="round" />
+      <line x1="0" y1="-18" x2="0" y2="-14" stroke="#c084fc" stroke-width="1.6" stroke-linecap="round" opacity="0.6" />
+      <polyline points="-3.5,-4.5 0,0 3.5,-4.5" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+    <g id="drop_mid">
+      <line x1="0" y1="-12" x2="0" y2="0" stroke="#e9d5ff" stroke-width="1.8" stroke-linecap="round" />
+      <polyline points="-3,-4 0,0 3,-4" fill="none" stroke="#e9d5ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+    <g id="drop_faint">
+      <line x1="0" y1="-10" x2="0" y2="0" stroke="#a855f7" stroke-width="1.4" stroke-linecap="round" />
+      <polyline points="-2.5,-3.5 0,0 2.5,-3.5" fill="none" stroke="#a855f7" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+
+    <!-- Khung viền và HUD cố định cho 1 ô (170x130) -->
+    <g id="cell_box">
+      <rect x="1" y="1" width="168" height="128" rx="10" fill="#6b21a8" fill-opacity="0.14" stroke="#a855f7" stroke-width="1.5" stroke-opacity="0.45" stroke-dasharray="6,4" />
+      <path d="M 5,13 L 5,5 L 13,5 M 165,13 L 165,5 L 157,5 M 5,117 L 5,125 L 13,125 M 165,117 L 165,125 L 157,125" stroke="#c084fc" stroke-width="2" fill="none" opacity="0.8" />
+      <polyline points="8,58 12,62 16,58" stroke="#a855f7" stroke-width="1.4" fill="none" opacity="0.6" />
+      <polyline points="154,58 158,62 162,58" stroke="#a855f7" stroke-width="1.4" fill="none" opacity="0.6" />
+    </g>
+  </defs>
+
+  <!-- ==================== FRAME 0 (Offset 0px) ==================== -->
+  <g id="f0" transform="translate(0, 0)">
+    <use href="#cell_box" />
+    <use href="#drop_faint" x="32" y="24" opacity="0.4" />
+    <use href="#drop_bright" x="32" y="72" opacity="0.9" />
+    <use href="#drop_faint" x="32" y="120" opacity="0.3" />
+
+    <use href="#drop_mid" x="62" y="44" opacity="0.8" />
+    <use href="#drop_bright" x="62" y="92" opacity="0.85" />
+
+    <use href="#drop_bright" x="85" y="32" opacity="0.9" />
+    <use href="#drop_mid" x="85" y="80" opacity="0.85" />
+
+    <use href="#drop_faint" x="110" y="16" opacity="0.35" />
+    <use href="#drop_bright" x="110" y="64" opacity="0.95" />
+    <use href="#drop_mid" x="110" y="112" opacity="0.5" />
+
+    <use href="#drop_mid" x="138" y="40" opacity="0.75" />
+    <use href="#drop_bright" x="138" y="88" opacity="0.85" />
+  </g>
+
+  <!-- ==================== FRAME 1 (Rơi xuống +8px) ==================== -->
+  <g id="f1" transform="translate(170, 0)">
+    <use href="#cell_box" />
+    <use href="#drop_mid" x="32" y="32" opacity="0.55" />
+    <use href="#drop_bright" x="32" y="80" opacity="0.9" />
+    <use href="#drop_faint" x="32" y="128" opacity="0.2" />
+
+    <use href="#drop_bright" x="62" y="52" opacity="0.9" />
+    <use href="#drop_mid" x="62" y="100" opacity="0.75" />
+
+    <use href="#drop_bright" x="85" y="40" opacity="0.95" />
+    <use href="#drop_bright" x="85" y="88" opacity="0.8" />
+
+    <use href="#drop_faint" x="110" y="24" opacity="0.45" />
+    <use href="#drop_bright" x="110" y="72" opacity="0.9" />
+    <use href="#drop_faint" x="110" y="120" opacity="0.3" />
+
+    <use href="#drop_bright" x="138" y="48" opacity="0.85" />
+    <use href="#drop_mid" x="138" y="96" opacity="0.75" />
+  </g>
+
+  <!-- ==================== FRAME 2 (Rơi xuống +16px) ==================== -->
+  <g id="f2" transform="translate(340, 0)">
+    <use href="#cell_box" />
+    <use href="#drop_mid" x="32" y="40" opacity="0.7" />
+    <use href="#drop_bright" x="32" y="88" opacity="0.85" />
+
+    <use href="#drop_bright" x="62" y="60" opacity="0.95" />
+    <use href="#drop_faint" x="62" y="108" opacity="0.6" />
+    <use href="#drop_faint" x="62" y="12" opacity="0.3" />
+
+    <use href="#drop_bright" x="85" y="48" opacity="0.9" />
+    <use href="#drop_mid" x="85" y="96" opacity="0.7" />
+
+    <use href="#drop_mid" x="110" y="32" opacity="0.6" />
+    <use href="#drop_bright" x="110" y="80" opacity="0.85" />
+
+    <use href="#drop_bright" x="138" y="56" opacity="0.9" />
+    <use href="#drop_faint" x="138" y="104" opacity="0.6" />
+    <use href="#drop_faint" x="138" y="8" opacity="0.3" />
+  </g>
+
+  <!-- ==================== FRAME 3 (Rơi xuống +24px) ==================== -->
+  <g id="f3" transform="translate(510, 0)">
+    <use href="#cell_box" />
+    <use href="#drop_bright" x="32" y="48" opacity="0.85" />
+    <use href="#drop_mid" x="32" y="96" opacity="0.7" />
+    <use href="#drop_faint" x="32" y="0" opacity="0.25" />
+
+    <use href="#drop_bright" x="62" y="68" opacity="0.9" />
+    <use href="#drop_faint" x="62" y="116" opacity="0.4" />
+    <use href="#drop_faint" x="62" y="20" opacity="0.45" />
+
+    <use href="#drop_bright" x="85" y="56" opacity="0.95" />
+    <use href="#drop_mid" x="85" y="104" opacity="0.55" />
+    <use href="#drop_faint" x="85" y="8" opacity="0.35" />
+
+    <use href="#drop_mid" x="110" y="40" opacity="0.75" />
+    <use href="#drop_bright" x="110" y="88" opacity="0.8" />
+
+    <use href="#drop_bright" x="138" y="64" opacity="0.9" />
+    <use href="#drop_faint" x="138" y="112" opacity="0.4" />
+    <use href="#drop_faint" x="138" y="16" opacity="0.45" />
+  </g>
+
+  <!-- ==================== FRAME 4 (Rơi xuống +32px) ==================== -->
+  <g id="f4" transform="translate(680, 0)">
+    <use href="#cell_box" />
+    <use href="#drop_bright" x="32" y="56" opacity="0.9" />
+    <use href="#drop_mid" x="32" y="104" opacity="0.5" />
+    <use href="#drop_faint" x="32" y="8" opacity="0.35" />
+
+    <use href="#drop_bright" x="62" y="76" opacity="0.85" />
+    <use href="#drop_mid" x="62" y="28" opacity="0.6" />
+
+    <use href="#drop_bright" x="85" y="64" opacity="0.9" />
+    <use href="#drop_faint" x="85" y="112" opacity="0.4" />
+    <use href="#drop_faint" x="85" y="16" opacity="0.45" />
+
+    <use href="#drop_bright" x="110" y="48" opacity="0.9" />
+    <use href="#drop_mid" x="110" y="96" opacity="0.7" />
+
+    <use href="#drop_bright" x="138" y="72" opacity="0.85" />
+    <use href="#drop_mid" x="138" y="24" opacity="0.6" />
+  </g>
+
+  <!-- ==================== FRAME 5 (Rơi xuống +40px - Chuẩn bị lặp về Frame 0) ==================== -->
+  <g id="f5" transform="translate(850, 0)">
+    <use href="#cell_box" />
+    <use href="#drop_bright" x="32" y="64" opacity="0.95" />
+    <use href="#drop_faint" x="32" y="112" opacity="0.4" />
+    <use href="#drop_faint" x="32" y="16" opacity="0.45" />
+
+    <use href="#drop_bright" x="62" y="84" opacity="0.8" />
+    <use href="#drop_mid" x="62" y="36" opacity="0.7" />
+
+    <use href="#drop_bright" x="85" y="72" opacity="0.85" />
+    <use href="#drop_mid" x="85" y="24" opacity="0.6" />
+
+    <use href="#drop_bright" x="110" y="56" opacity="0.95" />
+    <use href="#drop_faint" x="110" y="104" opacity="0.55" />
+    <use href="#drop_faint" x="110" y="8" opacity="0.35" />
+
+    <use href="#drop_bright" x="138" y="80" opacity="0.8" />
+    <use href="#drop_mid" x="138" y="32" opacity="0.7" />
+  </g>
+</svg>

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 140" width="160" height="140">
+  <defs>
+    <!-- Gradient nền khí nóng -->
+    <linearGradient id="updraftBg" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#ff5500" stop-opacity="0.08" />
+      <stop offset="50%" stop-color="#ff8c1a" stop-opacity="0.18" />
+      <stop offset="100%" stop-color="#ffcc00" stop-opacity="0.08" />
+    </linearGradient>
+
+    <!-- Gradient viền phát sáng -->
+    <linearGradient id="borderGlow" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#ff6600" stop-opacity="0.2" />
+      <stop offset="50%" stop-color="#ffaa33" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#ffdd44" stop-opacity="0.2" />
+    </linearGradient>
+  </defs>
+
+  <!-- 1. KHUNG VÙNG KHÍ NÓNG -->
+  <rect x="1" y="1" width="158" height="138" rx="8" fill="url(#updraftBg)" stroke="url(#borderGlow)" stroke-width="1.5" stroke-dasharray="6,4" />
+
+  <!-- 4 GÓC ĐỊNH VỊ VÙNG (HUD CORNERS) -->
+  <path d="M 4,14 L 4,4 L 14,4" stroke="#ffaa33" stroke-width="2" fill="none" opacity="0.6" />
+  <path d="M 146,4 L 156,4 L 156,14" stroke="#ffaa33" stroke-width="2" fill="none" opacity="0.6" />
+  <path d="M 4,126 L 4,136 L 14,136" stroke="#ffaa33" stroke-width="2" fill="none" opacity="0.6" />
+  <path d="M 146,136 L 156,136 L 156,126" stroke="#ffaa33" stroke-width="2" fill="none" opacity="0.6" />
+
+  <!-- 2. CÁC LUỒNG KHÍ VÀ MŨI TÊN NHIỆT HƯỚNG LÊN -->
+  <!-- Cột 1 (x = 32) -->
+  <g stroke="#ffaa33" fill="none" stroke-linecap="round">
+    <path d="M 32,118 L 32,108 M 28,112 L 32,108 L 36,112" stroke-width="1.8" opacity="0.4" />
+    <path d="M 32,70 L 32,58 M 28,63 L 32,58 L 36,63" stroke-width="2.2" opacity="0.85" />
+    <path d="M 32,26 L 32,18 M 29,22 L 32,18 L 35,22" stroke-width="1.8" opacity="0.45" />
+  </g>
+
+  <!-- Cột 2 (x = 68) -->
+  <g stroke="#ffbb33" fill="none" stroke-linecap="round">
+    <path d="M 68,96 L 68,84 M 64,89 L 68,84 L 72,89" stroke-width="2.2" opacity="0.8" />
+    <path d="M 68,46 L 68,36 M 65,40 L 68,36 L 71,40" stroke-width="1.8" opacity="0.6" />
+  </g>
+
+  <!-- Cột 3 (x = 100) -->
+  <g stroke="#ff9922" fill="none" stroke-linecap="round">
+    <path d="M 100,122 L 100,112 M 97,116 L 100,112 L 103,116" stroke-width="1.8" opacity="0.35" />
+    <path d="M 100,74 L 100,60 M 96,65 L 100,60 L 104,65" stroke-width="2.4" opacity="0.9" />
+    <path d="M 100,30 L 100,20 M 97,24 L 100,20 L 103,24" stroke-width="1.8" opacity="0.5" />
+  </g>
+
+  <!-- Cột 4 (x = 132) -->
+  <g stroke="#ffbb33" fill="none" stroke-linecap="round">
+    <path d="M 132,102 L 132,90 M 128,95 L 132,90 L 136,95" stroke-width="2.0" opacity="0.75" />
+    <path d="M 132,52 L 132,42 M 129,46 L 132,42 L 135,46" stroke-width="1.8" opacity="0.6" />
+  </g>
+</svg>

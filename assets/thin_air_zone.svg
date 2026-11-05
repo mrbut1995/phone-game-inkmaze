@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-85 -65 170 130" width="170" height="130">
+  <defs>
+    <!-- Gradient nền vùng khí loãng (Tím thạch anh huyền ảo) -->
+    <linearGradient id="thinAirBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7c3aed" stop-opacity="0.10" />
+      <stop offset="50%" stop-color="#9333ea" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#4c1d95" stop-opacity="0.12" />
+    </linearGradient>
+
+    <!-- Gradient vệt gió rơi tốc độ cao -->
+    <linearGradient id="dropStreak" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#c084fc" stop-opacity="0.1" />
+      <stop offset="70%" stop-color="#e9d5ff" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="1.0" />
+    </linearGradient>
+
+    <!-- Mẫu vệt rơi gia tốc trọng lực -->
+    <g id="streak_unit">
+      <line x1="0" y1="-14" x2="0" y2="0" stroke="url(#dropStreak)" stroke-width="2.0" stroke-linecap="round" />
+      <!-- Đầu mũi tên nhọn chúc xuống -->
+      <polyline points="-3,-4 0,0 3,-4" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      <!-- Hạt bụi chân không rơi theo -->
+      <circle cx="0" cy="-18" r="0.9" fill="#e9d5ff" opacity="0.6" />
+    </g>
+  </defs>
+
+  <!-- 1. KHUNG VÙNG KHÍ LOÃNG (170x130) -->
+  <rect x="-84" y="-64" width="168" height="128" rx="10" fill="url(#thinAirBg)" stroke="#a855f7" stroke-width="1.5" stroke-opacity="0.45" stroke-dasharray="6,4" />
+
+  <!-- 4 GÓC HUD CẢNH BÁO TRỌNG LỰC -->
+  <path d="M -80,-52 L -80,-60 L -72,-60" stroke="#c084fc" stroke-width="2" fill="none" opacity="0.8" />
+  <path d="M 80,-52 L 80,-60 L 72,-60" stroke="#c084fc" stroke-width="2" fill="none" opacity="0.8" />
+  <path d="M -80,52 L -80,60 L -72,60" stroke="#c084fc" stroke-width="2" fill="none" opacity="0.8" />
+  <path d="M 80,52 L 80,60 L 72,60" stroke="#c084fc" stroke-width="2" fill="none" opacity="0.8" />
+
+  <!-- CÁC BIỂU TƯỢNG CẢNH BÁO TỤT ĐỘ CAO (DOWNWARD CHEVRONS) Ở 2 MÉP -->
+  <g stroke="#a855f7" stroke-width="1.4" fill="none" opacity="0.5">
+    <polyline points="-76,-10 -72,-6 -68,-10" />
+    <polyline points="-76,6 -72,10 -68,6" />
+    <polyline points="68,-10 72,-6 76,-10" />
+    <polyline points="68,6 72,10 76,6" />
+  </g>
+
+  <!-- 2. CÁC VỆT RƠI GIA TỐC PHÂN BỔ TRONG VÙNG -->
+  <!-- Cột 1 (x = -52) -->
+  <g transform="translate(-52, -22)"><use href="#streak_unit" opacity="0.5" /></g>
+  <g transform="translate(-52, 26)"><use href="#streak_unit" opacity="0.9" /></g>
+
+  <!-- Cột 2 (x = -26) -->
+  <g transform="translate(-26, -38)"><use href="#streak_unit" opacity="0.4" /></g>
+  <g transform="translate(-26, 8)"><use href="#streak_unit" opacity="0.95" /></g>
+  <g transform="translate(-26, 46)"><use href="#streak_unit" opacity="0.4" /></g>
+
+  <!-- Cột 3 (x = 0 - Trục giữa) -->
+  <g transform="translate(0, -20)"><use href="#streak_unit" opacity="0.85" /></g>
+  <g transform="translate(0, 28)"><use href="#streak_unit" opacity="0.75" /></g>
+
+  <!-- Cột 4 (x = 26) -->
+  <g transform="translate(26, -42)"><use href="#streak_unit" opacity="0.35" /></g>
+  <g transform="translate(26, 4)"><use href="#streak_unit" opacity="0.95" /></g>
+  <g transform="translate(26, 48)"><use href="#streak_unit" opacity="0.4" /></g>
+
+  <!-- Cột 5 (x = 52) -->
+  <g transform="translate(52, -16)"><use href="#streak_unit" opacity="0.75" /></g>
+  <g transform="translate(52, 32)"><use href="#streak_unit" opacity="0.8" /></g>
+</svg>

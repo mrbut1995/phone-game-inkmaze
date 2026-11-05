@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 -15 40 75" width="40" height="75">
+  <defs>
+    <!-- Thân cột gỗ công nghiệp phong hóa -->
+    <linearGradient id="poleTimber" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#291e16" />
+      <stop offset="30%" stop-color="#4a3525" />
+      <stop offset="60%" stop-color="#6e5039" />
+      <stop offset="100%" stop-color="#1f1610" />
+    </linearGradient>
+
+    <!-- Xà kim loại mạ kẽm -->
+    <linearGradient id="metalArm" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#334155" />
+      <stop offset="50%" stop-color="#64748b" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+
+    <!-- Sứ cách điện nhiều đĩa gốm (Ceramic Insulator) -->
+    <linearGradient id="ceramicGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#475569" />
+      <stop offset="40%" stop-color="#94a3b8" />
+      <stop offset="70%" stop-color="#e2e8f0" />
+      <stop offset="100%" stop-color="#334155" />
+    </linearGradient>
+  </defs>
+
+  <!-- 1. THÂN CỘT CHÍNH (ĐI XUỐNG DƯỚI) -->
+  <rect x="-5" y="-14" width="10" height="72" rx="1" fill="url(#poleTimber)" stroke="#17110c" stroke-width="0.8" />
+  <!-- Dây tiếp địa kim loại chạy dọc sườn cột -->
+  <line x1="4" y1="-12" x2="4" y2="58" stroke="#0f172a" stroke-width="1.2" />
+  
+  <!-- Các đinh giằng cơ khí trên thân cột -->
+  <circle cx="-1" cy="20" r="0.9" fill="#94a3b8" />
+  <circle cx="-1" cy="35" r="0.9" fill="#94a3b8" />
+
+  <!-- 2. THANH XÀ NGANG CHỊU LỰC (CROSSARM) -->
+  <rect x="-17" y="-12" width="34" height="6.5" rx="1.5" fill="url(#metalArm)" stroke="#0f172a" stroke-width="0.8" />
+  <!-- Thanh giằng chéo gia cố xà -->
+  <line x1="-14" y1="-5.5" x2="0" y2="4" stroke="#475569" stroke-width="1.8" stroke-linecap="round" />
+  <line x1="14" y1="-5.5" x2="0" y2="4" stroke="#475569" stroke-width="1.8" stroke-linecap="round" />
+
+  <!-- 3. SỨ CÁCH ĐIỆN 3 TẦNG (TÂM NEO CÁP Ở TỌA ĐỘ (0, 0)) -->
+  <g id="insulator">
+    <!-- Đĩa sứ tầng 1 -->
+    <ellipse cx="0" cy="-6.5" rx="5" ry="1.8" fill="url(#ceramicGrad)" stroke="#1e293b" stroke-width="0.6" />
+    <!-- Đĩa sứ tầng 2 -->
+    <ellipse cx="0" cy="-3.8" rx="4.2" ry="1.6" fill="url(#ceramicGrad)" stroke="#1e293b" stroke-width="0.6" />
+    <!-- Đĩa sứ tầng 3 -->
+    <ellipse cx="0" cy="-1.5" rx="3.5" ry="1.4" fill="url(#ceramicGrad)" stroke="#1e293b" stroke-width="0.6" />
+    <!-- Ngàm kẹp giữ cáp (Cable Clamp) ngay tại (0, 0) -->
+    <rect x="-2" y="-0.5" width="4" height="3" rx="0.5" fill="#0f172a" />
+    <circle cx="0" cy="0" r="1.2" fill="#38bdf8" />
+  </g>
+
+  <!-- 4. BIỂN CẢNH BÁO ĐIỆN CAO THẾ (DANGER 10kV) -->
+  <g transform="translate(0, 14)">
+    <polygon points="0,-1 -8,12 8,12" fill="#facc15" stroke="#78350f" stroke-width="1" stroke-linejoin="round" />
+    <!-- Tia sét cảnh báo nguy hiểm đen bóng -->
+    <polygon points="0.5,1.5 -3.5,6.5 0,6.5 -1,10.5 3.5,5.5 0,5.5" fill="#0f172a" />
+  </g>
+</svg>

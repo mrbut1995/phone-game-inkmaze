@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-90 -65 180 130" width="180" height="130">
+  <defs>
+    <!-- Gradient nền vùng gió nhiễu động -->
+    <linearGradient id="turbBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0284c7" stop-opacity="0.12" />
+      <stop offset="50%" stop-color="#38bdf8" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#0369a1" stop-opacity="0.12" />
+    </linearGradient>
+
+    <!-- Gradient dải gió xoáy sáng -->
+    <linearGradient id="windGlow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+      <stop offset="50%" stop-color="#7dd3fc" stop-opacity="0.75" />
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0.1" />
+    </linearGradient>
+
+    <!-- Mẫu một lốc xoáy hoàn chỉnh (Vortex Model) -->
+    <g id="vortex_unit">
+      <!-- Vầng sáng trung tâm mắt bão -->
+      <ellipse cx="0" cy="0" rx="9" ry="5.5" fill="#38bdf8" opacity="0.3" />
+      <circle cx="0" cy="0" r="3" fill="#ffffff" opacity="0.85" />
+      
+      <!-- Cánh xoáy 1 (Bên ngoài cuộn vào tâm) -->
+      <path d="M 0,-18 C 16,-18 28,-10 28,0 C 28,9 15,16 0,16 C -12,16 -21,9 -21,1 C -21,-6 -13,-11 -2,-11 C 6,-11 12,-6 12,0 C 12,4 7,8 1,8 C -4,8 -7,5 -7,1" 
+            fill="none" stroke="url(#windGlow)" stroke-width="2.2" stroke-linecap="round" />
+      
+      <!-- Cánh xoáy 2 (Đối xứng 180° cuộn ngược) -->
+      <path d="M 0,18 C -16,18 -28,10 -28,0 C -28,-9 -15,-16 0,-16 C 12,-16 21,-9 21,-1 C 21,6 13,11 2,11 C -6,11 -12,6 -12,0 C -12,-4 -7,-8 -1,-8 C 4,-8 7,-5 7,-1" 
+            fill="none" stroke="url(#windGlow)" stroke-width="2.2" stroke-linecap="round" />
+
+      <!-- Bụi khí & vệt gió phụ -->
+      <path d="M -24,-8 Q -30,0 -26,8" fill="none" stroke="#bae6fd" stroke-width="1.2" opacity="0.5" stroke-linecap="round" />
+      <path d="M 24,8 Q 30,0 26,-8" fill="none" stroke="#bae6fd" stroke-width="1.2" opacity="0.5" stroke-linecap="round" />
+      <circle cx="-14" cy="12" r="1" fill="#ffffff" opacity="0.7" />
+      <circle cx="14" cy="-12" r="1" fill="#ffffff" opacity="0.7" />
+    </g>
+  </defs>
+
+  <!-- 1. KHUNG VÙNG GIÓ NHIỄU ĐỘNG (180x130) -->
+  <rect x="-89" y="-64" width="178" height="128" rx="10" fill="url(#turbBg)" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.4" stroke-dasharray="6,4" />
+
+  <!-- 4 GÓC HUD CÔNG NGHỆ -->
+  <path d="M -85,-52 L -85,-60 L -77,-60" stroke="#7dd3fc" stroke-width="2" fill="none" opacity="0.7" />
+  <path d="M 85,-52 L 85,-60 L 77,-60" stroke="#7dd3fc" stroke-width="2" fill="none" opacity="0.7" />
+  <path d="M -85,52 L -85,60 L -77,60" stroke="#7dd3fc" stroke-width="2" fill="none" opacity="0.7" />
+  <path d="M 85,52 L 85,60 L 77,60" stroke="#7dd3fc" stroke-width="2" fill="none" opacity="0.7" />
+
+  <!-- 2. CÁC LUỒNG GIÓ THỔI NGANG BỊ CUỐN VÀO TÂM -->
+  <path d="M -80,-38 Q -45,-30 0,-40 T 80,-35" fill="none" stroke="#e0f2fe" stroke-width="1.2" opacity="0.35" stroke-dasharray="8,5" />
+  <path d="M -80,38 Q 0,45 80,38" fill="none" stroke="#e0f2fe" stroke-width="1.2" opacity="0.35" stroke-dasharray="10,6" />
+
+  <!-- 3. HAI TÂM LỐC XOÁY CHÍNH (VORTEX CENTERS) -->
+  <!-- Lốc xoáy trái tại (-45, 0) -->
+  <g transform="translate(-45, 0)">
+    <use href="#vortex_unit" />
+  </g>
+
+  <!-- Lốc xoáy phải tại (45, 0) -->
+  <g transform="translate(45, 0)">
+    <use href="#vortex_unit" />
+  </g>
+</svg>

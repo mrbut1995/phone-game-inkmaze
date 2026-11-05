@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-11 -9 22 12" width="22" height="12">
+  <defs>
+    <linearGradient id="trolleyMetal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#475569" />
+      <stop offset="50%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+  </defs>
+
+  <!-- BÁNH XE LĂN TRÊN RAY TRƯỢT (Ray nằm ở y = 0) -->
+  <circle cx="-6" cy="-6.5" r="2.2" fill="#94a3b8" stroke="#1e293b" stroke-width="0.7" />
+  <circle cx="6" cy="-6.5" r="2.2" fill="#94a3b8" stroke="#1e293b" stroke-width="0.7" />
+
+  <!-- THÂN XE CON BỌC THÉP CHỊU TẢI -->
+  <rect x="-9" y="-5" width="18" height="7" rx="1" fill="url(#trolleyMetal)" stroke="#f59e0b" stroke-width="0.8" />
+
+  <!-- TẤM CHE KHUNG BẢO VỆ MÀU VÀNG CẢNH BÁO -->
+  <rect x="-7" y="-3.5" width="14" height="2.5" fill="#facc15" />
+
+  <!-- CỤM RÒNG RỌC NHẢ CÁP CHÍNH (ĐIỂM NEO CÁP Ở ĐÚNG TỌA ĐỘ (0, 0)) -->
+  <circle cx="0" cy="0" r="2.5" fill="#64748b" stroke="#0f172a" stroke-width="0.8" />
+  <circle cx="0" cy="0" r="1.1" fill="#ffffff" />
+</svg>

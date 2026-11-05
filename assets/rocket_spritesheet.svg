@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 86" width="360" height="86">
+  <defs>
+    <!-- Template Thân tên lửa Pro cố định -->
+    <g id="missile_hull">
+      <!-- Cánh đuôi -->
+      <path d="M -9,3 L -24,14 L -21,20 L -9,15 Z" fill="#b91c1c" stroke="#450a0a" stroke-width="1" />
+      <path d="M -9,4 L -22,14 L -20,18 L -9,14 Z" fill="#ef4444" />
+      <path d="M 9,3 L 24,14 L 21,20 L 9,15 Z" fill="#b91c1c" stroke="#450a0a" stroke-width="1" />
+      <path d="M 9,4 L 22,14 L 20,18 L 9,14 Z" fill="#ef4444" />
+      <polygon points="-1.5,5 1.5,5 2,17 -2,17" fill="#ef4444" stroke="#991b1b" stroke-width="0.7" />
+      <!-- Loa phụt -->
+      <path d="M -7,12 L -9,17 L 9,17 L 7,12 Z" fill="#334155" stroke="#0f172a" stroke-width="0.8" />
+      <line x1="-8.5" y1="16.5" x2="8.5" y2="16.5" stroke="#ff3838" stroke-width="1.2" />
+      <!-- Thân -->
+      <path d="M -9,-10 L -9,13 L 9,13 L 9,-10 Z" fill="#64748b" stroke="#1e293b" stroke-width="0.8" />
+      <rect x="-9" y="1" width="18" height="6" fill="#facc15" />
+      <path d="M -8,7 L -5,1 M -2,7 L 1,1 M 4,7 L 7,1" stroke="#0f172a" stroke-width="2.2" stroke-linecap="square" />
+      <!-- Mũi và cảm biến -->
+      <path d="M -9,-10 C -9,-20 0,-33 0,-33 C 0,-33 9,-20 9,-10 Z" fill="#ef4444" stroke="#7f1d1d" stroke-width="0.8" />
+      <polygon points="0,-33 -2.5,-27 2.5,-27" fill="#e2e8f0" stroke="#475569" stroke-width="0.6" />
+      <ellipse cx="0" cy="-17" rx="3" ry="3.8" fill="#1e1b4b" />
+      <circle cx="0" cy="-17" r="2.0" fill="#ff0044" />
+      <circle cx="-0.8" cy="-18" r="0.8" fill="#ffffff" />
+      <path d="M -4,-28 Q -7,-15 -7,10" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.7" />
+    </g>
+
+    <linearGradient id="pFlame" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffaa00" />
+      <stop offset="40%" stop-color="#ff2200" />
+      <stop offset="100%" stop-color="#7209b7" opacity="0.0" />
+    </linearGradient>
+  </defs>
+
+  <!-- ==================== FRAME 0 (Xung nhiệt 1) ==================== -->
+  <g id="f0" transform="translate(30, 36)">
+    <path d="M -9,16 Q -14,32 0,46 Q 14,32 9,16 Z" fill="url(#pFlame)" />
+    <path d="M -5,16 Q -6,27 0,38 Q 6,27 5,16 Z" fill="#ffffff" />
+    <polygon points="0,20 -3,24 0,28 3,24" fill="#00f5d4" />
+    <polygon points="0,30 -2,33 0,36 2,33" fill="#ffea00" />
+    <use href="#missile_hull" />
+    <circle cx="-11" cy="30" r="1.2" fill="#ffaa00" />
+  </g>
+
+  <!-- ==================== FRAME 1 (Lửa vươn cực đại) ==================== -->
+  <g id="f1" transform="translate(90, 36)">
+    <path d="M -9.5,16 Q -16,36 0,50 Q 16,36 9.5,16 Z" fill="url(#pFlame)" />
+    <path d="M -5.5,16 Q -7,30 0,42 Q 7,30 5.5,16 Z" fill="#ffffff" />
+    <polygon points="0,21 -3.2,25 0,29 3.2,25" fill="#00f5d4" />
+    <polygon points="0,31 -2.5,35 0,39 2.5,35" fill="#ffea00" />
+    <polygon points="0,40 -1.5,43 0,46 1.5,43" fill="#ff5500" />
+    <use href="#missile_hull" />
+    <circle cx="12" cy="34" r="1.4" fill="#ff5500" />
+  </g>
+
+  <!-- ==================== FRAME 2 (Kim cương nén mở rộng) ==================== -->
+  <g id="f2" transform="translate(150, 36)">
+    <path d="M -9,16 Q -15,33 0,47 Q 15,33 9,16 Z" fill="url(#pFlame)" />
+    <path d="M -5,16 Q -6.5,28 0,39 Q 6.5,28 5,16 Z" fill="#ffffff" />
+    <polygon points="0,19 -3.5,23 0,27 3.5,23" fill="#ffffff" />
+    <polygon points="0,29 -2.5,33 0,37 2.5,33" fill="#00f5d4" />
+    <polygon points="0,38 -1.8,41 0,44 1.8,41" fill="#ffea00" />
+    <use href="#missile_hull" />
+    <circle cx="-12" cy="36" r="1.3" fill="#ffdd00" />
+  </g>
+
+  <!-- ==================== FRAME 3 (Lửa co nhẹ, tàn lửa phụt) ==================== -->
+  <g id="f3" transform="translate(210, 36)">
+    <path d="M -8.5,16 Q -13,31 0,44 Q 13,31 8.5,16 Z" fill="url(#pFlame)" />
+    <path d="M -4.5,16 Q -5.5,26 0,36 Q 5.5,26 4.5,16 Z" fill="#ffffff" />
+    <polygon points="0,21 -2.8,24 0,27 2.8,24" fill="#00f5d4" />
+    <polygon points="0,29 -2,32 0,35 2,32" fill="#ffea00" />
+    <use href="#missile_hull" />
+    <circle cx="10" cy="32" r="1.2" fill="#ff7700" />
+  </g>
+
+  <!-- ==================== FRAME 4 (Xung áp suất mới) ==================== -->
+  <g id="f4" transform="translate(270, 36)">
+    <path d="M -9,16 Q -15,34 0,48 Q 15,34 9,16 Z" fill="url(#pFlame)" />
+    <path d="M -5,16 Q -6.5,29 0,40 Q 6.5,29 5,16 Z" fill="#ffffff" />
+    <polygon points="0,20 -3.2,24 0,28 3.2,24" fill="#ffffff" />
+    <polygon points="0,30 -2.5,34 0,38 2.5,34" fill="#00f5d4" />
+    <use href="#missile_hull" />
+    <circle cx="-10" cy="38" r="1.1" fill="#ff5500" />
+    <circle cx="11" cy="40" r="1.0" fill="#ffaa00" />
+  </g>
+
+  <!-- ==================== FRAME 5 (Chuẩn bị lặp lại Frame 0) ==================== -->
+  <g id="f5" transform="translate(330, 36)">
+    <path d="M -9,16 Q -14,33 0,45 Q 14,33 9,16 Z" fill="url(#pFlame)" />
+    <path d="M -5,16 Q -6,27 0,37 Q 6,27 5,16 Z" fill="#ffffff" />
+    <polygon points="0,20 -3,23.5 0,27 3,23.5" fill="#00f5d4" />
+    <polygon points="0,29.5 -2,32.5 0,35.5 2,32.5" fill="#ffea00" />
+    <use href="#missile_hull" />
+    <circle cx="8" cy="35" r="1.2" fill="#ffbb00" />
+  </g>
+</svg>
