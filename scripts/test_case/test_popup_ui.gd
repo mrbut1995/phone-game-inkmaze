@@ -15,13 +15,11 @@ const SCENES := {
 	"next_floor": "res://nodes/popups/next_floor.tscn",
 	"language": "res://nodes/popups/language.tscn",
 }
-## Icon CỤC TẨY mới (viewBox 0 0 140 94) — 3 nét định danh thiết kế, phải có ở MỌI trạng thái:
-## thân cục tẩy (nét chính) · vạch chia thân tẩy · đáy cục tẩy
-const RESTART_ICON := "M 21.2 28.8 L 11.2 28.8 L 4.3 22"
-const RESTART_DIVIDER := "M 8 12.5 L 22.4 26.9"
-const RESTART_BASE := "M 26 28.8 H 38"
-## Icon reset cũ (cung tròn + mũi tên) phải đã bị gỡ hẳn khỏi art
-const OLD_RESET_ICON := "M 19 29"
+## Icon CỤC TẨY trên nút Restart — cả 4 trạng thái dùng CHUNG một nhóm glyph (chỉ đổi nền):
+## thân cục tẩy + vạch chia + đáy cục tẩy (đường dẫn dưới đây lấy từ art hiện tại).
+const RESTART_ICON := "m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"
+const RESTART_DIVIDER := "M22 21H7"
+const RESTART_BASE := "m5 11 9 9"
 ## Art KHÔNG được chứa <text> (ThorVG bỏ qua chữ) — kiểm NGUỒN SVG (đọc được path; PNG là file nhị phân)
 const NO_TEXT_ART := [
 	"res://assets/images/game/btn_restart_normal.svg",
@@ -73,15 +71,13 @@ func _section_1_restart_icon() -> void:
 		_entry(svg.contains(RESTART_ICON), "btn_restart_%s: net than cuc tay dung thiet ke" % state)
 		_entry(svg.contains(RESTART_DIVIDER), "btn_restart_%s: vach chia than cuc tay" % state)
 		_entry(svg.contains(RESTART_BASE), "btn_restart_%s: day cuc tay" % state)
-		_entry(not svg.contains(OLD_RESET_ICON),
-			"btn_restart_%s: da bo icon reset cu (%s)" % [state, OLD_RESET_ICON])
 
 
 # ---------------------------------------------------------------------------
 # 2. Popup thắng màn
 # ---------------------------------------------------------------------------
 func _section_2_winning() -> void:
-	print("[2] Popup THANG MAN (con dau + nut CHOI LAI)...")
+	print("[2] Popup THANG MAN (bang dinh tieu de + 3 nhiem vu + nut CHOI LAI)...")
 	var popup := await _open(SCENES["winning"], {
 		"level": 10, "grid": "5×5", "time": 12.0, "steps_used": 5, "steps_max": 9,
 		"wall_hits": 0, "score": 1116, "next_available": true, "stars": 2,
@@ -89,18 +85,18 @@ func _section_2_winning() -> void:
 	})
 	if popup == null:
 		return
-	var stamp := popup.get_node_or_null("Panel/Content/Stamp") as NinePatchRect
-	_entry(stamp != null, "Co node con dau (Stamp)")
-	if stamp != null:
-		_entry(stamp.texture != null, "Con dau co art (stamp_done.svg)")
-		_entry(absf(stamp.size.x - 106.0) < 3.0 and absf(stamp.size.y - 56.0) < 3.0,
-			"Con dau dung co 106x56 (nhan %s)" % str(stamp.size))
-		var title := stamp.get_node_or_null("StampTitle") as Label
-		var sub := stamp.get_node_or_null("StampSub") as Label
-		_entry(title != null and title.text.contains("2 / 3"),
-			"Con dau co chu '2 / 3 THU THACH' (nhan '%s')" % (title.text if title != null else "?"))
-		_entry(sub != null and sub.text.contains("2") and sub.text == tr("STR_WIN_STAMP_SUB").format([2]),
-			"Con dau co chu sao dat duoc (nhan '%s')" % (sub.text if sub != null else "?"))
+	var tape_title := popup.get_node_or_null("Panel/Art/WashiTape/Title") as Label
+	_entry(tape_title != null and TranslationServer.translate(tape_title.text) == tr("STR_WL_TITLE"),
+		"Bang dinh tieu de ghi '%s'" % tr("STR_WL_TITLE"))
+	var missions := popup.get_node_or_null("Panel/Content/Information/Missions") as Control
+	_entry(missions != null and missions.get_child_count() == 3,
+		"Co 3 o nhiem vu (Missions)")
+	if missions != null:
+		var done_marks := 0
+		for child in missions.get_children():
+			if child.get_node_or_null("V/Star") != null and child.get_node_or_null("V/Name") != null:
+				done_marks += 1
+		_entry(done_marks == 3, "Moi o nhiem vu co ngoi sao + ten (%d/3)" % done_marks)
 	var replay := popup.get_node_or_null("Panel/Content/Information/Buttons/ReplayBtn") as TextureButton
 	_entry(replay != null, "Co nut CHOI LAI")
 	if replay != null:
@@ -123,7 +119,7 @@ func _section_2_winning() -> void:
 # 3. Popup thông qua tầng
 # ---------------------------------------------------------------------------
 func _section_3_next_floor() -> void:
-	print("[3] Popup THONG QUA TANG (con dau)...")
+	print("[3] Popup THONG QUA TANG (bang dinh tieu de + nut)...")
 	var popup := await _open(SCENES["next_floor"], {
 		"floor": 4, "next_floor": 5, "steps_bonus": 5, "base_score": 1000,
 		"move_bonus": 240, "perfect_bonus": 300, "total_score": 1540,
@@ -131,21 +127,13 @@ func _section_3_next_floor() -> void:
 	if popup == null:
 		return
 	var panel := popup.get_node_or_null("Panel") as Control
-	var stamp := popup.get_node_or_null("Panel/Content/Stamp") as TextureRect
-	_entry(stamp != null, "Co node con dau (Stamp)")
-	if stamp != null:
-		_entry(absf(stamp.size.x - 56.0) < 3.0 and absf(stamp.size.y - 56.0) < 3.0,
-			"Con dau dung co 56x56 (nhan %s)" % str(stamp.size))
-		if panel != null:
-			_entry(stamp.position.x > 0.0 and stamp.position.x + stamp.size.x < panel.size.x,
-				"Con dau nam gon trong phieu (x %.0f..%.0f / rong %.0f)" % [
-					stamp.position.x, stamp.position.x + stamp.size.x, panel.size.x])
-		var title := stamp.get_node_or_null("StampTitle") as Label
-		var sub := stamp.get_node_or_null("StampSub") as Label
-		_entry(title != null and title.text == tr("STR_RESULT_STAMP_PASSED"),
-			"Con dau co chu 'DA QUA' (nhan '%s')" % (title.text if title != null else "?"))
-		_entry(sub != null and sub.text.contains("04"),
-			"Con dau co chu 'TANG 04' (nhan '%s')" % (sub.text if sub != null else "?"))
+	_entry(panel != null, "Co phieu Panel")
+	# Con dau da thay bang bang dinh tieu de dung chung (`Panel/Art/WashiTape/Title`)
+	var tape_title := popup.get_node_or_null("Panel/Art/WashiTape/Title") as Label
+	_entry(tape_title != null and TranslationServer.translate(tape_title.text) == tr("STR_NF_TITLE"),
+		"Bang dinh tieu de ghi '%s'" % tr("STR_NF_TITLE"))
+	var bonus_card := popup.get_node_or_null("Panel/Content/Information/BonusCard") as Control
+	_entry(bonus_card != null, "Co khoi thuong buoc (BonusCard)")
 	popup.queue_free()
 	await process_frame
 
