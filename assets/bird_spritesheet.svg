@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 48" width="384" height="48">
+  <defs>
+    <style>
+      .wing-back { fill: #3a4d6b; }
+      .wing-front { fill: #526e99; }
+      .body { fill: #334059; }
+      .beak { fill: #ffb31a; }
+      .eye-white { fill: #ffffff; }
+      .eye-pupil { fill: #151a24; }
+      .tail { fill: #2b364a; }
+    </style>
+  </defs>
+
+  <!-- ==================== FRAME 0: ĐỈNH VỖ CAO NHẤT (Peak Up) ==================== -->
+  <g id="frame_0" transform="translate(0, 0)">
+    <!-- Cánh sau -->
+    <path class="wing-back" d="M 21,24 Q 15,13 18,9 Q 22,12 24,23 Z" />
+    <!-- Đuôi chim -->
+    <polygon class="tail" points="18,24 11,21 13,26" />
+    <!-- Thân chim -->
+    <circle class="body" cx="24" cy="25" r="6" />
+    <!-- Mắt chim -->
+    <circle class="eye-white" cx="26" cy="23" r="1.6" />
+    <circle class="eye-pupil" cx="26.7" cy="23" r="0.8" />
+    <!-- Mỏ chim -->
+    <polygon class="beak" points="29,23 37,25 29,27" />
+    <!-- Cánh trước (vểnh cao) -->
+    <path class="wing-front" d="M 23,24 Q 28,11 31,8 Q 28,16 25,24 Z" />
+  </g>
+
+  <!-- ==================== FRAME 1: BẮT ĐẦU ĐẬP XUỐNG (Downstroke Start) ==================== -->
+  <g id="frame_1" transform="translate(48, 0)">
+    <path class="wing-back" d="M 20,24 Q 13,17 15,13 Q 20,17 23,23 Z" />
+    <polygon class="tail" points="18,24 11,22 13,26" />
+    <circle class="body" cx="24" cy="24.5" r="6" />
+    <circle class="eye-white" cx="26" cy="22.5" r="1.6" />
+    <circle class="eye-pupil" cx="26.7" cy="22.5" r="0.8" />
+    <polygon class="beak" points="29,22.5 37,24.5 29,26.5" />
+    <path class="wing-front" d="M 23,24 Q 31,15 34,13 Q 30,19 25,24 Z" />
+  </g>
+
+  <!-- ==================== FRAME 2: QUẠT NGANG THÂN (Mid Downstroke) ==================== -->
+  <g id="frame_2" transform="translate(96, 0)">
+    <path class="wing-back" d="M 20,24 Q 10,22 11,19 Q 18,22 23,23 Z" />
+    <polygon class="tail" points="18,24 11,23 12,27" />
+    <circle class="body" cx="24" cy="24" r="6" />
+    <circle class="eye-white" cx="26" cy="22" r="1.6" />
+    <circle class="eye-pupil" cx="26.7" cy="22" r="0.8" />
+    <polygon class="beak" points="29,22 37,24 29,26" />
+    <!-- Cánh trước duỗi thẳng chém gió ngang thân -->
+    <path class="wing-front" d="M 22,23 Q 33,22 37,21 Q 31,25 24,25 Z" />
+  </g>
+
+  <!-- ==================== FRAME 3: QUẠT MẠNH XUỐNG DƯỚI (Downstroke Power) ==================== -->
+  <g id="frame_3" transform="translate(144, 0)">
+    <path class="wing-back" d="M 21,24 Q 13,27 15,31 Q 19,26 23,24 Z" />
+    <polygon class="tail" points="18,23 11,22 12,26" />
+    <!-- Thân nâng nhẹ do lực nâng -->
+    <circle class="body" cx="24" cy="23.5" r="6" />
+    <circle class="eye-white" cx="26" cy="21.5" r="1.6" />
+    <circle class="eye-pupil" cx="26.7" cy="21.5" r="0.8" />
+    <polygon class="beak" points="29,21.5 37,23.5 29,25.5" />
+    <path class="wing-front" d="M 23,23 Q 33,29 36,33 Q 30,28 24,25 Z" />
+  </g>
+
+  <!-- ==================== FRAME 4: ĐÁY THẤP NHẤT (Bottom Peak) ==================== -->
+  <g id="frame_4" transform="translate(192, 0)">
+    <path class="wing-back" d="M 22,24 Q 16,33 19,37 Q 21,30 24,24 Z" />
+    <polygon class="tail" points="18,23 11,22 12,26" />
+    <circle class="body" cx="24" cy="23" r="6" />
+    <circle class="eye-white" cx="26" cy="21" r="1.6" />
+    <circle class="eye-pupil" cx="26.7" cy="21" r="0.8" />
+    <polygon class="beak" points="29,21 37,23 29,25" />
+    <!-- Cánh ép sâu xuống dưới cùng -->
+    <path class="wing-front" d="M 23,23 Q 29,35 31,39 Q 27,31 24,25 Z" />
+  </g>
+
+  <!-- ==================== FRAME 5: BẮT ĐẦU CO KHUỶU CÁNH (Recovery Start) ==================== -->
+  <g id="frame_5" transform="translate(240, 0)">
+    <path class="wing-back" d="M 21,24 Q 15,26 14,29 Q 18,26 23,24 Z" />
+    <polygon class="tail" points="18,24 11,23 13,27" />
+    <circle class="body" cx="24" cy="24" r="6" />
+    <circle class="eye-white" cx="26" cy="22" r="1.6" />
+    <circle class="eye-pupil" cx="26.7" cy="22" r="0.8" />
+    <polygon class="beak" points="29,22 37,24 29,26" />
+    <!-- Khuỷu cánh nâng lên, đầu cánh rũ tự nhiên -->
+    <path class="wing-front" d="M 23,24 Q 28,19 32,24 Q 28,24 24,25 Z" />
+  </g>
+
+  <!-- ==================== FRAME 6: NÂNG CÁNH LÊN NGANG (Upstroke Mid) ==================== -->
+  <g id="frame_6" transform="translate(288, 0)">
+    <path class="wing-back" d="M 20,24 Q 14,19 16,16 Q 19,19 23,23 Z" />
+    <polygon class="tail" points="18,24 11,22 13,26" />
+    <circle class="body" cx="24" cy="24.5" r="6" />
+    <circle class="eye-white" cx="26" cy="22.5" r="1.6" />
+    <circle class="eye-pupil" cx="26.7" cy="22.5" r="0.8" />
+    <polygon class="beak" points="29,22.5 37,24.5 29,26.5" />
+    <path class="wing-front" d="M 23,24 Q 30,16 31,17 Q 27,21 24,25 Z" />
+  </g>
+
+  <!-- ==================== FRAME 7: CHUẨN BỊ ĐẠT ĐỈNH (Upstroke Finish) ==================== -->
+  <g id="frame_7" transform="translate(336, 0)">
+    <path class="wing-back" d="M 20,24 Q 15,15 17,11 Q 21,15 24,23 Z" />
+    <polygon class="tail" points="18,24 11,21 13,26" />
+    <circle class="body" cx="24" cy="25" r="6" />
+    <circle class="eye-white" cx="26" cy="23" r="1.6" />
+    <circle class="eye-pupil" cx="26.7" cy="23" r="0.8" />
+    <polygon class="beak" points="29,23 37,25 29,27" />
+    <!-- Cánh giương cao chuẩn bị lặp lại chu kỳ Frame 0 -->
+    <path class="wing-front" d="M 23,24 Q 28,13 30,10 Q 28,17 25,24 Z" />
+  </g>
+</svg>

@@ -172,7 +172,8 @@ func _play_pending_clear() -> void:
 	var events: Array = gm.call("take_map_events")
 	if events.is_empty():
 		return
-	map.queue_progress_animation(events)
+	## Chỉ lấy và chạy màn cuối
+	map.queue_progress_animation(events.slice(-1))
 
 
 func _on_map_scrolled(delta_y: float) -> void:

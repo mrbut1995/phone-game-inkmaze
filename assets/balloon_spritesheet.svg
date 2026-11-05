@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 272 84" width="272" height="84">
+  <defs>
+    <!-- Khung khinh khí cầu cơ sở -->
+    <g id="balloon_base">
+      <g stroke="#78350f" stroke-width="1.2" stroke-linecap="round">
+        <line x1="-12" y1="12" x2="-6" y2="26" /><line x1="12" y1="12" x2="6" y2="26" />
+        <line x1="-6" y1="14" x2="-4" y2="26" /><line x1="6" y1="14" x2="4" y2="26" />
+      </g>
+      <rect x="-3" y="14" width="6" height="3" rx="1" fill="#475569" />
+      <path d="M 0,-36 C -28,-36 -28,-6 -14,12 L 14,12 C 28,-6 28,-36 0,-36 Z" fill="#f97316" stroke="#c2410c" stroke-width="1.2" />
+      <path d="M 0,-36 C -18,-36 -18,-6 -8,12 L 8,12 C 18,-6 18,-36 0,-36 Z" fill="#facc15" />
+      <path d="M 0,-36 C -8,-36 -8,-6 -3,12 L 3,12 C 8,-6 8,-36 0,-36 Z" fill="#0d9488" />
+      <rect x="-14" y="10" width="28" height="3" rx="1" fill="#475569" />
+      <path d="M -16,-28 C -8,-34 2,-34 8,-32" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.6" />
+      <!-- Giỏ mây -->
+      <rect x="-8" y="26" width="16" height="11" rx="2" fill="#b45309" stroke="#291507" stroke-width="0.8" />
+      <rect x="-9" y="24.5" width="18" height="3" rx="1" fill="#451a03" />
+      <ellipse cx="-8.5" cy="31" rx="2" ry="3" fill="#d97706" />
+      <ellipse cx="8.5" cy="31" rx="2" ry="3" fill="#d97706" />
+    </g>
+
+    <linearGradient id="flamePulse" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#00f5d4" />
+      <stop offset="50%" stop-color="#ffea00" />
+      <stop offset="100%" stop-color="#ff3300" opacity="0.0" />
+    </linearGradient>
+  </defs>
+
+  <!-- FRAME 0: LỬA BẬP BÙNG VỪA -->
+  <g id="bf0" transform="translate(34, 42)">
+    <use href="#balloon_base" />
+    <path d="M -3,14 Q -4,8 0,4 Q 4,8 3,14 Z" fill="url(#flamePulse)" />
+    <circle cx="0" cy="11" r="1.5" fill="#ffffff" />
+  </g>
+
+  <!-- FRAME 1: LỬA BỐC CAO -->
+  <g id="bf1" transform="translate(102, 42)">
+    <use href="#balloon_base" />
+    <path d="M -3.5,14 Q -5,6 0,1 Q 5,6 3.5,14 Z" fill="url(#flamePulse)" />
+    <circle cx="0" cy="10" r="1.8" fill="#ffffff" />
+  </g>
+
+  <!-- FRAME 2: LỬA CỰC ĐẠI PHỒNG TO -->
+  <g id="bf2" transform="translate(170, 42)">
+    <use href="#balloon_base" />
+    <path d="M -4,14 Q -5.5,5 0,-1 Q 5.5,5 4,14 Z" fill="url(#flamePulse)" />
+    <circle cx="0" cy="9" r="2.0" fill="#ffffff" />
+  </g>
+
+  <!-- FRAME 3: LỬA THU NHỎ CHUẨN BỊ LẶP VỀ 0 -->
+  <g id="bf3" transform="translate(238, 42)">
+    <use href="#balloon_base" />
+    <path d="M -2.8,14 Q -3.5,9 0,5 Q 3.5,9 2.8,14 Z" fill="url(#flamePulse)" />
+    <circle cx="0" cy="11.5" r="1.2" fill="#ffffff" />
+  </g>
+</svg>

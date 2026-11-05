@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 140" width="960" height="140">
+  <defs>
+    <!-- Template mũi tên nhiệt -->
+    <g id="arrow_bright">
+      <line x1="0" y1="14" x2="0" y2="0" stroke="#ffaa22" stroke-width="2.2" stroke-linecap="round" />
+      <polyline points="-4,5 0,0 4,5" fill="none" stroke="#ffdd55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+    <g id="arrow_mid">
+      <line x1="0" y1="12" x2="0" y2="0" stroke="#ff9922" stroke-width="1.8" stroke-linecap="round" />
+      <polyline points="-3.5,4.5 0,0 3.5,4.5" fill="none" stroke="#ffbb33" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+    <g id="arrow_faint">
+      <line x1="0" y1="10" x2="0" y2="0" stroke="#ff7711" stroke-width="1.5" stroke-linecap="round" />
+      <polyline points="-3,4 0,0 3,4" fill="none" stroke="#ff8822" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+
+    <!-- Khung nền chung cho 1 ô -->
+    <g id="cell_bg">
+      <rect x="1" y="1" width="158" height="138" rx="8" fill="#ff7700" fill-opacity="0.12" stroke="#ffaa33" stroke-width="1.5" stroke-opacity="0.38" stroke-dasharray="6,4" />
+      <path d="M 4,14 L 4,4 L 14,4 M 146,4 L 156,4 L 156,14 M 4,126 L 4,136 L 14,136 M 146,136 L 156,136 L 156,126" stroke="#ffaa33" stroke-width="2" fill="none" opacity="0.6" />
+    </g>
+  </defs>
+
+  <!-- ==================== FRAME 0 (Offset 0px) ==================== -->
+  <g id="frame_0" transform="translate(0, 0)">
+    <use href="#cell_bg" />
+    <use href="#arrow_faint" x="30" y="116" opacity="0.3" />
+    <use href="#arrow_bright" x="30" y="68" opacity="0.85" />
+    <use href="#arrow_mid" x="30" y="20" opacity="0.45" />
+
+    <use href="#arrow_mid" x="65" y="92" opacity="0.75" />
+    <use href="#arrow_bright" x="65" y="44" opacity="0.8" />
+
+    <use href="#arrow_faint" x="100" y="104" opacity="0.4" />
+    <use href="#arrow_bright" x="100" y="56" opacity="0.9" />
+    <use href="#arrow_mid" x="100" y="8" opacity="0.35" />
+
+    <use href="#arrow_mid" x="132" y="80" opacity="0.85" />
+    <use href="#arrow_mid" x="132" y="32" opacity="0.6" />
+  </g>
+
+  <!-- ==================== FRAME 1 (Dịch lên 8px) ==================== -->
+  <g id="frame_1" transform="translate(160, 0)">
+    <use href="#cell_bg" />
+    <use href="#arrow_faint" x="30" y="108" opacity="0.4" />
+    <use href="#arrow_bright" x="30" y="60" opacity="0.9" />
+    <use href="#arrow_mid" x="30" y="12" opacity="0.35" />
+
+    <use href="#arrow_bright" x="65" y="84" opacity="0.85" />
+    <use href="#arrow_mid" x="65" y="36" opacity="0.7" />
+
+    <use href="#arrow_mid" x="100" y="96" opacity="0.5" />
+    <use href="#arrow_bright" x="100" y="48" opacity="0.85" />
+
+    <use href="#arrow_bright" x="132" y="72" opacity="0.9" />
+    <use href="#arrow_mid" x="132" y="24" opacity="0.5" />
+  </g>
+
+  <!-- ==================== FRAME 2 (Dịch lên 16px) ==================== -->
+  <g id="frame_2" transform="translate(320, 0)">
+    <use href="#cell_bg" />
+    <use href="#arrow_mid" x="30" y="100" opacity="0.55" />
+    <use href="#arrow_bright" x="30" y="52" opacity="0.85" />
+    <use href="#arrow_faint" x="30" y="4" opacity="0.25" />
+
+    <use href="#arrow_bright" x="65" y="76" opacity="0.9" />
+    <use href="#arrow_mid" x="65" y="28" opacity="0.6" />
+
+    <use href="#arrow_mid" x="100" y="88" opacity="0.65" />
+    <use href="#arrow_bright" x="100" y="40" opacity="0.75" />
+
+    <use href="#arrow_bright" x="132" y="64" opacity="0.85" />
+    <use href="#arrow_mid" x="132" y="16" opacity="0.4" />
+    <use href="#arrow_faint" x="132" y="112" opacity="0.3" />
+  </g>
+
+  <!-- ==================== FRAME 3 (Dịch lên 24px) ==================== -->
+  <g id="frame_3" transform="translate(480, 0)">
+    <use href="#cell_bg" />
+    <use href="#arrow_mid" x="30" y="92" opacity="0.7" />
+    <use href="#arrow_bright" x="30" y="44" opacity="0.8" />
+    <use href="#arrow_faint" x="30" y="140" opacity="0.2" />
+
+    <use href="#arrow_bright" x="65" y="68" opacity="0.85" />
+    <use href="#arrow_mid" x="65" y="20" opacity="0.5" />
+    <use href="#arrow_faint" x="65" y="116" opacity="0.3" />
+
+    <use href="#arrow_bright" x="100" y="80" opacity="0.8" />
+    <use href="#arrow_mid" x="100" y="32" opacity="0.65" />
+
+    <use href="#arrow_bright" x="132" y="56" opacity="0.8" />
+    <use href="#arrow_mid" x="132" y="8" opacity="0.3" />
+    <use href="#arrow_faint" x="132" y="104" opacity="0.4" />
+  </g>
+
+  <!-- ==================== FRAME 4 (Dịch lên 32px) ==================== -->
+  <g id="frame_4" transform="translate(640, 0)">
+    <use href="#cell_bg" />
+    <use href="#arrow_bright" x="30" y="84" opacity="0.8" />
+    <use href="#arrow_mid" x="30" y="36" opacity="0.7" />
+    <use href="#arrow_faint" x="30" y="132" opacity="0.25" />
+
+    <use href="#arrow_bright" x="65" y="60" opacity="0.8" />
+    <use href="#arrow_mid" x="65" y="12" opacity="0.4" />
+    <use href="#arrow_faint" x="65" y="108" opacity="0.4" />
+
+    <use href="#arrow_bright" x="100" y="72" opacity="0.9" />
+    <use href="#arrow_mid" x="100" y="24" opacity="0.5" />
+    <use href="#arrow_faint" x="100" y="120" opacity="0.3" />
+
+    <use href="#arrow_bright" x="132" y="48" opacity="0.75" />
+    <use href="#arrow_faint" x="132" y="0" opacity="0.2" />
+    <use href="#arrow_mid" x="132" y="96" opacity="0.55" />
+  </g>
+
+  <!-- ==================== FRAME 5 (Dịch lên 40px, chuẩn bị loop mượt về 0) ==================== -->
+  <g id="frame_5" transform="translate(800, 0)">
+    <use href="#cell_bg" />
+    <use href="#arrow_bright" x="30" y="76" opacity="0.85" />
+    <use href="#arrow_mid" x="30" y="28" opacity="0.6" />
+    <use href="#arrow_faint" x="30" y="124" opacity="0.3" />
+
+    <use href="#arrow_bright" x="65" y="52" opacity="0.8" />
+    <use href="#arrow_faint" x="65" y="4" opacity="0.3" />
+    <use href="#arrow_mid" x="65" y="100" opacity="0.55" />
+
+    <use href="#arrow_bright" x="100" y="64" opacity="0.85" />
+    <use href="#arrow_mid" x="100" y="16" opacity="0.4" />
+    <use href="#arrow_faint" x="100" y="112" opacity="0.35" />
+
+    <use href="#arrow_bright" x="132" y="40" opacity="0.7" />
+    <use href="#arrow_mid" x="132" y="88" opacity="0.7" />
+    <use href="#arrow_faint" x="132" y="136" opacity="0.25" />
+  </g>
+</svg>

@@ -15,6 +15,11 @@ const TITLE_KEY := "STR_TUT_CONGRATS_TITLE"
 ## Hiệu ứng riêng của bài (animation "congrats") — node tên `CongratsAnim` vì scene kế thừa
 ## `base_tutorial.tscn` đã có sẵn `AnimationPlayer` (hiệu ứng vào màn) — không được trùng tên.
 @export var fx_anim: AnimationPlayer = null
+## Confetti nền + 2 thẻ thống kê (3 bài học · 4 màn thử sức) hiện ra sau khi con dấu đóng xong
+@export var confetti: Control = null
+@export var stat_cards: Array[Control] = []
+@export var lbl_stat_a: Label = null
+@export var lbl_stat_b: Label = null
 
 
 func _init_tutorial() -> void:
@@ -36,6 +41,18 @@ func _on_step_entered(_index: int, _data: Dictionary) -> void:
 		btn_continue.text = _tr_key("STR_TUT_CONGRATS_CONTINUE", "CHƠI BÀN TIẾP THEO")
 	if btn_main != null:
 		btn_main.text = _tr_key("STR_TUT_CONGRATS_MAIN", "VỀ MÀN HÌNH CHÍNH")
+	if lbl_stat_a != null:
+		lbl_stat_a.text = _tr_key("STR_TUT_CONGRATS_STAT_LESSONS", "bài học")
+	if lbl_stat_b != null:
+		lbl_stat_b.text = _tr_key("STR_TUT_CONGRATS_STAT_TRIALS", "màn thử sức")
+	if confetti != null:
+		confetti.modulate.a = 0.0
+	for card in stat_cards:
+		if card != null:
+			card.pivot_offset = card.size * 0.5
+			card.modulate.a = 0.0
+	if wave != null:
+		wave.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 	nav_bar.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 	btn_skip.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 	if lbl_step_num != null:
@@ -74,9 +91,11 @@ func _on_step_entered(_index: int, _data: Dictionary) -> void:
 		tw.tween_property(stamp, "scale", Vector2.ONE, 0.34).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 		# Phase 3: nhạc chiến thắng + nút xuất hiện
 		tw.tween_callback(func() -> void: Sfx.play(Sfx.LEVEL_WIN))
+		tw.tween_callback(_reveal_extras)
 		tw.tween_callback(func() -> void: _reveal_choice_buttons())
 	else:
 		Sfx.play(Sfx.LEVEL_WIN)
+		_reveal_extras()
 		_reveal_choice_buttons()
 
 
@@ -88,6 +107,17 @@ func _stamp_impact() -> void:
 ## Nhạc chiến thắng khi con dấu nảy xong — gọi từ method track của animation "congrats"
 func _level_win() -> void:
 	Sfx.play(Sfx.LEVEL_WIN)
+	_reveal_extras()
+
+
+## Confetti rơi vào + 2 thẻ thống kê nảy ra (so le)
+func _reveal_extras() -> void:
+	if confetti != null:
+		confetti.create_tween().tween_property(confetti, "modulate:a", 1.0, 0.4)
+	for i in stat_cards.size():
+		var c := stat_cards[i]
+		if c != null:
+			UIAnim.play_pop_in(c, 0.08 + i * 0.12, 0.8, 0.3)
 
 
 ## Nút xuất hiện có stagger sau khi con dấu đóng xong

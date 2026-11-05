@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-200 -22 400 60" width="400" height="60">
+  <defs>
+    <!-- Gradient cột điện gỗ/thép phong hóa -->
+    <linearGradient id="poleGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#33271e" />
+      <stop offset="40%" stop-color="#5c4434" />
+      <stop offset="70%" stop-color="#785944" />
+      <stop offset="100%" stop-color="#261c15" />
+    </linearGradient>
+
+    <!-- Gradient sứ cách điện ceramic xanh ngọc -->
+    <linearGradient id="insulatorGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#94a3b8" />
+      <stop offset="50%" stop-color="#e2e8f0" />
+      <stop offset="100%" stop-color="#64748b" />
+    </linearGradient>
+
+    <!-- Gradient hào quang dây điện cao thế -->
+    <linearGradient id="wireGlow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#00f5d4" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#00b4d8" stop-opacity="0.0" />
+    </linearGradient>
+  </defs>
+
+  <!-- ================= 1. DÂY CÁP ĐIỆN CHÍNH & PHỤ (VÕNG PARABOL 22px) ================= -->
+  <!-- Quầng phát sáng mờ quanh dây điện -->
+  <path d="M -190,0 Q 0,44 190,0" fill="none" stroke="#38bdf8" stroke-width="4.5" opacity="0.25" />
+  
+  <!-- Cáp điện cao thế bọc xoắn chịu lực (Main Wire) -->
+  <path d="M -190,0 Q 0,44 190,0" fill="none" stroke="#1e293b" stroke-width="2.8" stroke-linecap="round" />
+  <path d="M -190,0 Q 0,44 190,0" fill="none" stroke="#475569" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="8,2" />
+
+  <!-- Dây phụ trợ lực treo phía trên -->
+  <path d="M -190,-4 Q 0,34 190,-4" fill="none" stroke="#334155" stroke-width="1.2" opacity="0.65" />
+
+  <!-- ================= 2. CỘT ĐIỆN BÊN TRÁI (-190px) ================= -->
+  <g id="left_pole" transform="translate(-190, 0)">
+    <!-- Thân cột chính -->
+    <rect x="-4" y="-18" width="8" height="48" rx="1" fill="url(#poleGrad)" stroke="#1c1917" stroke-width="0.8" />
+    <!-- Xà ngang chịu lực -->
+    <rect x="-12" y="-12" width="24" height="4.5" rx="1" fill="#443226" stroke="#1c1917" stroke-width="0.8" />
+    <!-- Thanh giằng kim loại gia cố chéo -->
+    <line x1="-10" y1="-7.5" x2="0" y2="-2" stroke="#78716c" stroke-width="1.4" />
+    <line x1="10" y1="-7.5" x2="0" y2="-2" stroke="#78716c" stroke-width="1.4" />
+
+    <!-- Sứ cách điện nhiều tầng (Insulators) -->
+    <!-- Sứ trái -->
+    <rect x="-9" y="-7.5" width="4" height="6" rx="1" fill="url(#insulatorGrad)" />
+    <!-- Sứ giữa (nơi bắt dây chính) -->
+    <ellipse cx="0" cy="-0.5" rx="3.2" ry="2.2" fill="url(#insulatorGrad)" stroke="#334155" stroke-width="0.6" />
+    <circle cx="0" cy="-0.5" r="1.2" fill="#0f172a" />
+    <!-- Sứ phải -->
+    <rect x="5" y="-7.5" width="4" height="6" rx="1" fill="url(#insulatorGrad)" />
+
+    <!-- Biển tam giác cảnh báo điện giật -->
+    <polygon points="0,6 -5,15 5,15" fill="#facc15" stroke="#78350f" stroke-width="0.7" />
+    <path d="M 0,8 L -1.5,11 L 0.5,11 L -0.5,14" stroke="#0f172a" stroke-width="0.9" fill="none" stroke-linecap="round" />
+  </g>
+
+  <!-- ================= 3. CỘT ĐIỆN BÊN PHẢI (+190px) ================= -->
+  <g id="right_pole" transform="translate(190, 0)">
+    <rect x="-4" y="-18" width="8" height="48" rx="1" fill="url(#poleGrad)" stroke="#1c1917" stroke-width="0.8" />
+    <rect x="-12" y="-12" width="24" height="4.5" rx="1" fill="#443226" stroke="#1c1917" stroke-width="0.8" />
+    <line x1="-10" y1="-7.5" x2="0" y2="-2" stroke="#78716c" stroke-width="1.4" />
+    <line x1="10" y1="-7.5" x2="0" y2="-2" stroke="#78716c" stroke-width="1.4" />
+
+    <rect x="-9" y="-7.5" width="4" height="6" rx="1" fill="url(#insulatorGrad)" />
+    <ellipse cx="0" cy="-0.5" rx="3.2" ry="2.2" fill="url(#insulatorGrad)" stroke="#334155" stroke-width="0.6" />
+    <circle cx="0" cy="-0.5" r="1.2" fill="#0f172a" />
+    <rect x="5" y="-7.5" width="4" height="6" rx="1" fill="url(#insulatorGrad)" />
+
+    <polygon points="0,6 -5,15 5,15" fill="#facc15" stroke="#78350f" stroke-width="0.7" />
+    <path d="M 0,8 L -1.5,11 L 0.5,11 L -0.5,14" stroke="#0f172a" stroke-width="0.9" fill="none" stroke-linecap="round" />
+  </g>
+
+  <!-- ================= 4. TIA LỬA ĐIỆN CAO THẾ MẪU ================= -->
+  <g id="ambient_spark">
+    <!-- Điểm hồ quang nổ ở giữa đáy võng -->
+    <circle cx="0" cy="22" r="5" fill="#00f5d4" opacity="0.4" />
+    <circle cx="0" cy="22" r="2.2" fill="#ffffff" />
+    <polyline points="-8,20 -3,23 2,19 7,23" fill="none" stroke="#a7f3d0" stroke-width="1.5" stroke-linecap="round" />
+  </g>
+</svg>

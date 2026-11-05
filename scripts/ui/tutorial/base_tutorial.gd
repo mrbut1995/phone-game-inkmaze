@@ -38,6 +38,8 @@ var is_active: bool = false
 ## Số bước trong huy hiệu tròn + dòng "Bước N trong M" (kiểu AO4) — bind trong base_tutorial.tscn
 @export var lbl_step_num: Label = null
 @export var lbl_step_of: Label = null
+## Thanh tiến độ nét mực gợn sóng (thay hàng sao) — value = bước hiện tại / tổng số bước
+@export var wave: TextureProgressBar = null
 ## Sao tiến độ: sáng = đã tới / đang ở bước này, xám = chưa tới
 @export var tex_star_on: Texture2D = null
 @export var tex_star_off: Texture2D = null
@@ -161,6 +163,9 @@ func _update_step_labels() -> void:
 		if fmt == "STR_TUT_STEP_OF":
 			fmt = "Bước {0} trong {1}"
 		lbl_step_of.text = fmt.format([current_step_index + 1, steps_data.size()])
+	if wave != null:
+		wave.max_value = maxf(1.0, float(steps_data.size()))
+		wave.create_tween().tween_property(wave, "value", float(current_step_index + 1), 0.3).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
 
 ## Gắn hiệu ứng nhấn nảy cho 3 nút điều hướng (giống mọi nút khác trong game)
@@ -290,7 +295,8 @@ func _animate_step_text(new_msg: String, new_title: String) -> void:
 		_fx_message.tween_property(lbl_message, "modulate:a", 0.0, 0.1)
 		_fx_message.tween_callback(func() -> void:
 			lbl_message.text = new_msg
-			lbl_message.position = Vector2.ZERO  # keep-code: pose hoạt cảnh runtime (tween)
+			_fit_message_font()
+			lbl_message.position = MSG_HOME  # keep-code: pose hoạt cảnh runtime (tween)
 			if lbl_title.text != new_title:
 				lbl_title.text = new_title
 				UIAnim.play_pop_in(lbl_title, 0.0, 0.88, 0.24)
@@ -299,12 +305,41 @@ func _animate_step_text(new_msg: String, new_title: String) -> void:
 		return
 	# Lần đầu hoặc đang ẩn: set text ngay rồi cho chữ trượt lên
 	lbl_message.text = new_msg
-	lbl_message.position = Vector2.ZERO  # keep-code: pose hoạt cảnh runtime (tween)
+	_fit_message_font()
+	lbl_message.position = MSG_HOME  # keep-code: pose hoạt cảnh runtime (tween)
 	lbl_title.text = new_title
 	if not _play_anim_on(anim_title, &"title_pop"):
 		UIAnim.play_pop_in(lbl_title, 0.0, 0.88, 0.24)
 	if not _play_anim_on(anim_dialog, &"text_in_first"):
 		_fx_message = UIAnim.play_slide_in(lbl_message, Vector2(0, 10), 0.06, 0.24)
+
+
+## Thu nhỏ chữ thoại (27 → 20) cho vừa thẻ giấy; thẻ chỉ cao 150 nên câu dài 3–4 dòng sẽ tràn ra ngoài.
+## Vị trí "nhà" của chữ thoại trong bóng (khớp offset_left/top của Message trong base_tutorial.tscn)
+const MSG_HOME := Vector2(30, 20)
+const MSG_FONT_MAX := 27
+const MSG_FONT_MIN := 20
+func _fit_message_font() -> void:
+	if lbl_message == null or dialog_bubble == null:
+		return
+	var font := lbl_message.get_theme_font("font")
+	if font == null:
+		return
+	var line_gap := float(lbl_message.get_theme_constant("line_spacing"))
+	var max_w := lbl_message.size.x
+	var max_h := lbl_message.size.y
+	if max_w <= 1.0 or max_h <= 1.0:  # chưa layout xong → dùng cỡ thiết kế của thẻ
+		max_w = dialog_bubble.size.x - 60.0
+		max_h = dialog_bubble.size.y - 40.0
+	var chosen := MSG_FONT_MIN
+	for sz in range(MSG_FONT_MAX, MSG_FONT_MIN - 1, -1):
+		var line_h := font.get_height(sz)
+		var box := font.get_multiline_string_size(lbl_message.text, HORIZONTAL_ALIGNMENT_LEFT, max_w, sz, -1, TextServer.BREAK_WORD_BOUND | TextServer.BREAK_MANDATORY)
+		var lines := maxf(1.0, roundf(box.y / line_h))
+		if lines * line_h + (lines - 1.0) * line_gap <= max_h:
+			chosen = sz
+			break
+	lbl_message.add_theme_font_size_override("font_size", chosen)
 
 
 ## TextOutTimer kêu (chữ cũ đã mờ xong) → đổi sang nội dung bước mới.
@@ -318,7 +353,8 @@ func _apply_step_text_and_slide(new_msg: String, new_title: String) -> void:
 	if lbl_message == null or not is_instance_valid(lbl_message):
 		return
 	lbl_message.text = new_msg
-	lbl_message.position = Vector2.ZERO  # keep-code: pose hoạt cảnh runtime (tween)
+	_fit_message_font()
+	lbl_message.position = MSG_HOME  # keep-code: pose hoạt cảnh runtime (tween)
 	if lbl_title.text != new_title:
 		lbl_title.text = new_title
 		if not _play_anim_on(anim_title, &"title_pop"):
@@ -477,8 +513,8 @@ func show_fail_feedback(key: String, fallback_text: String = "") -> void:
 
 
 func show_success_feedback(key: String = "", fallback_text: String = "") -> void:
+	# Không hiện toast xanh: chữ trùng với thẻ thoại phía trên (người chơi báo lỗi hiển thị).
 	Sfx.play(Sfx.STAR_POP)
-	_show_toast(key, fallback_text, Color("#4CAE4C"), 0.95)
 
 
 ## Toast phản hồi: nở ra → giữ → mờ dần — animation "toast_in"/"toast_out" của scene

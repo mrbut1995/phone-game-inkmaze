@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 360" width="400" height="360">
+  <defs>
+    <!-- Khung cơ sở 1 tầng (Gồm 2 cột và dây cáp võng) -->
+    <g id="wire_rig">
+      <path d="M 10,22 Q 200,66 390,22" fill="none" stroke="#1e293b" stroke-width="2.6" />
+      <path d="M 10,22 Q 200,66 390,22" fill="none" stroke="#475569" stroke-width="1.2" stroke-dasharray="8,2" />
+      <path d="M 10,18 Q 200,56 390,18" fill="none" stroke="#334155" stroke-width="1.2" opacity="0.6" />
+      <!-- Cột trái -->
+      <g transform="translate(10, 22)">
+        <rect x="-4" y="-18" width="8" height="48" rx="1" fill="#5c4434" stroke="#1c1917" stroke-width="0.8" />
+        <rect x="-12" y="-12" width="24" height="4.5" rx="1" fill="#443226" />
+        <ellipse cx="0" cy="-0.5" rx="3.2" ry="2.2" fill="#cbd5e1" />
+        <polygon points="0,6 -5,15 5,15" fill="#facc15" stroke="#78350f" stroke-width="0.6" />
+      </g>
+      <!-- Cột phải -->
+      <g transform="translate(390, 22)">
+        <rect x="-4" y="-18" width="8" height="48" rx="1" fill="#5c4434" stroke="#1c1917" stroke-width="0.8" />
+        <rect x="-12" y="-12" width="24" height="4.5" rx="1" fill="#443226" />
+        <ellipse cx="0" cy="-0.5" rx="3.2" ry="2.2" fill="#cbd5e1" />
+        <polygon points="0,6 -5,15 5,15" fill="#facc15" stroke="#78350f" stroke-width="0.6" />
+      </g>
+    </g>
+
+    <!-- Mẫu hồ quang điện nổ lớn -->
+    <g id="spark_burst">
+      <circle cx="0" cy="0" r="7" fill="#00f5d4" opacity="0.4" />
+      <circle cx="0" cy="0" r="3" fill="#ffffff" />
+      <polyline points="-10,-4 -4,3 3,-2 9,4" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" />
+      <circle cx="-6" cy="6" r="1.0" fill="#a7f3d0" />
+      <circle cx="8" cy="-5" r="1.0" fill="#a7f3d0" />
+    </g>
+  </defs>
+
+  <!-- ==================== FRAME 0 (Hồ quang tích điện bên trái) ==================== -->
+  <g id="f0" transform="translate(0, 0)">
+    <use href="#wire_rig" />
+    <!-- Tia điện giật ở 1/4 dây trái -->
+    <g transform="translate(90, 36)"><use href="#spark_burst" /></g>
+  </g>
+
+  <!-- ==================== FRAME 1 (Tia sét trượt về gần giữa) ==================== -->
+  <g id="f1" transform="translate(0, 60)">
+    <use href="#wire_rig" />
+    <path d="M 130,42 L 145,47 L 160,43 L 175,48" fill="none" stroke="#00f5d4" stroke-width="2" stroke-linecap="round" />
+    <circle cx="150" cy="46" r="2.5" fill="#ffffff" />
+  </g>
+
+  <!-- ==================== FRAME 2 (NỔ HỒ QUANG CỰC ĐẠI Ở ĐÁY VÕNG 22px) ==================== -->
+  <g id="f2" transform="translate(0, 120)">
+    <use href="#wire_rig" />
+    <!-- Vầng sáng lớn tại điểm võng sâu nhất x=200, y=44 -->
+    <circle cx="200" cy="44" r="12" fill="#38bdf8" opacity="0.35" />
+    <g transform="translate(200, 44)"><use href="#spark_burst" /></g>
+    <polyline points="180,41 192,46 208,40 220,45" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" />
+  </g>
+
+  <!-- ==================== FRAME 3 (Tia điện phóng sang nhánh phải) ==================== -->
+  <g id="f3" transform="translate(0, 180)">
+    <use href="#wire_rig" />
+    <path d="M 230,44 L 245,41 L 260,45 L 275,39" fill="none" stroke="#00f5d4" stroke-width="2" stroke-linecap="round" />
+    <circle cx="255" cy="43" r="2.2" fill="#ffffff" />
+    <circle cx="240" cy="48" r="1.2" fill="#67e8f9" />
+  </g>
+
+  <!-- ==================== FRAME 4 (Nổ tia lửa ở 3/4 dây phải) ==================== -->
+  <g id="f4" transform="translate(0, 240)">
+    <use href="#wire_rig" />
+    <g transform="translate(305, 36)"><use href="#spark_burst" /></g>
+  </g>
+
+  <!-- ==================== FRAME 5 (Dư quang mờ tắt, chuẩn bị lặp lại F0) ==================== -->
+  <g id="f5" transform="translate(0, 300)">
+    <use href="#wire_rig" />
+    <circle cx="340" cy="28" r="4" fill="#00f5d4" opacity="0.3" />
+    <circle cx="340" cy="28" r="1.6" fill="#ffffff" />
+    <circle cx="60" cy="28" r="2" fill="#38bdf8" opacity="0.5" />
+  </g>
+</svg>

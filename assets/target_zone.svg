@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-130 -130 260 260" width="260" height="260">
+  <!-- VÒNG 20 ĐIỂM (R = 125px) -->
+  <g id="ring_20">
+    <circle cx="0" cy="0" r="125" fill="#2e3852" fill-opacity="0.75" stroke="#668cbf" stroke-width="2.5" stroke-opacity="0.8" />
+  </g>
+
+  <!-- VÒNG 40 ĐIỂM (R = 85px) -->
+  <g id="ring_40">
+    <circle cx="0" cy="0" r="85" fill="#2673bf" fill-opacity="0.85" stroke="#99d9ff" stroke-width="2" stroke-opacity="0.9" />
+  </g>
+
+  <!-- VÒNG 70 ĐIỂM (R = 50px) -->
+  <g id="ring_70">
+    <circle cx="0" cy="0" r="50" fill="#e6b326" fill-opacity="0.9" stroke="#fff299" stroke-width="2" />
+  </g>
+
+  <!-- TÂM BULLSEYE 100 ĐIỂM (R = 22px) -->
+  <g id="ring_100">
+    <circle cx="0" cy="0" r="22" fill="#f22640" stroke="#ffffff" stroke-width="2" stroke-opacity="0.9" />
+  </g>
+
+  <!-- CROSSHAIR TRUNG TÂM -->
+  <g id="crosshair" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" opacity="0.95">
+    <line x1="-7" y1="0" x2="7" y2="0" />
+    <line x1="0" y1="-7" x2="0" y2="7" />
+    <circle cx="0" cy="0" r="3" fill="#ffffff" stroke="none" />
+  </g>
+
+  <!-- CỌC CỜ TIÊU ĐIỂM (MARKER FLAG) -->
+  <g id="marker_flag">
+    <!-- Cán cờ -->
+    <line x1="0" y1="0" x2="0" y2="-26" stroke="#e6e6e6" stroke-width="2" stroke-linecap="round" />
+    <!-- Lá cờ đỏ -->
+    <polygon points="0,-26 14,-20 0,-14" fill="#ff3333" />
+  </g>
+</svg>

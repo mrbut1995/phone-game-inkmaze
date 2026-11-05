@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-34 -42 68 84" width="68" height="84">
+  <defs>
+    <!-- Gradient bóng khối quả cầu khí nóng -->
+    <radialGradient id="balloonSpherical" cx="0.4" cy="0.35" r="0.65">
+      <stop offset="0%" stop-color="#ffedd5" stop-opacity="0.35" />
+      <stop offset="60%" stop-color="#000000" stop-opacity="0.0" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.4" />
+    </radialGradient>
+
+    <!-- Màu giỏ mây đan -->
+    <linearGradient id="basketWood" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#78350f" />
+      <stop offset="50%" stop-color="#b45309" />
+      <stop offset="100%" stop-color="#451a03" />
+    </linearGradient>
+
+    <!-- Ngọn lửa burner khí gas -->
+    <linearGradient id="burnerFlame" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#00f5d4" />
+      <stop offset="30%" stop-color="#ffea00" />
+      <stop offset="70%" stop-color="#ff5500" />
+      <stop offset="100%" stop-color="#ff0044" opacity="0.0" />
+    </linearGradient>
+  </defs>
+
+  <!-- 1. DÂY TREO GIỎ MÂY (SUSPENSION ROPES) -->
+  <g stroke="#78350f" stroke-width="1.2" stroke-linecap="round">
+    <line x1="-12" y1="12" x2="-6" y2="26" />
+    <line x1="12" y1="12" x2="6" y2="26" />
+    <line x1="-6" y1="14" x2="-4" y2="26" />
+    <line x1="6" y1="14" x2="4" y2="26" />
+  </g>
+
+  <!-- 2. NGỌN LỬA ĐỐT KHÍ NÓNG (BURNER FLAME) -->
+  <!-- Khung kim loại giữ vòi phun -->
+  <rect x="-3" y="14" width="6" height="3" rx="1" fill="#475569" />
+  <!-- Ngọn lửa bốc lên -->
+  <path d="M -3,14 Q -4,8 0,4 Q 4,8 3,14 Z" fill="url(#burnerFlame)" />
+  <circle cx="0" cy="11" r="1.5" fill="#ffffff" />
+
+  <!-- 3. QUẢ CẦU KHÍ CHÍNH (BALLOON ENVELOPE) -->
+  <g id="envelope">
+    <!-- Nền quả cầu màu cam rực rỡ -->
+    <path d="M 0,-36 C -28,-36 -28,-6 -14,12 L 14,12 C 28,-6 28,-36 0,-36 Z" fill="#f97316" stroke="#c2410c" stroke-width="1.2" />
+
+    <!-- Múi sọc vàng kim loại bên cạnh -->
+    <path d="M 0,-36 C -18,-36 -18,-6 -8,12 L 8,12 C 18,-6 18,-36 0,-36 Z" fill="#facc15" />
+
+    <!-- Múi sọc xanh ngọc mòng két (Teal) ở chính giữa -->
+    <path d="M 0,-36 C -8,-36 -8,-6 -3,12 L 3,12 C 8,-6 8,-36 0,-36 Z" fill="#0d9488" />
+
+    <!-- Đai cổ quả cầu bọc viền thép -->
+    <rect x="-14" y="10" width="28" height="3" rx="1" fill="#475569" />
+
+    <!-- Lớp phủ tạo bóng cầu 3D căng tròn -->
+    <path d="M 0,-36 C -28,-36 -28,-6 -14,12 L 14,12 C 28,-6 28,-36 0,-36 Z" fill="url(#balloonSpherical)" />
+    
+    <!-- Vệt sáng phản chiếu ánh mặt trời góc trên trái -->
+    <path d="M -16,-28 C -8,-34 2,-34 8,-32" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.6" />
+  </g>
+
+  <!-- 4. GIỎ MÂY CHỞ NGƯỜI (WICKER BASKET) -->
+  <g id="basket" transform="translate(0, 26)">
+    <!-- Thành giỏ mây -->
+    <rect x="-8" y="0" width="16" height="11" rx="2" fill="url(#basketWood)" stroke="#291507" stroke-width="0.8" />
+    <!-- Vành miệng giỏ -->
+    <rect x="-9" y="-1.5" width="18" height="3" rx="1" fill="#451a03" />
+    <!-- Họa tiết nan mây đan chéo -->
+    <path d="M -6,1 L -3,11 M 0,1 L 3,11 M 6,1 L 7,7 M -3,1 L -6,11 M 3,1 L 0,11" stroke="#291507" stroke-width="0.8" opacity="0.6" />
+    <!-- Túi cát dằn hai bên giỏ (Sandbags) -->
+    <ellipse cx="-8.5" cy="5" rx="2" ry="3" fill="#d97706" stroke="#92400e" stroke-width="0.6" />
+    <ellipse cx="8.5" cy="5" rx="2" ry="3" fill="#d97706" stroke="#92400e" stroke-width="0.6" />
+  </g>
+</svg>

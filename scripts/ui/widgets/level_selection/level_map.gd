@@ -218,7 +218,7 @@ func build(level_ids: Array[int], stars: Dictionary, unlocked: int, current_id: 
 
 
 ## Cuộn đến nút của `level_id` (đưa nút về giữa khung bản đồ)
-func scroll_to(level_id: int, animate := true) -> void:
+func scroll_to(level_id: int, animate := true, duration := -1.0) -> void:
 	var node_y := _node_y(level_id)
 	if is_nan(node_y):
 		return
@@ -229,7 +229,7 @@ func scroll_to(level_id: int, animate := true) -> void:
 		return
 	_scroll_tween = create_tween()
 	_scroll_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
-	_scroll_tween.tween_method(_set_scroll_y, scroll_offset_y(), target_y, scroll_to_duration)
+	_scroll_tween.tween_method(_set_scroll_y, scroll_offset_y(), target_y, scroll_to_duration if duration <= 0.0 else duration)
 
 
 ## Toạ độ Y (trong `Tracks`) của nút màn / cổng; NAN nếu không có
@@ -888,6 +888,17 @@ func _run_reveal(token: int) -> void:
 			shown.append(entry)
 	var step := clampf(reveal_max_total / float(maxi(shown.size(), 1)), 0.09, reveal_step_sec)
 	var prev_id := _reveal_gate_id
+	# MỘT cú cuộn duy nhất, êm, kéo dài suốt lúc các nút lần lượt hiện (không giật cục từng nút):
+	# đích = vị trí để nút CUỐI cùng được diễn nằm ở mức `reveal_camera_top` của khung
+	if not shown.is_empty():
+		var camera_target := clampf(maxf(scroll_offset_y(), area_top_offset(int(shown[shown.size() - 1]["id"]))),
+			_min_scroll_y, _max_scroll_y)
+		if camera_target > scroll_offset_y() + 0.5:
+			_stop_scroll_tween()
+			_scroll_tween = create_tween()
+			_scroll_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+			_scroll_tween.tween_method(_set_scroll_y, scroll_offset_y(), camera_target,
+				step * float(shown.size()) + reveal_pop_sec * 0.5)
 	for entry in shown:
 		if token != _reveal_token:
 			return
@@ -895,14 +906,6 @@ func _run_reveal(token: int) -> void:
 		var node: Node2D = entry["node"]
 		if not is_instance_valid(node):
 			continue
-		# 1) Nút mới cao quá mức ⇒ bản đồ cuộn lên đón nó (tốc độ đều, liền mạch giữa các nút)
-		var top_target := area_top_offset(id)
-		var target := clampf(maxf(scroll_offset_y(), top_target), _min_scroll_y, _max_scroll_y)
-		if target > scroll_offset_y() + 0.5:
-			_stop_scroll_tween()
-			_scroll_tween = create_tween()
-			_scroll_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-			_scroll_tween.tween_method(_set_scroll_y, scroll_offset_y(), target, step * 1.15)
 		# 2) Vệt dạ quang vẽ nối từ nút trước sang nút này
 		var from_point: int = _road_point_of.get(prev_id, -1)
 		var to_point: int = _road_point_of.get(id, -1)
@@ -965,7 +968,12 @@ func _finish_reveal(skipped: bool) -> void:
 	_busy = false
 	var target_id := _current_id if node_for(_current_id) != null else 0
 	if target_id != 0:
-		scroll_to(target_id, not skipped)
+		var screen_y := _node_y(target_id) + scroll_offset_y()
+		var h := _area_size().y
+		if skipped:
+			scroll_to(target_id, false)
+		elif screen_y < h * 0.12 or screen_y > h * 0.9:   # màn đang chơi đã nằm trong tầm nhìn thì khỏi cuộn lại
+			scroll_to(target_id, true, 0.9)
 
 
 func _set_decor_visible(visible_now: bool) -> void:

@@ -14,8 +14,22 @@
 [ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_page_grid.png" id="t_grid"]
 [ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_page_margin.png" id="t_margin"]
 [ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_page_holes.png" id="t_holes"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_ribbon.png" id="a_rib"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_ribbon_pressed.png" id="a_rib_p"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_chevron.png" id="a_chev"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_play.png" id="a_play"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_bubble.png" id="a_bub"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_mascot.png" id="a_mas"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_wave_bg.png" id="a_wbg"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_wave_fill.png" id="a_wfi"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_next_blue.png" id="a_nxb"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_next_blue_pressed.png" id="a_nxbp"]
 
 [sub_resource type="StyleBoxTexture" id="btn_primary"]
+content_margin_left = 24.0
+content_margin_top = 8.0
+content_margin_right = 24.0
+content_margin_bottom = 14.0
 texture = ExtResource("t_next")
 texture_margin_left = 46.0
 texture_margin_top = 40.0
@@ -23,6 +37,10 @@ texture_margin_right = 46.0
 texture_margin_bottom = 40.0
 
 [sub_resource type="StyleBoxTexture" id="btn_primary_hover"]
+content_margin_left = 24.0
+content_margin_top = 8.0
+content_margin_right = 24.0
+content_margin_bottom = 14.0
 texture = ExtResource("t_next_p")
 texture_margin_left = 46.0
 texture_margin_top = 40.0
@@ -101,7 +119,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [210.0]
+"values": [218.0]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -113,7 +131,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [360.0]
+"values": [368.0]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -234,46 +252,34 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("DialogBubble:offset_top")
+tracks/2/path = NodePath("DialogBubble:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.06, 0.32),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [252.0, 252.0, 210.0]
+"values": [Vector2(0.92, 0.92), Vector2(0.92, 0.92), Vector2(1, 1)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("DialogBubble:offset_bottom")
+tracks/3/path = NodePath("BoardHost:modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.06, 0.32),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [402.0, 402.0, 360.0]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("BoardHost:modulate")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
 "times": PackedFloat32Array(0, 0.05, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("BoardHost:scale")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BoardHost:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
 "times": PackedFloat32Array(0, 0.05, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
@@ -300,7 +306,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.22),
 "transitions": PackedFloat32Array(0.5, 1),
 "update": 0,
-"values": [Vector2(0, 10), Vector2(0, 0)]
+"values": [Vector2(30, 30), Vector2(30, 20)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -328,7 +334,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.06, 0.3),
 "transitions": PackedFloat32Array(1, 0.5, 1),
 "update": 0,
-"values": [Vector2(0, 10), Vector2(0, 10), Vector2(0, 0)]
+"values": [Vector2(30, 30), Vector2(30, 30), Vector2(30, 20)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -505,7 +511,7 @@ _data = {
 &"spotlight_pulse": SubResource("Animation_tt_spotlight_pulse")
 }
 
-[node name="BaseTutorial" type="Control" unique_id=1525698188 node_paths=PackedStringArray("backdrop", "spotlight", "board_host", "dialog_bubble", "lbl_title", "dots_container", "lbl_message", "nav_bar", "btn_skip_all", "lbl_step_num", "lbl_step_of", "btn_skip", "btn_next", "toast_label", "anim_player", "anim_dialog", "anim_title", "text_out_timer", "toast_timer", "spot_in_timer", "spot_out_timer", "anim_toast", "anim_spotlight")]
+[node name="BaseTutorial" type="Control" unique_id=1525698188 node_paths=PackedStringArray("backdrop", "spotlight", "board_host", "dialog_bubble", "lbl_title", "dots_container", "lbl_message", "nav_bar", "btn_skip_all", "lbl_step_num", "lbl_step_of", "wave", "btn_skip", "btn_next", "toast_label", "anim_player", "anim_dialog", "anim_title", "text_out_timer", "toast_timer", "spot_in_timer", "spot_out_timer", "anim_toast", "anim_spotlight")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -524,6 +530,7 @@ nav_bar = NodePath("NavBar")
 btn_skip_all = NodePath("Header/BtnSkipAll")
 lbl_step_num = NodePath("Header/StepBadge/Num")
 lbl_step_of = NodePath("Header/StepOf")
+wave = NodePath("Header/Wave")
 tex_star_on = ExtResource("t_star_on")
 tex_star_off = ExtResource("t_star_off")
 btn_skip = NodePath("Header/BtnSkip")
@@ -617,9 +624,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -230.0
-offset_top = -180.0
+offset_top = -102.0
 offset_right = 230.0
-offset_bottom = 240.0
+offset_bottom = 318.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -633,6 +640,7 @@ grow_horizontal = 2
 mouse_filter = 2
 
 [node name="StepBadge" type="TextureRect" parent="Header"]
+visible = false
 layout_mode = 0
 offset_left = 62.0
 offset_top = 36.0
@@ -661,13 +669,13 @@ vertical_alignment = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
-offset_left = 196.0
-offset_top = 40.0
-offset_right = -20.0
-offset_bottom = 92.0
-pivot_offset = Vector2(0, 26)
+offset_left = 50.0
+offset_top = 22.0
+offset_right = -190.0
+offset_bottom = 66.0
+pivot_offset = Vector2(0, 22)
 theme_override_colors/font_color = Color(0.114, 0.31, 0.45, 1)
-theme_override_font_sizes/font_size = 34
+theme_override_font_sizes/font_size = 32
 text = "STR_TUT_COMMON_TITLE"
 vertical_alignment = 1
 clip_text = true
@@ -676,11 +684,11 @@ clip_text = true
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
-offset_left = 196.0
-offset_top = 94.0
-offset_right = -20.0
-offset_bottom = 130.0
-theme_override_colors/font_color = Color(0.35, 0.45, 0.55, 1)
+offset_left = 50.0
+offset_top = 64.0
+offset_right = -190.0
+offset_bottom = 98.0
+theme_override_colors/font_color = Color(0.353, 0.451, 0.533, 1)
 theme_override_font_sizes/font_size = 24
 text = "Bước 1 trong 4"
 vertical_alignment = 1
@@ -738,15 +746,29 @@ theme_override_styles/focus = SubResource("sb_empty")
 text = "STR_TUT_COMMON_SKIP_ALL"
 icon = ExtResource("t_scis")
 
+[node name="Wave" type="TextureProgressBar" parent="Header"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 98.0
+offset_right = 540.0
+offset_bottom = 128.0
+mouse_filter = 2
+max_value = 4.0
+step = 0.01
+value = 1.0
+texture_under = ExtResource("a_wbg")
+texture_progress = ExtResource("a_wfi")
+nine_patch_stretch = true
+
 [node name="DialogBubble" type="Control" parent="." unique_id=2017602598]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -236.0
-offset_top = 210.0
+offset_top = 218.0
 offset_right = 236.0
-offset_bottom = 360.0
+offset_bottom = 368.0
 grow_horizontal = 2
 mouse_filter = 2
 
@@ -803,8 +825,8 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -170.0
-offset_bottom = -70.0
+offset_top = -112.0
+offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
@@ -817,7 +839,7 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -236.0
-offset_top = -104.0
+offset_top = -92.0
 offset_right = 236.0
 offset_bottom = -8.0
 grow_horizontal = 2
@@ -828,6 +850,8 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0.6, 0.38, 0.05, 1)
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+theme_override_constants/h_separation = 12
 theme_override_constants/outline_size = 7
 theme_override_font_sizes/font_size = 36
 theme_override_styles/normal = SubResource("btn_primary")
@@ -835,8 +859,11 @@ theme_override_styles/hover = SubResource("btn_primary")
 theme_override_styles/pressed = SubResource("btn_primary_hover")
 theme_override_styles/focus = SubResource("sb_empty")
 text = "STR_TUT_COMMON_NEXT"
+icon = ExtResource("a_play")
+icon_alignment = 2
 
 [node name="Dots" type="HBoxContainer" parent="." unique_id=1937457845]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
