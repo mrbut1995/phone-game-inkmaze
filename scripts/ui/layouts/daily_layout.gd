@@ -22,8 +22,6 @@ signal star_gain_finished
 @export_group("Thanh Sao tháng")
 ## Số Sao tích luỹ của tháng (chữ to nằm trong ngôi sao lớn)
 @export var lbl_star_total: Label = null
-## Thanh tiến độ (nền navy + phần đã đạt màu hổ phách)
-@export var bar_stars: TextureProgressBar = null
 ## HBox chứa các huy hiệu mốc thưởng
 ## Node chứa các huy hiệu mốc thưởng (bản ngang: HBox · bản đường mốc: Control, chip đặt theo `Slot`)
 @export var milestones_host: Control = null
@@ -181,11 +179,6 @@ func show_stars(stars: float) -> void:
 	if lbl_star_total != null:
 		lbl_star_total.text = str(roundi(stars))
 	var fraction := bar_fraction(stars)
-	if bar_stars != null:
-		bar_stars.min_value = 0.0  # keep-code: khởi tạo thanh Sao (runtime)
-		bar_stars.max_value = 1.0  # keep-code: khởi tạo thanh Sao (runtime)
-		bar_stars.step = 0.0005  # keep-code: khởi tạo thanh Sao (runtime)
-		bar_stars.value = fraction
 	if _bar_fx != null:
 		_bar_fx.set_fraction(fraction)
 	if road != null:
@@ -282,8 +275,7 @@ func refresh_bar() -> void:
 ## 0 Sao → mép trái · mỗi mốc → đúng tâm chip của nó · mốc cuối → mép phải (thanh đầy khi đủ mốc cuối).
 func bar_fraction(stars: float) -> float:
 	if _thresholds.is_empty():
-		var goal := maxf(bar_stars.max_value if bar_stars != null else 1.0, 1.0)
-		return clampf(stars / goal, 0.0, 1.0)
+		return clampf(stars, 0.0, 1.0)
 	var fr := _chip_fractions
 	var n := _thresholds.size()
 	var prev_t := 0.0
@@ -300,18 +292,25 @@ func bar_fraction(stars: float) -> float:
 	return 1.0
 
 
+## Node chứa hiệu ứng thanh Sao (bản đường mốc dùng chính `road`)
+func bar_host() -> Control:
+	return road
+
+
 ## Gắn node hiệu ứng thanh (do màn Daily instance) làm con của thanh Sao
 func attach_bar_fx(fx: StarBarFx) -> void:
-	if bar_stars == null or fx == null:
+	var host := bar_host()
+	if host == null or fx == null:
 		return
 	_bar_fx = fx
-	if fx.get_parent() != bar_stars:
-		bar_stars.add_child(fx)
+	if fx.get_parent() != host:
+		host.add_child(fx)
 	fx.set_fraction(bar_fraction(_stars_shown))
 
 
 func has_bar_fx() -> bool:
-	return _bar_fx != null and is_instance_valid(_bar_fx) and _bar_fx.get_parent() == bar_stars
+	var host := bar_host()
+	return _bar_fx != null and is_instance_valid(_bar_fx) and host != null and _bar_fx.get_parent() == host
 
 
 ## Dọn hiệu ứng thanh (đổi hướng: layout cũ không còn dùng)
@@ -328,15 +327,15 @@ func _on_host_sorted() -> void:
 
 func _measure_chip_fractions() -> Array[float]:
 	var out: Array[float] = []
-	if bar_stars == null or milestones_host == null or bar_stars.size.x <= 0.0:
+	if milestones_host == null or milestones_host.size.x <= 0.0:
 		return out
-	var inv := bar_stars.get_global_transform().affine_inverse()
+	var inv := milestones_host.get_global_transform().affine_inverse()
 	for child in milestones_host.get_children():
 		var chip := child as Control
 		if chip == null or chip.is_queued_for_deletion():
 			continue
 		var c := inv * (chip.get_global_transform() * (chip.size * 0.5))
-		out.append(clampf(c.x / bar_stars.size.x, 0.0, 1.0))
+		out.append(clampf(c.x / milestones_host.size.x, 0.0, 1.0))
 	# Bảo đảm tăng dần (tránh nội suy ngược nếu bố cục chưa ổn định)
 	for i in range(1, out.size()):
 		out[i] = maxf(out[i], out[i - 1])

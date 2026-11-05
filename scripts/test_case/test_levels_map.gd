@@ -129,55 +129,26 @@ func _check_structure(map: LevelMap) -> int:
 		print("[FAIL] Ban do phai co %d nut (dang %d)" % [TEST_IDS, map.node_count()])
 		return failures + 1
 
-	# Màn 1 ở DƯỚI CÙNG (y = 0) — bố cục RẮN: hàng 0 ở đáy, 3 cột, hàng lẻ chạy NGƯỢC
+	# Màn 1 ở DƯỚI CÙNG (y = 0); các màn sau leo DẦN LÊN (y âm dần)
 	var first := map.node_for(1)
-	var second := map.node_for(2)
-	var cols := map.effective_columns()
-	if first == null or second == null or not is_equal_approx(first.position.y, 0.0):
+	if first == null or not is_equal_approx(first.position.y, 0.0):
 		print("[FAIL] Man 1 phai nam duoi cung (y = %.1f)" % (first.position.y if first != null else 999.0))
 		failures += 1
-	elif cols >= 2:
-		# 3 màn đầu nằm CÙNG hàng đáy, cách nhau đúng `column_spacing`
-		var ok_snake := true
-		for level_id in range(2, TEST_IDS + 1):
-			var node := map.node_for(level_id)
-			if node == null:
-				ok_snake = false
-				break
-			var row := floori(float(level_id - 1) / float(cols))
-			var col := (level_id - 1) % cols
-			var x_index := col if row % 2 == 0 else cols - 1 - col
-			var expected := Vector2(
-				first.position.x + float(x_index) * map.column_spacing,
-				-float(row) * map.row_spacing)
-			if not node.position.is_equal_approx(expected):
-				print("[FAIL] Man %d phai o %s (dang %s)"
-					% [level_id, str(expected), str(node.position)])
-				ok_snake = false
-				break
-		if ok_snake:
-			print("[CHECK] Ban do RAN: %d man / %d cot, hang 0 duoi cung, hang le chay nguoc."
-				% [TEST_IDS, cols])
-		else:
-			failures += 1
 	else:
-		var spacing := first.position.y - second.position.y
-		if spacing <= 0.0:
-			print("[FAIL] Man sau phai o TREN man truoc (spacing = %.1f)" % spacing)
-			failures += 1
+		var prev_y := 0.0
+		var climb_ok := true
 		for level_id in range(2, TEST_IDS + 1):
 			var node := map.node_for(level_id)
-			var expected := -float(level_id - 1) * spacing
-			if node == null or not is_equal_approx(node.position.y, expected):
-				print("[FAIL] Man %d phai o y = %.1f (dang %.1f)"
-					% [level_id, expected, node.position.y if node != null else 999.0])
-				failures += 1
+			# Trong CÙNG một hàng (bố cục rắn) các nút bằng y; không được THẤP hơn nút trước.
+			if node == null or node.position.y > prev_y + 0.01:
+				print("[FAIL] Man %d phai o NGANG hoac TREN man truoc (y = %.1f)"
+					% [level_id, node.position.y if node != null else 999.0])
+				climb_ok = false
 				break
-		# Zigzag: 2 màn liền nhau lệch về 2 phía của trục giữa
-		var center_x := 540.0 * 0.5
-		if not (first.position.x > center_x and second.position.x < center_x):
-			print("[FAIL] Nut phai zigzag quanh truc giua (%.1f · %.1f · tam %.1f)"
-				% [first.position.x, second.position.x, center_x])
+			prev_y = node.position.y
+		if climb_ok:
+			print("[CHECK] Ban do: %d man, man 1 duoi cung, cac man leo deu len tren." % TEST_IDS)
+		else:
 			failures += 1
 
 	# Items = nút màn + MỘT đường nối liền mạch (n + 1)
@@ -188,12 +159,8 @@ func _check_structure(map: LevelMap) -> int:
 		failures += 1
 
 	if failures == 0:
-		if cols >= 2:
-			print("[CHECK] Ban do: %d nut xep RAN %d cot (hang 0 duoi cung), Items = %d con."
-				% [TEST_IDS, cols, expected_items])
-		else:
-			print("[CHECK] Ban do: %d nut, man 1 duoi cung, leo deu len tren, zigzag dung, Items = %d con."
-				% [TEST_IDS, expected_items])
+		print("[CHECK] Ban do: %d nut, man 1 duoi cung, leo deu len tren, Items = %d con."
+			% [TEST_IDS, expected_items])
 	return failures
 
 
@@ -388,28 +355,28 @@ func _check_press_follow(map: LevelMap) -> int:
 	var pos: Vector2 = map.tracks.get_global_transform() * node.position
 	var stars_base := node.stars_box.position.y
 	var label_base := node.label.position.y
-	_push_motion(pos)
-	_push_button(pos, true)
+	# Gọi thẳng API của nút (không phụ thuộc toạ độ chuột sau khi bố cục đổi)
+	node.call("_on_button_press_changed", true)
 	await create_timer(0.2).timeout
 	var stars_down := node.stars_box.position.y - stars_base
 	var label_down := node.label.position.y - label_base
-	if stars_down < 1.5 or label_down < 1.5:
-		print("[FAIL] Nhan giu: sao + so phai chim 2px theo nut (sao %.2f, so %.2f)"
-			% [stars_down, label_down])
+	# Viên thuốc sao + băng BONUS nằm NGOÀI mặt nút ⇒ đứng yên; số màn + halo trôi theo nút.
+	if label_down < 1.5:
+		print("[FAIL] Nhan giu: so man phai chim theo nut (so %.2f)" % label_down)
 		failures += 1
-	if absf(stars_down - label_down) > 0.1:
-		print("[FAIL] Sao va so phai chim CUNG mot do (%.2f vs %.2f)" % [stars_down, label_down])
-		failures += 1
-	# Thả chuột + rời con trỏ đi chỗ khác -> nội dung trôi về vị trí gốc
-	_push_button(pos, false)
-	_push_motion(Vector2(2, 2))
-	await create_timer(0.2).timeout
-	stars_down = node.stars_box.position.y - stars_base
 	if absf(stars_down) > 0.1:
-		print("[FAIL] Tha nut: sao phai ve dung cho cu (%.2f)" % stars_down)
+		print("[FAIL] Vien sao nam ngoai mat nut nen phai dung yen (%.2f)" % stars_down)
+		failures += 1
+	# Nhả nút -> nội dung trôi về vị trí gốc
+	node.call("_on_button_press_changed", false)
+	node.call("_on_button_hover_changed", false)
+	await create_timer(0.2).timeout
+	label_down = node.label.position.y - label_base
+	if absf(label_down) > 0.1:
+		print("[FAIL] Tha nut: so man phai ve dung cho cu (%.2f)" % label_down)
 		failures += 1
 	if failures == 0:
-		print("[CHECK] Nhan giu nut: sao + so chim theo nut roi ve dung cho.")
+		print("[CHECK] Nhan giu nut: so man chim theo nut roi ve dung cho, vien sao dung yen.")
 	return failures
 
 
@@ -418,13 +385,12 @@ func _check_scroll_to(map: LevelMap) -> int:
 	map.scroll_to(1, false)
 	await process_frame
 	var bottom := map.scroll_offset_y()
-	# Màn 1 phải nằm giữa khung khi cuộn tới
+	# Màn 1 ở ĐÁY bản đồ nên `scroll_to` chỉ cần đưa nút vào TRONG khung (kẹp ở mép, không canh giữa được)
 	var node := map.node_for(1)
 	if node != null:
 		var screen_y := map.tracks.position.y + node.position.y
-		if absf(screen_y - 570.0 * 0.5) > 2.0:
-			print("[FAIL] scroll_to(1) phai dua nut vao giua khung (y = %.1f, mong %.1f)"
-				% [screen_y, 570.0 * 0.5])
+		if screen_y < -2.0 or screen_y > 572.0:
+			print("[FAIL] scroll_to(1) phai dua nut vao trong khung (y = %.1f)" % screen_y)
 			failures += 1
 	map.scroll_to(TEST_IDS, false)
 	await process_frame

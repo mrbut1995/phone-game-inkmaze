@@ -313,13 +313,12 @@ func _section_5_scene(dm: Node) -> void:
 	_check(scene.challenge_card() != null, "Co the THU THACH")
 	_check(scene.milestone_count() == 4, "Hien 4 chip moc thuong (nhan %d)" % scene.milestone_count())
 	_check(scene.layout.milestones_host != null, "milestones_host da gan")
-	## Thanh Sao chay thang 0..1 (ti le so voi moc cuoi thang) — xem `DailyLayout.set_star_progress()`
-	_check(scene.layout.bar_stars != null
-		and is_equal_approx(float(scene.layout.bar_stars.max_value), 1.0)
-		and float(scene.layout.bar_stars.value) >= 0.0
-		and float(scene.layout.bar_stars.value) <= 1.0,
-		"Thanh tien do chay 0..1 theo ti le moc cuoi thang (%.2f)" % float(
-			scene.layout.bar_stars.value if scene.layout.bar_stars != null else 0.0))
+	## Đường phần thưởng (thay thanh Sao) chạy tiến độ 0..1 — xem `DailyLayout.road_progress()`
+	_check(scene.layout.road != null
+		and float(scene.layout.road.progress) >= 0.0
+		and float(scene.layout.road.progress) <= 1.0,
+		"Duong phan thuong chay tien do 0..1 (%.2f)" % float(
+			scene.layout.road.progress if scene.layout.road != null else 0.0))
 
 	# Ngày đã có 2 Sao CHƠI -> thẻ CHƠI hiện "CHƠI LẠI" + 2 sao sáng
 	dm.call("set_day_stars_split", today, 2, 0)

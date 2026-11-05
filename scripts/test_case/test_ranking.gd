@@ -218,9 +218,10 @@ func _section_7_scene(manager: Node) -> void:
 	var title := _ui(scene, "Sheet/Banner/Title") as Label
 	_entry(title != null and title.text == "STR_RANK_TITLE", "Tieu de dung khoa dich STR_RANK_TITLE")
 	_entry(_ui(scene, "Sheet/Banner") is NinePatchRect, "Co bang ten bang (Sheet/Banner)")
-	# To giay la NinePatchRect (co gian 9-slice theo man hinh), truoc day la TextureRect.
+	# Tờ giấy là scene dùng chung `nodes/common/notebook_sheet.tscn` (Control + các lỗ gáy).
 	var sheet := _ui(scene, "Sheet")
-	_entry(sheet is NinePatchRect or sheet is TextureRect, "Co to giay Sheet")
+	_entry(sheet is Control and sheet.get_node_or_null("SheetBack2") != null,
+		"Co to giay Sheet (notebook_sheet.tscn)")
 	_entry(_ui(scene, "Sheet/Body/Scroll/Rows") is VBoxContainer,
 		"Co danh sach cuon Sheet/Body/Scroll/Rows")
 	_entry(_ui(scene, "Sheet/Body/MyRank") is TextureRect, "Co thanh 'hang cua ban' Sheet/Body/MyRank")
