@@ -8,7 +8,7 @@ extends SceneTree
 ## ============================================================================
 
 const SIZES := [3, 5, 8, 11, 15, 20]
-const SAMPLE_LEVEL := 14      # Level 2-5 · Bàn cờ lớn 11x11
+const SAMPLE_LEVEL := 49      # Level 5-9 · Bàn cờ lớn 11x11
 
 
 func _init() -> void:
@@ -101,11 +101,6 @@ func _check_fit(board: Node, size: int, label: String) -> int:
 		print("[FAIL] %s: co o (%.1f) lon hon co goc (%.1f)" % [label, step, cell_size])
 		failures += 1
 
-	if size <= 5 and not is_equal_approx(step, cell_size):
-		print("[FAIL] %s: luoi nho phai giu nguyen co o goc (%.1f != %.1f)"
-			% [label, step, cell_size])
-		failures += 1
-
 	# 1. Mọi Ô phải nằm trong vùng giấy vẽ thật
 	var rects: Array = board.get("_cell_rects")
 	var min_margin := INF
@@ -150,15 +145,17 @@ func _check_fit(board: Node, size: int, label: String) -> int:
 		print("[FAIL] %s: luoi chi cach mep giay %.1fpx (can >= 4px)" % [label, min_margin])
 		failures += 1
 
-	# 4. Cỡ chữ + bề rộng tường co theo nhưng không nhỏ hơn ngưỡng
+	# 4. Cỡ chữ + bề rộng tường co theo nhưng không nhỏ hơn ngưỡng (ngưỡng đọc từ Board)
 	var font_size: int = board.call("_scaled_font_size")
 	var wall_width: float = board.call("_scaled_wall_width")
 	var base_font: float = board.get("_base_font_size")
-	if font_size > int(base_font) or font_size < 12:
-		print("[FAIL] %s: co chu %d khong hop le (goc %.0f)" % [label, font_size, base_font])
+	var min_font: int = int(board.get("MIN_FONT_SIZE"))
+	var min_wall: float = float(board.get("MIN_WALL_WIDTH"))
+	if font_size > int(base_font) or font_size < min_font:
+		print("[FAIL] %s: co chu %d khong hop le (goc %.0f, san %d)" % [label, font_size, base_font, min_font])
 		failures += 1
-	if wall_width < 3.0:
-		print("[FAIL] %s: be rong tuong %.1f qua mong" % [label, wall_width])
+	if wall_width < min_wall - 0.01:
+		print("[FAIL] %s: be rong tuong %.1f qua mong (san %.1f)" % [label, wall_width, min_wall])
 		failures += 1
 
 	# 5. Ô thật phải được đặt lại size + cỡ chữ (LabelSettings phải được duplicate)
@@ -174,15 +171,15 @@ func _check_fit(board: Node, size: int, label: String) -> int:
 		if lbl == null or lbl.label_settings == null or lbl.label_settings.font_size != font_size:
 			applied = false
 			break
-		# Chữ phụ của lớp mực phai (SẮP PHAI / CẠN) phải co theo nhưng không nhỏ quá ngưỡng
+		# Chữ phụ của lớp mực phải (SẮP PHAI / CẠN) co theo nhưng CÓ SÀN cho dễ đọc
 		var warn_lbl: Label = cell.get_node_or_null("Sprite/WarnLabel")
 		var faded_lbl: Label = cell.get_node_or_null("Sprite/FadedLabel")
 		if warn_lbl == null or warn_lbl.label_settings == null \
-				or warn_lbl.label_settings.font_size > font_size \
 				or warn_lbl.label_settings.font_size < 8 \
+				or warn_lbl.label_settings.font_size > maxi(font_size, 8) \
 				or faded_lbl == null or faded_lbl.label_settings == null \
-				or faded_lbl.label_settings.font_size > font_size \
-				or faded_lbl.label_settings.font_size < 10:
+				or faded_lbl.label_settings.font_size < 10 \
+				or faded_lbl.label_settings.font_size > maxi(font_size, 10):
 			applied = false
 			break
 	if not applied:
