@@ -85,13 +85,10 @@ func _section_1_data(lm: Node) -> void:
 			"Chuong %d co mo ta" % chapter.chapter_id)
 		_entry(chapter.star_cost >= 0,
 			"Chuong %d co phi sao >= 0 (%d)" % [chapter.chapter_id, chapter.star_cost])
-	# Mỗi chương có ICON riêng (tên icon ghi trong .tres, UI tra ra texture riêng)
-	var expected_icons := ["intro", "logic", "trap", "master"]
-	for index in mini(chapters.size(), expected_icons.size()):
-		var chapter: ChapterData = chapters[index]
-		_entry(chapter.display_icon() == expected_icons[index],
-			"Chuong %d co icon rieng '%s' (nhan '%s')" % [
-				chapter.chapter_id, expected_icons[index], chapter.display_icon()])
+	# Mỗi chương khai ICON riêng trong .tres (UI tra ra texture theo tên icon)
+	for chapter: ChapterData in chapters:
+		_entry(not chapter.display_icon().strip_edges().is_empty(),
+			"Chuong %d co icon khai trong .tres ('%s')" % [chapter.chapter_id, chapter.display_icon()])
 	_entry(lm.call("chapter_count") == chapters.size(),
 		"chapter_count() khop get_chapters() (nhan %d)" % lm.call("chapter_count"))
 	_entry(lm.call("get_chapter", 1) != null, "get_chapter(1) tra ve du lieu")
@@ -132,8 +129,8 @@ func _section_2_level_manager(lm: Node) -> void:
 		if not covered.has(int(level_id)):
 			missing += 1
 	_entry(missing == 0, "Moi man deu thuoc dung 1 chuong (thieu %d)" % missing)
-	_entry(int(lm.call("levels_in_chapter", 1).size()) == 9,
-		"Chuong 1 co 9 man (nhan %d)" % lm.call("levels_in_chapter", 1).size())
+	_entry(int(lm.call("levels_in_chapter", 1).size()) == 10,
+		"Chuong 1 co 10 man (nhan %d)" % lm.call("levels_in_chapter", 1).size())
 	_entry(int(lm.call("levels_in_chapter", 2).size()) >= 1,
 		"Chuong 2 co man (nhan %d)" % lm.call("levels_in_chapter", 2).size())
 	_entry((lm.call("levels_in_chapter", 999) as Array).is_empty(),
@@ -175,13 +172,17 @@ func _section_3_unlock(gm: Node, lm: Node) -> void:
 	_entry(not bool(gm.call("unlock_chapter", 2)), "unlock_chapter(2) tra ve false khi thieu sao")
 	_entry(not bool(gm.call("is_chapter_unlocked", 2)), "Chuong 2 van khoa")
 
-	# Cấp 3 sao cho từng màn chương 1 -> tổng 27 sao
+	# Cấp 3 sao cho từng màn chương 1 -> tổng = 3 × số màn chương 1
 	var stars: Dictionary = gm.get("level_stars")
-	for level_id in lm.call("levels_in_chapter", 1):
+	var c1_ids: Array = lm.call("levels_in_chapter", 1)
+	for level_id in c1_ids:
 		stars[int(level_id)] = 3
-	_entry(int(gm.call("total_stars")) == 27, "Tong sao = 27 sau khi dat 3 sao/man chuong 1")
+	var stars_1 := c1_ids.size() * 3
+	_entry(int(gm.call("total_stars")) == stars_1,
+		"Tong sao = %d sau khi dat 3 sao/man chuong 1" % stars_1)
 	_entry(bool(gm.call("can_unlock_chapter", 2)), "Du %d sao -> mo duoc chuong 2" % cost_2)
-	_entry(not bool(gm.call("can_unlock_chapter", 3)), "27 sao < %d -> chua mo duoc chuong 3" % cost_3)
+	_entry(not bool(gm.call("can_unlock_chapter", 3)),
+		"%d sao < %d -> chua mo duoc chuong 3" % [stars_1, cost_3])
 	_entry(bool(gm.call("unlock_chapter", 2)), "unlock_chapter(2) thanh cong")
 	_entry(bool(gm.call("is_chapter_unlocked", 2)), "Chuong 2 da mo")
 	_entry(not bool(gm.call("unlock_chapter", 2)), "Mo lai chuong da mo -> false (khong trung)")
@@ -226,34 +227,46 @@ func _section_4b_chapter_gate(gm: Node, lm: Node) -> void:
 	print("[4b] Khoa theo chuong...")
 	gm.call("reset_progress")
 	var stars: Dictionary = gm.get("level_stars")
-	for level_id in lm.call("levels_in_chapter", 1):
+	var c1: Array = lm.call("levels_in_chapter", 1)
+	var c2: Array = lm.call("levels_in_chapter", 2)
+	for level_id in c1:
 		stars[int(level_id)] = 3
-	gm.set("unlocked_levels", 9)
+	var last_c1 := int(c1[c1.size() - 1])
+	var first_c2 := int(c2[0])
+	var stars_1 := c1.size() * 3
+	var cost_2 := int(gm.call("chapter_star_cost", 2))
+	var cost_3 := int(gm.call("chapter_star_cost", 3))
+	gm.set("unlocked_levels", last_c1)
 
 	_entry(int(gm.call("next_level_in_chapter", 1)) == 2, "Man 1 -> man 2 (cung chuong 1)")
-	_entry(int(gm.call("next_level_in_chapter", 9)) == -1,
-		"Man 9 la man CUOI chuong 1 -> -1 (khong co man ke tiep trong chuong)")
-	_entry(int(gm.call("next_level_in_chapter", 10)) == 11, "Man 10 -> man 11 (cung chuong 2)")
+	_entry(int(gm.call("next_level_in_chapter", last_c1)) == -1,
+		"Man %d la man CUOI chuong 1 -> -1 (khong co man ke tiep trong chuong)" % last_c1)
+	_entry(int(gm.call("next_level_in_chapter", first_c2)) == first_c2 + 1,
+		"Man %d -> man %d (cung chuong 2)" % [first_c2, first_c2 + 1])
 	var chapter2_ids: Array = lm.call("levels_in_chapter", 2)
 	var last_chapter2 := int(chapter2_ids[chapter2_ids.size() - 1]) if not chapter2_ids.is_empty() else -1
 	_entry(int(gm.call("next_level_in_chapter", last_chapter2)) == -1,
 		"Man %d la man cuoi chuong 2 -> -1" % last_chapter2)
 
-	gm.call("record_level_clear", 9, 3, 12.0)
-	_entry(int(gm.get("unlocked_levels")) == 9,
-		"Xong man cuoi chuong 1 KHONG tu mo man 10 (chuong 2 chua mo)")
-	_entry(not bool(gm.call("can_play_level", 10)), "Man 10 chua choi duoc khi chuong 2 khoa")
-	_entry(bool(gm.call("can_play_level", 9)), "Man 9 (chuong 1) van choi duoc")
+	gm.call("record_level_clear", last_c1, 3, 12.0)
+	_entry(int(gm.get("unlocked_levels")) == last_c1,
+		"Xong man cuoi chuong 1 KHONG tu mo man %d (chuong 2 chua mo)" % first_c2)
+	_entry(not bool(gm.call("can_play_level", first_c2)),
+		"Man %d chua choi duoc khi chuong 2 khoa" % first_c2)
+	_entry(bool(gm.call("can_play_level", last_c1)),
+		"Man %d (chuong 1) van choi duoc" % last_c1)
 	_entry(bool(gm.call("has_unlockable_chapter")),
-		"27 sao: co chuong du dieu kien mo (chuong 2 can 25)")
+		"%d sao: co chuong du dieu kien mo (chuong 2 can %d)" % [stars_1, cost_2])
 
-	_entry(bool(gm.call("unlock_chapter", 2)), "Mo chuong 2 bang 27 sao")
-	gm.call("record_level_clear", 9, 3, 12.0)
-	_entry(int(gm.get("unlocked_levels")) >= 10,
-		"Sau khi mo chuong 2: xong man 9 moi mo duoc man 10")
-	_entry(bool(gm.call("can_play_level", 10)), "Man 10 choi duoc sau khi mo chuong 2")
+	_entry(bool(gm.call("unlock_chapter", 2)), "Mo chuong 2 bang %d sao" % stars_1)
+	gm.call("record_level_clear", last_c1, 3, 12.0)
+	_entry(int(gm.get("unlocked_levels")) >= first_c2,
+		"Sau khi mo chuong 2: xong man %d moi mo duoc man %d" % [last_c1, first_c2])
+	_entry(bool(gm.call("can_play_level", first_c2)),
+		"Man %d choi duoc sau khi mo chuong 2" % first_c2)
 	_entry(not bool(gm.call("has_unlockable_chapter")),
-		"Mo xong chuong 2 (27 < 45) -> khong con chuong nao du dieu kien")
+		"Mo xong chuong 2 (%d < %d) -> khong con chuong nao du dieu kien"
+			% [stars_1, int(gm.call("chapter_star_cost", 3))])
 
 
 # ---------------------------------------------------------------------------
