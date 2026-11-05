@@ -29,9 +29,10 @@ const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 @export var GRID_COLUMNS_MAX := 4
 ## Bề rộng TỐI THIỂU của 1 thẻ ô ở bản NGANG — cơ sở để chia số cột (thẻ tự nở đầy ô)
 @export var TILE_MIN_W := 130.0
-## Lưới GÓI NẠP XU dùng chung cách chia cột với lưới ô (xem `grid_columns`)
-@export var GRID_H_SEP := 30.0
-@export var GRID_V_SEP := 24.0
+## Lưới GÓI NẠP XU dùng chung cách chia cột với lưới ô (xem `grid_columns`).
+## Số thật đọc từ `item_grid.tscn` (theme constant) — 2 giá trị dưới chỉ là dự phòng khi chưa có lưới.
+@export var GRID_H_SEP := 15.0
+@export var GRID_V_SEP := 12.0
 ## Khe dọc giữa các khối trong danh sách (khớp `List.theme_override_constants/separation`)
 @export var LIST_SEP := 20.0
 ## Ngưỡng nhận diện kéo (px) và ngưỡng tính là "vuốt" (px)
