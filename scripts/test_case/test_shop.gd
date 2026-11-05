@@ -342,21 +342,22 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 	if life_chip_scene != null and coin_chip != null:
 		_entry(coin_chip.global_position.x < life_chip_scene.global_position.x,
 			"CoinChip nam ben TRAI LifeChip")
-	_entry(_ui(scene, "Content/List") is VBoxContainer, "Co danh sach mon hang")
+	_entry(_ui(scene, "Body/Content/List") is VBoxContainer, "Co danh sach mon hang")
 	_entry(_ui(scene, "GiftBanner/GiftBtn") is TextureButton, "Co nut o banner tiep suc")
 	_entry(scene.layout.tabs_box.get_child_count() == 4, "4 tab khai san trong scene bo cuc")
 	for category in ["pen", "theme", "tool", "coin"]:
 		_entry(scene.tab_button(category) != null, "Co tab '%s'" % category)
-	# TAB: chiều cao lấy từ ART (`tab_active.svg` 240×98) × hệ số màn hình — không hard-code
+	# TAB: chiều cao lấy từ ART (`tab_active.svg` 240×98) — không hard-code
 	var tab_h: float = scene.tab_height()
-	_entry(absf(tab_h - 49.0 * scene.screen_scale()) < 0.5,
+	_entry(absf(tab_h - ShopTabButton.art_height()) < 0.5,
 		"Chieu cao tab lay tu art tab_active.svg (%.0f)" % tab_h)
 	var tab_on: TextureButton = scene.tab_button("pen")
 	var tab_off: TextureButton = scene.tab_button("theme")
+	# Thanh tab DƯỚI là dải cố định ⇒ mọi tab cao BẰNG NHAU (art focus nằm trong cùng ô).
 	_entry(tab_on != null and tab_off != null
 			and absf(tab_on.custom_minimum_size.y - tab_h) < 0.5
-			and tab_off.custom_minimum_size.y < tab_on.custom_minimum_size.y - 1.0,
-		"Tab dang chon cao hon tab chua chon (%.0f vs %.0f)" % [
+			and absf(tab_off.custom_minimum_size.y - tab_h) < 0.5,
+		"Tab dang chon va tab chua chon cung cao %.0f (%.0f vs %.0f)" % [tab_h,
 			tab_on.custom_minimum_size.y if tab_on != null else -1.0,
 			tab_off.custom_minimum_size.y if tab_off != null else -1.0])
 	_entry(scene.wallet_text() == "1,234", "Vi hien dung dinh dang 1,234 (nhan '%s')" % scene.wallet_text())
@@ -389,12 +390,15 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 		_entry(tile.get_node_or_null("Panel/Stroke") is TextureRect, "The o co net muc ve thu (Stroke)")
 		_entry(tile.get_node_or_null("Panel/Badge/BadgeLabel") is Label, "The o co nhan goc (Badge)")
 		var action := tile.get_node_or_null("Panel/Action") as BaseButton
-		_entry(action != null and action.size == Vector2(100, 23),
-			"Nut the o dung 100x23 (nhan %s)" % str(action.size if action != null else Vector2.ZERO))
+		# Neo trong `item_tile.tscn`: trái/phải 14px, đáy 13px, cao 31px (nút giãn theo bề rộng thẻ)
+		_entry(action != null
+				and absf(action.size.x - (tile.size.x - 28.0)) < 1.0
+				and absf(action.size.y - 31.0) < 1.0,
+			"Nut the o rong = the - 28, cao 31 (nhan %s)" % str(action.size if action != null else Vector2.ZERO))
 		# Nút hành động NEO ĐÁY thẻ (thẻ cao lên thì nút đi xuống, không bỏ trống đáy)
 		if action != null:
-			_entry(absf((action.position.y + action.size.y) - (tile.size.y - 8.0)) < 1.0,
-				"Nut the o neo day the (cach day 8, nhan %.0f)" % (tile.size.y - action.position.y - action.size.y))
+			_entry(absf((action.position.y + action.size.y) - (tile.size.y - 13.0)) < 1.0,
+				"Nut the o neo day the (cach day 13, nhan %.0f)" % (tile.size.y - action.position.y - action.size.y))
 		# BÚT & MỰC: thẻ hiện đúng icon CON TRỎ trong game của chính ngòi bút đó
 		var first_icon := tile.get_node_or_null("Panel/IconCircle/Icon") as TextureRect
 		_entry(first_icon != null and first_icon.texture == PenSkin.cursor_texture(first_id),
