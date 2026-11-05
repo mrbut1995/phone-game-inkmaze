@@ -97,8 +97,10 @@ func _init() -> void:
 	assert(_has(title_inst, "Panel/LogoContainer/Pencil"), "Title phai co Panel/LogoContainer/Pencil")
 	assert(_has(title_inst, "Panel/Title"), "Title phai co Panel/Title")
 	assert(_has(title_inst, "Panel/Subtitle"), "Title phai co Panel/Subtitle")
-	assert(_has(title_inst, "Panel/TapContainer/TapLabel"), "Title phai co Panel/TapContainer/TapLabel")
-	assert(_has(title_inst, "Panel/TapContainer/PlayIcon"), "Title phai co Panel/TapContainer/PlayIcon")
+	assert(_has(title_inst, "Panel/TapContainer/Content/TapLabel"),
+		"Title phai co Panel/TapContainer/Content/TapLabel")
+	assert(_has(title_inst, "Panel/TapContainer/Content/PlayIcon"),
+		"Title phai co Panel/TapContainer/Content/PlayIcon")
 	assert(_has(title_inst, "Panel/Stamp"), "Title phai co Panel/Stamp")
 	assert(_has(title_inst, "FadeOverlay"), "Title phai co FadeOverlay")
 	print("[CHECK] TitleScene load va chua day du cac node giao dien truc quan.")
