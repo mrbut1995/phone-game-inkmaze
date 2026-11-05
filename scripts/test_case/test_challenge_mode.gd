@@ -263,14 +263,17 @@ func _section_3_run() -> void:
 	_entry(Popups.is_open(Popups.WIN_CHALLENGE), "Hoan thanh man -> mo popup 'win_challenge'")
 	var win: BasePopup = Popups.get_popup(Popups.WIN_CHALLENGE)
 	if win != null:
-		var stamp := win.get("stamp_title") as Label
-		_entry(stamp != null and stamp.text == tr("STR_CHALLENGE_STAMP_TITLE"),
-			"Con dau ghi 'THU THACH' (dang '%s')" % (stamp.text if stamp != null else "?"))
+		# Băng dính tiêu đề nay là node tĩnh `Panel/Art/WashiTape/Title` (chữ khai trong .tscn).
+		# `Label.text` giữ KHOÁ dịch; chữ hiển thị = `TranslationServer.translate(khoá)`.
+		var stamp := win.get_node_or_null("Panel/Art/WashiTape/Title") as Label
+		var shown: String = TranslationServer.translate(stamp.text) if stamp != null else ""
+		_entry(stamp != null and shown == tr("STR_WC_TITLE") and not shown.begins_with("STR_"),
+			"Bang dinh tieu de ghi '%s' (dang '%s')" % [tr("STR_WC_TITLE"), shown])
 		# Nut chinh = "TRO VE" (thay vi "MAN KE TIEP") + day bam khai trong tscn
 		var back_label := win.get("label_next") as Label
 		_entry(back_label != null and back_label.text == tr("STR_BTN_BACK_PREV"),
 			"Nut chinh ghi 'TRO VE' (nhan '%s')" % (back_label.text if back_label != null else "?"))
-		var back_btn := win.get_node_or_null("Panel/Content/Information/Buttons/BackBtn") as Button
+		var back_btn := win.get_node_or_null("Panel/Content/Information/Buttons/BackBtn") as BaseButton
 		_entry(back_btn != null, "Popup co nut BackBtn (doi ten tu NextBtn)")
 		_entry(back_btn != null and back_btn.pressed.is_connected(Callable(win, "_on_back_pressed")),
 			"Day nut BackBtn -> _on_back_pressed (khai trong tscn)")
