@@ -11,19 +11,19 @@ func _init() -> void:
 
 	var board := scene.get_board_tutorial() as BoardTutorial
 	assert(board != null, "Board tutorial should exist")
-	var start_cell: Vector2 = board.get_global_transform_with_canvas() * board.get_cell_center(Vector2i(0, 0))
-	var next_cell: Vector2 = board.get_global_transform_with_canvas() * board.get_cell_center(Vector2i(1, 0))
+	# Kéo/vuốt trên bàn cờ phát `cell_step_attempted`; tutorial nghe signal đó (dây nối trong .tscn).
+	# Bài "how_to_play_move" chỉ cho tương tác ở bước 1–2 ⇒ mở bước 1 trước.
+	scene.call("show_step", 1)
+	await process_frame
+	var start_cell: Vector2i = board.get("_player_current_cell")
+	var next_cell := start_cell + Vector2i(1, 0)
 
-	var touch_down := InputEventScreenTouch.new()
-	touch_down.pressed = true
-	touch_down.position = start_cell
-	scene._gui_input(touch_down)
-	_check(scene.get("_is_dragging") == true, "Touch down starts drag")
-
-	var drag := InputEventScreenDrag.new()
-	drag.position = next_cell
-	scene._gui_input(drag)
-	_check(scene.get("_visited_cells").size() == 2, "Screen drag advances to next cell")
+	var before := (scene.get("_visited_cells") as Array).size()
+	board.cell_step_attempted.emit(next_cell)
+	await process_frame
+	var after := (scene.get("_visited_cells") as Array).size()
+	_check(after == before + 1, "Screen drag advances to next cell (%d -> %d)" % [before, after])
+	_check(board.get("_player_current_cell") == next_cell, "Player cursor follows the drag")
 
 	print("RESULT: %d/%d checks passed" % [_checks - _failed, _checks])
 	quit(1 if _failed > 0 else 0)
