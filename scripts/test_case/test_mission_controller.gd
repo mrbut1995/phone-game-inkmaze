@@ -303,18 +303,19 @@ func _check_revive_level(scene: GameScene, gc: GameController) -> void:
 
 	var popup := Popups.get_popup(Popups.GAME_OVER_LEVEL)
 	if popup != null:
-		var stamp := popup.find_child("StampCount", true, false) as Label
-		# Số nhiệm vụ hiển thị ở panel "MissionHead/Value" của popup (không phải node tên MissionCount)
-		var header_node := popup.find_child("MissionHead", true, false) as Control
-		var header: Label = null
-		if header_node != null:
-			header = header_node.get_node_or_null("Value") as Label
-		if stamp == null or header == null:
-			_fail("Popup level thieu con dau / so thu thach")
-		elif stamp.text != header.text:
-			_fail("So thu thach tren con dau ('%s') phai khop tieu de bang ('%s')" % [stamp.text, header.text])
-		elif not stamp.text.contains("/"):
-			_fail("So thu thach tren con dau phai dang 'x / 3', dang la '%s'" % stamp.text)
+		# Bố cục mới: 3 ô nhiệm vụ (Missions/M1..M3, mỗi ô có V/Star + V/Name) — không còn con dấu đếm
+		var missions := popup.get_node_or_null("Panel/Content/Information/Missions") as Control
+		if missions == null or missions.get_child_count() != 3:
+			_fail("Popup level thieu khoi 3 o nhiem vu")
+		else:
+			var named := 0
+			for child in missions.get_children():
+				var name_lbl := child.get_node_or_null("V/Name") as Label
+				var star_rect := child.get_node_or_null("V/Star") as TextureRect
+				if name_lbl != null and not name_lbl.text.strip_edges().is_empty() and star_rect != null:
+					named += 1
+			if named != 3:
+				_fail("Moi o nhiem vu phai co ten + ngoi sao (%d/3)" % named)
 
 	# --- Người chơi bấm HỒI SINH trên popup (đúng luồng thật, qua AdsManager) ---
 	if popup != null:
