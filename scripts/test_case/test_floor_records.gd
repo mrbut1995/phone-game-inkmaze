@@ -122,7 +122,7 @@ func _section_record(gm: Node) -> void:
 # ---------------------------------------------------------------------------
 func _section_expiry(gm: Node) -> void:
 	print("[3] Ky cu -> ky luc ve 0...")
-	gm.set("floor_records", {
+	gm.call("_import_floor_records", {
 		"day": {"key": "2000-01-01", "floor": 12},
 		"week": {"key": "2000-01-03", "floor": 12},
 		"month": {"key": "2000-01", "floor": 12},
@@ -135,7 +135,8 @@ func _section_expiry(gm: Node) -> void:
 	_check(int(gm.call("best_floor", "day")) == 2, "Ky moi: ky luc ngay = 2 (khong dinh 12 cu)")
 	_check(int(gm.call("best_floor", "month")) == 2, "Ky moi: ky luc thang = 2")
 
-	var day_key := str((gm.get("floor_records") as Dictionary)["day"].get("key", ""))
+	var blob: Dictionary = gm.call("export_progress")
+	var day_key := str(((blob.get("floor_records", {}) as Dictionary).get("day", {}) as Dictionary).get("key", ""))
 	_check(day_key == GameManagerClass.current_period_key("day"), "Khoa ngay da cap nhat (%s)" % day_key)
 
 
@@ -176,7 +177,7 @@ func _section_save(gm: Node) -> void:
 # 5. Popup Game Over hiện kỷ lục tuần/tháng
 # ---------------------------------------------------------------------------
 func _section_popup(gm: Node) -> void:
-	print("[5] Popup Game Over hien ky luc tuan/thang...")
+	print("[5] Popup Game Over hien ky luc tuan/thang (thuoc ky luc)...")
 	gm.call("reset_progress")
 
 	var packed := load(POPUP_SCENE) as PackedScene
@@ -186,51 +187,44 @@ func _section_popup(gm: Node) -> void:
 	var popup := packed.instantiate() as GameOverPopup
 	root.add_child(popup)
 	await process_frame
-	var week_label: Label = popup.get("value_best_week")
-	var month_label: Label = popup.get("value_best_month")
-	_check(week_label != null, "Bind value_best_week")
-	_check(month_label != null, "Bind value_best_month")
+	var ruler: GameOverRuler = popup.get("ruler") as GameOverRuler
+	_check(ruler != null, "Bind ruler (thuoc ky luc)")
 
 	popup.call("open", {"floor": 4, "progress": 40, "wall_hits": 1, "score": 120,
 		"steps_left": 0, "steps_max": 15})
 	await process_frame
-	_check(week_label != null and week_label.text.contains("--"),
-		"Chua co ky luc -> tuan hien '--' ('%s')" % (week_label.text if week_label != null else ""))
-	_check(month_label != null and month_label.text.contains("--"),
-		"Chua co ky luc -> thang hien '--' ('%s')" % (month_label.text if month_label != null else ""))
-	_check(week_label != null and week_label.text != "STR_GAMEOVER_BEST_WEEK",
-		"Nhan tuan da dich")
+	_check(ruler != null and int(ruler.get("_week")) == 0 and int(ruler.get("_month")) == 0,
+		"Chua co ky luc -> thang/tuan = 0 (%s/%s)"
+			% [str(ruler.get("_week") if ruler != null else "?"), str(ruler.get("_month") if ruler != null else "?")])
+	var hint := popup.get("label_hint") as Label
+	_check(hint != null and not hint.visible, "Chua co ky luc thang -> an dong goi y")
 
 	gm.call("record_floor_reached", 6)
 	gm.call("record_floor_reached", 11)
 	popup.call("open", {"floor": 4, "progress": 40, "wall_hits": 1, "score": 120})
 	await process_frame
-	_check(week_label != null and week_label.text.contains("11"),
-		"Co ky luc -> tuan hien 11 ('%s')" % (week_label.text if week_label != null else ""))
-	_check(month_label != null and month_label.text.contains("11"),
-		"Co ky luc -> thang hien 11 ('%s')" % (month_label.text if month_label != null else ""))
+	_check(ruler != null and int(ruler.get("_week")) == 11,
+		"Co ky luc -> thuoc ve tuan 11 (dang %s)" % str(ruler.get("_week") if ruler != null else "?"))
+	_check(ruler != null and int(ruler.get("_month")) == 11,
+		"Co ky luc -> thuoc ve thang 11 (dang %s)" % str(ruler.get("_month") if ruler != null else "?"))
 
 	# `data` được ưu tiên (GameController có thể truyền sẵn số)
 	popup.call("open", {"best_floor_week": 42, "best_floor_month": 77})
 	await process_frame
-	_check(week_label != null and week_label.text.contains("42"), "data.best_floor_week duoc uu tien")
-	_check(month_label != null and month_label.text.contains("77"), "data.best_floor_month duoc uu tien")
+	_check(ruler != null and int(ruler.get("_week")) == 42, "data.best_floor_week duoc uu tien")
+	_check(ruler != null and int(ruler.get("_month")) == 77, "data.best_floor_month duoc uu tien")
 
-	# Bố cục: hàng kỷ lục nằm giữa 3 chỉ số và Banner, không đè lên nhau
+	# Bố cục: thuốc kỷ lục nằm trong thẻ RulerCard, dưới Header và trên hàng nút
 	var info := popup.get_node_or_null("Panel/Content/Information") as Control
-	var records := popup.get_node_or_null("Panel/Content/Information/Records") as Control
-	var stat3 := popup.get_node_or_null("Panel/Content/Information/Stat3") as Control
-	var banner := popup.get_node_or_null("Panel/Content/Information/Banner") as Control
-	var quote := popup.get_node_or_null("Panel/Content/Information/Quote") as Control
-	_check(info != null and records != null and stat3 != null and banner != null and quote != null,
-		"Du node bo cuc (Information/Records/Stat3/Banner/Quote)")
-	if info != null and records != null and stat3 != null and banner != null and quote != null:
-		_check(records.size.y >= 20.0, "Hang ky luc co chieu cao (%d px)" % int(records.size.y))
-		_check(records.position.y >= stat3.position.y + stat3.size.y - 1.0,
-			"Hang ky luc nam DUOI 3 chi so")
-		_check(banner.position.y >= records.position.y + records.size.y - 1.0,
-			"Banner nam DUOI hang ky luc")
-		_check(quote.get_global_rect().end.y <= info.get_global_rect().end.y + 1.0,
+	var header := popup.get_node_or_null("Panel/Content/Information/Header") as Control
+	var ruler_card := popup.get_node_or_null("Panel/Content/Information/RulerCard") as Control
+	_check(info != null and header != null and ruler_card != null,
+		"Du node bo cuc (Information/Header/RulerCard)")
+	if info != null and header != null and ruler_card != null:
+		_check(ruler_card.size.y >= 20.0, "The thuoc ky luc co chieu cao (%d px)" % int(ruler_card.size.y))
+		_check(ruler_card.position.y >= header.position.y + header.size.y - 1.0,
+			"Thuoc ky luc nam DUOI hang tieu de")
+		_check(ruler_card.get_global_rect().end.y <= info.get_global_rect().end.y + 1.0,
 			"Toan bo noi dung popup nam trong khung (khong tran)")
 
 	popup.queue_free()
