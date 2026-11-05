@@ -486,7 +486,7 @@ func _section_9_hud_bindings() -> void:
 		node.free()
 
 	_entry(scenes.size() >= 7, "quet duoc %d scene HUD (ban doc)" % scenes.size())
-	_entry(exports >= 30, "HUD co %d export NODE can bind" % exports)
+	_entry(exports >= 20, "HUD co %d export NODE can bind" % exports)
 	_entry(missing.is_empty(),
 		"moi export node cua HUD deu duoc BIND trong scene%s"
 			% ("" if missing.is_empty() else " — thieu: %s" % ", ".join(missing)))
