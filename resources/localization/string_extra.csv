@@ -1504,3 +1504,25 @@ STR_DW_WD_SUN,CN,CN
 STR_MAIN_CHAPTER_CHIP,CHAPTER {0},CHƯƠNG {0}
 STR_MAIN_GATE_OPEN,OPEN,MỞ
 STR_MAIN_DOCK_DAILY,"CHALLENGE","THỬ THÁCH"
+STR_DAILY_ROAD_TITLE,STAR ROAD,LỘ TRÌNH SAO
+STR_DAILY_ROAD_ALL,ALL,TẤT CẢ
+STR_DAILY_ROAD_NEXT,{0}/{1} STARS TO GO,CÒN {0}/{1} SAO
+STR_SPLASH_TIP_HEAD,TIPS,MẸO NHỎ
+STR_SPLASH_TIP_1,The number in each cell tells how many walls surround it.,Con số trên mỗi ô cho biết có bao nhiêu bức tường bao quanh ô đó.
+STR_SPLASH_TIP_2,Walk into a wall to reveal it. Remember where it is!,Đi va vào tường là tường sẽ hiện ra. Hãy ghi nhớ vị trí nó!
+STR_SPLASH_TIP_3,Stuck? Tap the light bulb to get a hint.,Bị kẹt rồi? Bấm nút bóng đèn để được gợi ý.
+STR_SPLASH_TIP_4,Wrong turn? The undo button steps you back.,Đi nhầm đường? Nút hoàn tác sẽ lùi lại một bước.
+STR_SPLASH_GUIDE_HEAD,GUIDE,HƯỚNG DẪN
+STR_SPLASH_GUIDE_1,Start from the S cell and find a path to the F cell to win.,Xuất phát từ ô S và tìm đường tới ô F để thắng.
+STR_SPLASH_GUIDE_2,Drag between two corner dots to mark a suspected wall.,Kéo giữa hai chấm góc để đánh dấu bức tường nghi ngờ.
+STR_SPLASH_GUIDE_3,Stairs going down are the start; stairs going up are the exit.,"Cầu thang đi xuống là điểm bắt đầu, cầu thang đi lên là lối ra."
+STR_TUT_COMMON_SKIP,SKIP,BỎ QUA
+STR_TUT_STEP_OF,Step {0} of {1},Bước {0} trong {1}
+STR_TUT_CONGRATS_STAT_LESSONS,LESSONS,BÀI HỌC
+STR_TUT_CONGRATS_STAT_TRIALS,TRIALS,THỬ THÁCH
+STR_LEVEL_BONUS_LABEL,BONUS,BONUS
+STR_CHAPTER_GATE_LABEL,CHAPTER,CHƯƠNG
+STR_NF_STEPS,STEPS,BƯỚC
+STR_WC_TITLE,VICTORY!,CHIẾN THẮNG!
+STR_CHAPTER_5_NAME,MASTER,BẬC THẦY
+STR_CHAPTER_5_SUB,Huge mazes — the final challenge,Mê cung khổng lồ — thử thách cuối cùng

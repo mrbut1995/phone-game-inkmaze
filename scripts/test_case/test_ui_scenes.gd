@@ -73,32 +73,30 @@ func _section_1_shop() -> void:
 		return
 	_entry(tab.get_node_or_null("Label") != null,
 		"tab_button.tscn co node con 'Label' (parent=\".\")")
-	_entry(tab.get_child_count() == 1, "tab chi co 1 node con (nhan)")
-	_entry(is_equal_approx(ShopTabButton.art_height(), 49.0),
-		"chieu cao tab lay tu art = 49 (dang %.0f)" % ShopTabButton.art_height())
-	_entry(ShopTabButton.inactive_ratio() > 0.0 and ShopTabButton.inactive_ratio() < 1.0,
-		"tab chua chon thap hon tab dang chon")
+	_entry(tab.get_node_or_null("TabArt") is TextureRect,
+		"tab tu dung node art 'TabArt' (TextureRect, duoi nhan)")
+	_entry(is_equal_approx(ShopTabButton.art_height(), 84.0),
+		"chieu cao hang tab lay tu thiet ke = 84 (dang %.0f)" % ShopTabButton.art_height())
 
 	tab.set_label_text("nhan thu")
 	_entry(tab.label.text == "nhan thu", "set_label_text() doi nhan tab")
 
-	tab.set_active(true)
-	var art_active: Texture2D = tab.texture_normal
+	tab.apply_metrics(84.0)
 	tab.set_active(false)
-	_entry(art_active != null and art_active != tab.texture_normal,
+	var art_idle: Texture2D = (tab.get_node("TabArt") as TextureRect).texture
+	tab.set_active(true)
+	var art_active: Texture2D = (tab.get_node("TabArt") as TextureRect).texture
+	_entry(art_idle != null and art_active != null and art_idle != art_active,
 		"set_active() doi art giua 2 trang thai")
 
 	tab.set_active(true)
-	tab.apply_metrics(49.0)
-	_entry(tab.custom_minimum_size == Vector2(0, 49),
-		"tab dang chon: rong do HBox chia, cao 49 (dang %s)" % tab.custom_minimum_size)
+	tab.apply_metrics(84.0)
+	_entry(is_equal_approx(tab.custom_minimum_size.y, 84.0),
+		"tab dang chon cao 84 (dang %.0f)" % tab.custom_minimum_size.y)
 	tab.set_active(false)
-	tab.apply_metrics(49.0)
-	_entry(is_equal_approx(tab.custom_minimum_size.y, 49.0 * ShopTabButton.inactive_ratio()),
-		"tab chua chon: cao %.1f" % tab.custom_minimum_size.y)
-	_entry(is_equal_approx(tab.label.position.y, tab.custom_minimum_size.y - 49.0),
-		"nhan tab chua chon duoc nang len cho thang hang (%.1f)" % tab.label.position.y)
-	_entry(tab.size_flags_vertical == Control.SIZE_SHRINK_END, "tab canh DAY hang")
+	tab.apply_metrics(84.0)
+	_entry(is_equal_approx(tab.custom_minimum_size.y, 84.0),
+		"tab chua chon cung cao 84 (dang %.0f)" % tab.custom_minimum_size.y)
 	tab.queue_free()
 
 	# Tab khai san trong scene: gan `category` + `label_key` TRƯỚC khi vào cây ⇒ `_ready` tự dịch nhãn
@@ -410,20 +408,6 @@ func _section_7_board_hud_popup() -> void:
 			"setup() đặt vệt mực đúng TÂM ô (18×18)")
 		_entry(is_equal_approx(footstep.mark.modulate.a, 0.45), "độ mờ vệt mực 0.45")
 		footstep.queue_free()
-
-	var segment: CountdownSegment = _spawn("res://nodes/hud/portrait/game/countdown_segment.tscn") as CountdownSegment
-	_entry(segment != null, "countdown_segment.tscn instantiate ra CountdownSegment")
-	if segment != null:
-		segment.set_width(20.0)
-		_entry(segment.custom_minimum_size == Vector2(20, 6),
-			"vạch rộng 20 · cao 6 (cao lấy từ scene)")
-		segment.set_width(999.0)
-		_entry(segment.custom_minimum_size.x == 38.0, "vạch tự kẹp bề rộng tối đa 38")
-		segment.set_used(true)
-		var col_used: Color = segment.self_modulate
-		segment.set_used(false)
-		_entry(col_used != segment.self_modulate, "set_used() đổi màu xám ⇄ cam")
-		segment.queue_free()
 
 	var row: LanguageRow = _spawn("res://nodes/popups/language_row.tscn") as LanguageRow
 	_entry(row != null, "language_row.tscn instantiate ra LanguageRow")

@@ -40,7 +40,11 @@ const OPTIONAL := {
 	## Popup THỬ THÁCH giữ layout CŨ (Subtitle + Banner hồi sinh) nên KHÔNG có thẻ đường đi /
 	## bút chì / nút Chơi lại của layout mới — các export đó null là ĐÚNG thiết kế.
 	"gameover_challenge": ["path", "label_percent", "label_walked", "label_stats",
-		"label_count", "pencils", "btn_retry"],
+		"label_count", "pencils", "btn_retry",
+		## Hiệu ứng của layout Game Over MỚI (ruler · đường đi · bút chì · tia · tro) — popup
+		## Thử thách dùng layout CŨ nên các node này không tồn tại.
+		"fx_tape", "fx_shake_a", "fx_shake_b", "fx_path_card", "fx_missions",
+		"fx_pencil_card", "fx_buttons", "fx_rays", "fx_soft", "fx_ash"],
 }
 
 var _failed := 0

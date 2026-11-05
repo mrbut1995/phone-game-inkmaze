@@ -241,7 +241,7 @@ func _build_milestones() -> void:
 
 ## Gắn hiệu ứng thanh Sao vào layout đang hiển thị (1 lần cho mỗi layout)
 func _ensure_bar_fx() -> void:
-	if layout == null or STAR_BAR_FX == null or layout.bar_stars == null or layout.has_bar_fx():
+	if layout == null or STAR_BAR_FX == null or layout.bar_host() == null or layout.has_bar_fx():
 		return
 	var fx := STAR_BAR_FX.instantiate() as StarBarFx
 	if fx != null:

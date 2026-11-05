@@ -198,7 +198,7 @@ func _section_4b_deep_stats(manager: Node) -> void:
 	manager.call("record_run", {
 		"won": true, "mode_id": "play", "level_run": true, "level_id": 5,
 		"elapsed": 30.0, "moves": 10, "wall_hits": 2,
-		"undos": 1, "wall_draws": 3, "wall_erases": 1, "skips": 0,
+		"undos": 1, "wall_draws": 3, "wall_erases": 1, "skips": 0, "teleports": 1,
 	})
 	var d: Dictionary = manager.call("deep_stats")
 	_entry(int(d.get("level_plays", 0)) == 1, "level_plays = 1")
@@ -208,8 +208,8 @@ func _section_4b_deep_stats(manager: Node) -> void:
 	var mp: Dictionary = d.get("mode_plays", {})
 	_entry(int(mp.get("play", 0)) == 1, "mode_plays[play] = 1")
 	_entry(int(d.get("moves_total", 0)) == 10 and int(d.get("wall_draws", 0)) == 3
-		and int(d.get("wall_erases", 0)) == 1 and int(d.get("undos_total", 0)) == 1,
-		"Tong move/wall-draw/revert/undo dung (10/3/1/1)")
+		and int(d.get("wall_erases", 0)) == 1 and int(d.get("teleports_total", 0)) == 1,
+		"Tong move/wall-draw/revert/teleport dung (10/3/1/1)")
 	_entry(absf(float(d.get("avg_level_time", 0.0)) - 30.0) < 0.01, "TG trung binh man = 30s")
 
 	# Ván 2 cùng màn: THUA -> chuỗi thắng về 0, First Try giữ nguyên
