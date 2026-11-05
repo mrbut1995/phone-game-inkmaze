@@ -121,9 +121,11 @@ func _section_1_shop() -> void:
 	_entry(dot != null, "page_dot.tscn instantiate ra ShopPageDot")
 	if dot != null:
 		dot.set_current(true)
-		_entry(dot.custom_minimum_size == Vector2(34, 24), "cham dang xem: 34x24")
+		_entry(dot.custom_minimum_size == dot.SIZE_ACTIVE,
+			"cham dang xem = SIZE_ACTIVE cua scene (%s)" % str(dot.custom_minimum_size))
 		dot.set_current(false)
-		_entry(dot.custom_minimum_size == Vector2(12, 24), "cham thuong: 12x24")
+		_entry(dot.custom_minimum_size == dot.SIZE_INACTIVE,
+			"cham thuong = SIZE_INACTIVE cua scene (%s)" % str(dot.custom_minimum_size))
 		dot.queue_free()
 
 
@@ -160,11 +162,11 @@ func _section_2_achievement() -> void:
 			"tab NGANG cao hon tab DOC (%.0f > %.0f)" % [tab_land.custom_minimum_size.y, portrait_tab_h])
 		tab_land.queue_free()
 
-	# Mỗi layout Sổ tay phải instance ĐÚNG scene tab của hướng mình
+	# Mỗi layout Sổ tay phải instance ĐÚNG scene tab (segment) của hướng mình
 	_check_layout_tab("res://scenes/layout/portrait/achievement.tscn",
-		"tab_button.tscn", "tab_button_landscape.tscn")
+		"tab_button_seg.tscn", "tab_button_seg_land.tscn")
 	_check_layout_tab("res://scenes/layout/landscape/achievement.tscn",
-		"tab_button_landscape.tscn", "tab_button.tscn")
+		"tab_button_seg_land.tscn", "tab_button_seg.tscn")
 	# Cỡ chữ khai trong scene: dọc 9 (5 tab/hàng 355px) · ngang 16 (lưới 2 cột rộng)
 	_entry(FileAccess.get_file_as_string("res://nodes/achievements/tab_button.tscn").contains("font_size = 9"),
 		"tab DOC khai co chu 9 trong scene")
@@ -348,7 +350,13 @@ func _section_6_sources() -> void:
 		var source := FileAccess.get_file_as_string(path)
 		var cleaned := comments.sub(source, "", true)
 		for m in pattern.search_all(cleaned):
-			offenders.append("%s:%d" % [name, cleaned.substr(0, m.get_start()).count("\n") + 1])
+			var line_no := cleaned.substr(0, m.get_start()).count("\n") + 1
+			var source_lines := source.split("\n")
+			var line := source_lines[line_no - 1] if line_no - 1 < source_lines.size() else ""
+			# Ngoại lệ có lý do: node do DỮ LIỆU quyết định lúc chạy, đã ghi `# keep-code:`
+			if line.contains("keep-code"):
+				continue
+			offenders.append("%s:%d" % [name, line_no])
 
 	_entry(scanned >= 20, "quet duoc %d script UI" % scanned)
 	_entry(offenders.is_empty(),
@@ -514,7 +522,7 @@ func _section_9_hud_bindings() -> void:
 					missing.append("%s: %s" % [path.get_file(), prop.name])
 		node.free()
 
-	_entry(scenes.size() >= 18, "quet duoc %d scene HUD (2 huong)" % scenes.size())
+	_entry(scenes.size() >= 14, "quet duoc %d scene HUD (2 huong)" % scenes.size())
 	_entry(exports >= 30, "HUD co %d export NODE can bind" % exports)
 	_entry(missing.is_empty(),
 		"moi export node cua HUD deu duoc BIND trong scene%s"
@@ -549,22 +557,13 @@ func _section_9_hud_bindings() -> void:
 ## `visible = false` thì coi như không hiện) — mỗi HUD 2 HƯỚNG phải giống nhau.
 const HUD_VISIBLE_CARDS := {
 	"level_mode.tscn": ["Time"],                     # Play: CHỈ THỜI GIAN (nhiệm vụ ở popup)
-	"minesweep_hud.tscn": ["Time"],                  # Minesweeper: CHỈ THỜI GIAN
 	"blind_memory_hud.tscn": ["Time"],               # Blind Memory: CHỈ THỜI GIAN
-	"fading_ink_hud.tscn": ["Time"],                 # Fading Ink: CHỈ THỜI GIAN
-	"one_stroke_hud.tscn": ["Time"],                 # One Stroke: CHỈ THỜI GIAN
 	"wall_builder_hud.tscn": ["Time"],               # Wall Builder: CHỈ THỜI GIAN
 	"dungeon_mode.tscn": ["Step", "Floor"],         # Dungeon: SỐ BƯỚC + TẦNG
-	"countdown_hud.tscn": ["Sheet"],                 # Countdown: NGÂN SÁCH CÒN
-	"fog_of_war_hud.tscn": ["Sheet"],                # Fog of War: LƯỢT THỬ LẠI
-	"sum_path_hud.tscn": ["Sheet"],                  # Sum Path: TỔNG · TOÁN TỬ · MỤC TIÊU
 }
-## Bên trong thẻ `Sheet` chỉ còn đúng những node này
-const HUD_SHEET_ROWS := {
-	"countdown_hud.tscn": ["Budget"],
-	"fog_of_war_hud.tscn": ["Retry"],
-	"sum_path_hud.tscn": ["BlockCurrent", "Emblem", "BlockTarget"],
-}
+## Bên trong thẻ `Sheet` chỉ còn đúng những node này (HUD riêng của các chế độ đặc biệt đã gộp
+## vào `game_hud` / `challenge_hud` ⇒ không còn thẻ Sheet nào phải kiểm).
+const HUD_SHEET_ROWS := {}
 
 
 func _section_10_hud_minimal() -> void:
@@ -631,7 +630,7 @@ func _section_10_hud_minimal() -> void:
 						huong, file_name, ", ".join(rows), ", ".join(want_rows)])
 			node.free()
 
-	_entry(checked >= 20, "kiem %d luot (scene HUD x 2 huong + the Sheet)" % checked)
+	_entry(checked >= 8, "kiem %d luot (scene HUD x 2 huong + the Sheet)" % checked)
 	_entry(bad.is_empty(),
 		"moi HUD chi hien dung thu can thiet%s"
 			% ("" if bad.is_empty() else " — sai: %s" % "; ".join(bad)))
@@ -646,13 +645,7 @@ const TUTORIAL_SCENES := [
 	"res://nodes/tutorials/first_time.tscn",
 	"res://nodes/tutorials/how_to_play_move.tscn",
 	"res://nodes/tutorials/how_to_play_checking_wall.tscn",
-	"res://nodes/tutorials/how_to_play_minesweeper.tscn",
-	"res://nodes/tutorials/how_to_play_one_stroke.tscn",
-	"res://nodes/tutorials/how_to_play_sum_path.tscn",
 	"res://nodes/tutorials/how_to_play_wall_builder.tscn",
-	"res://nodes/tutorials/how_to_play_countdown_cost.tscn",
-	"res://nodes/tutorials/how_to_play_fading_ink.tscn",
-	"res://nodes/tutorials/how_to_play_fog_of_war.tscn",
 	"res://nodes/tutorials/how_to_play_blind_memory.tscn",
 	"res://nodes/tutorials/how_to_use_tool.tscn",
 	"res://nodes/tutorials/congrats_first_time.tscn",
@@ -666,13 +659,7 @@ const TUTORIAL_EXPECTED_ARRAYS := {
 const TUTORIAL_EXPECTED_BOARD_CELLS := {
 	"how_to_play_move.tscn": 3,
 	"how_to_play_checking_wall.tscn": 4,
-	"how_to_play_minesweeper.tscn": 9,
-	"how_to_play_one_stroke.tscn": 9,
-	"how_to_play_sum_path.tscn": 9,
 	"how_to_play_wall_builder.tscn": 4,
-	"how_to_play_countdown_cost.tscn": 9,
-	"how_to_play_fading_ink.tscn": 9,
-	"how_to_play_fog_of_war.tscn": 9,
 	"how_to_play_blind_memory.tscn": 6,
 	"how_to_use_tool.tscn": 9,
 }
@@ -794,8 +781,8 @@ func _section_11_tutorials() -> void:
 		"moi export NODE cua tutorial deu duoc BIND trong .tscn%s"
 			% ("" if unbound.is_empty() else " — thieu: %s" % ", ".join(unbound)))
 	_entry(arrays >= 1, "co %d export MANG (o xem truoc) bind trong scene" % arrays)
-	_entry(boards >= 6, "co %d bai dung ban mini CHUNG (BoardTutorial) bind qua export" % boards)
-	_entry(cells_total >= 30, "tong so o ban mini dung luc chay: %d" % cells_total)
+	_entry(boards >= 5, "co %d bai dung ban mini CHUNG (BoardTutorial) bind qua export" % boards)
+	_entry(cells_total >= 26, "tong so o ban mini dung luc chay: %d" % cells_total)
 	_entry(steps_total >= 30, "tong so buoc nap tu 7 bai: %d" % steps_total)
 	_entry(effects_checked >= 7, "hieu ung (mo bai · phao giay · toast · chu noi) chay duoc tren %d bai" % effects_checked)
 	_entry(bad.is_empty(),

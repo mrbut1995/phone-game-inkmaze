@@ -57,7 +57,12 @@ const OPTIONAL := {
 	"shop|landscape": ["nav_bar", "content_body"],
 	## Sticker HỒ SƠ ở bản dọc chỉ là avatar nhỏ (không có chỗ ghi tên);
 	## thẻ hồ sơ ở bản NGANG mới hiện tên người chơi.
-	"main|portrait": ["profile_name"],
+	## Main DỌC (bố cục gộp): KHÔNG có `Logo` lẫn carousel sự kiện — sự kiện là CỘT NÚT ICON nổi
+	## bên phải bản đồ; 2 export đó chỉ bản NGANG khai.
+	"main|portrait": ["profile_name", "logo", "event_carousel"],
+	## Sổ tay: khối "tổng quan" (thanh + %) của thiết kế cũ đã bỏ ở CẢ 2 bố cục.
+	"achievement|portrait": ["overview_bar", "overview_fill", "overview_pct", "overview_summary"],
+	"achievement|landscape": ["overview_bar", "overview_fill", "overview_pct", "overview_summary"],
 	## Màn Chọn màn: `level_map` là node DÙNG CHUNG nằm NGOÀI 2 bố cục (trong `scenes/levels.tscn`
 	## → `MapArea/LevelMap`) nên bố cục đứng riêng không thể bind — binding thật khai ở node gốc
 	## màn và được `test_levels_map` kiểm. `map_slot` CHỈ bản NGANG có (khung `FitStage`), bản DỌC
