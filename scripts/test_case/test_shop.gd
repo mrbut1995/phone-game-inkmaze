@@ -483,7 +483,7 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 	_entry(scene.item_count() == 6, "Tab nap xu hien 6 the (nhan %d)" % scene.item_count())
 	_entry(scene.page_count() == 1, "Tab nap xu khong phan trang")
 	var noads := scene.card_at(0)
-	_entry(noads != null and noads.get_script() == preload("res://scripts/ui/widgets/shop/noads_row.gd"),
+	_entry(noads != null and noads.get_script() == preload("res://scripts/objects/shop/ShopNoadsRow.gd"),
 		"The dau tien la hang VIP xoa quang cao (ShopNoadsRow)")
 	if noads != null:
 		_entry(str(noads.get("item_id")) == "coin_no_ads", "Hang dau la coin_no_ads")
@@ -494,7 +494,7 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 				and is_equal_approx(noads.size.x, row_box.size.x),
 			"Hang VIP cao 100 va rong bang khung danh sach (%.0f) — bao trum 1 hang" % noads.size.x)
 	var pack_tile := scene.card_at(1)
-	_entry(pack_tile != null and pack_tile.get_script() == preload("res://scripts/ui/widgets/shop/coin_tile.gd"),
+	_entry(pack_tile != null and pack_tile.get_script() == preload("res://scripts/objects/shop/ShopCoinTile.gd"),
 		"Cac the sau la goi nap (ShopCoinTile)")
 	if pack_tile != null:
 		_entry(str(pack_tile.get("item_id")) == "coin_500", "The goi dau tien la coin_500")
@@ -631,19 +631,19 @@ func _section_7_gestures(shop: Node, wallet: Node) -> void:
 func _section_8_wiring() -> void:
 	print("[8] Noi day dieu huong...")
 	_entry(Nav.SCENE_SHOP == SCENE_PATH, "Nav.SCENE_SHOP tro dung scenes/shop.tscn")
-	var nav_src := FileAccess.get_file_as_string("res://scripts/utils/nav.gd")
+	var nav_src := FileAccess.get_file_as_string("res://scripts/utils/Nav.gd")
 	_entry(nav_src.contains("func goto_shop"), "Nav co ham goto_shop()")
 	var sm: Node = root.get_node_or_null("SceneManager")
 	if sm != null:
 		_entry(sm.get_script().get_script_constant_map().get("SCENE_SHOP", "") == SCENE_PATH,
 			"SceneManager.SCENE_SHOP tro dung scenes/shop.tscn")
 		_entry(sm.has_method("goto_shop"), "SceneManager co goto_shop()")
-	var main_src := FileAccess.get_file_as_string("res://scripts/ui/screens/main.gd")
+	var main_src := FileAccess.get_file_as_string("res://scripts/screens/MainScene.gd")
 	_entry(main_src.contains("_on_shop_pressed") and main_src.contains("Nav.goto_shop()"),
 		"Nut CUA HANG o Main mo man Cua hang")
-	var debug_src := FileAccess.get_file_as_string("res://scripts/ui/screens/debug.gd")
+	var debug_src := FileAccess.get_file_as_string("res://scripts/screens/DebugScene.gd")
 	_entry(debug_src.contains("scenes/shop.tscn"), "Debug Console co muc mo Cua hang")
-	var save_src := FileAccess.get_file_as_string("res://scripts/autoload/save_manager.gd")
+	var save_src := FileAccess.get_file_as_string("res://scripts/autoload/SaveManager.gd")
 	_entry(save_src.contains("ShopManager"), "ShopManager da dang ky luu vao save")
 
 

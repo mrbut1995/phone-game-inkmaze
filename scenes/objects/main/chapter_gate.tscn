@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3]
 
-[ext_resource type="Script" path="res://scripts/ui/widgets/main/chapter_gate.gd" id="1_gate"]
-[ext_resource type="Script" uid="uid://5833lhk0ggnb" path="res://scripts/tools/texture_button_2d.gd" id="2_tbtn2d"]
+[ext_resource type="Script" path="res://scripts/objects/main/ChapterGateNode.gd" id="1_gate"]
+[ext_resource type="Script" uid="uid://5833lhk0ggnb" path="res://scripts/editor/TextureButton2D.gd" id="2_tbtn2d"]
 [ext_resource uid="uid://brbqm6woha5py" type="Texture2D" path="res://assets/images-png/level_selector/lv_gate_normal.png" id="3_n"]
 [ext_resource uid="uid://ctdbxba1eq4dq" type="Texture2D" path="res://assets/images-png/level_selector/lv_gate_hover.png" id="4_h"]
 [ext_resource uid="uid://djmc6x56wcqor" type="Texture2D" path="res://assets/images-png/level_selector/lv_gate_pressed.png" id="5_p"]

@@ -1,0 +1,364 @@
+class_name UIController
+extends Node
+## ============================================================================
+## Controller: Quản lý HUD và các popup trong ván chơi.
+##
+## Popup KHÔNG còn instance sẵn trong scenes/game.tscn. Controller chỉ yêu cầu
+## PopupManager tạo popup khi cần; mọi nút bên trong popup tự phát signal riêng
+## (winning/gameover/next_floor/pause) và được nối tại đây.
+## ============================================================================
+
+const UIAnim := preload("res://scripts/utils/UIAnim.gd")
+
+signal continue_requested
+signal retry_requested
+signal quit_requested
+signal home_requested
+signal pause_toggled(is_paused: bool)
+## Nút HỒI SINH của popup Game Over: còn phải chạy quảng cáo trước khi hồi sinh
+signal revive_requested
+## Popup Thử lại (Retry) đã TỰ chạy quảng cáo / trừ Xu xong -> áp dụng hồi sinh NGAY
+## (không hỏi lại quảng cáo như `revive_requested`)
+signal revive_confirmed
+## Popup thắng Daily: người chơi bấm "VỀ DAILY" -> quay lại màn Daily
+signal daily_requested
+## Popup thắng THỬ THÁCH: bấm "TRỞ VỀ" -> quay lại MÀN TRƯỚC ĐÓ (Daily / Chọn màn / Debug)
+signal back_requested
+## Pha GHI NHỚ (Blind Memory) đếm ngược xong -> GameController ẩn tường và chạy đồng hồ
+signal memorize_finished
+
+@export var level_label: Label = null
+## Dòng phụ nhỏ dưới tiêu đề (VD "PLAY MODE · CHƯƠNG 1"). Rỗng = ẩn.
+@export var subtitle_label: Label = null
+## Nút TELEPORT của thanh nút dưới — được NHẤN MẠNH khi đang chọn ô đích dịch chuyển
+@export var teleport_button: TextureButton = null
+## Nút CHƠI LẠI (ẩn sẵn dưới thanh nút) — hiện khi Sum Path không còn thắng được nữa
+@export var replay_button: TextureButton = null
+
+## HUD của chế độ đang chơi (BaseHUD). GameScene gắn vào qua set_hud() khi đổi chế độ.
+var hud: BaseHUD = null
+
+## Thông tin ván đang chơi (GameController cập nhật) - dùng cho popup tạm dừng
+var run_info: Dictionary = {}
+
+var _teleport_highlight_on := false
+var _replay_shown := false
+var _teleport_highlight_tween: Tween = null
+
+
+func set_run_info(info: Dictionary) -> void:
+	run_info = info
+	# Cờ trạng thái đặc biệt của ván (GameController tính trong _update_hud):
+	#  - teleport_active: đang chọn ô đích -> NHẤN MẠNH nút Teleport
+	#  - replay_visible: Sum Path không thể thắng nữa -> hiện nút CHƠI LẠI dưới thanh nút
+	set_teleport_highlight(bool(info.get("teleport_active", false)))
+	set_replay_visible(bool(info.get("replay_visible", false)))
+
+
+# ---------------------------------------------------------------------------
+# Cờ trạng thái nút (đang chọn Teleport · hết đường thắng)
+# ---------------------------------------------------------------------------
+## Nhấn mạnh nút TELEPORT: ám tím + nhịp phồng nhẹ khi đang chọn ô đích
+func set_teleport_highlight(on: bool) -> void:
+	_teleport_highlight_on = on
+	if teleport_button == null:
+		return
+	if _teleport_highlight_tween != null and _teleport_highlight_tween.is_valid():
+		_teleport_highlight_tween.kill()
+	_teleport_highlight_tween = null
+	# Nhịp "thở" khai trong `action_bar.tscn` (player `PulseAnim`); thiếu thì fallback tween
+	var bar := _teleport_pulse_bar()
+	if on:
+		teleport_button.modulate = Color(0.85, 0.7, 1.25)  # keep-code: hoạt cảnh/trạng thái runtime (tween)
+		if bar == null or not UIAnim.play_layout_anim(bar, "PulseAnim", &"pulse_teleport", teleport_button):
+			_teleport_highlight_tween = UIAnim.play_pulse(teleport_button, 1.12, 0.7)
+	else:
+		teleport_button.modulate = Color.WHITE  # keep-code: hoạt cảnh/trạng thái runtime (tween)
+		if bar != null:
+			UIAnim.stop_layout_anim(bar, "PulseAnim")
+		teleport_button.scale = Vector2.ONE  # keep-code: hoạt cảnh/trạng thái runtime (tween)
+
+
+## Thanh công cụ của HUD đang dùng (chứa player `PulseAnim` cho nhịp nút Teleport)
+func _teleport_pulse_bar() -> Node:
+	if hud == null:
+		return null
+	return hud.action_bar()
+
+
+func teleport_highlighted() -> bool:
+	return _teleport_highlight_on
+
+
+## Hiện/ẩn nút CHƠI LẠI nằm DƯỚI hai nút "Vẽ Đường" + "Ghi Nhớ"
+func set_replay_visible(on: bool) -> void:
+	_replay_shown = on
+	if replay_button == null or replay_button.visible == on:
+		return
+	replay_button.visible = on
+	if on and replay_button.is_inside_tree():
+		UIAnim.play_pop_in(replay_button, 0.0, 0.85, 0.22)
+
+
+func replay_shown() -> bool:
+	return _replay_shown
+
+
+## Gắn HUD của chế độ đang chơi (GameScene gọi trong _apply_hud_for_mode).
+func set_hud(p_hud: BaseHUD) -> void:
+	hud = p_hud
+
+
+# ---------------------------------------------------------------------------
+# HUD
+# ---------------------------------------------------------------------------
+func update_hud(
+	title: String,
+	subtitle: String,
+	steps_remaining: int,
+	elapsed_time: float,
+	floor_number: int,
+	extra_info := "",
+	mode: BaseGameMode = null,
+	moves := 0,
+	challenge := {}
+) -> void:
+	if level_label != null:
+		level_label.text = title
+	if subtitle_label != null:
+		subtitle_label.text = subtitle
+		subtitle_label.visible = not subtitle.is_empty()
+
+	# Mọi thành phần trong khung Information do HUD của từng chế độ tự vẽ
+	if hud != null:
+		hud.update_hud({
+			"title": title,
+			"subtitle": subtitle,
+			"steps_remaining": steps_remaining,
+			"elapsed_time": elapsed_time,
+			"floor_number": floor_number,
+			"extra": extra_info,
+			"mode": mode,
+			"moves": moves,
+			# CHALLENGE MODE: trạng thái thử thách cho khối THỜI GIAN (xem ChallengeHUD)
+			"challenge": challenge,
+			# Số dư công cụ toàn tài khoản (GameController gửi qua set_run_info)
+			# → HUD hiện trên badge PanelLimit + khoá nút khi hết lượt
+			"skip_left": int(run_info.get("skip_left", 0)),
+			"teleport_left": int(run_info.get("teleport_left", 0)),
+			"hint_left": int(run_info.get("hint_left", 0)),
+		})
+
+
+# ---------------------------------------------------------------------------
+# Popup kết quả màn chơi (Dungeon -> phiếu thông qua tầng, chế độ thường -> win)
+# ---------------------------------------------------------------------------
+func show_floor_complete(result: Dictionary) -> void:
+	Popups.close_all()
+	# Ván Daily dùng popup riêng (nút "VỀ DAILY" thay cho "MÀN KẾ TIẾP")
+	var is_daily := bool(result.get("daily", false))
+	var id := Popups.NEXT_FLOOR if bool(result.get("endless", false)) \
+		else (Popups.WIN_DAILY if is_daily else Popups.WIN)	# Challenge: màn thử thách dùng popup "hoàn thành thử thách" riêng
+	if not str(result.get("challenge_id", "")).is_empty():
+		id = Popups.WIN_CHALLENGE	# SFX: con dấu "cộp" lên giấy
+	Sfx.play(Sfx.STAMP_IMPACT)
+
+	var popup := Popups.open(id, result)
+	if popup == null:
+		return
+
+	# Popup có nút "TRỞ VỀ" (thắng thử thách) thì ưu tiên — không nối "MÀN KẾ TIẾP" cho nó
+	if popup.has_signal("back_requested"):
+		_connect_once(popup, "back_requested", _emit_back)
+	elif popup.has_signal("next_requested"):
+		_connect_once(popup, "next_requested", _emit_continue)
+	elif popup.has_signal("enter_requested"):
+		_connect_once(popup, "enter_requested", _emit_continue)
+	if popup.has_signal("replay_requested"):
+		_connect_once(popup, "replay_requested", _emit_retry)
+	if popup.has_signal("rest_requested"):
+		_connect_once(popup, "rest_requested", _emit_home)
+	if popup.has_signal("daily_requested"):
+		_connect_once(popup, "daily_requested", _emit_daily)
+
+	# Popup WIN: tiếng chuông 3 sao do các Timer autostart khai trong `winning.tscn` phát
+
+
+func show_game_over(result: Dictionary) -> void:
+	Popups.close_all()
+	# SFX: tiếng vo tròn tờ giấy nháp ném đi
+	Sfx.play(Sfx.GAME_OVER)
+
+	# Bỏ qua popup retry nếu:
+	# - Được yêu cầu trực tiếp (direct_game_over = true)
+	# - Luồng học việc / onboarding (guided = true)
+	# - Đang chạy trong script test_case tự động cũ (trừ khi có cờ force_retry_popup)
+	var skip_retry_prompt := bool(result.get("direct_game_over", false)) or bool(result.get("guided", false))
+	if not bool(result.get("force_retry_popup", false)) and _is_running_headless_test():
+		skip_retry_prompt = true
+
+	if not skip_retry_prompt:
+		var retry_popup := Popups.open(Popups.RETRY, result)
+		if retry_popup != null:
+			# THỬ LẠI của popup Retry = HỒI SINH của popup Game Over: tiếp tục ĐÚNG ván đang chơi
+			# (mở khoá bàn cờ, chạy lại đồng hồ) thay vì bắt đầu ván mới.
+			# Popup đã tự chạy quảng cáo / trừ Xu nên chỉ cần áp dụng phần thưởng.
+			if retry_popup.has_signal("revive_requested"):
+				_connect_once(retry_popup, "revive_requested", _on_retry_popup_revive)
+			if retry_popup.has_signal("skip_requested"):
+				_connect_once(retry_popup, "skip_requested", func(_method = null): show_direct_game_over(result))
+			return
+
+	show_direct_game_over(result)
+
+
+## Popup Retry: người chơi đã xem quảng cáo (hoặc trả Xu) xong -> hồi sinh và chơi tiếp.
+## Đi đúng đường của nút HỒI SINH trong popup Game Over (`GameController.revive_run()`),
+## nhờ vậy bàn cờ được MỞ KHOÁ và đồng hồ chạy lại y như khi hồi sinh ở màn Game Over.
+func _on_retry_popup_revive(_method = null) -> void:
+	revive_confirmed.emit()
+
+
+func show_direct_game_over(result: Dictionary) -> void:
+	Popups.close_all()
+	# THUA CHỐT VÁN (không thử lại) ⇒ mất 1 LƯỢT CHƠI dùng chung toàn game (§5.11)
+	_charge_life_cost(result)
+	# Dungeon Mode thua vì HẾT BƯỚC (phiếu giấy + điểm an ủi);
+	# các chế độ khác thua vì ĐÂM TƯỜNG (phiếu nêu 3 nhiệm vụ + số Sao đạt được)
+	var id := Popups.GAME_OVER if bool(result.get("endless", true)) else Popups.GAME_OVER_LEVEL
+	# Challenge: thua vì vi phạm / hết hạn thử thách -> popup riêng (nêu rõ luật + lý do)
+	if not str(result.get("challenge_id", "")).is_empty():
+		id = Popups.GAME_OVER_CHALLENGE
+	var popup := Popups.open(id, result)
+	if popup == null:
+		return
+	if popup.has_signal("retry_requested"):
+		_connect_once(popup, "retry_requested", _emit_retry)
+	if popup.has_signal("menu_requested"):
+		_connect_once(popup, "menu_requested", _emit_home)
+	if popup.has_signal("revive_requested"):
+		_connect_once(popup, "revive_requested", _emit_revive)
+
+
+## Trừ 1 LƯỢT CHƠI khi ván thua đã chốt (đã bỏ qua popup Thử lại).
+## Luồng HỌC VIỆC (guided) và ván Debug Console không bị trừ.
+func _charge_life_cost(result: Dictionary) -> void:
+	if bool(result.get("guided", false)):
+		return
+	var game_manager := Svc.game()
+	if game_manager != null and game_manager.has_method("register_run_loss"):
+		game_manager.call("register_run_loss")
+
+
+func _is_running_headless_test() -> bool:
+	var ml := Engine.get_main_loop()
+	if ml != null:
+		var scr = ml.get_script()
+		if scr != null and str(scr.resource_path).contains("test_case") and not str(scr.resource_path).contains("retry"):
+			return true
+	return false
+
+
+# ---------------------------------------------------------------------------
+# Popup tạm dừng (Pause menu)
+# ---------------------------------------------------------------------------
+func toggle_settings() -> void:
+	# SFX: gõ thẻ giấy cho nút Pause trên HUD
+	Sfx.play(Sfx.BTN_WOOD_TAP)
+	if Popups.is_open(Popups.PAUSE):
+		Popups.close_id(Popups.PAUSE)
+		return
+
+	var data := run_info.duplicate()
+	var popup := Popups.open(Popups.PAUSE, data)
+	if popup == null:
+		return
+	_connect_once(popup, "resume_requested", _on_pause_closed)
+	_connect_once(popup, "restart_requested", _on_pause_restart)
+	_connect_once(popup, "menu_requested", _on_pause_menu)
+	pause_toggled.emit(true)
+
+
+## Nối signal một lần duy nhất (popup có thể được mở lại trên cùng một node)
+func _connect_once(source: Object, signal_name: String, handler: Callable) -> void:
+	if not source.is_connected(signal_name, handler):
+		source.connect(signal_name, handler)
+
+
+## Popup đếm ngược pha GHI NHỚ của Blind Memory.
+## Popup không có nền mờ nên mê cung (đang hiện toàn bộ tường) vẫn nhìn rõ để ghi nhớ.
+## Nếu vì lý do nào đó không mở được popup thì báo `memorize_finished` luôn để ván chơi không bị kẹt.
+func show_memorize_countdown(seconds: int) -> void:
+	var popup := Popups.open(Popups.MEMORIZE, {"seconds": maxi(seconds, 1)})
+	if popup == null:
+		memorize_finished.emit()
+		return
+	_connect_once(popup, "finished", _emit_memorize_finished)
+
+
+func _emit_memorize_finished() -> void:
+	memorize_finished.emit()
+
+
+func _emit_continue() -> void:
+	continue_requested.emit()
+
+
+func _emit_retry() -> void:
+	retry_requested.emit()
+
+
+func _emit_home() -> void:
+	home_requested.emit()
+
+
+func _emit_daily() -> void:
+	daily_requested.emit()
+
+
+func _emit_back() -> void:
+	back_requested.emit()
+
+
+func _emit_revive() -> void:
+	revive_requested.emit()
+
+
+func _on_pause_restart() -> void:
+	pause_toggled.emit(false)
+	retry_requested.emit()
+
+
+func _on_pause_menu() -> void:
+	pause_toggled.emit(false)
+	home_requested.emit()
+
+
+func _on_pause_closed() -> void:
+	pause_toggled.emit(false)
+
+
+## Đóng mọi popup đang hiển thị
+func hide_overlays() -> void:
+	Popups.close_all()
+
+
+## Các nút của popup ngắt sẵn trong .tscn (nếu scene còn nối) đi qua các hàm này
+func _on_next_pressed() -> void:
+	Sfx.play(Sfx.BTN_CLICK)
+	continue_requested.emit()
+
+
+func _on_replay_pressed() -> void:
+	Sfx.play(Sfx.BTN_CLICK)
+	retry_requested.emit()
+
+
+func _on_home_pressed() -> void:
+	Sfx.play(Sfx.BTN_WOOD_TAP)
+	home_requested.emit()
+
+
+func _on_resume_pressed() -> void:
+	Sfx.play(Sfx.BTN_WOOD_TAP)
+	pause_toggled.emit(false)

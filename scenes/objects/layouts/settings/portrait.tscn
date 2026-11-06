@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/base/base_layout.tscn" id="parent"]
-[ext_resource type="Script" uid="uid://blu4gqnjmvqys" path="res://scripts/ui/layouts/settings_layout.gd" id="layout_script"]
+[ext_resource type="Script" uid="uid://blu4gqnjmvqys" path="res://scripts/objects/layouts/settings/SettingsLayout.gd" id="layout_script"]
 [ext_resource type="Texture2D" uid="uid://bt4mb18wc2rf2" path="res://assets/images-png/main/stamp_version.png" id="stamp"]
 [ext_resource type="Texture2D" uid="uid://yssg5du4e4fc" path="res://assets/images-png/btn_header_back_normal.png" id="back_n"]
 [ext_resource type="Texture2D" uid="uid://c8fvwpvick2hx" path="res://assets/images-png/btn_header_back_pressed.png" id="back_p"]
@@ -37,7 +37,7 @@
 [ext_resource uid="uid://dbegbtl7rlpf3" type="Texture2D" path="res://assets/images-png/settings/ic_info.png" id="ic_info"]
 [ext_resource uid="uid://ff2cgvot430q" type="Texture2D" path="res://assets/images-png/settings/ic_reset.png" id="ic_reset"]
 [ext_resource type="PackedScene" path="res://scenes/objects/common/notebook_sheet.tscn" id="nbsheet"]
-[ext_resource type="Script" path="res://scripts/ui/widgets/settings/toggle_stamp.gd" id="stamp_script"]
+[ext_resource type="Script" path="res://scripts/objects/layouts/settings/SettingsToggleStamp.gd" id="stamp_script"]
 [ext_resource uid="uid://din3uerr5f02h" type="Texture2D" path="res://assets/images-png/settings/stamp_on.png" id="stamp_on"]
 [ext_resource uid="uid://dl4hhaypwglq3" type="Texture2D" path="res://assets/images-png/settings/stamp_off.png" id="stamp_off"]
 [ext_resource uid="uid://cuf5t751kanl1" type="Texture2D" path="res://assets/images-png/settings/tile_strip.png" id="tile_strip"]

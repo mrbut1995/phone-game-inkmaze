@@ -17,14 +17,14 @@ const SKIP_SOURCES := ["debug.gd"]
 ## Những scene đã KHAI SẴN trong scene cha (node MẪU hoặc node cố định) ⇒ script này KHÔNG được
 ## nhắc tới đường dẫn của chúng nữa (không preload, không instantiate) — xem GDD §10.2g.
 const FIXED_SCENES := {
-	"res://scripts/ui/game/board.gd": [
+	"res://scripts/objects/game/BoardView.gd": [
 		"nodes/game/cell.tscn", "nodes/game/anchor.tscn", "nodes/game/wall_segment.tscn",
 		"nodes/game/history_line.tscn", "nodes/game/moving_line.tscn",
 		"nodes/game/player_cursor.tscn", "nodes/game/board_layers.tscn",
 	],
-	"res://scripts/ui/screens/shop.gd": ["nodes/shop/tab_button.tscn", "nodes/shop/item_grid.tscn"],
-	"res://scripts/ui/screens/ranking.gd": ["nodes/ranking/tab_button.tscn"],
-	"res://scripts/ui/screens/achievement.gd": ["nodes/achievements/tab_button.tscn"],
+	"res://scripts/screens/ShopScene.gd": ["nodes/shop/tab_button.tscn", "nodes/shop/item_grid.tscn"],
+	"res://scripts/screens/RankingScene.gd": ["nodes/ranking/tab_button.tscn"],
+	"res://scripts/screens/AchievementScene.gd": ["nodes/achievements/tab_button.tscn"],
 }
 
 var _failed := 0
@@ -811,7 +811,7 @@ func _section_11_tutorials() -> void:
 			% ("" if offenders.is_empty() else " — con: %s" % ", ".join(offenders)))
 
 	# Bảng scene của TutorialController phải trỏ tới scene CÓ THẬT
-	var controller := FileAccess.get_file_as_string("res://scripts/core/controllers/tutorial_controller.gd")
+	var controller := FileAccess.get_file_as_string("res://scripts/components/shared/TutorialController.gd")
 	var route_re := RegEx.new()
 	route_re.compile("\"res://nodes/%s/([a-z_]+\\.tscn)\"" % "tutorials")
 	var routes := route_re.search_all(controller)

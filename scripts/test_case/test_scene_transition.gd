@@ -3,8 +3,8 @@ extends SceneTree
 ## Test Case: Kiểm tra SceneTransition, SceneManager & UIAnim
 ## ============================================================================
 
-const UIAnim := preload("res://scripts/utils/ui_anim.gd")
-const SceneTransition := preload("res://scripts/ui/widgets/common/scene_transition.gd")
+const UIAnim := preload("res://scripts/utils/UIAnim.gd")
+const SceneTransition := preload("res://scripts/autoload/SceneTransition.gd")
 
 func _init() -> void:
 	print("\n========================================================")

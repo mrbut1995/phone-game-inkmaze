@@ -183,7 +183,7 @@ func _section_5_refresh(manager: Node) -> void:
 # ---------------------------------------------------------------------------
 func _section_6_format() -> void:
 	print("[6] Dinh dang...")
-	var RankingScript = load("res://scripts/utils/ranking.gd")
+	var RankingScript = load("res://scripts/utils/Ranking.gd")
 	_entry(RankingScript.thousands(18250) == "18,250",
 		"thousands(18250) = '18,250' (nhan '%s')" % RankingScript.thousands(18250))
 	_entry(RankingScript.thousands(950) == "950", "thousands(950) = '950'")
@@ -336,10 +336,10 @@ func _section_7_scene(manager: Node) -> void:
 
 func _section_8_wiring() -> void:
 	print("[8] Noi dieu huong...")
-	var nav_consts: Dictionary = load("res://scripts/utils/nav.gd").get_script_constant_map()
+	var nav_consts: Dictionary = load("res://scripts/utils/Nav.gd").get_script_constant_map()
 	_entry(str(nav_consts.get("SCENE_RANKING", "")) == "res://scenes/screens/ranking.tscn",
 		"Nav.SCENE_RANKING tro dung scenes/ranking.tscn")
-	_entry(FileAccess.get_file_as_string("res://scripts/utils/nav.gd").contains("func goto_ranking"),
+	_entry(FileAccess.get_file_as_string("res://scripts/utils/Nav.gd").contains("func goto_ranking"),
 		"Nav co ham goto_ranking()")
 	var scene_manager: Node = root.get_node_or_null("SceneManager")
 	_entry(scene_manager != null, "Autoload SceneManager ton tai")
@@ -348,7 +348,7 @@ func _section_8_wiring() -> void:
 		_entry(str(sm_consts.get("SCENE_RANKING", "")) == "res://scenes/screens/ranking.tscn",
 			"SceneManager.SCENE_RANKING tro dung scenes/ranking.tscn")
 		_entry(scene_manager.has_method("goto_ranking"), "SceneManager co goto_ranking()")
-	var main_src := FileAccess.get_file_as_string("res://scripts/ui/screens/main.gd")
+	var main_src := FileAccess.get_file_as_string("res://scripts/screens/MainScene.gd")
 	_entry(main_src.contains("_on_leaderboard_pressed") and main_src.contains("Nav.goto_ranking()"),
 		"Nut XEP HANG o Main da noi toi Nav.goto_ranking()")
 

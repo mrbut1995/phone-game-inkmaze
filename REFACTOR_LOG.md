@@ -644,7 +644,7 @@ vé Dungeon kiểu M + `dock_style_j.gd`). Code đó viết TRƯỚC Phase 3B n�
 
 | File | Cách xử lý |
 |---|---|
-| `nodes/main/dungeon_pill.tscn` | giữ art VÉ GIẤY của nhánh feature, trỏ script sang vị trí mới `res://scripts/ui/widgets/main/dungeon_pill.gd` |
+| `nodes/main/dungeon_pill.tscn` | giữ art VÉ GIẤY của nhánh feature, trỏ script sang vị trí mới `res://scripts/components/main/DungeonPill.gd` |
 | `resources/localization/string_extra.{en,vi}.translation` | lấy bản của `refactor/cleanup` (cùng nguồn CSV, đã đổi khoá `STR_BTN_ACHIEVEMENT`) — nhánh feature không thêm chuỗi mới |
 | `scripts/scenes/main.gd` → `scripts/ui/screens/main.gd` | bỏ file ở đường dẫn cũ; phần dock được ĐƯA VÀO bản đã refactor (xem dưới) |
 | `scripts/nodes/main/dock_style_j.gd` → `scripts/ui/widgets/main/dock_style_j.gd` | git nhận diện đổi tên, chỉ cần xác nhận |

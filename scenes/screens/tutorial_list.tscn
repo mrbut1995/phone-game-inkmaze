@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://scenes/base/base_scene.tscn" id="1_base"]
 [ext_resource type="Theme" path="res://data/config/theme_default.tres" id="2_theme_text"]
-[ext_resource type="Script" path="res://scripts/ui/screens/tutorial_list.gd" id="3_script"]
+[ext_resource type="Script" path="res://scripts/screens/TutorialListScene.gd" id="3_script"]
 [ext_resource type="PackedScene" path="res://scenes/objects/layouts/tutorial_list/portrait.tscn" id="4_portrait"]
 [ext_resource type="PackedScene" path="res://scenes/objects/layouts/tutorial_list/landscape.tscn" id="5_landscape"]
 

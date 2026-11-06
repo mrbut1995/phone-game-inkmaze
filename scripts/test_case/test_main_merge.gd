@@ -85,13 +85,13 @@ func _section_files() -> void:
 # ---------------------------------------------------------------------------
 func _section_navigation() -> void:
 	print("[2] Dieu huong ve Main...")
-	var nav_src := FileAccess.get_file_as_string("res://scripts/utils/nav.gd")
+	var nav_src := FileAccess.get_file_as_string("res://scripts/utils/Nav.gd")
 	_check(nav_src.contains("static func goto_levels"), "Nav van giu goto_levels() (deprecated)")
 	_check(not nav_src.contains("scenes/levels.tscn"), "Nav KHONG con tro toi scenes/levels.tscn")
-	var gm_src := FileAccess.get_file_as_string("res://scripts/autoload/game_manager.gd")
+	var gm_src := FileAccess.get_file_as_string("res://scripts/autoload/GameManager.gd")
 	_check(gm_src.contains("func go_to_levels"), "GameManager van giu go_to_levels() (deprecated)")
 	_check(not gm_src.contains("scenes/levels.tscn"), "GameManager KHONG con tro toi scenes/levels.tscn")
-	var loading_src := FileAccess.get_file_as_string("res://scripts/autoload/loading_manager.gd")
+	var loading_src := FileAccess.get_file_as_string("res://scripts/autoload/LoadingManager.gd")
 	_check(not loading_src.contains("scenes/levels.tscn"), "LoadingManager khong nap san man Levels da xoa")
 
 	var sm: Node = root.get_node("SceneManager")

@@ -308,7 +308,7 @@ func _section_8_win_popup(gm: Node) -> void:
 	var mid_label := popup_mid.get_node("Panel/Content/Information/Buttons/NextBtn/H/Label") as Label
 	_entry(mid_label.text == TranslationServer.translate("STR_BTN_NEXT_LEVEL"),
 		"Con man trong chuong: nut van la MAN KE TIEP ('%s')" % mid_label.text)
-	var gc_src := FileAccess.get_file_as_string("res://scripts/core/controllers/game_controller.gd")
+	var gc_src := FileAccess.get_file_as_string("res://scripts/components/shared/GameController.gd")
 	_entry(gc_src.contains("next_level_in_chapter"),
 		"GameController di tiep trong CUNG CHUONG (khong nhay chuong khac)")
 	_entry(gc_src.contains("go_to_levels") or gc_src.contains("return_to_levels"),
@@ -325,7 +325,7 @@ func _section_8_win_popup(gm: Node) -> void:
 # ---------------------------------------------------------------------------
 func _section_9_wiring() -> void:
 	print("[9] Noi day dieu huong...")
-	var nav_src := FileAccess.get_file_as_string("res://scripts/utils/nav.gd")
+	var nav_src := FileAccess.get_file_as_string("res://scripts/utils/Nav.gd")
 	_entry(nav_src.contains("const SCENE_LEVELS"), "Nav co route toi man Chon man")
 	_entry(not nav_src.contains("goto_chapters") and not nav_src.contains("SCENE_CHAPTERS"),
 		"Nav KHONG con route Chon chuong (man da xoa)")
@@ -335,12 +335,12 @@ func _section_9_wiring() -> void:
 		_entry(not sm.get_script().get_script_constant_map().has("SCENE_CHAPTERS"),
 			"SceneManager khong con SCENE_CHAPTERS")
 		_entry(not sm.has_method("goto_chapters"), "SceneManager khong con goto_chapters()")
-	var main_src := FileAccess.get_file_as_string("res://scripts/ui/screens/main.gd")
+	var main_src := FileAccess.get_file_as_string("res://scripts/screens/MainScene.gd")
 	# Ban GOP: khong con nut "CHOI" mo man khac ? bam thang nut man tren ban do
 	_entry(main_src.contains("level_section"),
 		"Main nhung thang khoi ban do (LevelSection) thay vi mo man Chon man rieng")
 	# Ban GOP: ban do nam trong Main ? logic chuyen chuong o `LevelSection`
-	var section_src := FileAccess.get_file_as_string("res://scripts/ui/widgets/main/level_section.gd")
+	var section_src := FileAccess.get_file_as_string("res://scripts/objects/main/LevelSection.gd")
 	_entry(not section_src.is_empty(), "Co component LevelSection (ban do trong Main)")
 	_entry(not section_src.contains("goto_chapters()"),
 		"LevelSection KHONG con loi tat sang man Chon chuong")
@@ -352,9 +352,9 @@ func _section_9_wiring() -> void:
 		"Man Chon man rieng (scenes/levels.tscn) da bi xoa")
 	_entry(not ResourceLoader.exists("res://" + "scenes/chapters.tscn"),
 		"File scenes/chapters.tscn da bi xoa")
-	var debug_src := FileAccess.get_file_as_string("res://scripts/ui/screens/debug.gd")
+	var debug_src := FileAccess.get_file_as_string("res://scripts/screens/DebugScene.gd")
 	_entry(not debug_src.contains("scenes/chapters.tscn"), "Debug Console bo muc chon chuong")
-	var gm_src := FileAccess.get_file_as_string("res://scripts/autoload/game_manager.gd")
+	var gm_src := FileAccess.get_file_as_string("res://scripts/autoload/GameManager.gd")
 	_entry(gm_src.contains("\"unlocked_chapters\""), "GameManager luu unlocked_chapters")
 	_entry(not gm_src.contains("func go_to_chapters"), "GameManager khong con go_to_chapters()")
 	_entry(gm_src.contains("func go_to_levels"), "GameManager co go_to_levels() (nay ve Main)")
