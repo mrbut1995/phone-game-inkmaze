@@ -12,7 +12,10 @@ ROOT = Path(__file__).resolve().parent.parent
 
 # Never scanned by any tool (ai_helper is opt-in: copies of project files live there).
 IGNORE_DIRS = {".godot", ".git", ".import", ".mono", ".vscode", ".idea", "__pycache__",
-               "node_modules", "export", "ai_helper", ".logs"}
+               "node_modules", "export", "ai_helper", ".logs",
+               # InkMaze: build artifact / thư mục rác (không phải mã game)
+               "android", "build", "what-changes", "_removed_unused", "optimizing_clean",
+               "helpers", "mockup"}
 IGNORE_SUFFIXES = (".uid", ".import", ".tmp", ".translation")
 HIDDEN_FILES = {".gitkeep", ".gdignore", ".DS_Store", "Thumbs.db"}
 TEXT_EXTS = {".gd", ".tscn", ".tres", ".godot", ".cfg", ".json", ".md", ".txt", ".svg",
@@ -61,7 +64,8 @@ def iter_files(base: str = "", include_ai_helper: bool = False, exts=None, inclu
         yield start.relative_to(ROOT).as_posix()
         return
     for dirpath, dirnames, filenames in os.walk(start):
-        dirnames[:] = sorted(d for d in dirnames if d not in ignore)
+        # InkMaze: bỏ cả thư mục tạm tmp_* (screenshot/probe, gitignored)
+        dirnames[:] = sorted(d for d in dirnames if d not in ignore and not d.startswith("tmp_"))
         for name in sorted(filenames):
             if name.endswith(IGNORE_SUFFIXES):
                 continue

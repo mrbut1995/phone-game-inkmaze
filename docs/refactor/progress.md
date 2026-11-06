@@ -1,19 +1,33 @@
 # Refactor progress — InkMaze → GodotTemplate v1.7 conventions
 
-Nhánh: `refactor/template` (tách từ `portrait_landscape_feature` @ `77406bca`)
-Kit nguồn (ignored, không commit): `helpers/refactors/` — instruction + `GodotTemplate_v1.7` + `tools/refactor/*`
-Ghi chú: các phase P0..P7 theo `instruction_refactor_to_template.md`; mỗi session 1 phase.
+- Nhánh: `refactor/template` (tách từ `portrait_landscape_feature` @ `77406bca`).
+- Instruction: `D:/godot-phone-game/refactor-kit/instruction/instruction_refactor_to_template.md`
+  (kit đã **chuyển ra ngoài project** — xem D-ENV; `helpers/` không còn nằm trong `res://`).
+- Mỗi session = 1 phase. Gate + số liệu phải khớp bảng dưới trước khi sang phase kế.
 
-## Baselines (P0, đo trên project thật)
+## Baselines (P0, đo trên project thật ngày 2026-11-06)
 
-| Gate | Baseline | Ghi chú |
+| Gate | Baseline | Cách đo |
 |---|---|---|
-| G-INT | **637** | `E*` trừ `.import:`; bóc `android/**` 516 + `helpers/**` 91 + `what-changes/**` 12 ⇒ **trong phạm vi game = 18** (`scripts/test_case` 16 · `nodes/main` 1 · `tests/framework` 1) |
-| G-LEG | **7 / 20** PASS | `python tools/run_tests.py` (7 PASS / 13 FAIL — đều là test cũ đang hỏng sẵn) |
-| lint_total | **3230** (739 ERROR) | `python tools/lint_rules.py --max 0 --all` · DEAD 7 · GODOT3 80 · R1 1742 · R2 343 · R3 235 · R4 549 · R5 57 · R8 16 · STRUCT 1 · STYLE 200. Trong đó **115 dòng thuộc `helpers/`** (kit template, gitignored) — xem "Cần quyết định" |
-| G-GODOT | ok | `--headless --import` chỉ còn WARNING UID trùng `daily_milestone.tscn` (có sẵn từ trước) |
+| G-INT | **18** | `python tools/refactor/check_integrity.py .` → đếm dòng `E*` trừ `.import:` (đã bỏ qua thư mục rác, xem D-ENV) |
+| G-LEG | **7 / 20** PASS | `python tools/run_tests.py` (7 PASS / 13 FAIL — toàn test cũ hỏng sẵn) |
+| lint_total | **3027** (724 ERROR) | `python tools/lint_rules.py --max 0 --all` → DEAD 4 · GODOT3 78 · R1 1666 · R2 325 · R3 214 · R4 549 · R5 55 · R8 16 · STRUCT 1 · STYLE 119 |
+| G-GODOT | **ok** | `--headless --path . --import`: chỉ còn WARNING UID trùng `daily_milestone.tscn` (có sẵn từ trước) |
+| G-RUN | chưa đạt được | `run_checks.py` cần `scenes/base/base_scene.tscn` → chỉ có sau **P2** |
 
 Engine: `tools/godot_path.txt` → `D:/Godots/app dev/.../godot.windows.editor.x86_64.exe` (4.8.dev custom build).
+Chi tiết 18 E-line: 1 art Halloween thiếu (có sẵn) · 16 trong `scripts/test_case/` do dev-probe trỏ đường dẫn CŨ
+(`nodes/hud/...`, `nodes/tutorials/...` — sẽ chuyển sang `debug/probes/` ở P2) · 1 `tests/framework/GameTestCase.gd`
+trỏ `scenes/objects/world/actor.tscn` (asset demo của template, không copy theo D1).
+
+## Deviation đã áp dụng
+
+**D-ENV (môi trường InkMaze).** Toolchain donor quét cả thư mục build/rác nên gate bị nhiễu. Đã sửa 2 tool donor:
+- `tools/_common.py` → `IGNORE_DIRS` thêm `android`, `build`, `what-changes`, `_removed_unused`,
+  `optimizing_clean`, `helpers`, `mockup`; `iter_files()` bỏ mọi thư mục bắt đầu bằng `tmp_`.
+- `tools/refactor/check_integrity.py` → thêm `JUNK_DIRS` (như trên) + bỏ `tmp_*` trong `os.walk`.
+Không sửa `lint_config.json`, không sửa ngưỡng lint, không sửa baseline.
+Hệ quả: baseline sạch (3027 thay vì 3230; G-INT 18 thay vì 637 với 516 dòng từ `android/build`).
 
 ## Checklist
 
@@ -21,29 +35,26 @@ Engine: `tools/godot_path.txt` → `D:/Godots/app dev/.../godot.windows.editor.x
 - [ ] P1 maps
 - [ ] P2 structure
 - [ ] P3.1 autoload class_name · [ ] P3.2 guard rails · [ ] P3.3 baseline · [ ] P3.4 tags · [ ] P3.5 constants
-- [ ] P4 scene contracts (0/156)
-- [ ] P5.1 GODOT3 0/80 · [ ] P5.2 R3-err 0/… · [ ] P5.3 R2-err 0/… · [ ] P5.4 R4-err 0/…
+- [ ] P4 scene contracts (0/…)
+- [ ] P5.1 GODOT3 0/78 · [ ] P5.2 R3-err 0/… · [ ] P5.3 R2-err 0/… · [ ] P5.4 R4-err 0/549
 - [ ] P5.5..9 warnings (tuỳ chọn) · [ ] P6 tests · [ ] P7 docs
 
-Lint total history: 2026-11-06 = 3230
+Lint total history: 2026-11-06 = 3027 (baseline P0, chưa tạo lint_baseline — việc của P3.3)
 
-## P0 đã làm
+## P0 đã làm (commit `47e6f0ac`, `6284b77f`, + commit D-ENV)
 
-- `git checkout -b refactor/template` từ `portrait_landscape_feature` (đã commit 2 file `.import` của localization trước khi tách nhánh).
-- Copy donor theo D1: `tools/*.py` + `tools/*.json` (29 py + 3 json), `instruction/`, `ai_helper/`, `tests/run_tests.gd` + `tests/framework/`, `.editorconfig`; `tools/refactor/{gen_move_map,rewrite_dir_refs,convert_keep_code}.py`.
-- `tools/godot_path.txt` (đường dẫn engine) — `run_checks.py` đọc file này.
-- `python tools/start.py` chạy được: `PROJECT InkMaze (4.8, Mobile) — scenes 194, scripts 325`.
-- `godot --headless --path . --import`: **không lỗi** (kit nằm trong `helpers/` bị bỏ qua vì là project lồng nhau, không có `class_name` collision).
-- `python tools/run_checks.py --fast`: **FAIL (đúng như dự kiến ở P0)**, 2 nguyên nhân:
-  1. bước `scenes` quét cả `android/build/**` và `helpers/**` (`tools/_common.py` `IGNORE_DIRS` không có 2 thư mục này) ⇒
-     báo thiếu resource của file build/kit;
-  2. bước `exports` đòi `scenes/base/base_popup.tscn`, `scenes/base/base_scene.tscn`… — chỉ tồn tại **sau P2**.
-  ⇒ G-RUN chỉ có thể đạt từ P2 trở đi; gate P0 là `tools/start.py` (đạt).
+1. `git checkout -b refactor/template` (trước đó commit 2 file `.import` localization vừa đổi).
+2. Donor D1: `tools/*.py` (29) + `tools/*.json` (3) · `instruction/` · `ai_helper/` · `tests/run_tests.gd` +
+   `tests/framework/{TestCase,GameTestCase}.gd` · `.editorconfig`; kit `tools/refactor/{gen_move_map,
+   rewrite_dir_refs,convert_keep_code}.py`.
+3. `tools/godot_path.txt`; `.gitignore` merge (`tools/.logs/`, `ai_helper/session_*/…`).
+4. Chuyển kit ra `D:/godot-phone-game/refactor-kit/` (quyết định của người dùng) + D-ENV.
+5. Gate P0: `python tools/start.py` → `PROJECT InkMaze (4.8, Mobile) | scenes 194 | scripts 325`.
+   `--import` sạch.
 
-## Cần quyết định (dừng lại hỏi người)
+## Lưu ý cho session sau
 
-1. **`helpers/` nằm trong `res://`**: Godot bỏ qua (không lỗi), nhưng `lint_rules.py` vẫn quét ⇒ 115/3230 finding thuộc kit
-   template (`helpers/refactors/GodotTemplate_v1.7/...`). Đề xuất: **chuyển `helpers/refactors/` ra ngoài project**
-   (`D:/godot-phone-game/refactor-kit/`) trước P3.3, hoặc chấp nhận 115 dòng đó nằm trong baseline vĩnh viễn.
-2. Instruction giả định archive ~50 E-line; project thật có 637 vì còn `android/build` — tôi ghi baseline tổng **và**
-   baseline trong phạm vi (18) để gate còn ý nghĩa.
+- Đọc `instruction/brief.md` (rules R1..R7) trước khi làm P1; kit ở `D:/godot-phone-game/refactor-kit/`.
+- `python3 -I` của instruction ↔ trên Windows dùng `.venv\Scripts\python.exe`; tool donor **không** chạy với `-I`.
+- `scripts/test_case/` (68 file) sẽ thành `tests/legacy/legacy_*.gd` + `debug/probes/` ở P2 ⇒ 16 E-line hiện tại
+  sẽ tự hết (G-INT phải **giảm**, không được tăng).
