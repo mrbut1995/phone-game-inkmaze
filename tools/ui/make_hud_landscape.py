@@ -26,7 +26,7 @@ LAND_DIR = HUD_DIR / "landscape"
 BASE_UID = "uid://bnohqoayq3dt2"
 PORTRAIT_UID = "uid://bl4r7bsfws086"
 LANDSCAPE_UID = "uid://cchuuwsep7gyy"
-BASE_SCENE = "res://nodes/hud/base.tscn"
+BASE_SCENE = "res://scenes/base/base_hud.tscn"
 PORTRAIT_SCENE = "res://nodes/hud/portrait/portrait.tscn"
 LANDSCAPE_SCENE = "res://nodes/hud/landscape/landscape.tscn"
 

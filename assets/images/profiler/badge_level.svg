@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" width="112" height="112" fill="none">
+  <!-- badge_level: huy hiệu cấp độ tròn navy viền trắng, bóng đổ (56x56) -->
+  <circle cx="28" cy="31" r="24" fill="#000" opacity=".2"/>
+  <circle cx="28" cy="28" r="24" fill="#164663" stroke="#FFFFFF" stroke-width="3.5"/>
+</svg>

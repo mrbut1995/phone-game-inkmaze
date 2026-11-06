@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://jvn38aocsdwl"]
+
+[ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base/base_scene.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://dgj5baly6ekvo" path="res://scripts/screens/DailyScene.gd" id="2_daily"]
+[ext_resource type="PackedScene" path="res://scenes/objects/daily/milestone_chip.tscn" id="3_chip"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://data/config/theme_default.tres" id="4_theme"]
+[ext_resource type="PackedScene" uid="uid://ka36asr06er2" path="res://scenes/objects/layouts/daily/landscape.tscn" id="L_Landscape"]
+[ext_resource type="PackedScene" uid="uid://ddx6na0robdma" path="res://scenes/objects/layouts/daily/portrait.tscn" id="L_Portrait"]
+
+[node name="Control" unique_id=1222391855 instance=ExtResource("1_base")]
+theme = ExtResource("4_theme")
+script = ExtResource("2_daily")
+MILESTONE_CHIP = ExtResource("3_chip")
+
+[node name="Portrait" parent="." index="1" unique_id=1504128517 instance=ExtResource("L_Portrait")]
+layout_mode = 1
+
+[node name="Landscape" parent="." index="2" unique_id=1986560234 instance=ExtResource("L_Landscape")]
+layout_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="ResetTimer" type="Timer" parent="."]
+wait_time = 1.0
+autostart = true
+
+[connection signal="pressed" from="Portrait/TopBar/HeaderRow/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Landscape/TopBar/HeaderRow/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Portrait/Panel/Stage/Actions/PlayCard" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Landscape/Panel/Stage/Actions/PlayCard" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Portrait/Panel/Stage/Actions/ChallengeCard" to="." method="_on_challenge_pressed"]
+[connection signal="pressed" from="Landscape/Panel/Stage/Actions/ChallengeCard" to="." method="_on_challenge_pressed"]
+[connection signal="day_selected" from="Portrait/Panel/Stage/MonthSheet/Calendar" to="." method="_on_day_selected"]
+[connection signal="day_selected" from="Landscape/Panel/Stage/MonthSheet/Calendar" to="." method="_on_day_selected"]
+[connection signal="timeout" from="ResetTimer" to="." method="_on_reset_timer_timeout"]

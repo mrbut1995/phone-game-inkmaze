@@ -1,0 +1,985 @@
+[gd_scene format=3 uid="uid://bdaud8s52opsm"]
+
+[ext_resource type="Script" uid="uid://due7yap3gb5o" path="res://scripts/base/BaseTutorial.gd" id="1_7x6e2"]
+[ext_resource type="Texture2D" uid="uid://bq1g3a72wtikh" path="res://assets/images-png/tutorial/tutorial_spotlight.png" id="3_spotlight"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_step_badge.png" id="t_badge"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_skip_tag.png" id="t_skip"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_skip_tag_pressed.png" id="t_skip_p"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_msg_strip.png" id="t_strip"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_next_normal.png" id="t_next"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_next_pressed.png" id="t_next_p"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_star_on.png" id="t_star_on"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_star_off.png" id="t_star_off"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_scissors.png" id="t_scis"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_page_grid.png" id="t_grid"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_page_margin.png" id="t_margin"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_page_holes.png" id="t_holes"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_ribbon.png" id="a_rib"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_ribbon_pressed.png" id="a_rib_p"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_chevron.png" id="a_chev"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_play.png" id="a_play"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_bubble.png" id="a_bub"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_mascot.png" id="a_mas"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_wave_bg.png" id="a_wbg"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_wave_fill.png" id="a_wfi"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_next_blue.png" id="a_nxb"]
+[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_next_blue_pressed.png" id="a_nxbp"]
+
+[sub_resource type="StyleBoxTexture" id="btn_primary"]
+content_margin_left = 24.0
+content_margin_top = 8.0
+content_margin_right = 24.0
+content_margin_bottom = 14.0
+texture = ExtResource("t_next")
+texture_margin_left = 46.0
+texture_margin_top = 40.0
+texture_margin_right = 46.0
+texture_margin_bottom = 40.0
+
+[sub_resource type="StyleBoxTexture" id="btn_primary_hover"]
+content_margin_left = 24.0
+content_margin_top = 8.0
+content_margin_right = 24.0
+content_margin_bottom = 14.0
+texture = ExtResource("t_next_p")
+texture_margin_left = 46.0
+texture_margin_top = 40.0
+texture_margin_right = 46.0
+texture_margin_bottom = 40.0
+
+[sub_resource type="StyleBoxTexture" id="sb_skip"]
+content_margin_left = 16.0
+content_margin_top = 6.0
+content_margin_right = 20.0
+content_margin_bottom = 8.0
+texture = ExtResource("t_skip")
+texture_margin_left = 24.0
+texture_margin_top = 24.0
+texture_margin_right = 24.0
+texture_margin_bottom = 24.0
+
+[sub_resource type="StyleBoxTexture" id="sb_skip_p"]
+content_margin_left = 16.0
+content_margin_top = 6.0
+content_margin_right = 20.0
+content_margin_bottom = 8.0
+texture = ExtResource("t_skip_p")
+texture_margin_left = 24.0
+texture_margin_top = 24.0
+texture_margin_right = 24.0
+texture_margin_bottom = 24.0
+
+[sub_resource type="StyleBoxEmpty" id="sb_empty"]
+
+[sub_resource type="Animation" id="Animation_reset"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Backdrop:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Backdrop:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.969, 0.957, 0.937, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DialogBubble:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DialogBubble:offset_top")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [218.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("DialogBubble:offset_bottom")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [368.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("DialogBubble:offset_left")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-236.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("DialogBubble:offset_right")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [236.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("BoardHost:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("BoardHost:scale")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_fail_feedback"]
+resource_name = "fail_feedback"
+length = 0.45
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Backdrop:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0.969, 0.957, 0.937, 1), Color(0.98, 0.88, 0.88, 1), Color(0.969, 0.957, 0.937, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DialogBubble:offset_left")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [-236.0, -228.0, -244.0, -230.0, -242.0, -236.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DialogBubble:offset_right")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [236.0, 244.0, 228.0, 242.0, 230.0, 236.0]
+}
+
+[sub_resource type="Animation" id="Animation_entrance"]
+resource_name = "play_entrance"
+length = 0.35
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Backdrop:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.24),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DialogBubble:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.06, 0.32),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DialogBubble:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.06, 0.32),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.92, 0.92), Vector2(0.92, 0.92), Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("BoardHost:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BoardHost:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.94, 0.94), Vector2(0.94, 0.94), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tutorial"]
+_data = {
+&"RESET": SubResource("Animation_reset"),
+&"fail_feedback": SubResource("Animation_fail_feedback"),
+&"play_entrance": SubResource("Animation_entrance")
+}
+
+[sub_resource type="Animation" id="Animation_tt_text_in"]
+resource_name = "text_in"
+length = 0.22
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DialogBubble/Message:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.22),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(30, 30), Vector2(30, 20)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DialogBubble/Message:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.22),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_tt_text_in_first"]
+resource_name = "text_in_first"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DialogBubble/Message:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06, 0.3),
+"transitions": PackedFloat32Array(1, 0.5, 1),
+"update": 0,
+"values": [Vector2(30, 30), Vector2(30, 30), Vector2(30, 20)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DialogBubble/Message:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.06, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_tt_text_out"]
+resource_name = "text_out"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DialogBubble/Message:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tt_dialog"]
+_data = {
+&"text_in": SubResource("Animation_tt_text_in"),
+&"text_in_first": SubResource("Animation_tt_text_in_first"),
+&"text_out": SubResource("Animation_tt_text_out")
+}
+
+[sub_resource type="Animation" id="Animation_tt_title_pop"]
+resource_name = "title_pop"
+length = 0.24
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Header/Title:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.24),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(0.88, 0.88), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Header/Title:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.192, 0.24),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tt_title"]
+_data = {
+&"title_pop": SubResource("Animation_tt_title_pop")
+}
+
+[sub_resource type="Animation" id="Animation_tt_toast_in"]
+resource_name = "toast_in"
+length = 0.22
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ToastLabel:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.22),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(0.86, 0.86), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ToastLabel:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.16, 0.22),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_tt_toast_out"]
+resource_name = "toast_out"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ToastLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tt_toast"]
+_data = {
+&"toast_in": SubResource("Animation_tt_toast_in"),
+&"toast_out": SubResource("Animation_tt_toast_out")
+}
+
+[sub_resource type="Animation" id="Animation_tt_spotlight_in"]
+resource_name = "spotlight_in"
+length = 0.22
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Spotlight:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.22),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_tt_spotlight_out"]
+resource_name = "spotlight_out"
+length = 0.18
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Spotlight:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.18),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_tt_spotlight_pulse"]
+resource_name = "spotlight_pulse"
+length = 1.7
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Spotlight:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.85, 1.7),
+"transitions": PackedFloat32Array(0.5, 0.5, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.06, 1.06), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tt_spotlight"]
+_data = {
+&"spotlight_in": SubResource("Animation_tt_spotlight_in"),
+&"spotlight_out": SubResource("Animation_tt_spotlight_out"),
+&"spotlight_pulse": SubResource("Animation_tt_spotlight_pulse")
+}
+
+[node name="BaseTutorial" type="Control" unique_id=1525698188 node_paths=PackedStringArray("backdrop", "spotlight", "board_host", "dialog_bubble", "lbl_title", "dots_container", "lbl_message", "nav_bar", "btn_skip_all", "lbl_step_num", "lbl_step_of", "wave", "btn_skip", "btn_next", "toast_label", "anim_player", "anim_dialog", "anim_title", "text_out_timer", "toast_timer", "spot_in_timer", "spot_out_timer", "anim_toast", "anim_spotlight")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7x6e2")
+backdrop = NodePath("Backdrop")
+spotlight = NodePath("Spotlight")
+board_host = NodePath("BoardHost")
+dialog_bubble = NodePath("DialogBubble")
+lbl_title = NodePath("Header/Title")
+dots_container = NodePath("Dots")
+lbl_message = NodePath("DialogBubble/Message")
+nav_bar = NodePath("NavBar")
+btn_skip_all = NodePath("Header/BtnSkipAll")
+lbl_step_num = NodePath("Header/StepBadge/Num")
+lbl_step_of = NodePath("Header/StepOf")
+wave = NodePath("Header/Wave")
+tex_star_on = ExtResource("t_star_on")
+tex_star_off = ExtResource("t_star_off")
+btn_skip = NodePath("Header/BtnSkip")
+btn_next = NodePath("NavBar/BtnNext")
+toast_label = NodePath("ToastLabel")
+anim_player = NodePath("AnimationPlayer")
+anim_dialog = NodePath("DialogAnim")
+anim_title = NodePath("TitleAnim")
+text_out_timer = NodePath("TextOutTimer")
+toast_timer = NodePath("ToastTimer")
+spot_in_timer = NodePath("SpotlightInTimer")
+spot_out_timer = NodePath("SpotlightOutTimer")
+anim_toast = NodePath("ToastAnim")
+anim_spotlight = NodePath("SpotlightAnim")
+
+[node name="Backdrop" type="ColorRect" parent="." unique_id=2046952523]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0.969, 0.957, 0.937, 1)
+
+[node name="PageDeco" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Grid" type="TextureRect" parent="PageDeco"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("t_grid")
+stretch_mode = 1
+
+[node name="Margin" type="TextureRect" parent="PageDeco"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 0.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_right = 54.0
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("t_margin")
+stretch_mode = 1
+
+[node name="Holes" type="TextureRect" parent="PageDeco"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 0.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 30.0
+offset_right = 32.0
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("t_holes")
+stretch_mode = 1
+
+[node name="Spotlight" type="NinePatchRect" parent="." unique_id=393074664]
+z_index = 10
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("3_spotlight")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="BoardHost" type="Control" parent="." unique_id=1982948136]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -230.0
+offset_top = -102.0
+offset_right = 230.0
+offset_bottom = 318.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Header" type="Control" parent="." unique_id=601935572]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 200.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="StepBadge" type="TextureRect" parent="Header"]
+visible = false
+layout_mode = 0
+offset_left = 62.0
+offset_top = 36.0
+offset_right = 172.0
+offset_bottom = 146.0
+pivot_offset = Vector2(55, 55)
+rotation = -0.1047
+mouse_filter = 2
+texture = ExtResource("t_badge")
+
+[node name="Num" type="Label" parent="Header/StepBadge"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.85, 0.27, 0.25, 1)
+theme_override_font_sizes/font_size = 62
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Title" type="Label" parent="Header" unique_id=1569248542]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_left = 50.0
+offset_top = 22.0
+offset_right = -190.0
+offset_bottom = 66.0
+pivot_offset = Vector2(0, 22)
+theme_override_colors/font_color = Color(0.114, 0.31, 0.45, 1)
+theme_override_font_sizes/font_size = 32
+text = "STR_TUT_COMMON_TITLE"
+vertical_alignment = 1
+clip_text = true
+
+[node name="StepOf" type="Label" parent="Header"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_left = 50.0
+offset_top = 64.0
+offset_right = -190.0
+offset_bottom = 98.0
+theme_override_colors/font_color = Color(0.353, 0.451, 0.533, 1)
+theme_override_font_sizes/font_size = 24
+text = "Bước 1 trong 4"
+vertical_alignment = 1
+
+[node name="BtnSkip" type="Button" parent="Header" unique_id=1671343425]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_top = 138.0
+offset_right = -18.0
+offset_bottom = 204.0
+grow_horizontal = 0
+pivot_offset = Vector2(90, 33)
+rotation = 0.07
+mouse_default_cursor_shape = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.85, 0.27, 0.25, 1)
+theme_override_colors/font_hover_color = Color(0.72, 0.2, 0.18, 1)
+theme_override_colors/font_pressed_color = Color(0.72, 0.2, 0.18, 1)
+theme_override_constants/h_separation = 8
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("sb_skip")
+theme_override_styles/hover = SubResource("sb_skip")
+theme_override_styles/pressed = SubResource("sb_skip_p")
+theme_override_styles/focus = SubResource("sb_empty")
+text = "STR_TUT_COMMON_SKIP"
+icon = ExtResource("t_scis")
+
+[node name="BtnSkipAll" type="Button" parent="Header" unique_id=220332689]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
+offset_top = 138.0
+offset_right = -18.0
+offset_bottom = 204.0
+grow_horizontal = 0
+pivot_offset = Vector2(140, 33)
+rotation = 0.07
+mouse_default_cursor_shape = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.85, 0.27, 0.25, 1)
+theme_override_colors/font_hover_color = Color(0.72, 0.2, 0.18, 1)
+theme_override_colors/font_pressed_color = Color(0.72, 0.2, 0.18, 1)
+theme_override_constants/h_separation = 8
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("sb_skip")
+theme_override_styles/hover = SubResource("sb_skip")
+theme_override_styles/pressed = SubResource("sb_skip_p")
+theme_override_styles/focus = SubResource("sb_empty")
+text = "STR_TUT_COMMON_SKIP_ALL"
+icon = ExtResource("t_scis")
+
+[node name="Wave" type="TextureProgressBar" parent="Header"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 98.0
+offset_right = 540.0
+offset_bottom = 128.0
+mouse_filter = 2
+max_value = 4.0
+step = 0.01
+value = 1.0
+texture_under = ExtResource("a_wbg")
+texture_progress = ExtResource("a_wfi")
+nine_patch_stretch = true
+
+[node name="DialogBubble" type="Control" parent="." unique_id=2017602598]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -236.0
+offset_top = 218.0
+offset_right = 236.0
+offset_bottom = 368.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="Strip" type="NinePatchRect" parent="DialogBubble"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("t_strip")
+patch_margin_left = 24
+patch_margin_top = 22
+patch_margin_right = 24
+patch_margin_bottom = 22
+
+[node name="Message" type="Label" parent="DialogBubble" unique_id=211959486]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 30.0
+offset_top = 20.0
+offset_right = -30.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.114, 0.31, 0.45, 1)
+theme_override_constants/line_spacing = 6
+theme_override_font_sizes/font_size = 27
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="ToastLabel" type="Label" parent="." unique_id=1722041310]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -236.0
+offset_top = 372.0
+offset_right = 236.0
+offset_bottom = 420.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="NavBar" type="Control" parent="." unique_id=564302285]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -112.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="BtnNext" type="Button" parent="NavBar" unique_id=966799915]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -236.0
+offset_top = -92.0
+offset_right = 236.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_default_cursor_shape = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.6, 0.38, 0.05, 1)
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+theme_override_constants/h_separation = 12
+theme_override_constants/outline_size = 7
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("btn_primary")
+theme_override_styles/hover = SubResource("btn_primary")
+theme_override_styles/pressed = SubResource("btn_primary_hover")
+theme_override_styles/focus = SubResource("sb_empty")
+text = "STR_TUT_COMMON_NEXT"
+icon = ExtResource("a_play")
+icon_alignment = 2
+
+[node name="Dots" type="HBoxContainer" parent="." unique_id=1937457845]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -180.0
+offset_top = -272.0
+offset_right = 180.0
+offset_bottom = -222.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Dot1" type="TextureRect" parent="Dots" unique_id=1848305278]
+visible = false
+custom_minimum_size = Vector2(44, 44)
+layout_mode = 2
+pivot_offset = Vector2(22, 22)
+texture = ExtResource("t_star_off")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Dot2" type="TextureRect" parent="Dots" unique_id=318154076]
+visible = false
+custom_minimum_size = Vector2(44, 44)
+layout_mode = 2
+pivot_offset = Vector2(22, 22)
+texture = ExtResource("t_star_off")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Dot3" type="TextureRect" parent="Dots" unique_id=1381081468]
+visible = false
+custom_minimum_size = Vector2(44, 44)
+layout_mode = 2
+pivot_offset = Vector2(22, 22)
+texture = ExtResource("t_star_off")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Dot4" type="TextureRect" parent="Dots" unique_id=408374677]
+visible = false
+custom_minimum_size = Vector2(44, 44)
+layout_mode = 2
+pivot_offset = Vector2(22, 22)
+texture = ExtResource("t_star_off")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Dot5" type="TextureRect" parent="Dots" unique_id=1930197384]
+visible = false
+custom_minimum_size = Vector2(44, 44)
+layout_mode = 2
+pivot_offset = Vector2(22, 22)
+texture = ExtResource("t_star_off")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Dot6" type="TextureRect" parent="Dots" unique_id=967110451]
+visible = false
+custom_minimum_size = Vector2(44, 44)
+layout_mode = 2
+pivot_offset = Vector2(22, 22)
+texture = ExtResource("t_star_off")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1871871168]
+libraries = {
+"": SubResource("AnimationLibrary_tutorial")
+}
+
+[node name="DialogAnim" type="AnimationPlayer" parent="." unique_id=1994858890]
+libraries = {
+"": SubResource("AnimationLibrary_tt_dialog")
+}
+
+[node name="TitleAnim" type="AnimationPlayer" parent="." unique_id=1491080733]
+libraries = {
+"": SubResource("AnimationLibrary_tt_title")
+}
+
+[node name="ToastAnim" type="AnimationPlayer" parent="." unique_id=1913227351]
+libraries = {
+"": SubResource("AnimationLibrary_tt_toast")
+}
+
+[node name="SpotlightAnim" type="AnimationPlayer" parent="." unique_id=1628482365]
+libraries = {
+"": SubResource("AnimationLibrary_tt_spotlight")
+}
+
+[node name="TextOutTimer" type="Timer" parent="." unique_id=2011139773]
+wait_time = 0.1
+one_shot = true
+
+[node name="ToastTimer" type="Timer" parent="." unique_id=15217286]
+wait_time = 0.22
+one_shot = true
+
+[node name="SpotlightInTimer" type="Timer" parent="." unique_id=656274748]
+wait_time = 0.22
+one_shot = true
+
+[node name="SpotlightOutTimer" type="Timer" parent="." unique_id=1170836849]
+wait_time = 0.18
+one_shot = true
+
+[connection signal="resized" from="Spotlight" to="." method="_on_spotlight_resized"]
+[connection signal="pressed" from="Header/BtnSkip" to="." method="skip_tutorial"]
+[connection signal="pressed" from="NavBar/BtnNext" to="." method="next_step"]
+[connection signal="pressed" from="Header/BtnSkipAll" to="." method="skip_all_tutorials"]
+[connection signal="timeout" from="TextOutTimer" to="." method="_on_text_out_done"]
+[connection signal="timeout" from="ToastTimer" to="." method="_on_toast_hold_done"]
+[connection signal="timeout" from="SpotlightInTimer" to="." method="_start_spotlight_pulse"]
+[connection signal="timeout" from="SpotlightOutTimer" to="." method="_hide_spotlight_if_unused"]

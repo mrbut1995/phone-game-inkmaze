@@ -100,7 +100,7 @@ for d in range(3):
 anim_loading=f'[sub_resource type="Animation" id="Animation_loading"]\nresource_name = "loading"\nlength = {LEN}\nloop_mode = 1\n{tracks}\n'
 scene=f'''[gd_scene format=3 uid="uid://gpu3hvws2a5j"]
 
-[ext_resource type="Script" uid="uid://beu82xphg17i6" path="res://scripts/ui/widgets/common/scene_transition.gd" id="1_transition"]
+[ext_resource type="Script" uid="uid://beu82xphg17i6" path="res://scripts/autoload/SceneTransition.gd" id="1_transition"]
 [ext_resource type="Texture2D" path="res://assets/images-png/loading/loading_page_grid.png" id="l_grid"]
 [ext_resource type="Texture2D" path="res://assets/images-png/loading/loading_page_margin.png" id="l_mar"]
 [ext_resource type="Texture2D" path="res://assets/images-png/loading/loading_page_holes.png" id="l_hole"]

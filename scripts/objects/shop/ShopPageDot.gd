@@ -1,0 +1,26 @@
+class_name ShopPageDot
+extends TextureRect
+## ============================================================================
+## Chấm chỉ số trang của màn Cửa hàng (nodes/shop/page_dot.tscn)
+## Là SCENE riêng.
+## Cỡ + art: chấm ĐANG XEM to (34×24), các chấm khác nhỏ (12×24).
+## ============================================================================
+
+## Art chấm — gán trong `page_dot.tscn` (ExtResource)
+## Scene contract
+## Exports:  dot_active, dot_inactive, SIZE_ACTIVE, SIZE_INACTIVE
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
+@export var dot_active: Texture2D = null
+@export var dot_inactive: Texture2D = null
+
+@export var SIZE_ACTIVE := Vector2(34, 24)
+@export var SIZE_INACTIVE := Vector2(12, 24)
+
+
+## Đặt trạng thái chấm: đang xem hay không
+func set_current(on: bool) -> void:
+	texture = dot_active if on else dot_inactive
+	custom_minimum_size = SIZE_ACTIVE if on else SIZE_INACTIVE

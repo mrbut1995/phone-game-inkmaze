@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="EventTheme" format=3]
+
+[ext_resource type="Script" path="res://scripts/models/definitions/EventTheme.gd" id="1_script"]
+[ext_resource uid="uid://jtqoq2nf6xnp" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_summer_normal.png" id="btn_normal"]
+[ext_resource uid="uid://ddsshuum4mbiq" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_summer_pressed.png" id="btn_pressed"]
+[ext_resource uid="uid://djqsotxd1quej" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_summer_disabled.png" id="btn_disabled"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"summer"
+bg_stops = PackedColorArray(0.6156863, 0.9411765, 1, 1, 0.1254902, 0.8117647, 0.9098039, 1, 0.023529412, 0.47058824, 0.6156863, 1)
+accent = Color(1, 0.6901961, 0.1254902, 1)
+accent2 = Color(1, 0.91764706, 0.32156864, 1)
+title_color = Color(0, 0.3, 0.38, 1)
+title_outline = Color(1, 0.98, 0.82, 1)
+sub_color = Color(0.05490196, 0.28235295, 0.35686275, 1)
+label_color = Color(0.03137255, 0.20784314, 0.2784314, 1)
+panel_color = Color(0.9254902, 0.9843137, 1, 0.86)
+panel_stroke = Color(0.023529412, 0.47058824, 0.6156863, 0.4)
+cta_fill = Color(1, 0.6901961, 0.1254902, 1)
+cta_stroke = Color(0.7254902, 0.3882353, 0.02745098, 1)
+cta_text = Color(0.03137255, 0.20784314, 0.2784314, 1)
+chip_fill = Color(0.9254902, 0.9843137, 1, 0.9)
+chip_text = Color(0.03137255, 0.20784314, 0.2784314, 1)
+button_normal = ExtResource("btn_normal")
+button_pressed = ExtResource("btn_pressed")
+button_disabled = ExtResource("btn_disabled")

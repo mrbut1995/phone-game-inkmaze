@@ -2180,17 +2180,17 @@ Xem `DELETED_FILES.txt`.
 --- a/scripts/core/controllers/tutorial_controller.gd
 +++ b/scripts/core/controllers/tutorial_controller.gd
 @@ -16,11 +16,5 @@
- 	"how_to_play_move": "res://nodes/tutorials/how_to_play_move.tscn",
- 	"how_to_play_checking_wall": "res://nodes/tutorials/how_to_play_checking_wall.tscn",
+ 	"how_to_play_move": "res://scenes/objects/tutorials/how_to_play_move.tscn",
+ 	"how_to_play_checking_wall": "res://scenes/objects/tutorials/how_to_play_checking_wall.tscn",
 -	"how_to_play_minesweeper": "res://nodes/tutorials/how_to_play_minesweeper.tscn",
 -	"how_to_play_one_stroke": "res://nodes/tutorials/how_to_play_one_stroke.tscn",
 -	"how_to_play_sum_path": "res://nodes/tutorials/how_to_play_sum_path.tscn",
- 	"how_to_play_wall_builder": "res://nodes/tutorials/how_to_play_wall_builder.tscn",
+ 	"how_to_play_wall_builder": "res://scenes/objects/tutorials/how_to_play_wall_builder.tscn",
 -	"how_to_play_countdown_cost": "res://nodes/tutorials/how_to_play_countdown_cost.tscn",
 -	"how_to_play_fading_ink": "res://nodes/tutorials/how_to_play_fading_ink.tscn",
 -	"how_to_play_fog_of_war": "res://nodes/tutorials/how_to_play_fog_of_war.tscn",
- 	"how_to_play_blind_memory": "res://nodes/tutorials/how_to_play_blind_memory.tscn",
- 	"how_to_use_tool": "res://nodes/tutorials/how_to_use_tool.tscn",
+ 	"how_to_play_blind_memory": "res://scenes/objects/tutorials/how_to_play_blind_memory.tscn",
+ 	"how_to_use_tool": "res://scenes/objects/tutorials/how_to_use_tool.tscn",
 ```
 
 ### `scripts/core/controllers/ui_controller.gd`
@@ -2878,7 +2878,7 @@ Xem `DELETED_FILES.txt`.
 +## Người chơi chạm ra ngoài các ô sáng khi đang chọn Teleport -> huỷ chọn
 +signal teleport_cancelled
  
- const CRASH_SFX_SCENE := preload("res://nodes/sfx/crash.tscn")
+ const CRASH_SFX_SCENE := preload("res://scenes/objects/vfx/crash.tscn")
 @@ -96,4 +100,6 @@
  var _dragging_player := false
  var _player_current_cell := Vector2i.ZERO
@@ -3311,11 +3311,11 @@ Xem `DELETED_FILES.txt`.
  var hint_btn: BaseButton = null
  ### Nút CHƠI LẠI ẩn sẵn DƯỚI thanh nút — UIController hiện khi ván không còn thắng được nữa (Sum Path)
 @@ -48,13 +48,5 @@
- const HUD_LEVEL := preload("res://nodes/hud/portrait/game/level_mode.tscn")
- const HUD_DUNGEON := preload("res://nodes/hud/portrait/game/dungeon_mode.tscn")
+ const HUD_LEVEL := preload("res://scenes/objects/ui/hud/game/level_mode/portrait.tscn")
+ const HUD_DUNGEON := preload("res://scenes/objects/ui/hud/game/dungeon_mode/portrait.tscn")
 -const HUD_MINESWEEP := preload("res://nodes/hud/portrait/game/minesweep_hud.tscn")
 -const HUD_SUM_PATH := preload("res://nodes/hud/portrait/game/sum_path_hud.tscn")
- const HUD_BLIND_MEMORY := preload("res://nodes/hud/portrait/game/blind_memory_hud.tscn")
+ const HUD_BLIND_MEMORY := preload("res://scenes/objects/ui/hud/game/blind_memory_hud/portrait.tscn")
 -const HUD_COUNTDOWN := preload("res://nodes/hud/portrait/game/countdown_hud.tscn")
 -const HUD_FADING_INK := preload("res://nodes/hud/portrait/game/fading_ink_hud.tscn")
 -## Fog of War: THỜI GIAN + BẢNG SƯƠNG MÙ (lượt thử lại · tầm nhìn · cảnh báo) — không có thẻ Nhiệm vụ
@@ -3323,19 +3323,19 @@ Xem `DELETED_FILES.txt`.
 -## One Stroke: THỜI GIAN + BẢNG TIẾN ĐỘ PHỦ KÍN (số ô đã đi · thanh tiến độ) — không có thẻ Nhiệm vụ
 -const HUD_ONE_STROKE := preload("res://nodes/hud/portrait/game/one_stroke_hud.tscn")
  ## Wall Builder: THỜI GIAN + BẢNG TƯỜNG ĐÃ VẼ (đoạn đã dựng · lượt gửi) — không có thẻ Nhiệm vụ
- const HUD_WALL_BUILDER := preload("res://nodes/hud/portrait/game/wall_builder_hud.tscn")
+ const HUD_WALL_BUILDER := preload("res://scenes/objects/ui/hud/game/wall_builder_hud/portrait.tscn")
 @@ -64,11 +56,5 @@
- const HUD_LAND_LEVEL := preload("res://nodes/hud/landscape/game/level_mode.tscn")
- const HUD_LAND_DUNGEON := preload("res://nodes/hud/landscape/game/dungeon_mode.tscn")
+ const HUD_LAND_LEVEL := preload("res://scenes/objects/ui/hud/game/level_mode/landscape.tscn")
+ const HUD_LAND_DUNGEON := preload("res://scenes/objects/ui/hud/game/dungeon_mode/landscape.tscn")
 -const HUD_LAND_MINESWEEP := preload("res://nodes/hud/landscape/game/minesweep_hud.tscn")
 -const HUD_LAND_SUM_PATH := preload("res://nodes/hud/landscape/game/sum_path_hud.tscn")
- const HUD_LAND_BLIND_MEMORY := preload("res://nodes/hud/landscape/game/blind_memory_hud.tscn")
+ const HUD_LAND_BLIND_MEMORY := preload("res://scenes/objects/ui/hud/game/blind_memory_hud/landscape.tscn")
 -const HUD_LAND_COUNTDOWN := preload("res://nodes/hud/landscape/game/countdown_hud.tscn")
 -const HUD_LAND_FADING_INK := preload("res://nodes/hud/landscape/game/fading_ink_hud.tscn")
 -const HUD_LAND_FOG_OF_WAR := preload("res://nodes/hud/landscape/game/fog_of_war_hud.tscn")
 -const HUD_LAND_ONE_STROKE := preload("res://nodes/hud/landscape/game/one_stroke_hud.tscn")
- const HUD_LAND_WALL_BUILDER := preload("res://nodes/hud/landscape/game/wall_builder_hud.tscn")
- const HUD_LAND_CHALLENGE := preload("res://nodes/hud/landscape/game/challenge_hud.tscn")
+ const HUD_LAND_WALL_BUILDER := preload("res://scenes/objects/ui/hud/game/wall_builder_hud/landscape.tscn")
+ const HUD_LAND_CHALLENGE := preload("res://scenes/objects/ui/hud/game/challenge_hud/landscape.tscn")
 @@ -143,4 +129,6 @@
  	# Bàn cờ → GameController (overlay retry)
  	_connect_once(board_view, "no_moves_retry_pressed", game_controller, "_on_no_moves_retry_pressed")

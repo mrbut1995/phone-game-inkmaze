@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/models/definitions/LevelData.gd" id="1_level"]
+
+[resource]
+script = ExtResource("1_level")
+level_title = "Level 2-1 · Mở Đầu Suy Luận"
+chapter = 2
+mode_id = "play"
+difficulty = "medium"
+width = 4
+height = 4
+start_pos = Vector2i(0, 3)
+end_pos = Vector2i(3, 0)
+max_steps = 21
+par_time = 63.0
+v_walls = PackedByteArray(1, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1)
+v_walls_visible = PackedByteArray(1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1)
+h_walls = PackedByteArray(1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1)
+h_walls_visible = PackedByteArray(1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1)
+custom_cell_values = {}

@@ -1,0 +1,307 @@
+[gd_scene format=3 uid="uid://dxpf4nu3wy753"]
+
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://data/config/theme_default.tres" id="1_t30dy"]
+[ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/editor/NinePatchButton.gd" id="4_tfbqo"]
+[ext_resource uid="uid://w4vmljypjtn" type="Texture2D" path="res://assets/images-png/game/btn_teleport_normal.png" id="10_nytdo"]
+[ext_resource uid="uid://18tyqqpebj34" type="Texture2D" path="res://assets/images-png/game/btn_teleport_pressed.png" id="11_t30dy"]
+[ext_resource uid="uid://dbhwrsi5ewmbg" type="Texture2D" path="res://assets/images-png/game/btn_skip_normal.png" id="11_vyd7l"]
+[ext_resource uid="uid://c1udpquhff0e1" type="Texture2D" path="res://assets/images-png/game/btn_skip_pressed.png" id="12_jbxlu"]
+[ext_resource uid="uid://cokoietwvdpeo" type="Texture2D" path="res://assets/images-png/game/btn_teleport_disabled.png" id="12_srfk4"]
+[ext_resource uid="uid://c4louruvu6ijq" type="Texture2D" path="res://assets/images-png/game/btn_hint_normal.png" id="13_iyt1b"]
+[ext_resource uid="uid://cd1lfyfbiymhx" type="Texture2D" path="res://assets/images-png/game/btn_skip_disable.png" id="13_s4ykb"]
+[ext_resource uid="uid://c1rsbeag67ckp" type="Texture2D" path="res://assets/images-png/game/btn_hint_pressed.png" id="14_vyd7l"]
+[ext_resource uid="uid://dybqvaw2rmp7w" type="Texture2D" path="res://assets/images-png/game/btn_hint_disabled.png" id="15_nytdo"]
+[ext_resource type="Script" uid="uid://blpdwtvxerh8h" path="res://scripts/editor/NinePatchStateTexture.gd" id="16_jbxlu"]
+[ext_resource uid="uid://bs6bmfy2ow7bv" type="Texture2D" path="res://assets/images-png/common/btn_item_normal.png" id="17_s4ykb"]
+[ext_resource uid="uid://bwj5ympwe2hm3" type="Texture2D" path="res://assets/images-png/common/btn_item_pressed.png" id="18_7hpxb"]
+[ext_resource uid="uid://dg85ewia3cxa7" type="Texture2D" path="res://assets/images-png/common/btn_item_disable.png" id="19_i0adw"]
+[ext_resource type="Script" uid="uid://bbq8fo18vt532" path="res://scripts/objects/ui/hud/game/action_bar/ActionBar.gd" id="bar_script"]
+[ext_resource type="Script" uid="uid://6o5plv3ncq4w" path="res://scripts/objects/ui/hud/game/action_bar/LimitedButton.gd" id="limit_btn"]
+[ext_resource uid="uid://cftwvp13ryeqs" type="Texture2D" path="res://assets/images-png/game/btn_restart_disabled.png" id="restart_d"]
+[ext_resource uid="uid://din4ucp1xnysu" type="Texture2D" path="res://assets/images-png/game/btn_restart_focus.png" id="restart_f"]
+[ext_resource uid="uid://blq6cnnryjyqu" type="Texture2D" path="res://assets/images-png/game/btn_restart_normal.png" id="restart_n"]
+[ext_resource uid="uid://e42nujmud7ck" type="Texture2D" path="res://assets/images-png/game/btn_restart_pressed.png" id="restart_p"]
+[ext_resource uid="uid://bma8xm7w4gmh6" type="Texture2D" path="res://assets/images-png/game/btn_submit_disabled.png" id="submit_d"]
+[ext_resource uid="uid://b62wcl4y41lv7" type="Texture2D" path="res://assets/images-png/game/btn_submit_normal.png" id="submit_n"]
+[ext_resource uid="uid://cvvjfxne56g5k" type="Texture2D" path="res://assets/images-png/game/btn_submit_pressed.png" id="submit_p"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jbxlu"]
+content_margin_left = 61.0
+content_margin_top = 18.0
+content_margin_right = 30.0
+content_margin_bottom = 20.0
+texture = ExtResource("submit_n")
+texture_margin_left = 61.0
+texture_margin_top = 18.0
+texture_margin_right = 30.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_s4ykb"]
+content_margin_left = 61.0
+content_margin_top = 18.0
+content_margin_right = 30.0
+content_margin_bottom = 20.0
+texture = ExtResource("submit_p")
+texture_margin_left = 61.0
+texture_margin_top = 18.0
+texture_margin_right = 30.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7hpxb"]
+content_margin_left = 61.0
+content_margin_top = 18.0
+content_margin_right = 30.0
+content_margin_bottom = 20.0
+texture = ExtResource("submit_n")
+texture_margin_left = 61.0
+texture_margin_top = 18.0
+texture_margin_right = 30.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i0adw"]
+content_margin_left = 61.0
+content_margin_top = 18.0
+content_margin_right = 30.0
+content_margin_bottom = 20.0
+texture = ExtResource("submit_d")
+texture_margin_left = 61.0
+texture_margin_top = 18.0
+texture_margin_right = 30.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="Animation" id="Animation_teleport_pulse_l"]
+resource_name = "pulse_teleport"
+length = 0.7
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubRow/Teleport:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.35, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.12, 1.12), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_teleport_pulse_l"]
+_data = {
+&"pulse_teleport": SubResource("Animation_teleport_pulse_l")
+}
+
+[node name="ActionBar" type="VBoxContainer" unique_id=834062236]
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.20300001
+offset_bottom = 0.23999023
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("1_t30dy")
+script = ExtResource("bar_script")
+metadata/_edit_use_anchors_ = true
+
+[node name="Submit" type="Button" parent="." unique_id=832790697]
+visible = false
+custom_minimum_size = Vector2(230, 75)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+tooltip_text = "STR_TOOL_SUBMIT"
+theme_override_styles/normal = SubResource("StyleBoxTexture_jbxlu")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_s4ykb")
+theme_override_styles/hover = SubResource("StyleBoxTexture_7hpxb")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_i0adw")
+script = ExtResource("4_tfbqo")
+texture_normal = ExtResource("submit_n")
+texture_hover = ExtResource("submit_n")
+texture_pressed = ExtResource("submit_p")
+texture_disabled = ExtResource("submit_d")
+patch_margin_left = 61.0
+patch_margin_top = 18.0
+patch_margin_right = 30.0
+patch_margin_bottom = 20.0
+metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
+
+[node name="SubRow" type="HBoxContainer" parent="." unique_id=1864078791]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 2
+
+[node name="Restart" type="TextureButton" parent="SubRow" unique_id=1496407431]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "STR_TOOL_RESTART"
+texture_normal = ExtResource("restart_n")
+texture_pressed = ExtResource("restart_p")
+texture_hover = ExtResource("restart_n")
+texture_disabled = ExtResource("restart_d")
+texture_focused = ExtResource("restart_f")
+stretch_mode = 0
+
+[node name="Skip" type="TextureButton" parent="SubRow" unique_id=2113501766 node_paths=PackedStringArray("panel_limit", "limit_label")]
+script = ExtResource("limit_btn")
+panel_limit = NodePath("PanelLimit")
+limit_label = NodePath("PanelLimit/Label")
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_stretch_ratio = 0.2
+tooltip_text = "STR_TOOL_SKIP"
+texture_normal = ExtResource("11_vyd7l")
+texture_pressed = ExtResource("12_jbxlu")
+texture_hover = ExtResource("11_vyd7l")
+texture_disabled = ExtResource("13_s4ykb")
+texture_focused = ExtResource("11_vyd7l")
+stretch_mode = 0
+
+[node name="PanelLimit" type="Control" parent="SubRow/Skip" unique_id=2113501767]
+layout_mode = 1
+anchor_left = 0.59300005
+anchor_top = -0.279
+anchor_right = 1.088
+anchor_bottom = 0.344
+offset_left = 0.036994934
+offset_top = 0.019001007
+offset_right = -0.008003235
+offset_bottom = 0.01599884
+mouse_filter = 1
+script = ExtResource("16_jbxlu")
+patch_margin_left = 12.0
+patch_margin_top = 11.0
+patch_margin_right = 13.0
+patch_margin_bottom = 14.0
+texture_normal = ExtResource("17_s4ykb")
+texture_hover = ExtResource("17_s4ykb")
+texture_pressed = ExtResource("18_7hpxb")
+texture_disabled = ExtResource("19_i0adw")
+metadata/_custom_type_script = "uid://blpdwtvxerh8h"
+
+[node name="Label" type="Label" parent="SubRow/Skip/PanelLimit" unique_id=2113501768]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1521739
+anchor_top = 0.12903225
+anchor_right = 0.87000006
+anchor_bottom = 0.74200004
+offset_right = -0.020004272
+offset_bottom = -0.0020008087
+theme_type_variation = &"HintGuideText"
+theme_override_font_sizes/font_size = 15
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Teleport" type="TextureButton" parent="SubRow" unique_id=293478108 node_paths=PackedStringArray("panel_limit", "limit_label")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "STR_TOOL_TELEPORT"
+texture_normal = ExtResource("10_nytdo")
+texture_pressed = ExtResource("11_t30dy")
+texture_hover = ExtResource("10_nytdo")
+texture_disabled = ExtResource("12_srfk4")
+texture_focused = ExtResource("10_nytdo")
+stretch_mode = 0
+script = ExtResource("limit_btn")
+panel_limit = NodePath("PanelLimit")
+limit_label = NodePath("PanelLimit/Label")
+
+[node name="PanelLimit" type="Control" parent="SubRow/Teleport" unique_id=1634305007]
+layout_mode = 1
+anchor_left = 0.59300005
+anchor_top = -0.279
+anchor_right = 1.088
+anchor_bottom = 0.344
+offset_left = 0.036994934
+offset_top = 0.019001007
+offset_right = -0.008003235
+offset_bottom = 0.01599884
+mouse_filter = 1
+script = ExtResource("16_jbxlu")
+patch_margin_left = 12.0
+patch_margin_top = 11.0
+patch_margin_right = 13.0
+patch_margin_bottom = 14.0
+texture_normal = ExtResource("17_s4ykb")
+texture_hover = ExtResource("17_s4ykb")
+texture_pressed = ExtResource("18_7hpxb")
+texture_disabled = ExtResource("19_i0adw")
+metadata/_custom_type_script = "uid://blpdwtvxerh8h"
+
+[node name="Label" type="Label" parent="SubRow/Teleport/PanelLimit" unique_id=307457561]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1521739
+anchor_top = 0.12903225
+anchor_right = 0.87000006
+anchor_bottom = 0.74200004
+offset_right = -0.020004272
+offset_bottom = -0.0020008087
+theme_type_variation = &"HintGuideText"
+theme_override_font_sizes/font_size = 15
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Hint" type="TextureButton" parent="SubRow" unique_id=1015673811 node_paths=PackedStringArray("panel_limit", "limit_label")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "STR_TOOL_HINT"
+texture_normal = ExtResource("13_iyt1b")
+texture_pressed = ExtResource("14_vyd7l")
+texture_hover = ExtResource("13_iyt1b")
+texture_disabled = ExtResource("15_nytdo")
+texture_focused = ExtResource("13_iyt1b")
+stretch_mode = 0
+script = ExtResource("limit_btn")
+panel_limit = NodePath("PanelLimit")
+limit_label = NodePath("PanelLimit/Label")
+
+[node name="PanelLimit" type="Control" parent="SubRow/Hint" unique_id=968794150]
+layout_mode = 1
+anchor_left = 0.59300005
+anchor_top = -0.279
+anchor_right = 1.088
+anchor_bottom = 0.344
+offset_left = 0.036994934
+offset_top = 0.019001007
+offset_right = -0.008003235
+offset_bottom = 0.01599884
+mouse_filter = 1
+script = ExtResource("16_jbxlu")
+patch_margin_left = 12.0
+patch_margin_top = 11.0
+patch_margin_right = 13.0
+patch_margin_bottom = 14.0
+texture_normal = ExtResource("17_s4ykb")
+texture_hover = ExtResource("17_s4ykb")
+texture_pressed = ExtResource("18_7hpxb")
+texture_disabled = ExtResource("19_i0adw")
+metadata/_custom_type_script = "uid://blpdwtvxerh8h"
+
+[node name="Label" type="Label" parent="SubRow/Hint/PanelLimit" unique_id=1153250952]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1521739
+anchor_top = 0.12903225
+anchor_right = 0.87000006
+anchor_bottom = 0.74200004
+offset_right = -0.020004272
+offset_bottom = -0.0020008087
+theme_type_variation = &"HintGuideText"
+theme_override_font_sizes/font_size = 15
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="PulseAnim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_teleport_pulse_l")
+}

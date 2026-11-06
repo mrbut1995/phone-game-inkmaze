@@ -1,0 +1,488 @@
+[gd_scene format=3 uid="uid://dby0vymb3wuhs"]
+
+[ext_resource type="Script" uid="uid://dbnom6k6sjlek" path="res://scripts/components/game/MazeCell.gd" id="1_fj7pj"]
+[ext_resource uid="uid://d1cpghes4s4v7" type="Texture2D" path="res://assets/images-png/game/cell_normal.png" id="1_pne7a"]
+[ext_resource type="LabelSettings" uid="uid://d1q5q45o84b40" path="res://data/config/text/text_game_cell.tres" id="2_cjyvu"]
+[ext_resource uid="uid://hd8jc2u88ani" type="Texture2D" path="res://assets/images-png/game/cell_pressed.png" id="3_cobij"]
+[ext_resource uid="uid://bc0866cc0h3r5" type="Texture2D" path="res://assets/images-png/game/cell_disabled.png" id="4_lli7j"]
+[ext_resource uid="uid://bc6271g6dm76k" type="Texture2D" path="res://assets/images-png/game/icon_bomb.png" id="5_bomb"]
+[ext_resource uid="uid://eo1ufel7v72q" type="Texture2D" path="res://assets/images-png/game/cell_warn_wash.png" id="6_warn"]
+[ext_resource uid="uid://cq26wy0fmvu5r" type="Texture2D" path="res://assets/images-png/game/cell_faded_overlay.png" id="7_faded"]
+[ext_resource uid="uid://g4renere4wvx" type="Texture2D" path="res://assets/images-png/game/cell_depleted_badge.png" id="8_badge"]
+[ext_resource type="LabelSettings" path="res://data/config/text/text_game_cell_warn.tres" id="9_warnls"]
+[ext_resource type="LabelSettings" path="res://data/config/text/text_game_cell_faded.tres" id="10_fadedls"]
+[ext_resource uid="uid://b3y3ota5kgh7q" type="Texture2D" path="res://assets/images-png/game/cell_visited_hatch.png" id="11_visited"]
+[ext_resource type="LabelSettings" path="res://data/config/text/text_game_cell_visited.tres" id="12_visitedls"]
+[ext_resource uid="uid://cvm34mg2f0ngw" type="Texture2D" path="res://assets/images-png/game/cell_satisfied_wash.png" id="13_satisfied"]
+[ext_resource type="Texture2D" uid="uid://cowu67bwhbm4n" path="res://assets/images-png/game/cell_start.png" id="14_start"]
+[ext_resource type="Texture2D" uid="uid://dqyi8ijauyy0j" path="res://assets/images-png/game/cell_finish.png" id="15_finish"]
+[ext_resource uid="uid://b6p2na2vyeyvm" type="Texture2D" path="res://assets/images-png/game/icon_key.png" id="16_key"]
+[ext_resource uid="uid://j10m0igc4go5" type="Texture2D" path="res://assets/images-png/game/icon_lock_cell.png" id="17_lock"]
+[ext_resource uid="uid://df6sexipy7iqu" type="Texture2D" path="res://assets/images-png/game/cell_teleport_glow.png" id="18_tpglow"]
+
+[sub_resource type="Animation" id="Animation_cell_reset"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite/Label:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_cell_entrance"]
+resource_name = "entrance"
+length = 0.24
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.18, 0.24),
+"transitions": PackedFloat32Array(1, 0.5, 1),
+"update": 0,
+"values": [Vector2(0.65, 0.65), Vector2(1.04, 1.04), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_cell_pulse"]
+resource_name = "pulse"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.2),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.12, 1.12), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_cell_step"]
+resource_name = "step"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.2, 0.3),
+"transitions": PackedFloat32Array(0.5, 2, 0.5, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.12, 1.12), Vector2(1, 1), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Color(1.18, 1.18, 1.12, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_cell_win"]
+resource_name = "win"
+length = 0.28
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.12, 0.28),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.15, 1.15), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_cell_shudder"]
+resource_name = "shudder"
+length = 0.145
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.035, 0.07, 0.105, 0.145),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-6, 4), Vector2(6, -4), Vector2(-3, 2), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_cell_fail"]
+resource_name = "fail"
+length = 0.35
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.035, 0.07, 0.105, 0.145),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-6, 4), Vector2(6, -4), Vector2(-3, 2), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.35),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 0.45, 0.42, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_cell_pop_text"]
+resource_name = "pop_text"
+length = 0.22
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite/Label:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.22),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.32, 1.32), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_cell_teleport_glow"]
+resource_name = "teleport_glow"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite/TeleportGlow:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.45, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.55), Color(1, 1, 1, 1), Color(1, 1, 1, 0.55)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cell"]
+_data = {
+&"RESET": SubResource("Animation_cell_reset"),
+&"entrance": SubResource("Animation_cell_entrance"),
+&"fail": SubResource("Animation_cell_fail"),
+&"pop_text": SubResource("Animation_cell_pop_text"),
+&"pulse": SubResource("Animation_cell_pulse"),
+&"shudder": SubResource("Animation_cell_shudder"),
+&"step": SubResource("Animation_cell_step"),
+&"teleport_glow": SubResource("Animation_cell_teleport_glow"),
+&"win": SubResource("Animation_cell_win")
+}
+
+[node name="Cell" type="Control" unique_id=1607724359 node_paths=PackedStringArray("button", "label", "bomb", "warn", "warn_label", "faded", "faded_badge", "faded_label", "visited", "visited_label", "satisfied", "lock", "key_icon", "teleport_glow", "anim", "entrance_timer", "win_timer")]
+layout_mode = 3
+anchors_preset = 0
+offset_right =  88
+offset_bottom =  88
+mouse_filter = 2
+script = ExtResource("1_fj7pj")
+button = NodePath("Sprite")
+label = NodePath("Sprite/Label")
+bomb = NodePath("Sprite/Bomb")
+warn = NodePath("Sprite/Warn")
+warn_label = NodePath("Sprite/WarnLabel")
+faded = NodePath("Sprite/Faded")
+faded_badge = NodePath("Sprite/FadedBadge")
+faded_label = NodePath("Sprite/FadedLabel")
+visited = NodePath("Sprite/Visited")
+visited_label = NodePath("Sprite/VisitedLabel")
+satisfied = NodePath("Sprite/Satisfied")
+lock = NodePath("Sprite/Lock")
+key_icon = NodePath("Sprite/Key")
+teleport_glow = NodePath("Sprite/TeleportGlow")
+anim = NodePath("AnimationPlayer")
+entrance_timer = NodePath("EntranceTimer")
+win_timer = NodePath("WinTimer")
+texture_normal = ExtResource("1_pne7a")
+texture_start = ExtResource("14_start")
+texture_finish = ExtResource("15_finish")
+
+[node name="Sprite" type="TextureButton" parent="." unique_id=1867171790]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture_normal = ExtResource("1_pne7a")
+texture_pressed = ExtResource("3_cobij")
+texture_hover = ExtResource("1_pne7a")
+texture_disabled = ExtResource("4_lli7j")
+texture_focused = ExtResource("1_pne7a")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Bomb" type="TextureRect" parent="Sprite" index="0" unique_id=1305284501]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.2
+anchor_right = 0.8
+anchor_bottom = 0.8
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("5_bomb")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Warn" type="TextureRect" parent="Sprite" index="1"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("6_warn")
+expand_mode = 1
+
+[node name="WarnLabel" type="Label" parent="Sprite" index="2"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+offset_left =  0
+offset_top =  50
+offset_right =  88
+offset_bottom =  72
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "STR_CELL_ALMOST_FADED"
+label_settings = ExtResource("9_warnls")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Faded" type="TextureRect" parent="Sprite" index="3"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("7_faded")
+expand_mode = 1
+
+[node name="FadedBadge" type="TextureRect" parent="Sprite" index="4"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+offset_left =  26
+offset_top =  26
+offset_right =  62
+offset_bottom =  62
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("8_badge")
+expand_mode = 1
+
+[node name="FadedLabel" type="Label" parent="Sprite" index="5"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+offset_left =  26
+offset_top =  26
+offset_right =  62
+offset_bottom =  62
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "STR_CELL_DRY"
+label_settings = ExtResource("10_fadedls")
+
+[node name="Visited" type="TextureRect" parent="Sprite" index="6"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("11_visited")
+expand_mode = 1
+
+[node name="VisitedLabel" type="Label" parent="Sprite" index="7"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+offset_top =  1
+offset_right =  88
+offset_bottom =  15
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "ĐÃ ĐI"
+label_settings = ExtResource("12_visitedls")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Satisfied" type="TextureRect" parent="Sprite" index="8"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("13_satisfied")
+expand_mode = 1
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Sprite" index="6" unique_id=2091843329]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0"
+label_settings = ExtResource("2_cjyvu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Lock" type="TextureRect" parent="Sprite" index="10"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.18
+anchor_top = 0.18
+anchor_right = 0.82
+anchor_bottom = 0.82
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("17_lock")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Key" type="TextureRect" parent="Sprite" index="11"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.56
+anchor_top = 0.04
+anchor_right = 0.96
+anchor_bottom = 0.44
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("16_key")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TeleportGlow" type="TextureRect" parent="Sprite" index="12"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("18_tpglow")
+expand_mode = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_cell")
+}
+
+[node name="EntranceTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="WinTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="timeout" from="EntranceTimer" to="." method="_play_entrance_now"]
+[connection signal="timeout" from="WinTimer" to="." method="_play_win_now"]

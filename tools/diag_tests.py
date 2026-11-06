@@ -22,7 +22,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 
 def run(name: str, timeout: float = 150.0, keep: int = 30) -> None:
     print(f"\n######## {name} ########")
-    cmd = [GODOT, "--headless", "--path", str(ROOT), "--script", f"res://scripts/test_case/{name}.gd"]
+    cmd = [GODOT, "--headless", "--path", str(ROOT), "--script", f"res://tests/legacy/legacy_{name[len('test_'):] if name.startswith('test_') else name}.gd"]
     try:
         done = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True,
                               encoding="utf-8", errors="replace", timeout=timeout)

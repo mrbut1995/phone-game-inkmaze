@@ -1,0 +1,198 @@
+[gd_scene format=3 uid="uid://dusrddwoc1rqw"]
+
+[ext_resource type="Script" uid="uid://155506bao726" path="res://scripts/objects/ui/popups/LanguagePopup.gd" id="1_script"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://data/config/theme_default.tres" id="2_theme"]
+[ext_resource uid="uid://dh7g27ti5ff3h" type="Texture2D" path="res://assets/images-png/popups/lang_panel.png" id="3_panel"]
+[ext_resource uid="uid://ruoaaeu82tl0" type="Texture2D" path="res://assets/images-png/popups/washi_tape.png" id="4_washi"]
+[ext_resource uid="uid://blmy5cbx5kmeg" type="Texture2D" path="res://assets/images-png/popups/paper_clip.png" id="5_clip"]
+[ext_resource uid="uid://duqcleabqujwd" type="Texture2D" path="res://assets/images-png/settings/divider_dashed.png" id="6_divider"]
+[ext_resource uid="uid://57qxvoxv4bl3" type="Texture2D" path="res://assets/images-png/popups/btn_lang_cancel_normal.png" id="7_sec_n"]
+[ext_resource uid="uid://g54vvrpk2i64" type="Texture2D" path="res://assets/images-png/popups/btn_lang_cancel_pressed.png" id="8_sec_p"]
+[ext_resource uid="uid://btc1kg1ciivhw" type="Texture2D" path="res://assets/images-png/popups/btn_lang_cancel_focus.png" id="9_sec_f"]
+[ext_resource uid="uid://dkbm2jrrjdgew" type="Texture2D" path="res://assets/images-png/popups/btn_lang_apply_normal.png" id="10_pri_n"]
+[ext_resource uid="uid://c3dcve1nplix0" type="Texture2D" path="res://assets/images-png/popups/btn_lang_apply_pressed.png" id="11_pri_p"]
+[ext_resource uid="uid://hxscjbs80ry7" type="Texture2D" path="res://assets/images-png/popups/btn_lang_apply_focus.png" id="12_pri_f"]
+[ext_resource uid="uid://cdlnxrlq486tt" type="Texture2D" path="res://assets/images-png/icons/flags/flag_generic.png" id="13_flag_fallback"]
+
+[sub_resource type="StyleBoxTexture" id="Sb_sec_n"]
+texture = ExtResource("7_sec_n")
+texture_margin_left = 24
+texture_margin_top = 20
+texture_margin_right = 24
+texture_margin_bottom = 20
+
+[sub_resource type="StyleBoxTexture" id="Sb_sec_p"]
+texture = ExtResource("8_sec_p")
+texture_margin_left = 24
+texture_margin_top = 20
+texture_margin_right = 24
+texture_margin_bottom = 20
+
+[sub_resource type="StyleBoxTexture" id="Sb_sec_f"]
+texture = ExtResource("9_sec_f")
+texture_margin_left = 24
+texture_margin_top = 20
+texture_margin_right = 24
+texture_margin_bottom = 20
+
+[node name="Base" type="Control" unique_id=1015568792 node_paths=PackedStringArray("dim", "panel", "list", "scroll")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_theme")
+script = ExtResource("1_script")
+dim = NodePath("Dim")
+panel = NodePath("Panel")
+list = NodePath("Panel/Content/Scroll/List")
+scroll = NodePath("Panel/Content/Scroll")
+flag_fallback = ExtResource("13_flag_fallback")
+
+[node name="Dim" type="ColorRect" parent="." unique_id=1194060954]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.09411765, 0.14117648, 0.18039216, 0.6392157)
+
+[node name="Panel" type="Control" parent="." unique_id=1621539942]
+layout_mode = 1
+anchors_preset = 0
+offset_left =  75
+offset_top =  200
+offset_right =  465
+offset_bottom =  760
+mouse_filter = 2
+
+[node name="Art" type="TextureRect" parent="Panel" unique_id=848801197]
+layout_mode = 1
+anchors_preset = -1
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 391.0
+offset_bottom = 561.0
+mouse_filter = 2
+texture = ExtResource("3_panel")
+
+[node name="Washi" type="TextureRect" parent="Panel" unique_id=1925565409]
+layout_mode = 1
+anchors_preset = -1
+offset_left =  144
+offset_top =  -8.5
+offset_right =  257
+offset_bottom =  18.5
+mouse_filter = 2
+texture = ExtResource("4_washi")
+
+[node name="Clip" type="TextureRect" parent="Panel" unique_id=1468092271]
+layout_mode = 1
+anchors_preset = -1
+offset_left =  48.5
+offset_top =  -7.5
+offset_right =  71.5
+offset_bottom =  33
+mouse_filter = 2
+texture = ExtResource("5_clip")
+
+[node name="Content" type="VBoxContainer" parent="Panel" unique_id=2075346937]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left =  55
+offset_top =  34
+offset_right =  -35
+offset_bottom =  -34
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation =  6
+
+[node name="Title" type="Label" parent="Panel/Content" unique_id=649000259]
+layout_mode = 2
+theme_type_variation = &"PopupTitle"
+text = "STR_LANGUAGE_TITLE"
+
+[node name="Subtitle" type="Label" parent="Panel/Content" unique_id=613417771]
+layout_mode = 2
+theme_type_variation = &"PopupSubtitle"
+text = "STR_LANGUAGE_SUBTITLE"
+
+[node name="Divider" type="TextureRect" parent="Panel/Content" unique_id=775125674]
+custom_minimum_size =  Vector2(0, 2)
+layout_mode = 2
+texture = ExtResource("6_divider")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="Scroll" type="ScrollContainer" parent="Panel/Content" unique_id=33277931]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="List" type="VBoxContainer" parent="Panel/Content/Scroll" unique_id=1727273265]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation =  10
+
+[node name="Buttons" type="HBoxContainer" parent="Panel/Content" unique_id=935925410]
+layout_mode = 2
+theme_override_constants/separation =  15
+
+[node name="Cancel" type="Button" parent="Panel/Content/Buttons" unique_id=577269955]
+custom_minimum_size =  Vector2(90, 48)
+layout_mode = 2
+theme_override_styles/normal = SubResource("Sb_sec_n")
+theme_override_styles/hover = SubResource("Sb_sec_n")
+theme_override_styles/pressed = SubResource("Sb_sec_p")
+theme_override_styles/focus = SubResource("Sb_sec_f")
+
+[node name="Label" type="Label" parent="Panel/Content/Buttons/Cancel" unique_id=1419882142]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_bottom = -4.0
+theme_type_variation = &"PopupBtnTextMuted"
+theme_override_colors/font_color = Color(0.0863, 0.2745, 0.3882, 1)
+text = "STR_BTN_CANCEL"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Apply" type="TextureButton" parent="Panel/Content/Buttons" unique_id=1975684081]
+custom_minimum_size =  Vector2(195, 48)
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("10_pri_n")
+texture_pressed = ExtResource("11_pri_p")
+texture_hover = ExtResource("10_pri_n")
+texture_focused = ExtResource("12_pri_f")
+ignore_texture_size = true
+
+[node name="Label" type="Label" parent="Panel/Content/Buttons/Apply" unique_id=144376740]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_bottom = -4.0
+theme_type_variation = &"PopupBtnPrimarySm"
+text = "STR_BTN_APPLY"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Footer" type="Label" parent="Panel/Content" unique_id=537269353]
+layout_mode = 2
+theme_type_variation = &"PopupQuote"
+text = "STR_LANGUAGE_FOOTER"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="Panel/Content/Buttons/Cancel" to="." method="_on_cancel_pressed"]
+[connection signal="pressed" from="Panel/Content/Buttons/Apply" to="." method="_on_apply_pressed"]
+[connection signal="gui_input" from="Dim" to="." method="_on_dim_gui_input"]

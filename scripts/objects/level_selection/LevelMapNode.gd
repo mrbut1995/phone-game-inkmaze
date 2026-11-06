@@ -1,0 +1,408 @@
+class_name LevelMapNode
+extends Node2D
+## ============================================================================
+## LevelMapNode — Một nút màn chơi trên bản đồ (road map)
+## Nút là một KHỐI GIẤY NỔI dùng `TextureButton2D` (art 4 trạng thái: thường · rê ·
+## nhấn · khoá) nên bấm có cảm giác; số màn + 3 sao là node con nằm trong nút.
+##
+## Quy ước của project: CẤU HÌNH TĨNH nằm trong `level_node.tscn` — node con, texture
+## theo trạng thái, animation (`pop_in` · `pulse` · `press`) và dây signal
+## (`Button.pressed`, `AnimationPlayer.animation_finished`) đều khai trong scene;
+## script chỉ bind bằng `@export` rồi nhận dữ liệu qua `setup()`.
+##
+## Trạng thái (đổi qua `setup`):
+##   LOCKED  → `Button.disabled = true` (art xám nét đứt) + ổ khoá + số nhỏ bên dưới, ẩn sao
+##   CURRENT → mặt nút VÀNG + vòng `Halo` nét đứt đỏ + "thở" (`pulse`)
+##   DONE    → hiện số + sao đã đạt (viên thuốc 3 sao nằm DƯỚI nút)
+##   SKIPPED → ẩn số (chỉ còn sao trống) để nhấc người chơi quay lại
+##   NORMAL  → nút thường
+## Màn BONUS (`setup(..., p_bonus = true)`): bộ art cam + băng "BONUS" phía trên nút.
+## Nhấn giữ / rê chuột: art nút tự vẽ độ lệch (pressed chìm, hover nâng) nên số màn +
+## hàng sao + ổ khoá + vòng halo được TRÔI THEO cùng độ lệch — nội dung dính vào nút.
+## ============================================================================
+
+## Scene contract
+## Exports:  star_highlight, star_empty, color_number_current, color_number_normal, color_number_outline, tex_current, tex_bonus_normal, tex_bonus_pressed, tex_bonus_current, tex_bonus_disabled, button, halo, label, stars_box, star1, star2, star3, lock_icon, lock_number, stars_pill, bonus_ribbon, bonus_label, anim
+## Emits:    pressed, star_stamped, complete_finished, unlock_finished
+## Handlers wired in scene: _on_anim_finished, _on_button_hover_changed, _on_button_press_changed, _on_button_pressed
+## Subscribes in code (EventBus/Model): (none)
+
+signal pressed(level_id: int)
+## Đóng dấu xong ngôi sao thứ `index` (0..2) — nơi nghe có thể phát SFX
+signal star_stamped(index: int)
+## Kết thúc animation hoàn thành màn / mở khoá màn
+signal complete_finished
+signal unlock_finished
+
+enum State {
+	LOCKED,    ## Chưa mở khoá
+	NORMAL,    ## Đã mở, chưa chơi
+	CURRENT,   ## Màn tiếp theo cần chơi (highlight)
+	DONE,      ## Đã hoàn thành (có sao)
+	SKIPPED,   ## Đã bỏ qua
+}
+
+## Art sao — gán trong `level_node.tscn` (ExtResource; dùng bản `-png` chuẩn dự án)
+@export var star_highlight: Texture2D = null
+@export var star_empty: Texture2D = null
+
+## Màu số màn: nhãn giấy vở (nền kem / vàng) ⇒ số MỰC NAVY, không viền
+@export var color_number_current := Color(0.0863, 0.2745, 0.3882, 1.0)
+@export var color_number_normal := Color(0.0863, 0.2745, 0.3882, 1.0)
+@export var color_number_outline := Color(0.05, 0.16, 0.30, 0.0)
+@export_range(0, 12, 1) var number_outline_size := 0
+
+@export_group("Nhãn giấy")
+## Độ nghiêng tối đa của nhãn giấy (độ). Mỗi màn nghiêng khác nhau (theo số màn) cho tự nhiên; 0 = thẳng
+@export_range(0.0, 6.0, 0.1) var tilt_degrees := 2.5
+
+@export_group("Hiệu ứng hoàn thành màn")
+## Khoảng cách giữa 2 ngôi sao được đóng dấu (giây)
+@export_range(0.05, 0.6, 0.01) var star_stamp_interval := 0.24
+## Số tia sáng toả ra mỗi lần đóng dấu sao
+@export_range(0, 12, 1) var burst_count := 7
+
+@export_group("Bộ art theo trạng thái")
+## Bộ art mặc định (normal · hover · pressed · disabled) lấy từ `Body/Button` trong scene.
+## 2 bộ dưới đây thay vào khi màn ĐANG CHƠI / màn BONUS.
+@export var tex_current: Texture2D = null
+@export var tex_bonus_normal: Texture2D = null
+@export var tex_bonus_pressed: Texture2D = null
+@export var tex_bonus_current: Texture2D = null
+@export var tex_bonus_disabled: Texture2D = null
+
+## Node con — bind bằng `@export` trong `level_node.tscn`
+@export var button: TextureButton2D = null
+@export var halo: Sprite2D = null
+@export var label: Label = null
+@export var stars_box: HBoxContainer = null
+@export var star1: TextureRect = null
+@export var star2: TextureRect = null
+@export var star3: TextureRect = null
+@export var lock_icon: Sprite2D = null
+## Số màn nhỏ nằm dưới ổ khoá (chỉ hiện khi màn khoá)
+@export var lock_number: Label = null
+## Viên thuốc 3 sao nằm dưới nút (chứa `stars_box`)
+@export var stars_pill: Control = null
+## Băng "BONUS" phía trên nút (chỉ màn BONUS)
+@export var bonus_ribbon: Node2D = null
+@export var bonus_label: Label = null
+@export var anim: AnimationPlayer = null
+
+var level_id: int = 0
+var state: State = State.LOCKED
+var is_bonus := false
+
+var _skin_default: Array[Texture2D] = []
+var _stars_cached := 0
+
+
+## Thiết lập node với dữ liệu từ LevelMap (`p_bonus` = màn BONUS cuối chương)
+func setup(p_level_id: int, p_state: State, stars: int = 0, p_bonus: bool = false) -> void:
+	level_id = p_level_id
+	state = p_state
+	is_bonus = p_bonus
+	_stars_cached = stars
+	_apply_skin()
+	_apply_state_look()
+	_apply_number()
+	_apply_stars(stars)
+	_apply_tilt()
+	_play_enter_anim()
+	if state == State.CURRENT:
+		play_pulse()
+
+
+## Nghiêng cả khối nút (nhãn giấy dán băng dính không bao giờ thẳng tăm tắp)
+func _apply_tilt() -> void:
+	if button == null:
+		return
+	var body := button.get_parent() as Node2D
+	if body == null:
+		return
+	const PATTERN: Array[float] = [-1.0, 0.8, -0.6, 1.0, -0.8, 0.6]
+	body.rotation = deg_to_rad(tilt_degrees * PATTERN[absi(level_id) % PATTERN.size()])
+
+
+# ---------------------------------------------------------------------------
+# Animation HOÀN THÀNH MÀN: nhãn giấy bật nhẹ ⇒ từng ngôi sao được ĐÓNG DẤU (nảy + xoay + toả tia)
+# ---------------------------------------------------------------------------
+## Chuẩn bị trước khi phát: dừng "thở", đưa sao về trạng thái TRƯỚC (`prev_stars` sao đã có, còn lại trống)
+func prepare_complete(prev_stars: int = 0) -> void:
+	if anim != null:
+		anim.stop()
+	_set_star_textures(prev_stars)
+
+
+func _set_star_textures(filled: int) -> void:
+	var list: Array[TextureRect] = [star1, star2, star3]
+	for index in list.size():
+		if list[index] != null:
+			list[index].texture = star_highlight if index < filled else star_empty
+
+
+## Đóng dấu các sao MỚI (từ `prev_stars` tới `stars`); `speed` > 1 = chạy nhanh hơn (chuỗi nhiều màn)
+func play_complete(stars: int, prev_stars: int = 0, speed: float = 1.0) -> void:
+	if anim != null and anim.has_animation(&"stamp"):
+		anim.play(&"stamp")
+	await get_tree().create_timer(0.2 / speed).timeout  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	var list: Array[TextureRect] = [star1, star2, star3]
+	for index in range(clampi(prev_stars, 0, list.size()), mini(stars, list.size())):
+		var star := list[index]
+		if star == null or not is_instance_valid(star):
+			continue
+		star.texture = star_highlight
+		star.pivot_offset = star.size * 0.5
+		star.scale = Vector2.ZERO
+		star.rotation = -0.6
+		var tween := create_tween().set_parallel(true)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+		tween.tween_property(star, "scale", Vector2.ONE, 0.32).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+		tween.tween_property(star, "rotation", 0.0, 0.32).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+		_burst(star.global_position + star.size * 0.5 * star.get_global_transform().get_scale())
+		star_stamped.emit(index)
+		await get_tree().create_timer(star_stamp_interval / speed).timeout  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	await get_tree().create_timer(0.25 / speed).timeout  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	complete_finished.emit()
+
+
+## Tia sáng nhỏ toả ra từ `global_pos` (tự dọn sau khi tan)
+func _burst(global_pos: Vector2) -> void:
+	if star_highlight == null or burst_count <= 0:
+		return
+	var texture_w := maxf(float(star_highlight.get_width()), 1.0)
+	for index in burst_count:
+		var spark := Sprite2D.new()  # EXCEPTION(R2-runtime-node): node dựng từ dữ liệu runtime
+		spark.texture = star_highlight
+		spark.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+		spark.z_index = 20
+		add_child(spark)
+		spark.global_position = global_pos
+		var base_scale := 9.0 / texture_w
+		spark.scale = Vector2.ONE * base_scale
+		var angle := TAU * float(index) / float(burst_count) + 0.4
+		var target := spark.position + Vector2.from_angle(angle) * (26.0 + 6.0 * float(index % 2))
+		var tween := create_tween().set_parallel(true)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+		tween.tween_property(spark, "position", target, 0.45).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+		tween.tween_property(spark, "modulate:a", 0.0, 0.45)
+		tween.tween_property(spark, "scale", Vector2.ONE * base_scale * 0.3, 0.45)
+		tween.chain().tween_callback(spark.queue_free)
+
+
+# ---------------------------------------------------------------------------
+# Animation MỞ KHOÁ màn kế tiếp: đang khoá ⇒ ổ khoá rung ⇒ bật ra thành nhãn "đang chơi"
+# ---------------------------------------------------------------------------
+var _lock_base_scale := Vector2.ONE
+
+## Cho nút trông như ĐANG KHOÁ (dùng lúc bản đồ vừa dựng, trước khi mở khoá)
+func show_locked_preview() -> void:
+	if anim != null:
+		anim.stop()
+	if button != null:
+		button.disabled = true
+	if halo != null:
+		halo.visible = false
+	if label != null:
+		label.visible = false
+	if lock_icon != null:
+		lock_icon.visible = true
+		_lock_base_scale = lock_icon.scale
+	if lock_number != null:
+		lock_number.visible = true
+		lock_number.text = str(level_id)
+	if stars_pill != null:
+		stars_pill.visible = false
+
+
+## `reset_stars` = true khi chính màn này sắp được đóng dấu sao ngay sau đó (chuỗi nhiều màn)
+func play_unlock(reset_stars: bool = false) -> void:
+	if lock_icon != null and lock_icon.visible:
+		var shake := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+		for angle in [0.28, -0.28, 0.2, -0.2, 0.0]:
+			shake.tween_property(lock_icon, "rotation", angle, 0.07)
+		await shake.finished
+		var out := create_tween().set_parallel(true)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+		out.tween_property(lock_icon, "scale", _lock_base_scale * 1.5, 0.16)
+		out.tween_property(lock_icon, "modulate:a", 0.0, 0.16)
+		await out.finished
+		lock_icon.rotation = 0.0
+		lock_icon.scale = _lock_base_scale
+		lock_icon.modulate.a = 1.0
+	_apply_skin()
+	_apply_state_look()
+	_apply_number()
+	_apply_stars(_stars_cached)
+	if reset_stars:
+		_set_star_textures(0)
+	_burst(global_position)
+	if anim != null and anim.has_animation(&"unlock"):
+		anim.play(&"unlock")
+		await anim.animation_finished
+	unlock_finished.emit()
+
+
+## Chọn bộ art cho nút theo (màn đang chơi / BONUS). Bộ mặc định nhớ từ scene ở lần gọi đầu.
+func _apply_skin() -> void:
+	if button == null:
+		return
+	if _skin_default.is_empty():
+		_skin_default = [button.texture_normal, button.texture_hover,
+			button.texture_pressed, button.texture_disabled]
+	var normal: Texture2D = _skin_default[0]
+	var hover: Texture2D = _skin_default[1]
+	var pressed_tex: Texture2D = _skin_default[2]
+	var disabled_tex: Texture2D = _skin_default[3]
+	if is_bonus:
+		var base: Texture2D = tex_bonus_normal if tex_bonus_normal != null else normal
+		normal = tex_bonus_current if state == State.CURRENT and tex_bonus_current != null else base
+		hover = normal
+		pressed_tex = tex_bonus_pressed if tex_bonus_pressed != null else pressed_tex
+		disabled_tex = tex_bonus_disabled if tex_bonus_disabled != null else disabled_tex
+	elif state == State.CURRENT and tex_current != null:
+		normal = tex_current
+		hover = tex_current
+	button.texture_normal = normal
+	button.texture_hover = hover
+	button.texture_pressed = pressed_tex
+	button.texture_disabled = disabled_tex
+
+
+## Dáng nút theo trạng thái: khoá thì tắt tương tác + hiện ổ khoá; màn đang chơi có vòng sáng
+func _apply_state_look() -> void:
+	if button != null:
+		button.disabled = state == State.LOCKED
+	if halo != null:
+		halo.visible = state == State.CURRENT
+	if lock_icon != null:
+		lock_icon.visible = state == State.LOCKED
+	if lock_number != null:
+		lock_number.visible = state == State.LOCKED
+		lock_number.text = str(level_id)
+	if bonus_ribbon != null:
+		bonus_ribbon.visible = is_bonus
+	if is_bonus and bonus_label != null:
+		var text := TranslationServer.translate("STR_LEVEL_BONUS_LABEL")
+		bonus_label.text = "BONUS" if text == "STR_LEVEL_BONUS_LABEL" else text
+
+
+## Số màn (màn khoá / đã bỏ qua thì ẩn số)
+func _apply_number() -> void:
+	if label == null:
+		return
+	var show_number := state != State.LOCKED and state != State.SKIPPED
+	label.visible = show_number
+	if show_number:
+		label.text = str(level_id)
+	# Ghi đè màu chữ trực tiếp (không dùng modulate: màu font của theme có thể không phải trắng)
+	label.modulate = Color.WHITE  # keep-code: hoạt cảnh/trạng thái runtime (tween)
+	var is_current := state == State.CURRENT
+	label.add_theme_color_override("font_color", color_number_current if is_current else color_number_normal)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
+	label.add_theme_color_override("font_outline_color", color_number_outline)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
+	label.add_theme_constant_override("outline_size", 0 if is_current else number_outline_size)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
+
+
+## 3 sao của màn (màn khoá ẩn cả viên thuốc sao)
+func _apply_stars(stars: int) -> void:
+	if stars_pill != null:
+		stars_pill.visible = state != State.LOCKED
+	if stars_box == null:
+		return
+	stars_box.visible = state != State.LOCKED
+	if not stars_box.visible:
+		return
+	if star1 != null:
+		star1.texture = star_highlight if stars >= 1 else star_empty
+	if star2 != null:
+		star2.texture = star_highlight if stars >= 2 else star_empty
+	if star3 != null:
+		star3.texture = star_highlight if stars >= 3 else star_empty
+
+
+## "Thở" cho màn tiếp theo (animation `pulse` khai trong .tscn)
+func play_pulse() -> void:
+	if anim != null and anim.has_animation(&"pulse"):
+		anim.play(&"pulse")
+
+
+func _play_enter_anim() -> void:
+	if anim != null and anim.has_animation(&"pop_in"):
+		anim.play(&"pop_in")
+
+
+## Nút phát `pressed` (dây nối khai trong .tscn) — màn khoá đã bị `disabled` chặn
+func _on_button_pressed() -> void:
+	if state == State.LOCKED:
+		return
+	pressed.emit(level_id)
+	if anim != null and anim.has_animation(&"press"):
+		anim.play(&"press")
+
+
+## Hết animation bấm thì trả lại hiệu ứng "thở" cho màn đang chơi
+func _on_anim_finished(anim_name: StringName) -> void:
+	if (anim_name == &"press" or anim_name == &"unlock") and state == State.CURRENT:
+		play_pulse()
+
+
+# ---------------------------------------------------------------------------
+# Nội dung trôi theo nút (không "float" khi nhấn / rê)
+# ---------------------------------------------------------------------------
+## Art nút (kiểu GỜ ĐÁY) vẽ sẵn độ lệch: pressed chìm 10px thiết kế = 5px hiển thị; hover nâng 2px
+## thiết kế = 1px. Bù đúng chừng đó cho các node nội dung (số màn · hàng sao · ổ khoá ·
+## vòng halo) để chúng dính chặt vào mặt nút.
+@export_group("Nội dung trôi theo nút")
+@export_range(0.0, 12.0, 0.5) var content_press_sink := 5.0
+@export_range(-6.0, 6.0, 0.5) var content_hover_lift := -1.0
+@export_range(0.01, 0.5, 0.01) var content_follow_sec := 0.08
+
+var _button_down := false
+var _button_hovered := false
+var _content_base: Dictionary = {}
+var _content_tween: Tween = null  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+
+
+## `Body/Button` phát khi trạng thái nhấn giữ đổi (dây nối khai trong .tscn)
+func _on_button_press_changed(is_down: bool) -> void:
+	_button_down = is_down
+	_follow_button_art()
+
+
+## `Body/Button` phát khi trạng thái rê chuột đổi (dây nối khai trong .tscn)
+func _on_button_hover_changed(is_hovered: bool) -> void:
+	_button_hovered = is_hovered
+	_follow_button_art()
+
+
+## Trôi các node nội dung theo đúng trạng thái hiển thị của art nút (pressed > hover > thường)
+func _follow_button_art() -> void:
+	var target := 0.0
+	if _button_down:
+		target = content_press_sink
+	elif _button_hovered:
+		target = content_hover_lift
+	if _content_base.is_empty():
+		for node in _content_nodes():
+			_content_base[node] = node.get("position")
+	if _content_tween != null and _content_tween.is_valid():
+		_content_tween.kill()
+	if not is_inside_tree():
+		return
+	_content_tween = create_tween().set_parallel(true)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	_content_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	for node in _content_nodes():
+		var base: Vector2 = _content_base[node]
+		_content_tween.tween_property(node, "position", base + Vector2(0.0, target), content_follow_sec)
+
+
+## Các node là "nội dung mặt nút" (mọi thứ TRỪ art nút): halo · số · ổ khoá · số dưới ổ khoá.
+## Viên thuốc sao + băng BONUS nằm NGOÀI mặt nút nên đứng yên khi nhấn / rê.
+func _content_nodes() -> Array[Node]:
+	var out: Array[Node] = []
+	if halo != null:
+		out.append(halo)
+	if label != null:
+		out.append(label)
+	if lock_icon != null:
+		out.append(lock_icon)
+	if lock_number != null:
+		out.append(lock_number)
+	return out

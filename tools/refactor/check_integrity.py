@@ -22,9 +22,12 @@ if '--skip' in sys.argv:
         skip.append(sys.argv[i]); i += 1
 
 TEXT_EXT = ('.tscn', '.gd', '.tres', '.cfg', '.godot', '.import', '.remap', '.csv')
+# InkMaze: build artifact / thư mục rác (không phải mã game) — xem docs/refactor/progress.md (D-ENV)
+JUNK_DIRS = {'.git', '.godot', 'node_modules', 'android', 'build', 'what-changes',
+             '_removed_unused', 'optimizing_clean', 'helpers', 'mockup'}
 files = {}
 for d, dirs, fs in os.walk(root):
-    dirs[:] = [x for x in dirs if x not in ('.git', '.godot', 'node_modules')]
+    dirs[:] = [x for x in dirs if x not in JUNK_DIRS and not x.startswith('tmp_')]
     for f in fs:
         if f.endswith(TEXT_EXT) or f == 'project.godot':
             p = os.path.join(d, f)

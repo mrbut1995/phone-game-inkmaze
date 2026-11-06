@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://ym6erukug5p3"]
+
+[ext_resource type="Script" uid="uid://db1uxhq02q40b" path="res://scripts/models/definitions/LevelData.gd" id="1_hndnq"]
+
+[resource]
+script = ExtResource("1_hndnq")
+level_title = "Level 1-1 · Bước Khởi Đầu"
+difficulty = "easy"
+width = 3
+height = 3
+start_pos = Vector2i(0, 2)
+end_pos = Vector2i(2, 0)
+max_steps = 8
+par_time = 25.0
+v_walls = PackedByteArray(1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1)
+v_walls_visible = PackedByteArray(1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1)
+h_walls = PackedByteArray(1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1)
+h_walls_visible = PackedByteArray(1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1)

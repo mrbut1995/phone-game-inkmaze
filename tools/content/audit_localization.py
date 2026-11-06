@@ -2,7 +2,7 @@
 """Soát bản dịch (localization audit):
 
   1. CHUỖI CỨNG trong UI  — literal còn nằm thẳng trong `.gd` / `.tscn` / `.tres`
-     (thay vì dùng khoá `STR_*`). Bỏ qua vùng dev-only: `scripts/test_case/**`
+     (thay vì dùng khoá `STR_*`). Bỏ qua vùng dev-only: `tests/legacy/**` + `debug/**`
      (test) và bảng dịch `resources/localization/**`.
   2. KEY STR_ KHÔNG DÙNG   — khoá có trong `string.csv` / `string_extra.csv` nhưng
      KHÔNG xuất hiện ở bất kỳ mã/scene/dữ liệu nào. Khoá dựng ĐỘNG (ví dụ
@@ -29,7 +29,7 @@ CSV_FILES = [
     ROOT / "resources" / "localization" / "string_extra.csv",
 ]
 SCAN_DIRS = ["scripts", "scenes", "nodes", "resources", "tools"]
-SKIP_PARTS = ("scripts/test_case", "resources/localization", "__pycache__")
+SKIP_PARTS = ("tests/legacy", "debug", "data/localization", "__pycache__")
 ## Vùng DEV-ONLY: chữ trong Debug Console là chữ dev (cố ý không dịch) — không tính là chuỗi cứng
 SKIP_SOURCES = ("scripts/scenes/debug.gd", "scripts/scenes/layout/debug_layout.gd")
 SCAN_SUFFIXES = (".gd", ".tscn", ".tres", ".json", ".py")
@@ -87,7 +87,7 @@ def scan_files() -> list[Path]:
 
 
 def test_only_keys(all_keys: set[str]) -> set[str]:
-    """Khoá CHỈ được nhắc trong `scripts/test_case/**` (test cũ) — không dùng ở game thật."""
+    """Khoá CHỈ được nhắc trong `tests/legacy/**` (test cũ) — không dùng ở game thật."""
     base = ROOT / "scripts" / "test_case"
     if not base.exists():
         return set()

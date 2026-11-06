@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ChapterData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/models/definitions/ChapterData.gd" id="1_chapter"]
+
+[resource]
+script = ExtResource("1_chapter")
+chapter_id = 3
+title = "MÊ CUNG"
+subtitle = "Hình dạng đa dạng, tường ẩn dày đặc"
+title_key = "STR_CHAPTER_3_NAME"
+subtitle_key = "STR_CHAPTER_3_SUB"
+size_label = "5×5 – 7×7"
+star_cost = 60
+icon = "logic"

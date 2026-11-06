@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dpsk2l6kox52m"]
+
+[ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://scenes/objects/ui/hud/game/game_hud/landscape.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://bkhumwx0cgwps" path="res://scripts/objects/ui/hud/game/wall_builder_hud/WallBuilderHUD.gd" id="2_script"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://data/config/theme_default.tres" id="3_theme"]
+
+[node name="Hud" unique_id=991016561 instance=ExtResource("1_base")]
+theme = ExtResource("3_theme")
+script = ExtResource("2_script")

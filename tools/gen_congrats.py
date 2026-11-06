@@ -70,8 +70,8 @@ length = 0.5
 '''
 tscn=f'''[gd_scene format=3 uid="uid://4br5abaueaea"]
 
-[ext_resource type="PackedScene" uid="uid://bdaud8s52opsm" path="res://nodes/tutorials/base_tutorial.tscn" id="1_base"]
-[ext_resource type="Script" path="res://scripts/ui/tutorial/congrats_first_time.gd" id="2_script"]
+[ext_resource type="PackedScene" uid="uid://bdaud8s52opsm" path="res://scenes/base/base_tutorial.tscn" id="1_base"]
+[ext_resource type="Script" path="res://scripts/objects/tutorials/CongratsFirstTimeTutorial.gd" id="2_script"]
 [ext_resource type="Texture2D" path="res://assets/images-png/tutorial/congrats_seal.png" id="3_seal"]
 [ext_resource type="Texture2D" path="res://assets/images-png/tutorial/congrats_confetti.png" id="4_conf"]
 [ext_resource type="Texture2D" path="res://assets/images-png/tutorial/congrats_stat_card.png" id="5_card"]

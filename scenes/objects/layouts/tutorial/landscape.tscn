@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://b8fj3r5c715mg"]
+
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/base/base_layout.tscn" id="1_dymst"]
+[ext_resource type="Texture2D" uid="uid://dodkr1s1s7ick" path="res://assets/images-png/main/main_menu_paper.png" id="2_paper"]
+[ext_resource type="Script" path="res://scripts/objects/layouts/tutorial/TutorialLayout.gd" id="2_layout"]
+[ext_resource type="Texture2D" uid="uid://yssg5du4e4fc" path="res://assets/images-png/btn_header_back_normal.png" id="3_back_n"]
+[ext_resource type="Texture2D" uid="uid://c8fvwpvick2hx" path="res://assets/images-png/btn_header_back_pressed.png" id="4_back_p"]
+
+[node name="Landscape" node_paths=PackedStringArray("btn_back", "lbl_title", "tutorial_container", "header_anchor") instance=ExtResource("1_dymst")]
+script = ExtResource("2_layout")
+header_anchor = NodePath("Paper/Body/LeftCol/TopBarAnchor")
+btn_back = NodePath("TopBar/Back")
+lbl_title = NodePath("TopBar/Title")
+tutorial_container = NodePath("TutorialContainer")
+
+[node name="Paper" type="NinePatchRect" parent="." index="0"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.02
+anchor_top = 0.035
+anchor_right = 0.98
+anchor_bottom = 0.965
+texture = ExtResource("2_paper")
+patch_margin_left = 131
+patch_margin_top = 96
+patch_margin_right = 64
+patch_margin_bottom = 64
+
+[node name="Body" type="HBoxContainer" parent="Paper" index="0"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.07
+anchor_top = 0.065
+anchor_right = 0.95
+anchor_bottom = 0.935
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 22
+
+[node name="LeftCol" type="VBoxContainer" parent="Paper/Body" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.35
+theme_override_constants/separation = 12
+
+[node name="TopBarAnchor" type="Control" parent="Paper/Body/LeftCol" index="0"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Back" type="TextureButton" parent="TopBar" index="0"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("3_back_n")
+texture_pressed = ExtResource("4_back_p")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="TopBar" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "STR_TUT_COMMON_TITLE"
+theme_type_variation = &"GameTitle"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer" type="Control" parent="TopBar" index="2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="TutorialContainer" type="Control" parent="." index="1"]
+z_index = 30
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CoinChip" parent="TopBar"]
+mouse_filter = 2
+process_mode = 4
+visible = false
+
+[node name="LifeChip" parent="TopBar"]
+mouse_filter = 2
+process_mode = 4
+visible = false

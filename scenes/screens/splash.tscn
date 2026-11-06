@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dx4d2ahb6l2q0"]
+
+[ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base/base_scene.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://cfyy2h4gv0pnb" path="res://scripts/screens/SplashScene.gd" id="2_script"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://data/config/theme_default.tres" id="3_theme"]
+[ext_resource type="PackedScene" uid="uid://cm8mnjom2wcxs" path="res://scenes/objects/layouts/splash/landscape.tscn" id="L_Landscape"]
+[ext_resource type="PackedScene" uid="uid://cswk033ayh2sx" path="res://scenes/objects/layouts/splash/portrait.tscn" id="L_Portrait"]
+
+[node name="Control" unique_id=1419240075 instance=ExtResource("1_base")]
+theme = ExtResource("3_theme")
+script = ExtResource("2_script")
+
+[node name="Portrait" parent="." index="1" unique_id=1909293097 instance=ExtResource("L_Portrait")]
+layout_mode = 1
+
+[node name="Landscape" parent="." index="2" unique_id=618474580 instance=ExtResource("L_Landscape")]
+layout_mode = 1
+
+[node name="AutoAdvanceTimer" type="Timer" parent="." index="3" unique_id=1194745996]
+wait_time = 2.2
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="AutoAdvanceTimer" to="." method="_on_touch_pressed"]

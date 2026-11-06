@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="200" height="200" fill="none">
+  <!-- polaroid_panel: nền polaroid dạng 9-patch (margin 20px SVG = 40px PNG) cho thẻ hồ sơ bản NGANG -->
+  <rect x="3" y="8" width="94" height="90" rx="5" fill="#000" opacity=".16"/>
+  <rect x="2" y="2" width="96" height="90" rx="5" fill="#FFFFFF" stroke="#E3D8C6" stroke-width="1.5"/>
+</svg>

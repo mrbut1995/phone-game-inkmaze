@@ -1,0 +1,392 @@
+extends SceneTree
+## ============================================================================
+## Test Case: DEBUG CONSOLE — TEST 8 CHẾ ĐỘ SPECIAL (2026-02)
+##
+## 1. GameManager: prepare_mode_run() đặt đúng mode · độ khó · cờ ván test · tầng ép.
+## 2. GameModeController: 8 id Special map đúng sang class mode (mode_id khớp).
+## 3. DebugScene: có mục "SPECIAL MODES" + 1 hàng lệnh cho mỗi chế độ + toggle test mode.
+## 4. Ván TEST không ghi tiến trình (không đánh dấu Daily, không báo danh hiệu).
+## 5. Tầng ép: vào thẳng tầng N với chế độ Special (blind_memory — minesweeper đã bị xoá).
+## 6. Tutorial: mục "TUTORIAL (TEST)" + API mở thẳng bài + Test mode KHÔNG ghi tiến trình.
+## 7. "Reset progress": xoá luôn RƯƠNG THƯỞNG của từng chương (`chapter_chests`).
+## ============================================================================
+
+const MINESWEEPER := "blind_memory"   # che do Special con lai (minesweeper da bi xoa)
+
+var _backup := ""
+var _failed := 0
+var _checks := 0
+
+
+func _init() -> void:
+	print("\n========================================================")
+	print("  TEST: DEBUG CONSOLE — 8 CHE DO SPECIAL")
+	print("========================================================\n")
+
+	await process_frame
+	root.size = Vector2i(1080, 1920)
+
+	if FileAccess.file_exists("user://inkmaze_data.json"):
+		var rf := FileAccess.open("user://inkmaze_data.json", FileAccess.READ)
+		_backup = rf.get_as_text()
+
+	var gm: Node = root.get_node_or_null("GameManager")
+	var dm: Node = root.get_node_or_null("DailyManager")
+	assert(gm != null, "Autoload GameManager phai ton tai")
+	assert(dm != null, "Autoload DailyManager phai ton tai")
+
+	var saved_mode := str(gm.get("current_mode"))
+	var saved_diff := str(gm.get("current_difficulty"))
+	var saved_test := bool(gm.get("debug_run"))
+	var saved_floor := int(gm.get("start_floor_override"))
+	var today := int(dm.call("get_today"))
+	var today_mask := int(dm.call("get_day_mission_mask", today))
+	var arch: Node = root.get_node_or_null("AchievementManager")
+	var saved_seconds := int(arch.call("stat_value", "play_seconds")) if arch != null else 0
+	var saved_tutorial: Dictionary = (gm.get("tutorial_progress") as Dictionary).duplicate()
+
+	_section_1_game_manager(gm)
+	_section_2_mode_mapping(gm)
+	await _section_3_debug_scene(gm)
+	await _section_4_no_progress(gm, dm, today, today_mask, arch)
+	await _section_5_floor_override(gm)
+	await _section_6_tutorials(gm, saved_tutorial)
+	await _section_7_reset_progress(gm)
+
+	# Khôi phục trạng thái (không phá dữ liệu người chơi)
+	gm.set("current_mode", saved_mode)
+	gm.set("current_difficulty", saved_diff)
+	gm.set("debug_run", saved_test)
+	gm.set("start_floor_override", saved_floor)
+	gm.set("tutorial_progress", saved_tutorial)
+	gm.set("pending_tutorial", "")
+	dm.call("set_day_mission_mask", today, today_mask)
+	if arch != null:
+		arch.call("set_stat_for_test", "play_seconds", saved_seconds)
+	if not _backup.is_empty():
+		var wf := FileAccess.open("user://inkmaze_data.json", FileAccess.WRITE)
+		wf.store_string(_backup)
+	print("[INFO] Da khoi phuc trang thai GameManager/Daily/danh hieu.")
+
+	print("\n--------------------------------------------------------")
+	if _failed == 0:
+		print("  KET QUA: %d/%d CHECK PASS" % [_checks, _checks])
+	else:
+		print("  KET QUA: %d/%d CHECK FAIL" % [_failed, _checks])
+	print("--------------------------------------------------------\n")
+	quit(1 if _failed > 0 else 0)
+
+
+# ---------------------------------------------------------------------------
+# 1. GameManager API
+# ---------------------------------------------------------------------------
+func _section_1_game_manager(gm: Node) -> void:
+	print("--- 1. GAMEMANAGER: CO VAN TEST + TANG EP ---")
+	var ids: Array = gm.call("special_mode_ids")
+	_check(ids.size() == 2, "Liet ke dung 2 che do Special (dang %d: %s)" % [ids.size(), str(ids)])
+
+	for mode_id in ids:
+		gm.call("prepare_mode_run", str(mode_id), "hard", true, 3)
+		var ok := str(gm.get("current_mode")) == str(mode_id) \
+			and str(gm.get("current_difficulty")) == "hard" \
+			and bool(gm.get("debug_run")) \
+			and int(gm.get("start_floor_override")) == 3
+		_check(ok, "prepare_mode_run('%s', hard, test, 3) -> mode/do kho/co test/tang dung" % mode_id)
+
+	gm.call("prepare_mode_run", "dungeon", "medium", false, 0)
+	_check(not bool(gm.get("debug_run")), "Van thuong: co van TEST tat")
+	_check(int(gm.get("start_floor_override")) == 0, "Van thuong: khong ep tang")
+
+
+# ---------------------------------------------------------------------------
+# 2. Map id -> mode class
+# ---------------------------------------------------------------------------
+func _section_2_mode_mapping(gm: Node) -> void:
+	print("\n--- 2. GAME MODE CONTROLLER: MAP ID -> MODE ---")
+	var controller := GameModeController.new()
+	var count := 0
+	for mode_id in (gm.call("special_mode_ids") as Array):
+		var mode: BaseGameMode = controller.set_mode_by_name(str(mode_id), "medium")
+		var ok := mode != null and mode.mode_id == str(mode_id) and not mode.mode_name.is_empty()
+		_check(ok, "set_mode_by_name('%s') -> %s" % [mode_id, mode.mode_name if mode != null else "null"])
+		count += 1
+	_check(count == 2, "Ca 2 id Special deu map duoc sang mode class")
+	_check(controller.set_mode_by_name("play", "medium").mode_id == "play", "map 'play' -> StandardGameMode")
+	_check(controller.set_mode_by_name("dungeon", "medium").mode_id == "dungeon", "map 'dungeon' -> DungeonGameMode")
+	controller.free()
+
+
+# ---------------------------------------------------------------------------
+# 3. Debug scene
+# ---------------------------------------------------------------------------
+func _section_3_debug_scene(gm: Node) -> void:
+	print("\n--- 3. DEBUG SCENE: MUC SPECIAL MODES ---")
+	var scene: Node = (load("res://scenes/screens/debug.tscn") as PackedScene).instantiate()
+	root.add_child(scene)
+	await process_frame
+
+	var layout: Node = scene.get("layout")
+	# Vùng Rows nay nằm trong BỐ CỤC (`DebugLayout.rows_box`) — tra qua layout, không hard-code đường dẫn
+	var rows: Node = layout.get("rows_box") if layout != null else null
+	_check(rows != null, "Debug scene co vung Rows (layout.rows_box)")
+	if rows == null:
+		return
+
+	var texts := _collect_texts(rows)
+	_check(_contains(texts, "SPECIAL MODES"), "Co muc 'SPECIAL MODES (TEST)'")
+	_check(_contains(texts, "Test mode"), "Co toggle 'Test mode (khong ghi tien trinh)'")
+	_check(_contains(texts, "Do kho") or _contains(texts, "Độ khó"), "Co chon do kho")
+	_check(_contains(texts, "ng") and _contains(texts, "Tầng") or _contains(texts, "Tang"),
+		"Co chon tang bat dau")
+
+	var missing: Array[String] = []
+	for mode_id in (gm.call("special_mode_ids") as Array):
+		if not _contains(texts, str(mode_id)):
+			missing.append(str(mode_id))
+	_check(missing.is_empty(), "Moi che do Special co 1 hang lenh (thieu: %s)" % str(missing))
+	_check(_contains(texts, "Chế độ ngẫu nhiên"), "Co hang 'Che do ngau nhien'")
+
+	# Lựa chọn trong console phải được lưu lại
+	scene.call("_set_difficulty", "easy")
+	scene.call("_set_test_floor", 2)
+	_check(str(scene.get("_difficulty")) == "easy" and int(scene.get("_floor")) == 2,
+		"Do kho + tang chon trong Debug duoc giu lai")
+
+	# Toggle test mode phải ghi vào GameManager
+	scene.call("_set_test_mode", false)
+	_check(not bool(gm.get("debug_run")), "Toggle 'Test mode' TAT -> GameManager.debug_run = false")
+	scene.call("_set_test_mode", true)
+	_check(bool(gm.get("debug_run")), "Toggle 'Test mode' BAT -> GameManager.debug_run = true")
+
+	scene.queue_free()
+	await process_frame
+
+
+# ---------------------------------------------------------------------------
+# 4. Ván test không ghi tiến trình
+# ---------------------------------------------------------------------------
+func _section_4_no_progress(gm: Node, dm: Node, today: int, mask_before: int, arch: Node) -> void:
+	print("\n--- 4. VAN TEST KHONG GHI TIEN TRINH ---")
+	gm.call("prepare_mode_run", MINESWEEPER, "medium", true, 1)
+	var game_scene: Node = (load("res://scenes/screens/game.tscn") as PackedScene).instantiate()
+	root.add_child(game_scene)
+	await process_frame
+	await process_frame
+
+	var controller: GameController = game_scene.get("game_controller")
+	_check(controller != null, "Game scene nap duoc GameController")
+	if controller != null:
+		_check(bool(controller.call("_is_debug_run")), "Controller nhan biet day la van TEST")
+		_check(controller.game_state.mode_id == MINESWEEPER,
+			"Van dang choi che do %s (dang %s)" % [MINESWEEPER, controller.game_state.mode_id])
+
+		# Ván TEST: kể cả khi đang là ván DAILY thì cũng KHÔNG chốt nhiệm vụ ngày
+		var mask_before_call := int(dm.call("get_day_mission_mask", today))
+		var saved_variant := str(gm.get("daily_variant"))
+		var saved_day := int(gm.get("selected_daily_day"))
+		gm.set("daily_variant", "special")
+		gm.set("selected_daily_day", today)
+		controller.call("_complete_daily_missions", [])
+		gm.set("daily_variant", saved_variant)
+		gm.set("selected_daily_day", saved_day)
+		_check(int(dm.call("get_day_mission_mask", today)) == mask_before_call,
+			"Van TEST: ngay Daily KHONG bi chot nhiem vu (mask %d)" % mask_before_call)
+
+		if arch != null:
+			var seconds_before := int(arch.call("stat_value", "play_seconds"))
+			controller.call("_report_to_achievements", true, 12.0)
+			_check(int(arch.call("stat_value", "play_seconds")) == seconds_before,
+				"Van TEST: khong ghi so lieu vao So tay thanh tuu")
+			_check(str(gm.get("current_mode")) == MINESWEEPER, "Mode trong GameManager khong bi doi")
+
+	game_scene.queue_free()
+	await process_frame
+	_check(mask_before >= 0, "Trang thai Daily truoc test: mask %d (da sao luu)" % mask_before)
+
+
+# ---------------------------------------------------------------------------
+# 5. Ép tầng bắt đầu
+# ---------------------------------------------------------------------------
+func _section_5_floor_override(gm: Node) -> void:
+	print("\n--- 5. EP TANG BAT DAU (%s) ---" % MINESWEEPER)
+	var sizes := {}
+	for floor_number in [1, 3]:
+		gm.call("prepare_mode_run", MINESWEEPER, "medium", true, floor_number)
+		var game_scene: Node = (load("res://scenes/screens/game.tscn") as PackedScene).instantiate()
+		root.add_child(game_scene)
+		await process_frame
+		await process_frame
+
+		var controller: GameController = game_scene.get("game_controller")
+		var grid: Node = game_scene.get("grid_controller")
+		if controller != null and grid != null:
+			var maze: MazeData = grid.get("maze")
+			_check(controller.game_state.floor_number == floor_number,
+				"Van bat dau o tang %d (dang %d)" % [floor_number, controller.game_state.floor_number])
+			_check(controller.game_mode.mode_id == MINESWEEPER,
+				"Che do dang choi = %s" % MINESWEEPER)
+			if maze != null:
+				sizes[floor_number] = maze.width
+				_check(maze.width == maze.height, "Ban vuong (%dx%d)" % [maze.width, maze.height])
+		game_scene.queue_free()
+		await process_frame
+
+	# Blind Memory tu sinh ban 5x5 o MOI tang (chi Dungeon moi doi co ban theo tang)
+	_check(int(sizes.get(1, 0)) == 5 and int(sizes.get(3, 0)) == 5,
+		"Blind Memory: ban tu sinh 5x5 o moi tang (dang %s)" % str(sizes))
+
+
+# ---------------------------------------------------------------------------
+# 6. Tutorial: mục TUTORIAL (TEST) + API mở thẳng bài + Test mode
+# ---------------------------------------------------------------------------
+func _section_6_tutorials(gm: Node, saved: Dictionary) -> void:
+	print("\n--- 6. DEBUG CONSOLE: MUC TUTORIAL (TEST) ---")
+	var scene: Node = (load("res://scenes/screens/debug.tscn") as PackedScene).instantiate()
+	root.add_child(scene)
+	await process_frame
+
+	var layout: Node = scene.get("layout")
+	var rows: Node = layout.get("rows_box") if layout != null else null
+	var texts: Array[String] = _collect_texts(rows) if rows != null else []
+	_check(rows != null, "Console co vung rows de kiem tutorial")
+	_check(_contains(texts, "TUTORIAL"), "Co muc 'TUTORIAL (TEST)'")
+
+	var missing: Array[String] = []
+	for id in (TutorialController.TUTORIAL_SCENES as Dictionary):
+		if not _contains(texts, str(id)):
+			missing.append(str(id))
+	_check(missing.is_empty(), "Moi bai tutorial co 1 hang lenh (thieu: %s)" % str(missing))
+	_check(_contains(texts, "Chạy chuỗi CORE"), "Co hang 'Chay chuoi CORE'")
+	_check(_contains(texts, "Xoá tiến trình tutorial"), "Co hang 'Xoa tien trinh tutorial'")
+
+	# API yêu cầu mở thẳng bài (GameManager giữ yêu cầu qua scene change)
+	gm.call("request_tutorial", "how_to_play_sum_path")
+	_check(str(gm.get("pending_tutorial")) == "how_to_play_sum_path",
+		"request_tutorial() luu yeu cau mo thang 1 bai")
+	_check(str(gm.call("take_tutorial_request")) == "how_to_play_sum_path"
+			and str(gm.get("pending_tutorial")).is_empty(),
+		"take_tutorial_request() doc 1 lan roi xoa")
+
+	# Màn Tutorial tiêu thụ yêu cầu: vào là mở ĐÚNG bài được yêu cầu
+	gm.set("debug_run", true)
+	gm.call("request_tutorial", "how_to_play_move")
+	var tut: Node = (load("res://scenes/screens/tutorial.tscn") as PackedScene).instantiate()
+	root.add_child(tut)
+	await process_frame
+	await process_frame
+	var controller: Node = tut.get("tutorial_controller")
+	var opened := str(controller.get("current_tutorial_id")) if controller != null else "<null>"
+	_check(opened == "how_to_play_move", "Vao man Tutorial mo thang bai duoc yeu cau (dang '%s')" % opened)
+
+	# Test mode BẬT: học xong KHÔNG ghi tiến trình
+	# (xoá cờ trước khi thử — save thật có thể đã bật sẵn, để nguyên sẽ fail OAN)
+	gm.call("set_tutorial_completed", "how_to_play_move", false)
+	var active: Node = controller.get("active_tutorial_node") if controller != null else null
+	if active != null:
+		active.call("complete_tutorial")
+		await process_frame
+	_check(not bool((gm.get("tutorial_progress") as Dictionary).get("how_to_play_move", false)),
+		"Test mode BAT: hoc xong KHONG ghi tien trinh tutorial")
+	tut.queue_free()
+	await process_frame
+
+	# Test mode TẮT + KHÔNG yêu cầu gì ⇒ chỉ HIỆN DANH SÁCH (không tự chạy chuỗi CORE)
+	gm.set("debug_run", false)
+	gm.call("request_tutorial", "")
+	var tut2: Node = (load("res://scenes/screens/tutorial.tscn") as PackedScene).instantiate()
+	root.add_child(tut2)
+	await process_frame
+	await process_frame
+	var controller2: Node = tut2.get("tutorial_controller")
+	var active2: Node = controller2.get("active_tutorial_node") if controller2 != null else null
+	_check(active2 == null, "Khong co yeu cau -> HIEN DANH SACH, khong tu chay bai nao")
+
+	# Bấm 1 bài trong DANH SÁCH (như người chơi) → test mode TẮT: học xong CÓ ghi tiến trình
+	gm.call("set_tutorial_completed", "first_time", true)  # mở khoá nút để bấm được
+	var layout2: Node = tut2.get("layout")
+	var btn_first: BaseButton = layout2.get("btn_first_time") if layout2 != null else null
+	if btn_first != null:
+		btn_first.pressed.emit()
+	await process_frame
+	active2 = controller2.get("active_tutorial_node") if controller2 != null else null
+	if active2 != null:
+		gm.call("set_tutorial_completed", "first_time", false)  # xoá cờ trước để phép thử có nghĩa
+		active2.call("complete_tutorial")
+		await process_frame
+	_check(bool((gm.get("tutorial_progress") as Dictionary).get("first_time", false)),
+		"Test mode TAT: hoc xong CO ghi tien trinh")
+	tut2.queue_free()
+	await process_frame
+
+	# Xoá tiến trình tutorial (không đụng tiến trình màn chơi)
+	gm.call("reset_tutorial_progress")
+	_check(not bool((gm.get("tutorial_progress") as Dictionary).get("first_time", false)),
+		"reset_tutorial_progress() xoa het co tutorial")
+
+	scene.queue_free()
+	await process_frame
+	_check(saved.size() > 0, "Da sao luu tien trinh tutorial truoc khi test (%d co)" % saved.size())
+
+
+# ---------------------------------------------------------------------------
+# 7. "Reset progress" xoá cả RƯƠNG THƯỞNG của từng chương
+# ---------------------------------------------------------------------------
+func _section_7_reset_progress(gm: Node) -> void:
+	print("\n--- 7. RESET PROGRESS XOA RUONG THUONG CHUONG ---")
+	var snapshot: Dictionary = gm.call("export_progress")
+
+	# Giả lập: đã nhận rương 0 của chương 1 và rương 1 của chương 2
+	gm.set("chapter_chests", { 1: [0], 2: [1] })
+	_check(bool(gm.call("is_chapter_chest_claimed", 1, 0))
+			and bool(gm.call("is_chapter_chest_claimed", 2, 1)),
+		"Truoc reset: ruong chuong 1 va 2 da duoc danh dau da nhan")
+
+	# Bấm "Reset progress" trong Debug Console (không cần UI: gọi thẳng handler)
+	var debug_scene: Node = (load("res://scenes/screens/debug.tscn") as PackedScene).instantiate()
+	root.add_child(debug_scene)
+	await process_frame
+	debug_scene.call("_reset_progress")
+	await process_frame
+	_check(not bool(gm.call("is_chapter_chest_claimed", 1, 0)),
+		"Reset progress: ruong chuong 1 KHONG con o trang thai da nhan")
+	_check(not bool(gm.call("is_chapter_chest_claimed", 2, 1)),
+		"Reset progress: ruong chuong 2 KHONG con o trang thai da nhan")
+	_check((gm.get("chapter_chests") as Dictionary).is_empty(),
+		"Reset progress: chapter_chests rong hoan toan")
+	_check(int(gm.get("unlocked_levels")) == 1 and int(gm.get("current_level")) == 1,
+		"Reset progress: van xoa tien trinh man choi nhu cu (mo lai man 1)")
+
+	debug_scene.queue_free()
+	await process_frame
+
+	# Trả lại tiến trình người chơi + ghi NGAY để không còn autosave treo ghi đè
+	gm.call("import_progress", snapshot)
+	var sm: Node = root.get_node_or_null("SaveManager")
+	if sm != null and sm.has_method("flush"):
+		sm.call("flush")
+
+
+# ---------------------------------------------------------------------------
+# Tiện ích
+# ---------------------------------------------------------------------------
+func _check(condition: bool, label: String) -> void:
+	_checks += 1
+	if not condition:
+		_failed += 1
+	print("[%s] %s" % ["CHECK" if condition else "FAIL", label])
+
+
+func _collect_texts(node: Node) -> Array[String]:
+	var out: Array[String] = []
+	for child in node.get_children():
+		if child is Label:
+			out.append((child as Label).text)
+		out.append_array(_collect_texts(child))
+	return out
+
+
+func _contains(texts: Array[String], needle: String) -> bool:
+	for text in texts:
+		if text.contains(needle):
+			return true
+	return false

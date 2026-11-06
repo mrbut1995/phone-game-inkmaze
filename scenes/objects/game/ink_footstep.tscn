@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://cspwoqn43s5ul"]
+
+[ext_resource type="Script" uid="uid://d0d7d0sx57mpx" path="res://scripts/objects/game/InkFootstep.gd" id="1_script"]
+[ext_resource uid="uid://drnmh5ibc6fhg" type="Texture2D" path="res://assets/images-png/game/player_cursor.png" id="2_art"]
+
+[sub_resource type="Animation" id="Animation_footstep_ripple"]
+resource_name = "ripple"
+length = 0.32
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.9, 1.9)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_footstep"]
+_data = {
+&"ripple": SubResource("Animation_footstep_ripple")
+}
+
+[node name="InkFootstep" type="Control" unique_id=1890410275 node_paths=PackedStringArray("mark")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 18.0
+offset_bottom = 18.0
+mouse_filter = 2
+script = ExtResource("1_script")
+mark = NodePath("Mark")
+
+[node name="Mark" type="TextureRect" parent="." unique_id=821722271]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -18.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_art")
+expand_mode = 1
+stretch_mode = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "ripple"
+libraries = {
+"": SubResource("AnimationLibrary_footstep")
+}

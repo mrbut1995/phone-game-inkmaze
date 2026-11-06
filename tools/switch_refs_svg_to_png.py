@@ -18,7 +18,7 @@ CÁCH LÀM:
     - VÁ UID: dòng [ext_resource] thiếu uid sẽ được thêm nếu ASSET đích có .import
       (vá dấu vết đợt migrate chạy khi PNG chưa import). KHÔNG lấy uid từ .gd.uid/header
       .tscn/.tres — build này load fail âm thầm với uid ngoài .import (xem heal_uids).
-    - Bỏ qua scripts/test_case/test_popup_ui.gd — test này CỐ Ý đọc NGUỒN .svg để kiểm tra
+    - Bỏ qua tests/legacy/legacy_popup_ui.gd — test này CỐ Ý đọc NGUỒN .svg để kiểm tra
       thiết kế (đổi sang .png là hỏng test, PNG không đọc được path/chữ trong đó).
     - Đổi CẢ literal đuôi RỜI (không có res://) — kiểu `ICON_DIR + "avatar.svg"`, `"day_cell_empty.svg"`,
       `ends_with("icon_coin_t1.svg")`: nếu tên file (bỏ đuôi) khớp một asset của cây `assets/**`
@@ -54,7 +54,7 @@ EXCLUDE_DIRS = {
 }
 ## File CỐ Ý đọc NGUỒN .svg (kiểm tra thiết kế bên trong SVG) — KHÔNG đổi sang .png:
 SKIP_FILES = {
-    "scripts/test_case/test_popup_ui.gd",
+    "tests/legacy/legacy_popup_ui.gd",
 }
 
 REF_SVG = re.compile(r'res://[^"\'\s\)\]]*\.svg(?![.\w])')

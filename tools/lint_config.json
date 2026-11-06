@@ -1,0 +1,37 @@
+{
+  "exempt_dirs": [
+    "scripts/editor",
+    "tests",
+    "tools",
+    "debug"
+  ],
+  "load_allowed_files": [
+    "scripts/autoload/DataManager.gd",
+    "scripts/autoload/PopupManager.gd"
+  ],
+  "ui_structure_names": [
+    "Dim",
+    "Divider",
+    "Separator",
+    "Background",
+    "Panel",
+    "Overlay"
+  ],
+  "dead_code_allow": [
+    "BaseFrameAnimationController",
+    "BaseUIScene",
+    "FrameAnimChoice",
+    "FrameAnimUtils",
+    "GridMath",
+    "SimClock",
+    "StateMachine",
+    "StopCommand"
+  ],
+  "need_test_dirs": [
+    "scripts/models",
+    "scripts/commands",
+    "scripts/ai",
+    "scripts/systems",
+    "scripts/utils"
+  ]
+}

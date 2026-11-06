@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ChapterData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/models/definitions/ChapterData.gd" id="1_chapter"]
+
+[resource]
+script = ExtResource("1_chapter")
+chapter_id = 4
+title = "THỬ THÁCH"
+subtitle = "Bàn lớn hơn, nhiều lối rẽ đánh lừa"
+title_key = "STR_CHAPTER_4_NAME"
+subtitle_key = "STR_CHAPTER_4_SUB"
+size_label = "6×6 – 9×9"
+star_cost = 120
+icon = "logic"

@@ -1,0 +1,241 @@
+[gd_scene format=3 uid="uid://hch7t7btnk5m"]
+
+[ext_resource type="Script" uid="uid://y78i0wwbasih" path="res://scripts/objects/shop/ShopCoinTile.gd" id="1_coin"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://data/config/theme_default.tres" id="2_theme"]
+[ext_resource uid="uid://daiwxpthaqwa4" type="Texture2D" path="res://assets/images-png/shop/card_coin.png" id="3_card"]
+[ext_resource uid="uid://dpo72a7nt5gmj" type="Texture2D" path="res://assets/images-png/icons/icon_circle.png" id="4_circle"]
+[ext_resource uid="uid://c0h3fpd7dw73h" type="Texture2D" path="res://assets/images-png/settings/section_chip.png" id="5_chip"]
+[ext_resource uid="uid://bwhvnas1kr47y" type="Texture2D" path="res://assets/images-png/shop/btn_coin.png" id="6_btn"]
+[ext_resource uid="uid://bc41s6j0xkuu6" type="Texture2D" path="res://assets/images-png/icons/icon_coin_t1.png" id="7_icon"]
+[ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/editor/NinePatchButton.gd" id="8_dxbsk"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dxbsk"]
+content_margin_left = 10.0
+content_margin_top = 7.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+texture = ExtResource("6_btn")
+texture_margin_left = 10.0
+texture_margin_top = 7.0
+texture_margin_right = 10.0
+texture_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2hqit"]
+content_margin_left = 10.0
+content_margin_top = 7.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+texture = ExtResource("6_btn")
+texture_margin_left = 10.0
+texture_margin_top = 7.0
+texture_margin_right = 10.0
+texture_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l744w"]
+content_margin_left = 10.0
+content_margin_top = 7.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+texture = ExtResource("6_btn")
+texture_margin_left = 10.0
+texture_margin_top = 7.0
+texture_margin_right = 10.0
+texture_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_imoxk"]
+content_margin_left = 10.0
+content_margin_top = 7.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+texture = ExtResource("6_btn")
+texture_margin_left = 10.0
+texture_margin_top = 7.0
+texture_margin_right = 10.0
+texture_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mc44f"]
+content_margin_left = 10.0
+content_margin_top = 7.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+texture = ExtResource("6_btn")
+texture_margin_left = 10.0
+texture_margin_top = 7.0
+texture_margin_right = 10.0
+texture_margin_bottom = 8.0
+
+[node name="CoinTile" type="Control"]
+custom_minimum_size = Vector2(237.5, 120)
+layout_mode = 3
+anchor_right = 0.333
+anchor_bottom = 0.222
+offset_right = 0.3
+offset_bottom = 0.12
+theme = ExtResource("2_theme")
+script = ExtResource("1_coin")
+
+[node name="Panel" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_card")
+patch_margin_left = 18
+patch_margin_top = 18
+patch_margin_right = 18
+patch_margin_bottom = 24
+
+[node name="Badge" type="NinePatchRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 0
+anchor_bottom = 0
+offset_left = 78
+offset_top = 9
+offset_right = 162
+offset_bottom = 23
+mouse_filter = 2
+texture = ExtResource("5_chip")
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 4
+patch_margin_bottom = 4
+
+[node name="BadgeLabel" type="Label" parent="Panel/Badge"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"ShopBadge"
+theme_override_font_sizes/font_size = 9
+text = "CƠ BẢN"
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Content" type="HBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 0
+offset_left = 14
+offset_top = 26
+offset_right = -12
+offset_bottom = 76
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="IconCircle" type="TextureRect" parent="Panel/Content"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+texture = ExtResource("4_circle")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Icon" type="TextureRect" parent="Panel/Content/IconCircle"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_left = 8
+offset_top = 8
+offset_right = -8
+offset_bottom = -8
+mouse_filter = 2
+texture = ExtResource("7_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Description" type="VBoxContainer" parent="Panel/Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+alignment = 1
+theme_override_constants/separation = 1
+
+[node name="Name" type="Label" parent="Panel/Content/Description"]
+theme_type_variation = &"ShopNameTile"
+theme_override_font_sizes/font_size = 14
+text = "Túi Xu 500"
+mouse_filter = 2
+layout_mode = 2
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="Desc" type="Label" parent="Panel/Content/Description"]
+theme_type_variation = &"ShopDesc"
+theme_override_font_sizes/font_size = 10
+text = "Túi xu cơ bản"
+mouse_filter = 2
+layout_mode = 2
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="Bonus" type="Label" parent="Panel/Content/Description"]
+theme_type_variation = &"ShopBonus"
+theme_override_font_sizes/font_size = 10
+text = ""
+mouse_filter = 2
+layout_mode = 2
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="Action" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 1
+anchor_right = 1
+anchor_bottom = 1
+offset_left = 12
+offset_top = -41
+offset_right = -12
+offset_bottom = -13
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_dxbsk")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_2hqit")
+theme_override_styles/hover = SubResource("StyleBoxTexture_l744w")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_imoxk")
+theme_override_styles/focus = SubResource("StyleBoxTexture_mc44f")
+script = ExtResource("8_dxbsk")
+texture_normal = ExtResource("6_btn")
+texture_hover = ExtResource("6_btn")
+texture_pressed = ExtResource("6_btn")
+texture_disabled = ExtResource("6_btn")
+texture_focus = ExtResource("6_btn")
+patch_margin_left = 10.0
+patch_margin_top = 7.0
+patch_margin_right = 10.0
+patch_margin_bottom = 8.0
+metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
+mouse_filter = 2
+
+[node name="ActionLabel" type="Label" parent="Panel/Action"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"ShopPrice"
+theme_override_font_sizes/font_size = 13
+text = "19.000 VNĐ"
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.4196, 0.2667, 0, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+offset_bottom = -3.0
+
+[connection signal="pressed" from="Panel/Action" to="." method="_on_action_pressed"]

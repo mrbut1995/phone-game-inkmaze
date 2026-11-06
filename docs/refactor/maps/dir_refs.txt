@@ -1,0 +1,14 @@
+# tiền tố THƯ MỤC trong chuỗi res:// (rewrite_dir_refs.py). Định dạng: cũ/ -> mới/
+resources/achievements/ -> data/achievements/
+resources/animations/ -> data/animations/
+resources/chapters/ -> data/chapters/
+resources/events/ -> data/events/
+resources/levels/ -> data/levels/
+resources/levels_samples/ -> data/levels_samples/
+resources/localization/ -> data/localization/
+resources/materials/ -> data/materials/
+resources/profiler/ -> data/profiler/
+resources/settings/ -> data/config/
+shaders/ -> assets/shaders/
+assets/sfx/ -> assets/audio/sfx/
+assets/soundtrack/ -> assets/audio/music/

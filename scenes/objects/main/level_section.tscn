@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://7haijnwmq3kt"]
+
+[ext_resource type="Script" uid="uid://dyqoxeuolv1ce" path="res://scripts/objects/main/LevelSection.gd" id="1_sec"]
+[ext_resource type="PackedScene" uid="uid://cp4og3e21hxqe" path="res://scenes/objects/level_selection/level_map.tscn" id="2_map"]
+[ext_resource type="PackedScene" path="res://scenes/components/main/chest_widget.tscn" id="4_chest"]
+[ext_resource type="PackedScene" path="res://scenes/components/main/dungeon_pill.tscn" id="5_pill"]
+
+[node name="LevelSection" type="Control" unique_id=1574037684 node_paths=PackedStringArray("map", "chapter_chip", "chest", "dungeon_pill")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_sec")
+map = NodePath("MapArea/LevelMap")
+chapter_chip = NodePath("")
+chest = NodePath("ChestWidget")
+dungeon_pill = NodePath("DungeonPill")
+
+[node name="MapArea" type="Control" parent="." unique_id=1458737360]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="LevelMap" parent="MapArea" unique_id=1269095073 instance=ExtResource("2_map")]
+columns_landscape = 3
+bottom_reserve = 130.0
+
+[node name="ChestWidget" parent="." unique_id=1308813912 instance=ExtResource("4_chest")]
+custom_minimum_size = Vector2(104, 118)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -118.0
+offset_top = -130.0
+offset_right = -14.0
+offset_bottom = -12.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="DungeonPill" parent="." unique_id=519750396 instance=ExtResource("5_pill")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = -98.0
+offset_right = 256.0
+offset_bottom = -12.0
+grow_vertical = 0
+
+[connection signal="level_selected" from="MapArea/LevelMap" to="." method="_on_level_selected"]
+[connection signal="scrolled" from="MapArea/LevelMap" to="." method="_on_map_scrolled"]
+[connection signal="claim_requested" from="ChestWidget" to="." method="_on_chest_claim_requested"]
+
+[connection signal="gate_pressed" from="MapArea/LevelMap" to="." method="_on_gate_pressed"]

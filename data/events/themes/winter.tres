@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="EventTheme" format=3]
+
+[ext_resource type="Script" path="res://scripts/models/definitions/EventTheme.gd" id="2_im8b3"]
+[ext_resource uid="uid://clb7vccmibiuu" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_winter_normal.png" id="btn_normal"]
+[ext_resource uid="uid://vrimr27bi8se" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_winter_pressed.png" id="btn_pressed"]
+[ext_resource uid="uid://8kjydcw85upd" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_winter_disabled.png" id="btn_disabled"]
+
+[resource]
+script = ExtResource("2_im8b3")
+id = &"winter"
+bg_stops = PackedColorArray(0.8901961, 0.95686275, 1, 1, 0.6117647, 0.8039216, 0.95686275, 1, 0.43529412, 0.65882355, 0.8784314, 1)
+accent = Color(0.11764706, 0.43529412, 0.8156863, 1)
+accent2 = Color(1, 1, 1, 1)
+title_color = Color(0.04, 0.18, 0.36, 1)
+title_outline = Color(1, 1, 1, 1)
+sub_color = Color(0.12156863, 0.2901961, 0.5019608, 1)
+label_color = Color(0.05882353, 0.18431373, 0.36078432, 1)
+panel_color = Color(1, 1, 1, 1)
+panel_stroke = Color(0.11764706, 0.43529412, 0.8156863, 0.4)
+cta_fill = Color(0.11764706, 0.43529412, 0.8156863, 1)
+cta_stroke = Color(0.07058824, 0.29803923, 0.5803922, 1)
+chip_fill = Color(0.05882353, 0.18431373, 0.36078432, 1)
+chip_text = Color(0.8901961, 0.95686275, 1, 1)
+button_normal = ExtResource("btn_normal")
+button_pressed = ExtResource("btn_pressed")
+button_disabled = ExtResource("btn_disabled")

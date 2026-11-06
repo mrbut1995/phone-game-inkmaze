@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 252" width="400" height="504" fill="none">
+  <!-- polaroid_card: khung ảnh polaroid cho avatar Hồ sơ (200x252) — giấy trắng, viền kem, bóng đổ dưới -->
+  <rect x="3" y="8" width="194" height="240" rx="4" fill="#000" opacity=".16"/>
+  <rect x="2" y="2" width="196" height="240" rx="4" fill="#FFFFFF" stroke="#E3D8C6" stroke-width="1.5"/>
+  <rect x="12" y="12" width="176" height="176" rx="2" fill="#FBF6E6" stroke="#EFE6CB" stroke-width="1"/>
+</svg>

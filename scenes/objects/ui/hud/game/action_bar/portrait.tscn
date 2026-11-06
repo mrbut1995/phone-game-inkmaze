@@ -1,0 +1,362 @@
+[gd_scene format=3 uid="uid://cb348h6q1r8lf"]
+
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://data/config/theme_default.tres" id="1_w6pjg"]
+[ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/editor/NinePatchButton.gd" id="5_l0kg0"]
+[ext_resource type="Texture2D" uid="uid://b62wcl4y41lv7" path="res://assets/images-png/game/btn_submit_normal.png" id="13_8y1nw"]
+[ext_resource type="Texture2D" uid="uid://blq6cnnryjyqu" path="res://assets/images-png/game/btn_restart_normal.png" id="13_31yh8"]
+[ext_resource type="Texture2D" uid="uid://cvvjfxne56g5k" path="res://assets/images-png/game/btn_submit_pressed.png" id="14_7v77u"]
+[ext_resource type="Texture2D" uid="uid://e42nujmud7ck" path="res://assets/images-png/game/btn_restart_pressed.png" id="14_irvt4"]
+[ext_resource type="Texture2D" uid="uid://dbhwrsi5ewmbg" path="res://assets/images-png/game/btn_skip_normal.png" id="14_kn0bs"]
+[ext_resource type="Texture2D" uid="uid://bma8xm7w4gmh6" path="res://assets/images-png/game/btn_submit_disabled.png" id="15_kn0bs"]
+[ext_resource type="Texture2D" uid="uid://cftwvp13ryeqs" path="res://assets/images-png/game/btn_restart_disabled.png" id="15_oj83g"]
+[ext_resource type="Texture2D" uid="uid://c1udpquhff0e1" path="res://assets/images-png/game/btn_skip_pressed.png" id="15_vjyni"]
+[ext_resource type="Texture2D" uid="uid://din4ucp1xnysu" path="res://assets/images-png/game/btn_restart_focus.png" id="16_5kyg3"]
+[ext_resource type="Texture2D" uid="uid://cd1lfyfbiymhx" path="res://assets/images-png/game/btn_skip_disable.png" id="16_trajn"]
+[ext_resource type="Script" uid="uid://blpdwtvxerh8h" path="res://scripts/editor/NinePatchStateTexture.gd" id="23_7v77u"]
+[ext_resource type="Texture2D" uid="uid://bs6bmfy2ow7bv" path="res://assets/images-png/common/btn_item_normal.png" id="24_kfsk0"]
+[ext_resource type="Texture2D" uid="uid://bwj5ympwe2hm3" path="res://assets/images-png/common/btn_item_pressed.png" id="25_vvy6r"]
+[ext_resource type="Texture2D" uid="uid://dg85ewia3cxa7" path="res://assets/images-png/common/btn_item_disable.png" id="26_1uc10"]
+[ext_resource type="Texture2D" uid="uid://cp27il6y8f1dp" path="res://assets/images-png/icons/icon_bulb.png" id="bar_bulbicon"]
+[ext_resource type="Script" uid="uid://bt8f7hl74mar" path="res://scripts/objects/ui/hud/game/action_bar/HintGuide.gd" id="bar_hintguide"]
+[ext_resource type="Texture2D" uid="uid://caee6d0qm2nx1" path="res://assets/images-png/game/panel_hint_guide.png" id="bar_hintpanel"]
+[ext_resource type="Texture2D" uid="uid://dybqvaw2rmp7w" path="res://assets/images-png/game/btn_hint_disabled.png" id="bar_hint_d"]
+[ext_resource type="Texture2D" uid="uid://c4louruvu6ijq" path="res://assets/images-png/game/btn_hint_normal.png" id="bar_hint_n"]
+[ext_resource type="Texture2D" uid="uid://c1rsbeag67ckp" path="res://assets/images-png/game/btn_hint_pressed.png" id="bar_hint_p"]
+[ext_resource type="Script" uid="uid://bbq8fo18vt532" path="res://scripts/objects/ui/hud/game/action_bar/ActionBar.gd" id="bar_script"]
+[ext_resource uid="uid://cokoietwvdpeo" type="Texture2D" path="res://assets/images-png/game/btn_teleport_disabled.png" id="bar_undo_d"]
+[ext_resource uid="uid://w4vmljypjtn" type="Texture2D" path="res://assets/images-png/game/btn_teleport_normal.png" id="bar_undo_n"]
+[ext_resource uid="uid://18tyqqpebj34" type="Texture2D" path="res://assets/images-png/game/btn_teleport_pressed.png" id="bar_undo_p"]
+[ext_resource type="Script" uid="uid://6o5plv3ncq4w" path="res://scripts/objects/ui/hud/game/action_bar/LimitedButton.gd" id="limit_btn"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7v77u"]
+content_margin_left = 61.0
+content_margin_top = 18.0
+content_margin_right = 30.0
+content_margin_bottom = 20.0
+texture = ExtResource("13_8y1nw")
+texture_margin_left = 61.0
+texture_margin_top = 18.0
+texture_margin_right = 30.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kn0bs"]
+content_margin_left = 61.0
+content_margin_top = 18.0
+content_margin_right = 30.0
+content_margin_bottom = 20.0
+texture = ExtResource("14_7v77u")
+texture_margin_left = 61.0
+texture_margin_top = 18.0
+texture_margin_right = 30.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vjyni"]
+content_margin_left = 61.0
+content_margin_top = 18.0
+content_margin_right = 30.0
+content_margin_bottom = 20.0
+texture = ExtResource("13_8y1nw")
+texture_margin_left = 61.0
+texture_margin_top = 18.0
+texture_margin_right = 30.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_trajn"]
+content_margin_left = 61.0
+content_margin_top = 18.0
+content_margin_right = 30.0
+content_margin_bottom = 20.0
+texture = ExtResource("15_kn0bs")
+texture_margin_left = 61.0
+texture_margin_top = 18.0
+texture_margin_right = 30.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="Animation" id="Animation_teleport_pulse_p"]
+resource_name = "pulse_teleport"
+length = 0.7
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Row/Teleport:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.35, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.12, 1.12), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_teleport_pulse_p"]
+_data = {
+&"pulse_teleport": SubResource("Animation_teleport_pulse_p")
+}
+
+[node name="ActionBar" type="VBoxContainer" unique_id=647431502]
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.17
+offset_bottom = -0.40000916
+grow_horizontal = 2
+theme = ExtResource("1_w6pjg")
+script = ExtResource("bar_script")
+
+[node name="HintGuide" type="Control" parent="." unique_id=2049437720 node_paths=PackedStringArray("text_label")]
+visible = false
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+mouse_filter = 2
+theme = ExtResource("1_w6pjg")
+script = ExtResource("bar_hintguide")
+text_label = NodePath("Text")
+
+[node name="Bg" type="TextureRect" parent="HintGuide" unique_id=1663004128]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("bar_hintpanel")
+expand_mode = 1
+
+[node name="Icon" type="TextureRect" parent="HintGuide" unique_id=1996162738]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 11.5
+offset_right = 45.0
+offset_bottom = 33.5
+mouse_filter = 2
+texture = ExtResource("bar_bulbicon")
+
+[node name="Text" type="Label" parent="HintGuide" unique_id=1633726160]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.108
+anchor_right = 0.96900004
+anchor_bottom = 1.0
+offset_left = 0.079998
+offset_right = 0.189972
+theme_type_variation = &"HintGuideText"
+text = "STR_HINT_PLAY"
+vertical_alignment = 1
+
+[node name="Submit" type="Button" parent="." unique_id=832790697]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+tooltip_text = "STR_TOOL_SUBMIT"
+theme_override_styles/normal = SubResource("StyleBoxTexture_7v77u")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_kn0bs")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vjyni")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_trajn")
+script = ExtResource("5_l0kg0")
+texture_normal = ExtResource("13_8y1nw")
+texture_hover = ExtResource("13_8y1nw")
+texture_pressed = ExtResource("14_7v77u")
+texture_disabled = ExtResource("15_kn0bs")
+patch_margin_left = 61.0
+patch_margin_top = 18.0
+patch_margin_right = 30.0
+patch_margin_bottom = 20.0
+metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
+
+[node name="Text" type="Label" parent="Submit" unique_id=589082484]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.16837038
+anchor_right = 0.96900016
+anchor_bottom = 1.0
+offset_left = 0.079998
+offset_right = 0.189972
+theme_type_variation = &"PopupStampText"
+theme_override_font_sizes/font_size = 30
+text = "STR_TOOL_SUBMIT"
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Row" type="HBoxContainer" parent="." unique_id=1921036029]
+layout_mode = 2
+alignment = 1
+
+[node name="Restart" type="TextureButton" parent="Row" unique_id=1496407431]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_stretch_ratio = 0.2
+tooltip_text = "STR_TOOL_RESTART"
+texture_normal = ExtResource("13_31yh8")
+texture_pressed = ExtResource("14_irvt4")
+texture_hover = ExtResource("13_31yh8")
+texture_disabled = ExtResource("15_oj83g")
+texture_focused = ExtResource("16_5kyg3")
+
+[node name="Skip" type="TextureButton" parent="Row" unique_id=368139109 node_paths=PackedStringArray("panel_limit", "limit_label")]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_stretch_ratio = 0.2
+tooltip_text = "STR_TOOL_SKIP"
+texture_normal = ExtResource("14_kn0bs")
+texture_pressed = ExtResource("15_vjyni")
+texture_hover = ExtResource("14_kn0bs")
+texture_disabled = ExtResource("16_trajn")
+texture_focused = ExtResource("14_kn0bs")
+script = ExtResource("limit_btn")
+panel_limit = NodePath("PanelLimit")
+limit_label = NodePath("PanelLimit/Label")
+
+[node name="PanelLimit" type="Control" parent="Row/Skip" unique_id=1194304523]
+layout_mode = 1
+anchor_left = 0.58201104
+anchor_top = -0.24477175
+anchor_right = 1.077011
+anchor_bottom = 0.23530437
+offset_left = 0.036994934
+offset_top = 0.019001007
+offset_right = -0.008003235
+offset_bottom = 0.01599884
+mouse_filter = 1
+script = ExtResource("23_7v77u")
+patch_margin_left = 12.0
+patch_margin_top = 11.0
+patch_margin_right = 13.0
+patch_margin_bottom = 14.0
+texture_normal = ExtResource("24_kfsk0")
+texture_hover = ExtResource("24_kfsk0")
+texture_pressed = ExtResource("25_vvy6r")
+texture_disabled = ExtResource("26_1uc10")
+metadata/_custom_type_script = "uid://blpdwtvxerh8h"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Row/Skip/PanelLimit" unique_id=2120515569]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1521739
+anchor_top = 0.12903225
+anchor_right = 0.87000006
+anchor_bottom = 0.74200004
+offset_right = -0.020004272
+offset_bottom = -0.0020008087
+theme_type_variation = &"HintGuideText"
+theme_override_font_sizes/font_size = 15
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Spacer" type="Control" parent="Row" unique_id=844901431]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.8
+
+[node name="Teleport" type="TextureButton" parent="Row" unique_id=1686832729 node_paths=PackedStringArray("panel_limit", "limit_label")]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.2
+tooltip_text = "STR_TOOL_TELEPORT"
+texture_normal = ExtResource("bar_undo_n")
+texture_pressed = ExtResource("bar_undo_p")
+texture_disabled = ExtResource("bar_undo_d")
+script = ExtResource("limit_btn")
+panel_limit = NodePath("PanelLimit")
+limit_label = NodePath("PanelLimit/Label")
+
+[node name="PanelLimit" type="Control" parent="Row/Teleport" unique_id=1117707689]
+layout_mode = 1
+anchor_left = 0.58201104
+anchor_top = -0.24477175
+anchor_right = 1.077011
+anchor_bottom = 0.23530437
+offset_left = 0.036994934
+offset_top = 0.019001007
+offset_right = -0.008003235
+offset_bottom = 0.01599884
+mouse_filter = 1
+script = ExtResource("23_7v77u")
+patch_margin_left = 12.0
+patch_margin_top = 11.0
+patch_margin_right = 13.0
+patch_margin_bottom = 14.0
+texture_normal = ExtResource("24_kfsk0")
+texture_hover = ExtResource("24_kfsk0")
+texture_pressed = ExtResource("25_vvy6r")
+texture_disabled = ExtResource("26_1uc10")
+metadata/_custom_type_script = "uid://blpdwtvxerh8h"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Row/Teleport/PanelLimit" unique_id=1581698055]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1521739
+anchor_top = 0.12903225
+anchor_right = 0.87000006
+anchor_bottom = 0.74200004
+offset_right = -0.020004272
+offset_bottom = -0.0020008087
+theme_type_variation = &"HintGuideText"
+theme_override_font_sizes/font_size = 15
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Hint" type="TextureButton" parent="Row" unique_id=801132198 node_paths=PackedStringArray("panel_limit", "limit_label")]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.2
+tooltip_text = "STR_TOOL_HINT"
+texture_normal = ExtResource("bar_hint_n")
+texture_pressed = ExtResource("bar_hint_p")
+texture_disabled = ExtResource("bar_hint_d")
+script = ExtResource("limit_btn")
+panel_limit = NodePath("PanelLimit")
+limit_label = NodePath("PanelLimit/Label")
+
+[node name="PanelLimit" type="Control" parent="Row/Hint" unique_id=412242771]
+layout_mode = 1
+anchor_left = 0.58201104
+anchor_top = -0.24477175
+anchor_right = 1.077011
+anchor_bottom = 0.23530437
+offset_left = 0.036994934
+offset_top = 0.019001007
+offset_right = -0.008003235
+offset_bottom = 0.01599884
+mouse_filter = 1
+script = ExtResource("23_7v77u")
+patch_margin_left = 12.0
+patch_margin_top = 11.0
+patch_margin_right = 13.0
+patch_margin_bottom = 14.0
+texture_normal = ExtResource("24_kfsk0")
+texture_hover = ExtResource("24_kfsk0")
+texture_pressed = ExtResource("25_vvy6r")
+texture_disabled = ExtResource("26_1uc10")
+metadata/_custom_type_script = "uid://blpdwtvxerh8h"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Row/Hint/PanelLimit" unique_id=1253585341]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1521739
+anchor_top = 0.12903225
+anchor_right = 0.87000006
+anchor_bottom = 0.74200004
+offset_right = -0.020004272
+offset_bottom = -0.0020008087
+theme_type_variation = &"HintGuideText"
+theme_override_font_sizes/font_size = 15
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="PulseAnim" type="AnimationPlayer" parent="." unique_id=1415538603]
+libraries = {
+"": SubResource("AnimationLibrary_teleport_pulse_p")
+}

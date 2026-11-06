@@ -1,0 +1,27 @@
+# Overrides cho gen_move_map — mỗi dòng: <đường dẫn cũ> -> <đích cuối cùng>
+# Duyệt 2026-11-06 (9 mục "Cần người xem lại" + tên 2 layout màn Game).
+
+# 1. RefCounted có logic duyệt ô (không phải static thuần)
+scripts/ui/game/board_cells_view.gd -> scripts/systems/BoardCellsView.gd
+# 2. PaperGeometry: giữ utils (toàn static) — không cần override (map đã đúng)
+
+# 3. Widget HUD (extends NinePatchRect, gắn trong level_mode.tscn)
+scripts/ui/hud/game/mission_card.gd -> scripts/components/hud/MissionCard.gd
+
+# 4. Popup thật do PopupManager nạp từ nodes/popups/ (bản nodes/daily/ là scene trùng UID, đã xoá)
+scripts/ui/popups/daily_milestone.gd -> scripts/objects/ui/popups/DailyMilestonePopup.gd
+
+# 5. DebugData: giữ utils (toàn static) — không cần override
+# 6. DockStyleJ: utils, đổi PascalCase
+scripts/ui/widgets/main/dock_style_j.gd -> scripts/utils/DockStyleJ.gd
+# 7. ShopCardTap: giữ systems — không cần override
+
+# 8. Widget Label tự co cỡ chữ (dùng ở nhiều scene)
+scripts/utils/auto_fit_label.gd -> scripts/components/shared/AutoFitLabel.gd
+
+# 9. Lớp cơ sở layout màn Game (D7: sống cạnh scenes/objects/layouts/game/)
+scripts/ui/layouts/game_scene_layout.gd -> scripts/objects/layouts/game/GameSceneLayout.gd
+
+# 10. Hai layout màn Game phải nhất quán tên (map tự động đặt GameLayout.gd cho landscape)
+scripts/ui/layouts/game_layout_landscape.gd -> scripts/objects/layouts/game/GameLayoutLandscape.gd
+scripts/ui/layouts/game_layout_portrait.gd -> scripts/objects/layouts/game/GameLayoutPortrait.gd

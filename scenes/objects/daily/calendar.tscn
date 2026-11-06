@@ -1,0 +1,301 @@
+[gd_scene format=3 uid="uid://ba36iykveefpu"]
+
+[ext_resource type="Script" uid="uid://b8u3x0v0x0ol0" path="res://scripts/objects/daily/DailyCalendar.gd" id="1_cal"]
+[ext_resource uid="uid://dcnr5x8lxgprs" type="Texture2D" path="res://assets/images-png/daily/board.png" id="2_board"]
+[ext_resource uid="uid://b0uecaqo3t80v" type="Texture2D" path="res://assets/images-png/daily/btn_nav_normal.png" id="4_nav_n"]
+[ext_resource uid="uid://cse03txo7xama" type="Texture2D" path="res://assets/images-png/daily/btn_nav_pressed.png" id="5_nav_p"]
+[ext_resource uid="uid://bn0ykh2s0tstg" type="Texture2D" path="res://assets/images-png/daily/btn_nav_r_normal.png" id="6_navr_n"]
+[ext_resource uid="uid://bod7r8ra27kqn" type="Texture2D" path="res://assets/images-png/daily/btn_nav_r_pressed.png" id="7_navr_p"]
+[ext_resource uid="uid://b0yc3thcmxut" type="Texture2D" path="res://assets/images-png/daily/check_red.png" id="8_check"]
+[ext_resource uid="uid://bp8xq1qs34kdh" type="Texture2D" path="res://assets/images-png/daily/cross_red.png" id="9_cross"]
+[ext_resource uid="uid://cmy4x2wujs2jh" type="Texture2D" path="res://assets/images-png/daily/legend_box.png" id="10_box"]
+[ext_resource uid="uid://8aia4idjrvbo" type="Texture2D" path="res://assets/images-png/daily/legend_dashed.png" id="11_dash"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://data/config/theme_default.tres" id="12_theme"]
+
+[node name="Calendar" type="Control" node_paths=PackedStringArray("month_label", "btn_prev", "btn_next", "dow_row", "grid")]
+custom_minimum_size = Vector2(462, 417)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 462.0
+offset_bottom = 417.0
+theme = ExtResource("12_theme")
+script = ExtResource("1_cal")
+month_label = NodePath("Panel/Months/Label")
+btn_prev = NodePath("Panel/Months/Prev")
+btn_next = NodePath("Panel/Months/Next")
+dow_row = NodePath("Panel/DayTitle")
+grid = NodePath("Panel/Days")
+
+[node name="Panel" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Board" type="TextureRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_board")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Months" type="Control" parent="Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 14.0
+offset_bottom = 44.0
+grow_horizontal = 2
+
+[node name="Prev" type="TextureButton" parent="Panel/Months"]
+custom_minimum_size = Vector2(27, 27)
+layout_mode = 1
+anchors_preset = 0
+offset_left = 22.0
+offset_right = 49.0
+offset_bottom = 27.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("4_nav_n")
+texture_pressed = ExtResource("5_nav_p")
+texture_hover = ExtResource("5_nav_p")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Next" type="TextureButton" parent="Panel/Months"]
+custom_minimum_size = Vector2(27, 27)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -49.0
+offset_right = -22.0
+offset_bottom = 27.0
+grow_horizontal = 0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("6_navr_n")
+texture_pressed = ExtResource("7_navr_p")
+texture_hover = ExtResource("7_navr_p")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Panel/Months"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 56.0
+offset_right = -56.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.0862745, 0.227451, 0.345098, 1)
+theme_override_font_sizes/font_size = 19
+text = "STR_MONTH_SEP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DayTitle" type="HBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 7.0
+offset_top = 48.0
+offset_right = 454.0
+offset_bottom = 65.0
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="Monday" type="Label" parent="Panel/DayTitle"]
+custom_minimum_size = Vector2(57, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.333333, 0.439216, 0.498039, 1)
+theme_override_font_sizes/font_size = 11
+text = "STR_DOW_MON"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Tuesday" type="Label" parent="Panel/DayTitle"]
+custom_minimum_size = Vector2(57, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.333333, 0.439216, 0.498039, 1)
+theme_override_font_sizes/font_size = 11
+text = "STR_DOW_TUE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Wednesday" type="Label" parent="Panel/DayTitle"]
+custom_minimum_size = Vector2(57, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.333333, 0.439216, 0.498039, 1)
+theme_override_font_sizes/font_size = 11
+text = "STR_DOW_WED"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Thursday" type="Label" parent="Panel/DayTitle"]
+custom_minimum_size = Vector2(57, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.333333, 0.439216, 0.498039, 1)
+theme_override_font_sizes/font_size = 11
+text = "STR_DOW_THU"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Friday" type="Label" parent="Panel/DayTitle"]
+custom_minimum_size = Vector2(57, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.333333, 0.439216, 0.498039, 1)
+theme_override_font_sizes/font_size = 11
+text = "STR_DOW_FRI"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Saturday" type="Label" parent="Panel/DayTitle"]
+custom_minimum_size = Vector2(57, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.631373, 0.372549, 0.105882, 1)
+theme_override_font_sizes/font_size = 11
+text = "STR_DOW_SAT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sunday" type="Label" parent="Panel/DayTitle"]
+custom_minimum_size = Vector2(57, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.788235, 0.235294, 0.235294, 1)
+theme_override_font_sizes/font_size = 11
+text = "STR_DOW_SUN"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Days" type="GridContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 7.0
+offset_top = 71.0
+offset_right = 454.0
+offset_bottom = 379.0
+mouse_filter = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 6
+columns = 7
+
+[node name="Legend" type="HBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 15.0
+offset_top = 385.0
+offset_right = 447.0
+offset_bottom = 407.0
+mouse_filter = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Done" type="HBoxContainer" parent="Panel/Legend"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 5
+
+[node name="Icon" type="TextureRect" parent="Panel/Legend/Done"]
+custom_minimum_size = Vector2(13, 13)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("8_check")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Panel/Legend/Done"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.443137, 0.545098, 0.619608, 1)
+theme_override_font_sizes/font_size = 10
+text = "STR_DAILY_LEGEND_DONE"
+vertical_alignment = 1
+
+[node name="Missed" type="HBoxContainer" parent="Panel/Legend"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 5
+
+[node name="Icon" type="TextureRect" parent="Panel/Legend/Missed"]
+custom_minimum_size = Vector2(13, 13)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("9_cross")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Panel/Legend/Missed"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.443137, 0.545098, 0.619608, 1)
+theme_override_font_sizes/font_size = 10
+text = "STR_DAILY_LEGEND_MISSED"
+vertical_alignment = 1
+
+[node name="Today" type="HBoxContainer" parent="Panel/Legend"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 5
+
+[node name="Icon" type="TextureRect" parent="Panel/Legend/Today"]
+custom_minimum_size = Vector2(13, 13)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("10_box")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Panel/Legend/Today"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.443137, 0.545098, 0.619608, 1)
+theme_override_font_sizes/font_size = 10
+text = "STR_DAILY_LEGEND_TODAY"
+vertical_alignment = 1
+
+[node name="Upcoming" type="HBoxContainer" parent="Panel/Legend"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 5
+
+[node name="Icon" type="TextureRect" parent="Panel/Legend/Upcoming"]
+custom_minimum_size = Vector2(13, 13)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("11_dash")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Panel/Legend/Upcoming"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.443137, 0.545098, 0.619608, 1)
+theme_override_font_sizes/font_size = 10
+text = "STR_DAILY_LEGEND_UPCOMING"
+vertical_alignment = 1
+
+[connection signal="pressed" from="Panel/Months/Prev" to="." method="_on_month_switch_pressed" binds= [-1]]
+[connection signal="pressed" from="Panel/Months/Next" to="." method="_on_month_switch_pressed" binds= [1]]

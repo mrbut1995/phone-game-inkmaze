@@ -1,0 +1,16 @@
+# P2a: resources -> data, shaders -> assets/shaders, audio. Áp dụng TRƯỚC.
+resources/levels/AI Studio Response.txt -> docs/prompts/ai_studio_response.txt
+resources/levels/Ink Maze Level Generator System Prompt.txt -> docs/prompts/ink_maze_level_generator_system_prompt.txt
+assets/sfx -> assets/audio/sfx
+assets/soundtrack -> assets/audio/music
+resources/achievements -> data/achievements
+resources/animations -> data/animations
+resources/chapters -> data/chapters
+resources/events -> data/events
+resources/levels -> data/levels
+resources/levels_samples -> data/levels_samples
+resources/localization -> data/localization
+resources/materials -> data/materials
+resources/profiler -> data/profiler
+resources/settings -> data/config
+shaders -> assets/shaders
