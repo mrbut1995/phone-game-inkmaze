@@ -1,5 +1,7 @@
 class_name MainScene
 extends BaseScene
+const PlayerProfileManagerScript := preload("res://scripts/autoload/PlayerProfileManager.gd")
+const EventManagerScript := preload("res://scripts/autoload/EventManager.gd")
 ## ============================================================================
 ## View Controller: Màn hình chính (Main Screen) — bố cục GỘP (Main = màn chọn màn).
 ##
@@ -152,10 +154,10 @@ func _refresh_profile() -> void:
 
 ## Hồ sơ đổi (đổi avatar/viền/tên ở popup) → thẻ hồ sơ cập nhật theo
 func _connect_profile_manager() -> void:
-	var m := Profile.manager()
+	var m := Profile.manager() as PlayerProfileManagerScript
 	# keep-code: nối tới AUTOLOAD ProfileManager (không phải node tĩnh) — §5B.4 mục 4
-	if m != null and m.has_signal("profile_changed") and not m.is_connected("profile_changed", _refresh_profile):
-		m.connect("profile_changed", _refresh_profile)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+	if m != null and m.has_signal("profile_changed") and not m.profile_changed.is_connected(_refresh_profile):
+		m.profile_changed.connect(_refresh_profile)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 # ---------------------------------------------------------------------------
@@ -252,9 +254,9 @@ func _setup_event_buttons() -> void:
 		_event_buttons.event_pressed.connect(_on_event_card_pressed)
 		if section.map != null and not section.map.blockers.has(_event_buttons):
 			section.map.blockers.append(_event_buttons)
-	var em := Svc.event()
+	var em := Svc.event() as EventManagerScript
 	# keep-code: nối tới AUTOLOAD EventManager (không phải node tĩnh) — §5B.4 mục 4
-	if em != null and em.has_signal("events_changed") and not em.is_connected("events_changed", _on_events_changed):
+	if em != null and em.has_signal("events_changed") and not em.events_changed.is_connected(_on_events_changed):
 		em.events_changed.connect(_on_events_changed)
 	_refresh_event_buttons()
 

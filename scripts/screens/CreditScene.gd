@@ -1,5 +1,7 @@
 class_name CreditScene
 extends BaseScene
+const MusicManagerScript := preload("res://scripts/autoload/MusicManager.gd")
+const ThemeManagerScript := preload("res://scripts/autoload/ThemeManager.gd")
 ## ============================================================================
 ## View Controller: Credit Scene
 ## - Hiển thị thông tin soundtrack nền + attribution bản quyền.
@@ -42,27 +44,27 @@ func _ready() -> void:
 
 
 func _apply_credit_context() -> void:
-	var music := _music_manager()
+	var music := _music_manager() as MusicManagerScript
 	if music != null and music.has_method("set_context"):
 		music.call("set_context", "credits", true)
 
 
 func _bind_theme_signal() -> void:
-	var themes: Variant = Svc.theme()
+	var themes: Variant = Svc.theme() as ThemeManagerScript
 	if themes == null or not themes.has_signal("skin_changed"):
 		return
 	var cb := Callable(self, "_on_skin_changed")
-	if not themes.is_connected("skin_changed", cb):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		themes.connect("skin_changed", cb)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+	if not themes.skin_changed.is_connected(cb):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		themes.skin_changed.connect(cb)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _bind_music_signal() -> void:
-	var music := _music_manager()
+	var music := _music_manager() as MusicManagerScript
 	if music == null or not music.has_signal("soundtrack_changed"):
 		return
 	var cb := Callable(self, "_on_soundtrack_changed")
-	if not music.is_connected("soundtrack_changed", cb):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		music.connect("soundtrack_changed", cb)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+	if not music.soundtrack_changed.is_connected(cb):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		music.soundtrack_changed.connect(cb)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _refresh_all() -> void:
@@ -90,7 +92,7 @@ func _refresh_theme_name() -> void:
 func _refresh_track_name() -> void:
 	if layout.track_value == null:
 		return
-	var music := _music_manager()
+	var music := _music_manager() as MusicManagerScript
 	var track_name := "Wallpaper"
 	if music != null and music.has_method("current_track_name"):
 		var value := str(music.call("current_track_name"))

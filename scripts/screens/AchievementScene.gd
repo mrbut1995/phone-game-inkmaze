@@ -1,5 +1,7 @@
 class_name AchievementScene
 extends BaseScene
+const AchievementCardScript := preload("res://scripts/objects/achievements/AchievementCard.gd")
+const AchievementManagerScript := preload("res://scripts/autoload/AchievementManager.gd")
 ## ============================================================================
 ## View Controller: "Sổ tay thành tựu" (scenes/achievement.tscn)
 ##
@@ -198,10 +200,10 @@ func overview_text() -> String:
 # Dựng nội dung
 # ---------------------------------------------------------------------------
 func _connect_manager() -> void:
-	var manager := Achievement.manager()
+	var manager := Achievement.manager() as AchievementManagerScript
 	if manager != null and manager.has_signal("progress_changed"):
-		if not manager.is_connected("progress_changed", _on_manager_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-			manager.connect("progress_changed", _on_manager_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		if not manager.progress_changed.is_connected(_on_manager_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+			manager.progress_changed.connect(_on_manager_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _on_manager_changed() -> void:
@@ -280,12 +282,12 @@ func _build_pages() -> void:
 			var list_index := page_index * per_page + slot
 			if list_index >= _entries.size():
 				break
-			var card: Control = card_scene.instantiate()
+			var card := card_scene.instantiate() as AchievementCardScript
 			column.add_child(card)
 			if card.has_method("setup"):
 				card.call("setup", _decorated_entry(list_index))
 			if card.has_signal("claim_requested"):
-				card.connect("claim_requested", _on_claim_requested)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+				card.claim_requested.connect(_on_claim_requested)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 			# Thẻ lớn (G) có hiệu ứng thu/phóng riêng theo vị trí cuộn (`_update_peek`) ⇒ bỏ pop-in
 			if not padded:
 				UIAnim.play_pop_in(card, 0.02 * slot, 0.9, 0.18)

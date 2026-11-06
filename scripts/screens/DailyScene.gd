@@ -1,5 +1,7 @@
 class_name DailyScene
 extends BaseScene
+const DailyManagerScript := preload("res://scripts/autoload/DailyManager.gd")
+const AdsManagerScript := preload("res://scripts/autoload/AdsManager.gd")
 ## ============================================================================
 ## View Controller: Màn hình Thử thách hằng ngày (scenes/daily.tscn)
 ##
@@ -40,7 +42,7 @@ var layout: DailyLayout = null
 
 var _chips: Array[DailyMilestoneChip] = []
 var _tip: DailyRewardTip = null
-var _daily: Node = null
+var _daily: DailyManagerScript = null
 ## Đang chờ quảng cáo: true = sau khi xem xong vào THỬ THÁCH, false = vào CHƠI
 var _ad_challenge_pending := false
 ## Ngày đang chọn (mặc định hôm nay). Bấm ngày khác trên lịch = xem/ chơi ngày đó.
@@ -54,7 +56,7 @@ var _hold_stars := 0
 
 
 func _ready() -> void:
-	_daily = Svc.daily()
+	_daily = Svc.daily() as DailyManagerScript
 	_selected_day = _today()
 	_take_celebrate_info()
 
@@ -186,8 +188,8 @@ func _wire_buttons() -> void:
 		if not UIAnim.play_layout_anim(layout, "PulseAnim", &"pulse", layout.play_card):
 			UIAnim.play_pulse(layout.play_card, 1.02, 2.0)
 	if _daily != null and _daily.has_signal("daily_changed") \
-			and not _daily.is_connected("daily_changed", _refresh):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		_daily.connect("daily_changed", _refresh)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+			and not _daily.daily_changed.is_connected(_refresh):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		_daily.daily_changed.connect(_refresh)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 ## Cập nhật số Xu trên ví (ví dùng chung `AchievementManager.coins` với Main Screen)
@@ -521,14 +523,14 @@ func _enter_day(is_challenge: bool) -> void:
 ## Chạy quảng cáo thưởng để MỞ KHOÁ ngày bỏ lỡ; xem xong mới vào màn.
 ## AdsManager hiện là PLACEHOLDER: khi chưa gắn SDK nó giả lập "xem xong" ngay.
 func _request_ad_then_play(is_challenge: bool) -> void:
-	var ads: Node = Svc.ads()
+	var ads: Node = Svc.ads() as AdsManagerScript
 	if ads == null or not ads.has_method("show_rewarded"):
 		# Không có hệ thống quảng cáo (bản test): mở khoá luôn để không chặn người chơi
 		_grant_day_unlock()
 		_start_day(_selected_day, is_challenge)
 		return
-	if not ads.is_connected("rewarded_completed", _on_ad_rewarded):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		ads.connect("rewarded_completed", _on_ad_rewarded)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+	if not ads.rewarded_completed.is_connected(_on_ad_rewarded):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		ads.rewarded_completed.connect(_on_ad_rewarded)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 	_ad_challenge_pending = is_challenge
 	if not bool(ads.call("show_rewarded", ADS_REWARD_ID)):
 		_ad_challenge_pending = false

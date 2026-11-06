@@ -1,5 +1,6 @@
 class_name ProfilerScene
 extends BaseUI
+const PlayerProfileManagerScript := preload("res://scripts/autoload/PlayerProfileManager.gd")
 ## ============================================================================
 ## NỘI DUNG HỒ SƠ CÁ NHÂN (nodes/popups/profiler_content.tscn) — mockup/profiler.svg.
 ##
@@ -110,9 +111,9 @@ func _rebind_after_orientation() -> void:
 
 
 func _connect_manager() -> void:
-	var m := Profile.manager()
-	if m != null and m.has_signal("profile_changed") and not m.is_connected("profile_changed", _on_profile_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		m.connect("profile_changed", _on_profile_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+	var m := Profile.manager() as PlayerProfileManagerScript
+	if m != null and m.has_signal("profile_changed") and not m.profile_changed.is_connected(_on_profile_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		m.profile_changed.connect(_on_profile_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _on_profile_changed() -> void:

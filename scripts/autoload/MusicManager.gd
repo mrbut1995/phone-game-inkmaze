@@ -1,4 +1,7 @@
 extends Node
+const SceneManagerScript := preload("res://scripts/autoload/SceneManager.gd")
+const SettingManagerScript := preload("res://scripts/autoload/SettingManager.gd")
+const ThemeManagerScript := preload("res://scripts/autoload/ThemeManager.gd")
 ## ============================================================================
 ## Manager: MusicManager - Phát soundtrack nền theo chủ đề đang dùng.
 ##
@@ -97,30 +100,30 @@ func _refresh_runtime_state() -> void:
 
 
 func _bind_setting_manager() -> void:
-	var settings: Variant = Svc.setting()
+	var settings: Variant = Svc.setting() as SettingManagerScript
 	if settings == null or not settings.has_signal("volume_changed"):
 		return
 	var cb := Callable(self, "_on_volume_changed")
-	if not settings.is_connected("volume_changed", cb):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		settings.connect("volume_changed", cb)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+	if not settings.volume_changed.is_connected(cb):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		settings.volume_changed.connect(cb)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _bind_theme_manager() -> void:
-	var themes: Variant = Svc.theme()
+	var themes: Variant = Svc.theme() as ThemeManagerScript
 	if themes == null or not themes.has_signal("skin_changed"):
 		return
 	var cb := Callable(self, "_on_skin_changed")
-	if not themes.is_connected("skin_changed", cb):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		themes.connect("skin_changed", cb)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+	if not themes.skin_changed.is_connected(cb):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		themes.skin_changed.connect(cb)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _bind_scene_manager() -> void:
-	var scenes: Variant = Svc.scene()
+	var scenes: Variant = Svc.scene() as SceneManagerScript
 	if scenes == null or not scenes.has_signal("scene_changed"):
 		return
 	var cb := Callable(self, "_on_scene_changed")
-	if not scenes.is_connected("scene_changed", cb):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		scenes.connect("scene_changed", cb)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+	if not scenes.scene_changed.is_connected(cb):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		scenes.scene_changed.connect(cb)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _ensure_player() -> void:

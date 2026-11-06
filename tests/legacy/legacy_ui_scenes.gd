@@ -753,7 +753,8 @@ func _section_11_tutorials() -> void:
 				steps_total += (steps as Array).size()
 				# (7) Đi hết các bước: bước cuối → phát `tutorial_completed` ĐÚNG id (1 lần)
 				var completed: Array[String] = []
-				node.connect("tutorial_completed",
+				# EXCEPTION(GODOT3-dynamic-signal): scene nạp động trong test, không có kiểu tĩnh
+				(node as BaseTutorial).tutorial_completed.connect(
 					func(id: String) -> void: completed.append(id))
 				for _i in (steps as Array).size():
 					node.call("next_step")

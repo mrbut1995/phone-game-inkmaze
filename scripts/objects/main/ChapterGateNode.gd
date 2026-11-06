@@ -1,5 +1,6 @@
 class_name ChapterGateNode
 extends Node2D
+const LocalizationManagerScript := preload("res://scripts/autoload/LocalizationManager.gd")
 ## ============================================================================
 ## ChapterGateNode — CỔNG chương trên bản đồ đường liền
 ## (nodes/main/chapter_gate.tscn · script: scripts/ui/widgets/main/chapter_gate.gd) — `LevelMap._build_gate` dựng rồi gọi `setup()`.
@@ -147,10 +148,10 @@ func _fit_font(label: Label, base_size: int, max_width: float) -> void:
 
 ## Đổi ngôn ngữ ⇒ viết lại chữ
 func _connect_locale_signal() -> void:
-	var loc: Node = Svc.loc()
+	var loc: Node = Svc.loc() as LocalizationManagerScript
 	if loc != null and loc.has_signal("locale_changed") \
-			and not loc.is_connected("locale_changed", _on_locale_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		loc.connect("locale_changed", _on_locale_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+			and not loc.locale_changed.is_connected(_on_locale_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		loc.locale_changed.connect(_on_locale_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _on_locale_changed(_locale: String) -> void:

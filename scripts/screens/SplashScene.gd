@@ -1,5 +1,6 @@
 class_name SplashScene
 extends BaseScene
+const LoadingManagerScript := preload("res://scripts/autoload/LoadingManager.gd")
 ## ============================================================================
 ## View Controller: Màn hình Splash (scenes/splash.tscn)
 ## - Hoạt ảnh xuất hiện logo Mực & Giấy (Ink bloom, nét vẽ bút chì phác thảo).
@@ -143,17 +144,17 @@ func _swap_notes() -> void:
 ## Splash hiện ra trước, hoạt ảnh + thanh nạp chạy trong lúc nạp nền;
 ## nạp xong mới cho phép sang Title.
 func _bind_loading() -> void:
-	var loading := _loading_manager()
+	var loading := _loading_manager() as LoadingManagerScript
 	if loading == null or bool(loading.call("is_loading_done")):
 		# Nạp đã xong trước khi Splash kịp hiện (test/headless) ⇒ không có gì để hiện
 		_loading_done = true
 		_set_loading_progress(1.0)
 		_set_loading_box_visible(false)
 		return
-	if not loading.is_connected("progress_changed", _on_loading_progress):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		loading.connect("progress_changed", _on_loading_progress)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-	if not loading.is_connected("loading_finished", _on_loading_finished):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		loading.connect("loading_finished", _on_loading_finished)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+	if not loading.progress_changed.is_connected(_on_loading_progress):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		loading.progress_changed.connect(_on_loading_progress)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+	if not loading.loading_finished.is_connected(_on_loading_finished):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		loading.loading_finished.connect(_on_loading_finished)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 	_on_loading_progress(float(loading.call("progress")), "")
 	loading.call("start")
 

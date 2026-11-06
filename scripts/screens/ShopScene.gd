@@ -1,5 +1,7 @@
 class_name ShopScene
 extends BaseScene
+const ShopItemTileScript := preload("res://scripts/objects/shop/ShopItemTile.gd")
+const ShopItemRowScript := preload("res://scripts/objects/shop/ShopItemRow.gd")
 ## ============================================================================
 ## Màn CỬA HÀNG (mockup/shopping_*.svg) — 4 tab:
 ##   BÚT & MỰC (pen) · GIẤY VỞ (theme) · DỤNG CỤ (tool) · NẠP XU (coin)
@@ -556,11 +558,11 @@ func _rebuild_rows(items: Array[Dictionary]) -> void:
 	_page_first_id = ""
 	var index := 0
 	for item in items:
-		var card: Control = ROW_SCENE.instantiate()
+		var card := ROW_SCENE.instantiate() as ShopItemRowScript
 		layout.list_box.add_child(card)
 		card.call("setup", item)
 		if card.has_signal("action_pressed"):
-			card.connect("action_pressed", _on_item_action)  # EXCEPTION(R3-keep): signal của node sinh lúc chạy / biến thể (nối 1 chỗ khi tạo)
+			card.action_pressed.connect(_on_item_action)  # EXCEPTION(R3-keep): signal của node sinh lúc chạy / biến thể (nối 1 chỗ khi tạo)
 		_cards.append(card)
 		UIAnim.play_pop_in(card, 0.02 * index, 0.94, 0.18)
 		index += 1
@@ -592,9 +594,9 @@ func _rebuild_grid(items: Array[Dictionary]) -> void:
 		grid.add_child(card)
 		card.call("setup", items[item_index])
 		if card.has_signal("action_pressed"):
-			card.connect("action_pressed", _on_item_action)  # EXCEPTION(R3-keep): signal của node sinh lúc chạy / biến thể (nối 1 chỗ khi tạo)
+			card.action_pressed.connect(_on_item_action)  # EXCEPTION(R3-keep): signal của node sinh lúc chạy / biến thể (nối 1 chỗ khi tạo)
 		if card.has_signal("preview_pressed"):
-			card.connect("preview_pressed", select_pen_for_preview)  # EXCEPTION(R3-keep): signal của node sinh lúc chạy / biến thể (nối 1 chỗ khi tạo)
+			card.preview_pressed.connect(select_pen_for_preview)  # EXCEPTION(R3-keep): signal của node sinh lúc chạy / biến thể (nối 1 chỗ khi tạo)
 		_cards.append(card)
 		UIAnim.play_pop_in(card, 0.03 * index, 0.92, 0.2)
 		index += 1
@@ -645,12 +647,12 @@ func _rebuild_coin(items: Array[Dictionary]) -> void:
 			packs.append(item)
 	if not no_ads.is_empty():
 		# Hàng VIP khai sẵn trong scene (`Content/List/NoAds`) — chỉ hiện ở tab NẠP XU
-		var row: Control = layout.noads_row
+		var row := layout.noads_row as ShopItemRowScript
 		if row != null:
 			row.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 			row.call("setup", no_ads)
-		if row.has_signal("action_pressed") and not row.is_connected("action_pressed", _on_item_action):  # keep-code: hàng sinh lúc chạy — chỉ nối khi có signal
-			row.connect("action_pressed", _on_item_action)  # EXCEPTION(R3-keep): node sinh lúc chạy
+		if row.has_signal("action_pressed") and not row.action_pressed.is_connected(_on_item_action):  # keep-code: hàng sinh lúc chạy — chỉ nối khi có signal
+			row.action_pressed.connect(_on_item_action)  # EXCEPTION(R3-keep): node sinh lúc chạy
 			_cards.append(row)
 			UIAnim.play_pop_in(row, 0.0, 0.94, 0.18)
 	var grid := _item_grid()
@@ -665,7 +667,7 @@ func _rebuild_coin(items: Array[Dictionary]) -> void:
 		grid.add_child(card)
 		card.call("setup", item)
 		if card.has_signal("action_pressed"):
-			card.connect("action_pressed", _on_item_action)  # EXCEPTION(R3-keep): signal của node sinh lúc chạy / biến thể (nối 1 chỗ khi tạo)
+			card.action_pressed.connect(_on_item_action)  # EXCEPTION(R3-keep): signal của node sinh lúc chạy / biến thể (nối 1 chỗ khi tạo)
 		_cards.append(card)
 		UIAnim.play_pop_in(card, 0.03 * index, 0.92, 0.2)
 		index += 1

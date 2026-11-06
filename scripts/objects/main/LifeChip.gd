@@ -1,5 +1,6 @@
 class_name LifeChip
 extends Control
+const GameManagerScript := preload("res://scripts/autoload/GameManager.gd")
 ## ============================================================================
 ## Node: LifeChip — LƯỢT CHƠI (life) trên thanh trên của các màn hình.
 ## Trái tim + "còn/tối đa" + nút `+` (chỉ hiện khi CHƯA đầy lượt, mở Cửa hàng).
@@ -40,10 +41,10 @@ func _ready() -> void:
 	# Nút `+` (`Content/Plus`) nối `pressed` trong nodes/main/life_chip.tscn
 	if large:
 		_apply_large()
-	var game_manager := Svc.game()
+	var game_manager := Svc.game() as GameManagerScript
 	if game_manager != null and game_manager.has_signal("life_changed") \
-			and not game_manager.is_connected("life_changed", _on_life_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		game_manager.connect("life_changed", _on_life_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+			and not game_manager.life_changed.is_connected(_on_life_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		game_manager.life_changed.connect(_on_life_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 	refresh()
 
 

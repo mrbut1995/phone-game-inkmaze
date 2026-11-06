@@ -1,5 +1,6 @@
 class_name RankingScene
 extends BaseScene
+const RankingManagerScript := preload("res://scripts/autoload/RankingManager.gd")
 ## ============================================================================
 ## Màn BẢNG XẾP HẠNG — bố cục "tab gáy sổ + top 3 nhà vô địch + dòng kẻ"
 ##
@@ -130,9 +131,9 @@ func _on_tab_pressed(board: String) -> void:
 
 
 func _connect_manager() -> void:
-	var m := Ranking.manager()
-	if m != null and m.has_signal("ranking_changed") and not m.is_connected("ranking_changed", _on_ranking_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		m.connect("ranking_changed", _on_ranking_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+	var m := Ranking.manager() as RankingManagerScript
+	if m != null and m.has_signal("ranking_changed") and not m.ranking_changed.is_connected(_on_ranking_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		m.ranking_changed.connect(_on_ranking_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _on_ranking_changed(board: String) -> void:

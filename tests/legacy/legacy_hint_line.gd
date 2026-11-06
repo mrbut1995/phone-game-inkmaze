@@ -120,7 +120,8 @@ func _init() -> void:
 	# ---------------------------------------------------------------- 6. Thả -> tạo tường nghi ngờ
 	print("\n--- 6. THA RA -> TAO TUONG NGHI NGO ---")
 	var toggles: Array = []
-	anchor_ctrl.connect("suspected_wall_toggled",
+	# EXCEPTION(GODOT3-dynamic-signal): controller nối signal theo tên trong test
+	anchor_ctrl.suspected_wall_toggled.connect(
 		func(is_h: bool, lattice: Vector2i, active: bool) -> void:
 			toggles.append([is_h, lattice, active]))
 	_touch(dst_pos, false)

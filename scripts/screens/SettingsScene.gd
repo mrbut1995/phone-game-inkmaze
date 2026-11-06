@@ -1,5 +1,6 @@
 class_name SettingsScene
 extends BaseScene
+const LanguagePopupScript := preload("res://scripts/objects/ui/popups/LanguagePopup.gd")
 ## ============================================================================
 ## View Controller: Màn hình Cài đặt (Settings)
 ## Bám theo mockup mockup/settings_screen.svg:
@@ -235,11 +236,11 @@ func _on_toggle_changed(toggled_on: bool, key: String) -> void:
 func _on_language_pressed() -> void:
 	Sfx.play(Sfx.BTN_WOOD_TAP)
 	# Popup được PopupManager tạo khi mở và xoá khi đóng
-	var popup := Popups.open(Popups.LANGUAGE)
+	var popup := Popups.open(Popups.LANGUAGE) as LanguagePopupScript
 	if popup == null:
 		return
-	if not popup.is_connected("locale_applied", _on_locale_applied):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		popup.connect("locale_applied", _on_locale_applied)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+	if not popup.locale_applied.is_connected(_on_locale_applied):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		popup.locale_applied.connect(_on_locale_applied)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _on_locale_applied(_code: String) -> void:

@@ -1,4 +1,5 @@
 extends SceneTree
+const GameManagerScript := preload("res://scripts/autoload/GameManager.gd")
 ## ============================================================================
 ## Test Case: KỶ LỤC TẦNG CAO NHẤT theo NGÀY / TUẦN / THÁNG
 ##
@@ -28,7 +29,7 @@ func _init() -> void:
 	if FileAccess.file_exists("user://inkmaze_data.json"):
 		_backup = FileAccess.get_file_as_string("user://inkmaze_data.json")
 
-	var gm: Node = root.get_node_or_null("GameManager")
+	var gm := root.get_node_or_null("GameManager") as GameManagerScript
 	_check(gm != null, "Autoload GameManager ton tai")
 	if gm == null:
 		_finish()
@@ -90,7 +91,7 @@ func _section_record(gm: Node) -> void:
 	_check(int(gm.call("best_floor", "month")) == 0, "Chua co ky luc thang -> 0")
 
 	var hits: Array = []
-	gm.connect("floor_record_changed", func(kind: String, floor_number: int):
+	gm.floor_record_changed.connect(func(kind: String, floor_number: int):
 		hits.append("%s:%d" % [kind, floor_number]))
 
 	_check(bool(gm.call("record_floor_reached", 3)), "Dat tang 3 -> lap ky luc")

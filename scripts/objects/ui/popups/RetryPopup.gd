@@ -1,5 +1,6 @@
 class_name RetryPopup
 extends BasePopup
+const GameManagerScript := preload("res://scripts/autoload/GameManager.gd")
 ## ============================================================================
 ## Popup: HỒI SINH khi thua (nodes/popups/retry.tscn)
 ##
@@ -75,9 +76,9 @@ func _subtitle_text() -> String:
 
 
 func _on_close() -> void:
-	var gm := _game_manager()
+	var gm := _game_manager() as GameManagerScript
 	if gm != null and gm.has_signal("life_changed") \
-			and gm.is_connected("life_changed", _on_life_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+			and gm.life_changed.is_connected(_on_life_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 		gm.disconnect("life_changed", _on_life_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 	if not _chosen:
 		_chosen = true
@@ -92,14 +93,14 @@ func _game_manager() -> Node:
 
 
 func _lives_now() -> int:
-	var gm := _game_manager()
+	var gm := _game_manager() as GameManagerScript
 	if gm != null and gm.has_method("lives_left"):
 		return int(gm.call("lives_left"))
 	return 0
 
 
 func _max_lives() -> int:
-	var gm := _game_manager()
+	var gm := _game_manager() as GameManagerScript
 	if gm != null and gm.has_method("max_lives"):
 		return int(gm.call("max_lives"))
 	return 5
@@ -110,17 +111,17 @@ func _max_lives() -> int:
 func _will_charge_life() -> bool:
 	if bool(data.get("guided", false)):
 		return false
-	var gm := _game_manager()
+	var gm := _game_manager() as GameManagerScript
 	if gm != null and bool(gm.get("debug_run")):
 		return false
 	return true
 
 
 func _connect_life_signal() -> void:
-	var gm := _game_manager()
+	var gm := _game_manager() as GameManagerScript
 	if gm != null and gm.has_signal("life_changed") \
-			and not gm.is_connected("life_changed", _on_life_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		gm.connect("life_changed", _on_life_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+			and not gm.life_changed.is_connected(_on_life_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		gm.life_changed.connect(_on_life_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 ## Lượt đổi khi popup đang mở (vd hồi xong 1 bút) -> vẽ lại hàng bút
@@ -134,7 +135,7 @@ func _refresh_pencils() -> void:
 		skip_cost.visible = will_charge
 	if pencils == null:
 		return
-	var gm := _game_manager()
+	var gm := _game_manager() as GameManagerScript
 	var next_unix := 0.0
 	if gm != null and gm.has_method("seconds_to_next_life"):
 		var wait := int(gm.call("seconds_to_next_life"))

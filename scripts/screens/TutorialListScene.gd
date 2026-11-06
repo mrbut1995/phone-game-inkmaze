@@ -1,5 +1,6 @@
 class_name TutorialListScene
 extends BaseScene
+const LocalizationManagerScript := preload("res://scripts/autoload/LocalizationManager.gd")
 
 ## ============================================================================
 ## View Controller: màn DANH SÁCH bài hướng dẫn (`scenes/tutorial_list.tscn`)
@@ -44,10 +45,10 @@ func _apply_texts() -> void:
 ## Bảng dịch nạp XONG SAU `_ready()` (LoadingManager hoãn ~200 ms) ⇒ phải viết lại nhãn
 ## khi `LocalizationManager` phát `locale_changed`, nếu không tiêu đề sẽ hiện khoá thô.
 func _connect_locale_signal() -> void:
-	var loc: Node = Svc.loc()
+	var loc: Node = Svc.loc() as LocalizationManagerScript
 	if loc != null and loc.has_signal("locale_changed") \
-			and not loc.is_connected("locale_changed", _on_locale_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		loc.connect("locale_changed", _on_locale_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+			and not loc.locale_changed.is_connected(_on_locale_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		loc.locale_changed.connect(_on_locale_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _on_locale_changed(_locale: String) -> void:

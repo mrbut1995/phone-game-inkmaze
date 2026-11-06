@@ -1,5 +1,6 @@
 class_name GameOverLevelPopup
 extends BasePopup
+const GameManagerScript := preload("res://scripts/autoload/GameManager.gd")
 ## ============================================================================
 ## Popup: Thua cuộc ở Play / Level Mode (nodes/popups/gameover_level.tscn)
 ## Bố cục "BẢN ĐỒ ĐƯỜNG ĐI":
@@ -132,9 +133,9 @@ func _on_close() -> void:
 	_kill_tweens()
 	if fx_ash != null:
 		fx_ash.emitting = false
-	var gm := _game_manager()
+	var gm := _game_manager() as GameManagerScript
 	if gm != null and gm.has_signal("life_changed") \
-			and gm.is_connected("life_changed", _on_life_changed):  # keep-code: nối/ngắt AUTOLOAD GameManager (không phải node tĩnh)
+			and gm.life_changed.is_connected(_on_life_changed):  # keep-code: nối/ngắt AUTOLOAD GameManager (không phải node tĩnh)
 		gm.disconnect("life_changed", _on_life_changed)  # keep-code: nối/ngắt AUTOLOAD GameManager (không phải node tĩnh)
 
 
@@ -149,17 +150,17 @@ func _game_manager() -> Node:
 func _will_charge_life() -> bool:
 	if bool(data.get("guided", false)):
 		return false
-	var gm := _game_manager()
+	var gm := _game_manager() as GameManagerScript
 	if gm != null and bool(gm.get("debug_run")):
 		return false
 	return true
 
 
 func _connect_life_signal() -> void:
-	var gm := _game_manager()
+	var gm := _game_manager() as GameManagerScript
 	if gm != null and gm.has_signal("life_changed") \
-			and not gm.is_connected("life_changed", _on_life_changed):  # keep-code: nối/ngắt AUTOLOAD GameManager (không phải node tĩnh)
-		gm.connect("life_changed", _on_life_changed)  # EXCEPTION(R3-keep): nối/ngắt AUTOLOAD GameManager (không phải node tĩnh)
+			and not gm.life_changed.is_connected(_on_life_changed):  # keep-code: nối/ngắt AUTOLOAD GameManager (không phải node tĩnh)
+		gm.life_changed.connect(_on_life_changed)  # EXCEPTION(R3-keep): nối/ngắt AUTOLOAD GameManager (không phải node tĩnh)
 
 
 func _on_life_changed(_lives: int, _max: int) -> void:
@@ -169,14 +170,14 @@ func _on_life_changed(_lives: int, _max: int) -> void:
 func _can_play() -> bool:
 	if not _will_charge_life():
 		return true
-	var gm := _game_manager()
+	var gm := _game_manager() as GameManagerScript
 	if gm != null and gm.has_method("can_start_run"):
 		return bool(gm.call("can_start_run"))
 	return true
 
 
 func _refresh_pencils() -> void:
-	var gm := _game_manager()
+	var gm := _game_manager() as GameManagerScript
 	var lives := 0
 	var maximum := 5
 	var next_unix := 0.0
@@ -425,7 +426,7 @@ func _on_retry_pressed() -> void:
 	Sfx.play(Sfx.BTN_CLICK)
 	# GameController._on_retry_requested KHÔNG kiểm tra bút -> chặn ở đây
 	if not _can_play():
-		var gm := _game_manager()
+		var gm := _game_manager() as GameManagerScript
 		if gm != null and gm.has_method("open_out_of_life_popup"):
 			gm.call("open_out_of_life_popup")
 		return

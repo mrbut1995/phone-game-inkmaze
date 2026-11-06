@@ -1,5 +1,6 @@
 class_name ChapterLockSheet
 extends Control
+const LocalizationManagerScript := preload("res://scripts/autoload/LocalizationManager.gd")
 ## ============================================================================
 ## Overlay: KHUNG "CHƯƠNG ĐANG KHOÁ" của màn Chọn màn
 ## (nodes/level_selection/chapter_lock_sheet.tscn)
@@ -76,10 +77,10 @@ func _ready() -> void:
 
 ## Đổi ngôn ngữ ⇒ viết lại nội dung sheet (nếu đang mở)
 func _connect_locale_signal() -> void:
-	var loc: Node = Svc.loc()
+	var loc: Node = Svc.loc() as LocalizationManagerScript
 	if loc != null and loc.has_signal("locale_changed") \
-			and not loc.is_connected("locale_changed", _on_locale_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		loc.connect("locale_changed", _on_locale_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+			and not loc.locale_changed.is_connected(_on_locale_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		loc.locale_changed.connect(_on_locale_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _on_locale_changed(_locale: String) -> void:

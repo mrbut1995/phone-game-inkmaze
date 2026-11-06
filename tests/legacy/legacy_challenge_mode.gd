@@ -1,4 +1,5 @@
 extends SceneTree
+const WinningChallengePopupScript := preload("res://scripts/objects/ui/popups/WinningChallengePopup.gd")
 ## ============================================================================
 ## Test Case: CHALLENGE MODE (2026-10) — 8 luật thử thách cho chế độ chuẩn.
 ##
@@ -261,7 +262,7 @@ func _section_3_run() -> void:
 	await process_frame
 	await process_frame
 	_entry(Popups.is_open(Popups.WIN_CHALLENGE), "Hoan thanh man -> mo popup 'win_challenge'")
-	var win: BasePopup = Popups.get_popup(Popups.WIN_CHALLENGE)
+	var win := Popups.get_popup(Popups.WIN_CHALLENGE) as WinningChallengePopupScript
 	if win != null:
 		# Băng dính tiêu đề nay là node tĩnh `Panel/Art/WashiTape/Title` (chữ khai trong .tscn).
 		# `Label.text` giữ KHOÁ dịch; chữ hiển thị = `TranslationServer.translate(khoá)`.
@@ -280,10 +281,10 @@ func _section_3_run() -> void:
 		if back_btn != null:
 			# Ngat day toi UIController truoc khi bam thu de test KHONG doi scene
 			var ui: Node = scene.ui_controller
-			if ui != null and win.is_connected("back_requested", Callable(ui, "_emit_back")):
+			if ui != null and win.back_requested.is_connected(Callable(ui, "_emit_back")):
 				win.disconnect("back_requested", Callable(ui, "_emit_back"))
 			var got_back := [false]
-			win.connect("back_requested", func() -> void: got_back[0] = true)
+			win.back_requested.connect(func() -> void: got_back[0] = true)
 			win.call("_on_back_pressed")
 			_entry(got_back[0], "Bam 'TRO VE' phat signal back_requested")
 	Popups.close_all()

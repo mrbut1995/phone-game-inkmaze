@@ -1,5 +1,7 @@
 class_name LevelSection
 extends Control
+const LocalizationManagerScript := preload("res://scripts/autoload/LocalizationManager.gd")
+const SaveManagerScript := preload("res://scripts/autoload/SaveManager.gd")
 ## ============================================================================
 ## Component: LevelSection — KHỐI BẢN ĐỒ MÀN CHƠI nhúng trong màn Main (nodes/main/level_section.tscn).
 ##
@@ -86,10 +88,10 @@ func _on_visibility_changed() -> void:
 
 
 func _connect_locale_signal() -> void:
-	var loc: Node = Svc.loc()
+	var loc: Node = Svc.loc() as LocalizationManagerScript
 	if loc != null and loc.has_signal("locale_changed") \
-			and not loc.is_connected("locale_changed", _on_locale_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		loc.connect("locale_changed", _on_locale_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+			and not loc.locale_changed.is_connected(_on_locale_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		loc.locale_changed.connect(_on_locale_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _on_locale_changed(_locale: String) -> void:
@@ -99,10 +101,10 @@ func _on_locale_changed(_locale: String) -> void:
 ## Tiến trình (Sao/chương mở) nạp XONG sau khi màn Main đã mở ⇒ phải dựng lại bản đồ, nếu không
 ## bản đồ hiện sai trạng thái (vd. "màn nên chơi tiếp" không phải CURRENT)
 func _connect_save_signal() -> void:
-	var save: Node = Svc.save()
+	var save: Node = Svc.save() as SaveManagerScript
 	if save != null and save.has_signal("data_loaded") \
-			and not save.is_connected("data_loaded", _on_save_data_loaded):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		save.connect("data_loaded", _on_save_data_loaded)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+			and not save.data_loaded.is_connected(_on_save_data_loaded):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		save.data_loaded.connect(_on_save_data_loaded)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _on_save_data_loaded(_a = null, _b = null) -> void:

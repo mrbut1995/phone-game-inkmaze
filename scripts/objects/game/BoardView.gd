@@ -1,5 +1,6 @@
 class_name BoardView
 extends Control
+const ThemeManagerScript := preload("res://scripts/autoload/ThemeManager.gd")
 ## ============================================================================
 ## View: Board - Thành phần View thuần túy theo chuẩn MVC:
 ##   - Kích thước cell/anchor/tường/đường/cursor đọc trực tiếp từ scene gốc
@@ -227,11 +228,11 @@ func relayout() -> void:
 
 ## Người chơi đổi bút ở Cửa hàng -> đổi luôn con trỏ + nét mực đang hiển thị
 func _connect_skin_signal() -> void:
-	var themes := Svc.theme()
+	var themes := Svc.theme() as ThemeManagerScript
 	if themes == null or not themes.has_signal("skin_changed"):
 		return
-	if not themes.is_connected("skin_changed", _on_skin_changed):  # keep-code: nối/ngắt AUTOLOAD GameManager (không phải node tĩnh)
-		themes.connect("skin_changed", _on_skin_changed)  # EXCEPTION(R3-keep): signal của node sinh lúc chạy / biến thể (nối 1 chỗ khi tạo)
+	if not themes.skin_changed.is_connected(_on_skin_changed):  # keep-code: nối/ngắt AUTOLOAD GameManager (không phải node tĩnh)
+		themes.skin_changed.connect(_on_skin_changed)  # EXCEPTION(R3-keep): signal của node sinh lúc chạy / biến thể (nối 1 chỗ khi tạo)
 
 func _on_skin_changed(_theme_id: String, _pen_id: String) -> void:
 	apply_pen_skin()

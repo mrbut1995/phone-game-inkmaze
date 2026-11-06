@@ -1,4 +1,5 @@
 extends Node
+const OutOfLifePopupScript := preload("res://scripts/objects/ui/popups/OutOfLifePopup.gd")
 ## ============================================================================
 ## Manager: Quản lý phiên chơi, chế độ được chọn, tiến trình mở khóa màn
 ## và điều hướng chuyển đổi Scene trên toàn bộ game.
@@ -628,12 +629,12 @@ func open_out_of_life_popup() -> void:
 
 
 func _show_out_of_life() -> void:
-	var popup := Popups.open(Popups.OUT_OF_LIFE, {"max_lives": MAX_LIVES})
+	var popup := Popups.open(Popups.OUT_OF_LIFE, {"max_lives": MAX_LIVES}) as OutOfLifePopupScript
 	if popup == null:
 		return
 	if popup.has_signal("shop_requested") \
-			and not popup.is_connected("shop_requested", request_shop_from_life_gate):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		popup.connect("shop_requested", request_shop_from_life_gate)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+			and not popup.shop_requested.is_connected(request_shop_from_life_gate):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		popup.shop_requested.connect(request_shop_from_life_gate)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 ## Vào màn chơi — chặn khi hết lượt và mở popup báo hết lượt

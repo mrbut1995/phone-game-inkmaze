@@ -1,5 +1,6 @@
 class_name CoinChip
 extends Control
+const AchievementManagerScript := preload("res://scripts/autoload/AchievementManager.gd")
 ## ============================================================================
 ## Node: CoinChip — ví "Xu Mực" dùng chung trên thanh trên của mọi màn hình.
 ## Icon giọt mực vàng + số Xu + nút `+` (mặc định mở Cửa hàng).
@@ -37,10 +38,10 @@ func _ready() -> void:
 	# Nút `+` (`Content/Plus`) nối `pressed` trong nodes/main/coin_chip.tscn
 	if large:
 		_apply_large()
-	var wallet := Svc.achievement()
+	var wallet := Svc.achievement() as AchievementManagerScript
 	if wallet != null and wallet.has_signal("progress_changed") \
-			and not wallet.is_connected("progress_changed", _on_wallet_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		wallet.connect("progress_changed", _on_wallet_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+			and not wallet.progress_changed.is_connected(_on_wallet_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		wallet.progress_changed.connect(_on_wallet_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 	set_value(Shop.coins())
 
 

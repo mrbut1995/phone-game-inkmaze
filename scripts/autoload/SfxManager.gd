@@ -1,4 +1,5 @@
 extends Node
+const SettingManagerScript := preload("res://scripts/autoload/SettingManager.gd")
 ## ============================================================================
 ## Manager: SfxManager - Phát hiệu ứng âm thanh (SFX) toàn cục.
 ##
@@ -39,9 +40,9 @@ var _next_player := 0
 func _ready() -> void:
 	_build_pool()
 	_refresh_gain()
-	var sm: Variant = Svc.setting()
+	var sm: Variant = Svc.setting() as SettingManagerScript
 	if sm != null and sm.has_signal("volume_changed"):
-		sm.connect("volume_changed", _on_volume_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		sm.volume_changed.connect(_on_volume_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 # ---------------------------------------------------------------------------
