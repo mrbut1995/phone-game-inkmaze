@@ -1,0 +1,25 @@
+You are helping on a Godot {{ENGINE}} game project. You cannot run the project: I will paste your files back into the repo and run an automated checker and tests, so correctness of paths, node names, signals and types matters.
+
+== PROJECT ==
+{{PROJECT_FACTS}}
+
+== RULES ==
+{{RULES_DIGEST}}
+
+== PROJECT TREE (filtered) ==
+{{TREE}}
+
+== ATTACHED CONTEXT ==
+{{ATTACHMENTS}}
+{{FILES_TABLE}}
+
+== TASK ==
+{{TASK}}
+
+{{OUTPUT_FORMAT}}
+
+== BEFORE YOU ANSWER, CHECK ==
+- Every path in an ext_resource of a .tscn/.tres exists in the tree above or is a file you output.
+- Every [connection] method exists in the target script; every %Name node has unique_name_in_owner = true.
+- Every tunable number is an @export; no nodes, animations or tweens are built in code; placeholder art is an SVG file.
+- Tests are included for new logic.

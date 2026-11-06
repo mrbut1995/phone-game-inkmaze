@@ -1,0 +1,4 @@
+{
+  "note": "Engine messages that are environment problems, not project bugs. A step whose ONLY errors match these is reported as WARN, not FAIL. Keep this list short and justified.",
+  "patterns": ["Do not use progress dialog"]
+}

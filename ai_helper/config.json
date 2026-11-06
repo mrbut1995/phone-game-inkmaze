@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "claude":   { "max_files": 20,  "max_tokens": 120000, "note": "Claude website: attach context.txt + assets. Edit limits to match your plan." },
+    "aistudio": { "max_files": 100, "max_tokens": 500000, "note": "Google AI Studio: large context. Edit limits as needed." },
+    "generic":  { "max_files": 20,  "max_tokens": 100000, "note": "Any chat website." }
+  },
+  "full_file_max_tokens": 6000,
+  "tree_max_lines": 400,
+  "allowed_output_roots": ["scenes", "scripts", "data", "tests", "assets/images-placeholder", "plan", "docs"],
+  "protected_files": ["project.godot"]
+}

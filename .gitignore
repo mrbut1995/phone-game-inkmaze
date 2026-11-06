@@ -23,3 +23,9 @@ assets/images-old
 # Day chi la thung rac de doi chieu, KHONG commit.
 _removed_unused/
 assets/images-png-bk.zip
+
+# GodotTemplate donor (tools/ai_helper/instruction): log + session output
+tools/.logs/
+ai_helper/session_*/files/
+ai_helper/session_*/out/
+ai_helper/session_*/context.txt
