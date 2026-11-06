@@ -12,7 +12,7 @@ extends Node
 
 signal soundtrack_changed(track_path: String, theme_id: String, context_name: String)
 
-const DEFAULT_SOUNDTRACK := "res://assets/soundtrack/Wallpaper.mp3"  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const DEFAULT_SOUNDTRACK := "res://assets/audio/music/Wallpaper.mp3"  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 const DEFAULT_THEME := "theme_gride_4ly"
 
 const SCENE_GAME := "res://scenes/game.tscn"

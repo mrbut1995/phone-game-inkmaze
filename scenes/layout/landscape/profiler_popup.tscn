@@ -18,7 +18,7 @@
 [ext_resource uid="uid://cd635wxi2hio4" type="Texture2D" path="res://assets/images-png/frames/frame_default.png" id="20_frame"]
 [ext_resource type="Texture2D" uid="uid://de1fy87ucyxya" path="res://assets/images-png/avatars/avatar-baby-child-kid.png" id="21_avatar"]
 [ext_resource type="Texture2D" uid="uid://b4778ot7wu5gx" path="res://assets/images-png/profiler/badge_edit.png" id="22_badge"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="60_theme"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://data/config/theme_default.tres" id="60_theme"]
 [ext_resource type="Texture2D" uid="uid://c01iwhf75vw5v" path="res://assets/images-png/icons/icon_pen_name.png" id="70_pen_name"]
 [ext_resource type="Script" path="res://scripts/ui/widgets/profiler/scroll_drag.gd" id="9_info_scroll"]
 

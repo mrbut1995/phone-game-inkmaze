@@ -12,12 +12,12 @@ extends SceneTree
 ## 7. [INFO] Khoá không dùng — báo số lượng để dọn dần (không làm đỏ test).
 ## ============================================================================
 
-const CSV_MAIN := "res://resources/localization/string.csv"
-const CSV_EXTRA := "res://resources/localization/string_extra.csv"
+const CSV_MAIN := "res://data/localization/string.csv"
+const CSV_EXTRA := "res://data/localization/string_extra.csv"
 const SCAN_DIRS := ["res://scripts", "res://scenes", "res://nodes", "res://resources"]
 const SCAN_SUFFIXES := "gd,tscn,tres"
 ## Bỏ qua khi quét: công cụ Python, chính thư mục test (chứa chuỗi mẫu), file dịch
-const SKIP_PARTS := ["res://tools", "res://scripts/test_case", "res://resources/localization"]
+const SKIP_PARTS := ["res://tools", "res://scripts/test_case", "res://data/localization"]
 ## Dấu hiệu mojibake (UTF-8 bị đọc bằng CP1252 rồi ghi lại)
 const MOJIBAKE_MARKERS := ["á»", "áº", "Ä‘", "Æ°", "Æ¡", "â€"]
 const KEY_RE := "\"(STR_[A-Z0-9_]+)\""
@@ -196,11 +196,11 @@ func _section_4_node_names() -> void:
 # ---------------------------------------------------------------------------
 func _section_5_resource_keys() -> void:
 	print("[5] Khoa dich trong .tres (thanh tuu / chuong / ho so)...")
-	_check_tres_keys("res://resources/achievements", ["title_key", "desc_key"])
-	_check_tres_keys("res://resources/chapters", ["title_key", "subtitle_key"])
-	_check_tres_keys("res://resources/profiler/avatars", ["name_key"])
-	_check_tres_keys("res://resources/profiler/frames", ["name_key"])
-	_check_tres_keys("res://resources/profiler/titles", ["name_key"])
+	_check_tres_keys("res://data/achievements", ["title_key", "desc_key"])
+	_check_tres_keys("res://data/chapters", ["title_key", "subtitle_key"])
+	_check_tres_keys("res://data/profiler/avatars", ["name_key"])
+	_check_tres_keys("res://data/profiler/frames", ["name_key"])
+	_check_tres_keys("res://data/profiler/titles", ["name_key"])
 
 
 func _check_tres_keys(folder: String, properties: Array) -> void:

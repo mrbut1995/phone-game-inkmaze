@@ -20,7 +20,7 @@ signal progress_changed                                   # bất kỳ số li�
 signal achievement_unlocked(id: String)                    # vừa đủ điều kiện đạt danh hiệu
 signal reward_claimed(id: String, coins: int)               # vừa bấm NHẬN thưởng
 
-const DIR := "res://resources/achievements/"
+const DIR := "res://data/achievements/"
 
 ## Các tab phân loại trong Sổ tay (thứ tự hiển thị) — "" = TẤT CẢ
 const CATEGORIES := ["levels", "dungeon", "daily", "special"]

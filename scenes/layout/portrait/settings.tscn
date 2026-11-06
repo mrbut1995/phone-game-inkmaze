@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://c8fvwpvick2hx" path="res://assets/images-png/btn_header_back_pressed.png" id="back_p"]
 [ext_resource type="Texture2D" uid="uid://btdcp0w0yafgs" path="res://assets/images-png/btn_header_back_focus.png" id="back_f"]
 [ext_resource type="Texture2D" uid="uid://dq7236j6ybsew" path="res://assets/images-png/btn_header_back_disabled.png" id="back_d"]
-[ext_resource type="Theme" uid="uid://car0jeqlr0xi" path="res://resources/settings/theme_hslider.tres" id="slider_theme"]
+[ext_resource type="Theme" uid="uid://car0jeqlr0xi" path="res://data/config/theme_hslider.tres" id="slider_theme"]
 [ext_resource type="Texture2D" uid="uid://co6rqsr2wfdqi" path="res://assets/images-png/settings/dropdown_normal.png" id="dd_n"]
 [ext_resource type="Texture2D" uid="uid://p8qbebxngyrx" path="res://assets/images-png/settings/dropdown_pressed.png" id="dd_p"]
 [ext_resource type="Texture2D" uid="uid://ce1uu3m65yc4s" path="res://assets/images-png/settings/dropdown_focus.png" id="dd_f"]

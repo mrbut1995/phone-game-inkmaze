@@ -3,7 +3,7 @@ extends Resource
 ## ============================================================================
 ## Dữ liệu 1 DANH HIỆU (Thành tựu) — nguồn cho "Sổ tay thành tựu" (scenes/achievement.tscn).
 ##
-## Mỗi danh hiệu là 1 file .tres trong res://resources/achievements/ (giống màn chơi
+## Mỗi danh hiệu là 1 file .tres trong res://data/achievements/ (giống màn chơi
 ## là .tres trong resources/levels/) -> AchievementManager quét thư mục để nạp danh sách,
 ## nên THÊM danh hiệu mới chỉ cần tạo file .tres, không phải sửa code.
 ##

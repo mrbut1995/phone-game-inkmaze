@@ -3468,7 +3468,7 @@ func now_utc() -> int                          # nguồn thời gian DUY NHẤT 
 ```
 
 Quy tắc:
-- **Nạp event:** quét `res://resources/events/*.tres` lúc khởi động (đọc thư mục, KHÔNG liệt kê cứng). Event lỗi (thiếu `theme`, series rỗng, `end < start`) → **bỏ qua + `push_warning`**, không crash.
+- **Nạp event:** quét `res://data/events/*.tres` lúc khởi động (đọc thư mục, KHÔNG liệt kê cứng). Event lỗi (thiếu `theme`, series rỗng, `end < start`) → **bỏ qua + `push_warning`**, không crash.
 - **Lưu tiến độ:** qua `SaveManager` (`export_progress`/`import_progress`), khoá `events: { "<id>": {done_levels, best_floor, login_days, claimed} }`; lưu NGAY sau mỗi thay đổi; dọn bản ghi hết hạn quá **30 ngày**.
 - **Phát quà:** Xu qua `ShopManager.add_coins()` (idempotent vì `claim_reward` chặn lần 2); `COIN_MULTIPLIER` áp cho Dungeon đang chạy.
 - **Chống chỉnh giờ máy:** giai đoạn 2 (ghi chú trong `now_utc()`).

@@ -169,7 +169,7 @@ func _section_load_and_sort() -> void:
 
 func _section_theme_art() -> void:
 	print("Kiem tra art theme...")
-	var dir := DirAccess.open("res://resources/events/themes")
+	var dir := DirAccess.open("res://data/events/themes")
 	_check(dir != null, "Thu muc EventTheme ton tai")
 	if dir == null:
 		return
@@ -180,7 +180,7 @@ func _section_theme_art() -> void:
 	var filename := dir.get_next()
 	while not filename.is_empty():
 		if not dir.current_is_dir() and filename.ends_with(".tres"):
-			var path := "res://resources/events/themes/" + filename
+			var path := "res://data/events/themes/" + filename
 			var theme := ResourceLoader.load(path, "EventTheme") as EventTheme
 			_check(theme != null, "%s load thanh EventTheme" % filename)
 			if theme != null:

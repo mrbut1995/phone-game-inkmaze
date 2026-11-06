@@ -13,7 +13,7 @@ extends NinePatchRect
 ## ============================================================================
 
 const ROW_ART := preload("res://assets/images-png/common/chal_row.png")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
-const MAT_ROW_DONE := preload("res://resources/materials/chal_row_done.tres")
+const MAT_ROW_DONE := preload("res://data/materials/chal_row_done.tres")
 const CHECK_DONE := preload("res://assets/images-png/game/chal_check_done.png")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 const CHECK_PENDING := preload("res://assets/images-png/game/chal_check_pending.png")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 

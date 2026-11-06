@@ -5,7 +5,7 @@
 [ext_resource uid="uid://dx1xsafatrfpn" type="Texture2D" path="res://assets/images-png/popups/go_panel_dungeon.png" id="3_panel"]
 [ext_resource uid="uid://bs4syowdu4fqb" type="Texture2D" path="res://assets/images-png/popups/retry_washi_tape.png" id="4_tape"]
 [ext_resource type="Texture2D" uid="uid://blmy5cbx5kmeg" path="res://assets/images-png/popups/paper_clip.png" id="5_clip"]
-[ext_resource type="Theme" uid="uid://car0jeqlr0xi" path="res://resources/settings/theme_hslider.tres" id="6_slider"]
+[ext_resource type="Theme" uid="uid://car0jeqlr0xi" path="res://data/config/theme_hslider.tres" id="6_slider"]
 [ext_resource type="Texture2D" uid="uid://wpidjs6dq5qh" path="res://assets/images-png/common/checkbox_normal.png" id="7_c_off"]
 [ext_resource type="Texture2D" uid="uid://bbk7q0yva4fam" path="res://assets/images-png/common/checkbox_pressed.png" id="8_c_on"]
 [ext_resource type="Texture2D" uid="uid://c0gqrfabmdbmo" path="res://assets/images-png/common/checkbox_focus.png" id="9_c_f"]

@@ -22,7 +22,7 @@ const MAIN_SCENE_PATH := "res://scenes/main.tscn"
 const BLIND_MEMORY_LEVEL := 15
 ## Màn mẫu (tools/level_designer/make_samples.py) — level 15 = blind_memory. Màn THẬT id 15 là
 ## 'play' nên section 4 phải trỏ LevelManager vào thư mục màn mẫu.
-const SAMPLES_DIR := "res://resources/levels_samples/"
+const SAMPLES_DIR := "res://data/levels_samples/"
 
 var _failed := 0
 var _checks := 0

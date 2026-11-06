@@ -6,10 +6,10 @@ extends SceneTree
 ## Chay: godot --headless --path . -s res://scripts/test_case/dev_probe_translation.gd
 
 const PAIRS := [
-	["res://resources/localization/string.csv", "vi", 0, 2],
-	["res://resources/localization/string.csv", "en", 0, 1],
-	["res://resources/localization/string_extra.csv", "vi", 0, 2],
-	["res://resources/localization/string_extra.csv", "en", 0, 1],
+	["res://data/localization/string.csv", "vi", 0, 2],
+	["res://data/localization/string.csv", "en", 0, 1],
+	["res://data/localization/string_extra.csv", "vi", 0, 2],
+	["res://data/localization/string_extra.csv", "en", 0, 1],
 ]
 
 var _fail := 0

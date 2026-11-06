@@ -15,7 +15,7 @@ extends Control
 signal pen_changed(pen_id: String)
 
 ## Bảng màu cho con dấu THỬ (art trắng dẫn xuất: xoá nét viền, giữ nền trắng)
-const MAT_TILE_TRY := preload("res://resources/materials/btn_tile_normal.tres")
+const MAT_TILE_TRY := preload("res://data/materials/btn_tile_normal.tres")
 
 ## Con dấu thẻ "ĐANG XEM THỬ" — gán trong `doodle_pad.tscn` (ExtResource)
 @export var stamp_try: Texture2D = null

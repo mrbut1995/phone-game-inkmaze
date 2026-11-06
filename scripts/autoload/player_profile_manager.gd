@@ -10,7 +10,7 @@ extends Node
 ##   · Lịch sử 10 ván gần nhất (GameController gọi `record_run` khi kết thúc ván)
 ##
 ## Danh mục Avatar / Viền khung / Bậc danh hiệu = các file .tres
-## (AvatarData / FrameData / ProfilerTitleData) trong res://resources/profiler/ —
+## (AvatarData / FrameData / ProfilerTitleData) trong res://data/profiler/ —
 ## quét thư mục lúc khởi động, THÊM món mới chỉ cần tạo file .tres trong editor.
 ##
 ## Lưu save qua SaveManager (provider "PlayerProfileManager", autosave theo signal).
@@ -31,9 +31,9 @@ const EXP_PER_STAR := 25
 ##   resources/profiler/avatars/avatar_<id>.tres   (AvatarData)
 ##   resources/profiler/frames/frame_<id>.tres     (FrameData)
 ##   resources/profiler/titles/tier_<n>.tres       (ProfilerTitleData)
-const AVATAR_RES_DIR := "res://resources/profiler/avatars/"
-const FRAME_RES_DIR := "res://resources/profiler/frames/"
-const TITLE_RES_DIR := "res://resources/profiler/titles/"
+const AVATAR_RES_DIR := "res://data/profiler/avatars/"
+const FRAME_RES_DIR := "res://data/profiler/frames/"
+const TITLE_RES_DIR := "res://data/profiler/titles/"
 
 ## Danh mục đã nạp — thứ tự hiển thị: tặng sẵn → giá tăng dần → khoá mốc
 ## (công cụ sinh file: scripts/tools/gen_profiler_resources.gd)

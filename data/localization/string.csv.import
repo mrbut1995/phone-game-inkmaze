@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://ckrdnpuimio2j"
+
+[deps]
+
+files=["res://data/localization/string.en.translation", "res://data/localization/string.vi.translation", "res://data/localization/string.zh_TW.translation", "res://data/localization/string.zh_CN.translation", "res://data/localization/string.es.translation", "res://data/localization/string.ar.translation", "res://data/localization/string.de.translation", "res://data/localization/string.fr.translation", "res://data/localization/string.hi.translation", "res://data/localization/string.id.translation", "res://data/localization/string.it.translation", "res://data/localization/string.ja.translation", "res://data/localization/string.ko.translation", "res://data/localization/string.ms.translation", "res://data/localization/string.pt.translation", "res://data/localization/string.pt_BR.translation", "res://data/localization/string.ru.translation", "res://data/localization/string.th.translation", "res://data/localization/string.tr.translation"]
+
+source_file="res://data/localization/string.csv"
+dest_files=["res://data/localization/string.en.translation", "res://data/localization/string.vi.translation", "res://data/localization/string.zh_TW.translation", "res://data/localization/string.zh_CN.translation", "res://data/localization/string.es.translation", "res://data/localization/string.ar.translation", "res://data/localization/string.de.translation", "res://data/localization/string.fr.translation", "res://data/localization/string.hi.translation", "res://data/localization/string.id.translation", "res://data/localization/string.it.translation", "res://data/localization/string.ja.translation", "res://data/localization/string.ko.translation", "res://data/localization/string.ms.translation", "res://data/localization/string.pt.translation", "res://data/localization/string.pt_BR.translation", "res://data/localization/string.ru.translation", "res://data/localization/string.th.translation", "res://data/localization/string.tr.translation"]
+
+[params]
+
+compress=0
+delimiter=0
+unescape_keys=false
+unescape_translations=true

@@ -14,9 +14,9 @@ signal action_pressed(item_id: String)
 signal preview_pressed(item_id: String)
 
 const BTN_TILE := preload("res://assets/images-png/common/btn_tile.png")  # keep-code: màu/art hiệu ứng runtime — không thuộc theme tĩnh
-const MAT_TILE_NORMAL := preload("res://resources/materials/btn_tile_normal.tres")
-const MAT_TILE_DONE := preload("res://resources/materials/btn_tile_done.tres")
-const MAT_TILE_VIP := preload("res://resources/materials/btn_tile_vip.tres")
+const MAT_TILE_NORMAL := preload("res://data/materials/btn_tile_normal.tres")
+const MAT_TILE_DONE := preload("res://data/materials/btn_tile_done.tres")
+const MAT_TILE_VIP := preload("res://data/materials/btn_tile_vip.tres")
 const ICONS := {
 	"pen": preload("res://assets/images-png/icons/icon_pen.png"),
 	"ink": preload("res://assets/images-png/icons/icon_ink.png"),

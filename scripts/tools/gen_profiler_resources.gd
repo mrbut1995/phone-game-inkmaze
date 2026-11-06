@@ -19,9 +19,9 @@ extends SceneTree
 
 const AVATAR_ICON_DIR := "res://assets/images-png/avatars/"
 const FRAME_ICON_DIR := "res://assets/images-png/frames/"
-const AVATAR_OUT := "res://resources/profiler/avatars/"
-const FRAME_OUT := "res://resources/profiler/frames/"
-const TITLE_OUT := "res://resources/profiler/titles/"
+const AVATAR_OUT := "res://data/profiler/avatars/"
+const FRAME_OUT := "res://data/profiler/frames/"
+const TITLE_OUT := "res://data/profiler/titles/"
 ## Tiền tố khoá dịch ghép ĐỘNG — test_localization quét mọi chuỗi trong ngoặc kép
 ## trông như khoá dịch, nên TUYỆT ĐỐI không viết literal tiền tố rỗng ở đây.
 const KEY_PREFIX := "ST" + "R_"

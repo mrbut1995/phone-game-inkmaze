@@ -5,7 +5,7 @@ extends Node
 ## Thay vì sinh ngẫu nhiên, các màn chơi sẽ được tải từ file Resource (.tres).
 ## ============================================================================
 
-const LEVELS_DIR := "res://resources/levels/"
+const LEVELS_DIR := "res://data/levels/"
 const TOTAL_CHAPTER1_LEVELS := 9
 ## Quét tối đa tới id này khi dò danh sách màn (đủ rộng cho nhiều chương)
 const MAX_LEVEL_ID := 999
@@ -118,7 +118,7 @@ func save_level(data: LevelData) -> Error:
 # Chương gom các màn theo `LevelData.chapter`; file hiển thị/điều kiện sao nằm ở
 # resources/chapters/chapter_<id>.tres (ChapterData).
 # ---------------------------------------------------------------------------
-const CHAPTERS_DIR := "res://resources/chapters/"
+const CHAPTERS_DIR := "res://data/chapters/"
 const MAX_CHAPTER_ID := 99
 
 var _chapters_dir := CHAPTERS_DIR

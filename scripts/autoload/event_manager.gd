@@ -6,7 +6,7 @@ extends Node
 ## Đăng ký: project.godot [autoload] EventManager = "*res://scripts/autoload/event_manager.gd"
 ##
 ## THIẾT KẾ:
-##  • Quét res://resources/events/*.tres lúc khởi động (data-driven, B12 GDD).
+##  • Quét res://data/events/*.tres lúc khởi động (data-driven, B12 GDD).
 ##  • Daily = EventData ảo (không phải file .tres) tạo từ DailyManager.
 ##  • Lưu tiến độ qua SaveManager (export_progress / import_progress).
 ##  • Nguồn thời gian: now_utc() — bọc trong 1 hàm duy nhất để dễ thay bằng giờ server.
@@ -18,7 +18,7 @@ signal event_progress_changed(event_id: StringName)
 signal event_expired(event_id: StringName)
 
 ## Thư mục chứa file .tres event
-const EVENTS_DIR := "res://resources/events/"
+const EVENTS_DIR := "res://data/events/"
 ## Xoá bản ghi event đã hết hạn quá N ngày
 const STALE_DAYS := 30
 

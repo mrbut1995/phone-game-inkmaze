@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://nulkwncq3462" path="res://assets/images-png/daily/tri_white.png" id="12_tri_w"]
 [ext_resource type="Texture2D" uid="uid://d24vaiwlt8dsy" path="res://assets/images-png/daily/btn_cta_blue_normal.png" id="14_cta_bn"]
 [ext_resource type="Texture2D" uid="uid://c84kjolweguv7" path="res://assets/images-png/daily/btn_cta_blue_pressed.png" id="15_cta_bp"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="18_theme"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://data/config/theme_default.tres" id="18_theme"]
 [ext_resource type="Texture2D" uid="uid://isr1cd5s5mxk" path="res://assets/images-png/effects/fx_glow_soft.png" id="20_glow"]
 [ext_resource type="Texture2D" uid="uid://buhsd5kh2cdyp" path="res://assets/images-png/effects/fx_sparkle.png" id="21_spark"]
 [ext_resource type="Script" uid="uid://cwlut4ae8sqmq" path="res://scripts/tools/cta_content_follow.gd" id="22_follow"]

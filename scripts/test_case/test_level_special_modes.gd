@@ -21,7 +21,7 @@ extends SceneTree
 ## 13 = challenge (walk_number_only) · 14 = challenge (fog_of_war) ·
 ## 15 = blind_memory · 16 = wall_builder · 17 = play có ô khoá + chìa
 ## Thư mục này CỐ Ý tách khỏi `resources/levels/` (id 10..17 đã là MÀN THẬT của game).
-const SAMPLES_DIR := "res://resources/levels_samples/"
+const SAMPLES_DIR := "res://data/levels_samples/"
 ## Thư mục màn THẬT — section 1/3/4 (GameManager · skip level · nút Skip) chạy trên màn thật
 const LEVEL_SAMPLE := 13
 const LEVEL_SAMPLE_BLIND := 15

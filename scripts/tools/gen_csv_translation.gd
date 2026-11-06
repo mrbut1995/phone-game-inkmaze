@@ -14,7 +14,7 @@ extends SceneTree
 ## import CSV (String.csv.import / String_extra.csv.import).
 ## ============================================================================
 
-const LOCALIZATION_DIR := "res://resources/localization"
+const LOCALIZATION_DIR := "res://data/localization"
 
 
 func _init() -> void:

@@ -36,7 +36,7 @@ const GAME_OVER := "game_over"          # Vo giấy nháp (thua cuộc)
 const FLOOR_BONUS := "floor_bonus"      # Thưởng +Bước ở Dungeon Mode
 const ACHIEVEMENT := "achievement"      # Thành tích (ví dụ: floor hoàn hảo)
 
-## sfx_name -> tên file trong res://assets/sfx/
+## sfx_name -> tên file trong res://assets/audio/sfx/
 const LIBRARY := {
 	"path_draw": "sfx_path_draw.wav",
 	# sfx_cell_step.wav TRÙNG KHÍT sfx_path_draw.wav ⇒ dùng chung 1 file
@@ -64,7 +64,7 @@ const LIBRARY := {
 	"achievement": "sfx_achivement.wav",
 }
 
-const SOUND_DIR := "res://assets/sfx/"  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const SOUND_DIR := "res://assets/audio/sfx/"  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 const DEFAULT_PITCH_JITTER := 0.04
 
 

@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="StyleBox" path="res://resources/settings/styles/event/pill.tres" id="1_2d707"]
+[ext_resource type="StyleBox" path="res://data/config/styles/event/pill.tres" id="1_2d707"]
 
 [node name="EventButtonItem" type="VBoxContainer" unique_id=926710968]
 mouse_filter = 2

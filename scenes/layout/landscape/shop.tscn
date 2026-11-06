@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" path="res://nodes/shop/item_grid.tscn" id="21_grid"]
 [ext_resource type="PackedScene" uid="uid://deknldvs1yxnu" path="res://nodes/shop/doodle_pad.tscn" id="22_pad"]
 [ext_resource type="PackedScene" path="res://nodes/shop/noads_row.tscn" id="23_noads"]
-[ext_resource type="Material" path="res://resources/materials/btn_action_amber.tres" id="mat_amber_gift"]
+[ext_resource type="Material" path="res://data/materials/btn_action_amber.tres" id="mat_amber_gift"]
 [ext_resource type="Texture2D" uid="uid://5u14xjukich7" path="res://assets/images-png/shop/nav_coin.png" id="nav_coin"]
 [ext_resource type="Texture2D" uid="uid://dy7pg6bsg4d51" path="res://assets/images-png/shop/nav_paper.png" id="nav_paper"]
 [ext_resource type="Texture2D" uid="uid://boypfmedvt21m" path="res://assets/images-png/shop/nav_pen.png" id="nav_pen"]
