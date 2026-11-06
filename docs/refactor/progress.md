@@ -10,10 +10,10 @@
 | Gate | Baseline | Cách đo |
 |---|---|---|
 | G-INT | **18** | `python tools/refactor/check_integrity.py .` → đếm dòng `E*` trừ `.import:` (đã bỏ qua thư mục rác, xem D-ENV) |
-| G-LEG | **7 / 20** PASS | `python tools/run_tests.py` (7 PASS / 13 FAIL — toàn test cũ hỏng sẵn) |
+| G-LEG | **7 / 20** PASS (P0) → **17 / 20** (sau P2) | `python tools/run_tests.py` |
 | lint_total | **3027** (724 ERROR) | `python tools/lint_rules.py --max 0 --all` → DEAD 4 · GODOT3 78 · R1 1666 · R2 325 · R3 214 · R4 549 · R5 55 · R8 16 · STRUCT 1 · STYLE 119 |
 | G-GODOT | **ok** | `--headless --path . --import`: chỉ còn WARNING UID trùng `daily_milestone.tscn` (có sẵn từ trước) |
-| G-RUN | chưa đạt được | `run_checks.py` cần `scenes/base/base_scene.tscn` → chỉ có sau **P2** |
+| G-RUN | chưa kiểm | `run_checks.py` cần lint baseline (P3.3) + contract header (P4) |
 
 Engine: `tools/godot_path.txt` → `D:/Godots/app dev/.../godot.windows.editor.x86_64.exe` (4.8.dev custom build).
 Chi tiết 18 E-line: 1 art Halloween thiếu (có sẵn) · 16 trong `scripts/test_case/` do dev-probe trỏ đường dẫn CŨ
@@ -26,6 +26,7 @@ trỏ `scenes/objects/world/actor.tscn` (asset demo của template, không copy 
 - `tools/_common.py` → `IGNORE_DIRS` thêm `android`, `build`, `what-changes`, `_removed_unused`,
   `optimizing_clean`, `helpers`, `mockup`; `iter_files()` bỏ mọi thư mục bắt đầu bằng `tmp_`.
 - `tools/refactor/check_integrity.py` → thêm `JUNK_DIRS` (như trên) + bỏ `tmp_*` trong `os.walk`.
+- `tools/refactor/rewrite_dir_refs.py` → bỏ qua `.venv`, `android`, thư mục rác + `tmp_*` (walk cả `.venv` rất chậm).
 Không sửa `lint_config.json`, không sửa ngưỡng lint, không sửa baseline.
 Hệ quả: baseline sạch (3027 thay vì 3230; G-INT 18 thay vì 637 với 516 dòng từ `android/build`).
 
@@ -33,7 +34,7 @@ Hệ quả: baseline sạch (3027 thay vì 3230; G-INT 18 thay vì 637 với 516
 
 - [x] P0 prepare
 - [x] P1 maps (va chạm 0 · review 9 → 3, đã duyệt)
-- [ ] P2 structure
+- [x] P2 structure (G-INT 18 · G-GODOT 0 lỗi · G-LEG **17/20** PASS)
 - [ ] P3.1 autoload class_name · [ ] P3.2 guard rails · [ ] P3.3 baseline · [ ] P3.4 tags · [ ] P3.5 constants
 - [ ] P4 scene contracts (0/…)
 - [ ] P5.1 GODOT3 0/78 · [ ] P5.2 R3-err 0/… · [ ] P5.3 R2-err 0/… · [ ] P5.4 R4-err 0/549
@@ -66,6 +67,47 @@ Lint total history: 2026-11-06 = 3027 (baseline P0, chưa tạo lint_baseline �
 4. Chuyển kit ra `D:/godot-phone-game/refactor-kit/` (quyết định của người dùng) + D-ENV.
 5. Gate P0: `python tools/start.py` → `PROJECT InkMaze (4.8, Mobile) | scenes 194 | scripts 325`.
    `--import` sạch.
+
+## P2 đã làm (commit `40479743` P2a · `47c08b95` P2b · `085e79e7` P2c · `a46d66f0` P2d)
+
+Thứ tự đã chạy (đúng instruction, dry-run trước mỗi map):
+
+| Bước | Kết quả |
+|---|---|
+| P2a `resources→data`, `shaders→assets/shaders`, `sfx/soundtrack→assets/audio/*` | 15 mục · **106 file** tham chiếu cập nhật · G-INT 18 |
+| `rewrite_dir_refs dir_refs.txt` | 13 tiền tố thư mục (cả hằng số `res://resources/...`) |
+| P2b scenes | **169 scene** (178 file tham chiếu) · G-INT 18 |
+| P2c scripts | **257 script + .uid** (929 file tham chiếu) · G-INT 18 |
+| P2d tests | `tests/legacy/legacy_*.gd` + `debug/probes/` · G-INT **45 → 18** sau khi sửa tay |
+| Xoá thư mục rỗng | **49** thư mục (`nodes/`, `resources/`, `shaders/`, `scenes/layout/`, `scripts/ui/`, `scripts/core/`…) |
+
+**Sự cố + cách xử lý**
+
+1. **`-I` bỏ qua `PYTHONUTF8`** ⇒ thêm `-X utf8` (đã ghi từ P1), nếu không chết ở ký tự tiếng Việt.
+2. **`git mv` fail với `tmp_*.gd`** (bị `.gitignore` `tmp_*`): P2d dừng giữa đường. Đã xử lý: chuyển 2 file `tmp_*` còn lại sang `debug/probes/`,
+   xoá 19 `.uid` mồ côi (file nguồn đã mất từ trước), rồi xoá `scripts/test_case/`.
+3. **G-INT tăng 18 → 45** do 26 comment tự-trỏ trong `debug/probes/*` + 2 hằng số quét cũ (`SCAN_DIRS`, `ROOTS`)
+   ⇒ sửa tay hết, về đúng **18**.
+4. **Autoload lỗi khi import** (`…safe_area.gd not found`): `project.godot` ĐÃ được map sửa đúng, lỗi do **cache `.godot` cũ**.
+   → backup `.godot/export_credentials.cfg` (keystore), xoá `.godot/`, import **2 lần**, phục hồi credentials. Sau đó **0 ERROR**.
+5. **`tools/run_tests.py` fail 20/20**: map đặt tên `legacy_<x>.gd` (bỏ tiền tố `test_`) ⇒ runner phải `legacy_{name[5:]}.gd`.
+   Đã sửa `run_tests.py` + `diag_tests.py`.
+
+**Sửa tay theo mục 2 của P2** (ngoài map):
+`export_presets.cfg` (`include_filter` → `data/localization/*.csv`, `exclude_filter` → `tests/*,debug/*,docs/*,ai_helper/*`),
+`tools/level_designer/app/config.py` (LEVELS_DIR/CHAPTERS_DIR), `tools/godot/gen_profiler_resources.gd`,
+`tools/{run_tests,diag_tests,scene_smoke_report,switch_refs_svg_to_png}.py`, `tools/content/audit_localization.py`.
+
+**Kiểm chứng cuối P2**
+
+- G-INT **18** = baseline.
+- G-GODOT **0 ERROR** (chỉ còn WARNING anchor/UID có sẵn).
+- G-LEG **17/20 PASS** (baseline 7/20!) — nhiều test cũ hỏng vì đường dẫn cũ nay đã PASS thật:
+  `layout_bindings 84/84` · `daily 101/101` · `shop 229/229` · `chapters 162/162` · `achievement 56` · `ranking 92` ·
+  `profiler 135` · `level_special_modes 105` · `localization 64` · `tutorial_flow 88/88` (khi save sạch).
+- 3 test còn FAIL: `test_ui_scenes` (hardcode `nodes/hud/**`, `nodes/tutorials/**`, `scripts/ui/**` trong chính test) ·
+  `test_challenge_mode` (8 check popup — đã hỏng ở baseline 3/78) · `test_tutorial_flow` (chỉ hỏng khi save người chơi
+  đã có tiến trình tutorial — lỗi cô lập test có sẵn, xác nhận bằng cách đổi save ra chỗ khác thì 88/88 PASS).
 
 ## Lưu ý cho session sau
 
