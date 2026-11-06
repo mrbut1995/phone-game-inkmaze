@@ -225,7 +225,7 @@ func _connect_skin_signal() -> void:
 	if themes == null or not themes.has_signal("skin_changed"):
 		return
 	if not themes.is_connected("skin_changed", _on_skin_changed):  # keep-code: nối/ngắt AUTOLOAD GameManager (không phải node tĩnh)
-		themes.connect("skin_changed", _on_skin_changed)  # keep-code: signal của node sinh lúc chạy / biến thể (nối 1 chỗ khi tạo)
+		themes.connect("skin_changed", _on_skin_changed)  # EXCEPTION(R3-keep): signal của node sinh lúc chạy / biến thể (nối 1 chỗ khi tạo)
 
 func _on_skin_changed(_theme_id: String, _pen_id: String) -> void:
 	apply_pen_skin()

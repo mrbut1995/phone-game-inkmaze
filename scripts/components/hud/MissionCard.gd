@@ -12,10 +12,10 @@ extends NinePatchRect
 ## Nhờ vậy đổi mockup/art/màu của thẻ chỉ cần sửa file này + scene, không đụng controller.
 ## ============================================================================
 
-const ROW_ART := preload("res://assets/images-png/common/chal_row.png")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const ROW_ART := preload("res://assets/images-png/common/chal_row.png")  # EXCEPTION(R1-keep): hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 const MAT_ROW_DONE := preload("res://data/materials/chal_row_done.tres")
-const CHECK_DONE := preload("res://assets/images-png/game/chal_check_done.png")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
-const CHECK_PENDING := preload("res://assets/images-png/game/chal_check_pending.png")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const CHECK_DONE := preload("res://assets/images-png/game/chal_check_done.png")  # EXCEPTION(R1-keep): hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const CHECK_PENDING := preload("res://assets/images-png/game/chal_check_pending.png")  # EXCEPTION(R1-keep): hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 
 ## Chưa đạt nhưng vẫn còn cơ hội (chữ cam) / đã lệch mục tiêu (chữ đỏ)
 @export var COLOR_LIVE := Color(0.70980394, 0.38431373, 0.101960786, 1)

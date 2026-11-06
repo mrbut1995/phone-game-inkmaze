@@ -139,7 +139,7 @@ func _connect_locale_signal() -> void:
 	var loc: Node = Svc.loc()
 	if loc != null and loc.has_signal("locale_changed") \
 			and not loc.is_connected("locale_changed", _on_locale_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		loc.connect("locale_changed", _on_locale_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		loc.connect("locale_changed", _on_locale_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _on_locale_changed(_locale: String) -> void:

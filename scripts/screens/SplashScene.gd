@@ -145,9 +145,9 @@ func _bind_loading() -> void:
 		_set_loading_box_visible(false)
 		return
 	if not loading.is_connected("progress_changed", _on_loading_progress):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		loading.connect("progress_changed", _on_loading_progress)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		loading.connect("progress_changed", _on_loading_progress)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 	if not loading.is_connected("loading_finished", _on_loading_finished):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		loading.connect("loading_finished", _on_loading_finished)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		loading.connect("loading_finished", _on_loading_finished)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 	_on_loading_progress(float(loading.call("progress")), "")
 	loading.call("start")
 
@@ -251,7 +251,7 @@ func _setup_animations() -> void:
 			layout.studio_label.modulate.a = 0.0
 		if layout.logo_container != null:
 			layout.logo_container.pivot_offset = layout.logo_container.size * 0.5
-			layout.logo_container.scale = Vector2(0.3, 0.3)  # keep-code: hoạt cảnh/trạng thái runtime (tween)
+			layout.logo_container.scale = Vector2(0.3, 0.3)  # EXCEPTION(R1-keep): hoạt cảnh/trạng thái runtime (tween)
 			layout.logo_container.modulate.a = 0.0
 		if layout.title_label != null:
 			layout.title_label.modulate.a = 0.0
@@ -326,7 +326,7 @@ func _advance_to_title() -> void:
 	if layout.anim_player != null and layout.anim_player.has_animation("play_exit"):
 		if not layout.anim_player.animation_finished.is_connected(_on_exit_animation_finished):
 			# Guard: chỉ nối lại khi dây trong .tscn bị mất (layout đổi cấu trúc)
-			layout.anim_player.animation_finished.connect(_on_exit_animation_finished)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+			layout.anim_player.animation_finished.connect(_on_exit_animation_finished)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 		layout.anim_player.play("play_exit")
 	else:
 		# Fallback khi layout thiếu animation "play_exit"

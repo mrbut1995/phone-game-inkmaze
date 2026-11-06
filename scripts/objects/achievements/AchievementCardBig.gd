@@ -9,7 +9,7 @@ extends AchievementCard
 ## Hai khoá trên do AchievementScene nhét thêm vào entry; thiếu khoá ⇒ phần đó tự ẩn.
 ## ============================================================================
 
-const COIN_TEX := preload("res://assets/images-png/icons/icon_coin.png")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const COIN_TEX := preload("res://assets/images-png/icons/icon_coin.png")  # EXCEPTION(R1-keep): hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 
 @export var cat_chip: Control = null
 @export var cat_label: Label = null
@@ -73,7 +73,7 @@ func play_claimed_fx() -> void:
 		return
 	stamp.pivot_offset = stamp.size * 0.5
 	var rest_rot := stamp.rotation
-	stamp.scale = Vector2.ONE * 2.6  # keep-code: hoạt cảnh/trạng thái runtime (tween)
+	stamp.scale = Vector2.ONE * 2.6  # EXCEPTION(R1-keep): hoạt cảnh/trạng thái runtime (tween)
 	stamp.rotation = rest_rot - 0.55
 	stamp.modulate.a = 0.0
 
@@ -98,7 +98,7 @@ func _on_stamp_impact(rest_rot: float) -> void:
 		pop.tween_property(medal, "scale", Vector2.ONE * 1.22, 0.12)
 		pop.tween_property(medal, "scale", Vector2.ONE, 0.22)
 	# Nền loé sáng rồi dịu lại
-	bg.modulate = Color(1.6, 1.6, 1.35, 1.0)  # keep-code: hoạt cảnh/trạng thái runtime (tween)
+	bg.modulate = Color(1.6, 1.6, 1.35, 1.0)  # EXCEPTION(R1-keep): hoạt cảnh/trạng thái runtime (tween)
 	create_tween().tween_property(bg, "modulate", Color.WHITE, 0.45).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	# Xu bắn tung toé quanh dấu mộc
 	_burst(stamp.get_global_rect().get_center())

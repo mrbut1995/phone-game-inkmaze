@@ -69,7 +69,7 @@ func set_teleport_highlight(on: bool) -> void:
 	# Nhịp "thở" khai trong `action_bar.tscn` (player `PulseAnim`); thiếu thì fallback tween
 	var bar := _teleport_pulse_bar()
 	if on:
-		teleport_button.modulate = Color(0.85, 0.7, 1.25)  # keep-code: hoạt cảnh/trạng thái runtime (tween)
+		teleport_button.modulate = Color(0.85, 0.7, 1.25)  # EXCEPTION(R1-keep): hoạt cảnh/trạng thái runtime (tween)
 		if bar == null or not UIAnim.play_layout_anim(bar, "PulseAnim", &"pulse_teleport", teleport_button):
 			_teleport_highlight_tween = UIAnim.play_pulse(teleport_button, 1.12, 0.7)
 	else:

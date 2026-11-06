@@ -34,7 +34,7 @@ func _ready() -> void:
 	var wallet := Svc.achievement()
 	if wallet != null and wallet.has_signal("progress_changed") \
 			and not wallet.is_connected("progress_changed", _on_wallet_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		wallet.connect("progress_changed", _on_wallet_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		wallet.connect("progress_changed", _on_wallet_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 	set_value(Shop.coins())
 
 

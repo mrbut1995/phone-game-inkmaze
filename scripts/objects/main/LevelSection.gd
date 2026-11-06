@@ -83,7 +83,7 @@ func _connect_locale_signal() -> void:
 	var loc: Node = Svc.loc()
 	if loc != null and loc.has_signal("locale_changed") \
 			and not loc.is_connected("locale_changed", _on_locale_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		loc.connect("locale_changed", _on_locale_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		loc.connect("locale_changed", _on_locale_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _on_locale_changed(_locale: String) -> void:
@@ -96,7 +96,7 @@ func _connect_save_signal() -> void:
 	var save: Node = Svc.save()
 	if save != null and save.has_signal("data_loaded") \
 			and not save.is_connected("data_loaded", _on_save_data_loaded):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		save.connect("data_loaded", _on_save_data_loaded)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		save.connect("data_loaded", _on_save_data_loaded)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _on_save_data_loaded(_a = null, _b = null) -> void:
@@ -113,7 +113,7 @@ func _wire_lock_sheet() -> void:
 	# `map.gate_pressed` khai trong nodes/main/level_section.tscn;
 	# `lock_sheet` nằm NGOÀI scene này (con của layout) nên nối tại đây sau khi biết layout.
 	if not lock_sheet.unlock_requested.is_connected(_on_unlock_chapter_requested):
-		lock_sheet.unlock_requested.connect(_on_unlock_chapter_requested)  # keep-code: node của layout (ngoài scene này)
+		lock_sheet.unlock_requested.connect(_on_unlock_chapter_requested)  # EXCEPTION(R3-keep): node của layout (ngoài scene này)
 
 
 func is_sheet_open() -> bool:

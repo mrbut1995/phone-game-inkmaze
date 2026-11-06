@@ -319,7 +319,7 @@ func play_shudder() -> void:
 	if button == null:
 		return
 	# Fallback khi scene thiếu AnimationPlayer
-	button.position = Vector2.ZERO  # keep-code: hoạt cảnh/trạng thái runtime (tween)
+	button.position = Vector2.ZERO  # EXCEPTION(R4-keep): hoạt cảnh/trạng thái runtime (tween)
 	var tw := create_tween()
 	tw.tween_property(button, "position", Vector2(-6, 4), 0.035)
 	tw.tween_property(button, "position", Vector2(6, -4), 0.035)
@@ -381,7 +381,7 @@ func play_fail() -> void:
 		return
 	if button != null:
 		# Fallback khi scene thiếu AnimationPlayer
-		button.position = Vector2.ZERO  # keep-code: hoạt cảnh/trạng thái runtime (tween)
+		button.position = Vector2.ZERO  # EXCEPTION(R4-keep): hoạt cảnh/trạng thái runtime (tween)
 		var tw := create_tween()
 		tw.tween_property(button, "position", Vector2(-6, 4), 0.035)
 		tw.tween_property(button, "position", Vector2(6, -4), 0.035)

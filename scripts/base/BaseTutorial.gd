@@ -530,7 +530,7 @@ func _show_toast(key: String, fallback_text: String, color: Color, hold: float) 
 	if _fx_toast != null and _fx_toast.is_valid():
 		_fx_toast.kill()
 	toast_label.pivot_offset = toast_label.size * 0.5
-	toast_label.scale = Vector2(0.86, 0.86)  # keep-code: pose hoạt cảnh runtime (tween)
+	toast_label.scale = Vector2(0.86, 0.86)  # EXCEPTION(R1-keep): pose hoạt cảnh runtime (tween)
 	toast_label.modulate.a = 0.0
 	_toast_seq += 1
 	var seq := _toast_seq

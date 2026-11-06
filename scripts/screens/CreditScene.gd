@@ -47,7 +47,7 @@ func _bind_theme_signal() -> void:
 		return
 	var cb := Callable(self, "_on_skin_changed")
 	if not themes.is_connected("skin_changed", cb):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		themes.connect("skin_changed", cb)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		themes.connect("skin_changed", cb)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _bind_music_signal() -> void:
@@ -56,7 +56,7 @@ func _bind_music_signal() -> void:
 		return
 	var cb := Callable(self, "_on_soundtrack_changed")
 	if not music.is_connected("soundtrack_changed", cb):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		music.connect("soundtrack_changed", cb)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		music.connect("soundtrack_changed", cb)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _refresh_all() -> void:

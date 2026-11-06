@@ -144,7 +144,7 @@ func _play_intro(progress: int, walls: int, score: int) -> void:
 
 	# "TẦNG n" đập xuống
 	fx_header.pivot_offset = Vector2(60.0, fx_header.size.y * 0.5)
-	fx_header.scale = Vector2.ONE * 1.5  # keep-code: pose hoạt cảnh runtime (tween)
+	fx_header.scale = Vector2.ONE * 1.5  # EXCEPTION(R1-keep): pose hoạt cảnh runtime (tween)
 	var th := _track(create_tween())
 	th.tween_interval(0.55)
 	th.tween_property(fx_header, "modulate:a", 1.0, 0.08)
@@ -172,7 +172,7 @@ func _play_intro(progress: int, walls: int, score: int) -> void:
 	_fade_in(fx_stats, t_s, 0.95)
 	value_progress.text = "0%"  # keep-code: chữ theo dữ liệu ván chơi (runtime)
 	value_walls.text = "0"  # keep-code: chữ theo dữ liệu ván chơi (runtime)
-	value_score.text = "0"  # keep-code: chữ theo dữ liệu ván chơi (runtime)
+	value_score.text = "0"  # EXCEPTION(R4-keep): chữ theo dữ liệu ván chơi (runtime)
 	var tc := _track(create_tween())
 	tc.tween_interval(t_s + 0.1)
 	tc.tween_method(_count_progress, 0.0, float(progress), COUNT_TIME) \
@@ -248,8 +248,8 @@ func _red_flash() -> void:
 	for n: Control in [fx_soft, fx_rays]:
 		n.pivot_offset = n.size * 0.5
 		n.modulate = Color(GLOW_RED.r, GLOW_RED.g, GLOW_RED.b, 0.0)
-	fx_soft.scale = Vector2.ONE * 0.6  # keep-code: pose hoạt cảnh runtime (tween)
-	fx_rays.scale = Vector2.ONE * 0.7  # keep-code: pose hoạt cảnh runtime (tween)
+	fx_soft.scale = Vector2.ONE * 0.6  # EXCEPTION(R1-keep): pose hoạt cảnh runtime (tween)
+	fx_rays.scale = Vector2.ONE * 0.7  # EXCEPTION(R1-keep): pose hoạt cảnh runtime (tween)
 	var tw := _track(create_tween().set_parallel(true))
 	tw.tween_property(fx_soft, "modulate:a", 0.85, 0.12)
 	tw.tween_property(fx_soft, "scale", Vector2.ONE * 1.2, 0.4) \
@@ -374,7 +374,7 @@ func _connect_life_signal() -> void:
 	var gm := _game_manager()
 	if gm != null and gm.has_signal("life_changed") \
 			and not gm.is_connected("life_changed", _on_life_changed):  # keep-code: nối/ngắt AUTOLOAD GameManager (không phải node tĩnh)
-		gm.connect("life_changed", _on_life_changed)  # keep-code: nối/ngắt AUTOLOAD GameManager (không phải node tĩnh)
+		gm.connect("life_changed", _on_life_changed)  # EXCEPTION(R3-keep): nối/ngắt AUTOLOAD GameManager (không phải node tĩnh)
 
 
 func _on_life_changed(_lives: int, _max: int) -> void:

@@ -114,7 +114,7 @@ func _connect_life_signal() -> void:
 	var gm := _game_manager()
 	if gm != null and gm.has_signal("life_changed") \
 			and not gm.is_connected("life_changed", _on_life_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		gm.connect("life_changed", _on_life_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		gm.connect("life_changed", _on_life_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 ## Lượt đổi khi popup đang mở (vd hồi xong 1 bút) -> vẽ lại hàng bút

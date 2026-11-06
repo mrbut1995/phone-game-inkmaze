@@ -152,7 +152,7 @@ func _on_start_pressed() -> void:
 	if layout.anim_player != null and layout.anim_player.has_animation("play_exit"):
 		if not layout.anim_player.animation_finished.is_connected(_on_exit_animation_finished):
 			# Guard: chỉ nối lại khi dây trong .tscn bị mất (layout đổi cấu trúc)
-			layout.anim_player.animation_finished.connect(_on_exit_animation_finished)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+			layout.anim_player.animation_finished.connect(_on_exit_animation_finished)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 		layout.anim_player.play("play_exit")
 	else:
 		# Fallback khi layout thiếu animation "play_exit"

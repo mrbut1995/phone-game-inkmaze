@@ -153,7 +153,7 @@ func _connect_life_signal() -> void:
 	var gm := _game_manager()
 	if gm != null and gm.has_signal("life_changed") \
 			and not gm.is_connected("life_changed", _on_life_changed):  # keep-code: nối/ngắt AUTOLOAD GameManager (không phải node tĩnh)
-		gm.connect("life_changed", _on_life_changed)  # keep-code: nối/ngắt AUTOLOAD GameManager (không phải node tĩnh)
+		gm.connect("life_changed", _on_life_changed)  # EXCEPTION(R3-keep): nối/ngắt AUTOLOAD GameManager (không phải node tĩnh)
 
 
 func _on_life_changed(_lives: int, _max: int) -> void:
@@ -249,7 +249,7 @@ func _play_intro(progress: int) -> void:
 	var t_p := 0.5
 	_fade_in(fx_path_card, t_p, 0.95)
 	if label_percent != null:
-		label_percent.text = "0%"  # keep-code: chữ theo dữ liệu ván chơi (runtime)
+		label_percent.text = "0%"  # EXCEPTION(R4-keep): chữ theo dữ liệu ván chơi (runtime)
 	var tr_ := _track(create_tween())
 	tr_.tween_interval(t_p + 0.15)
 	if path != null:
@@ -282,7 +282,7 @@ func _play_intro(progress: int) -> void:
 		if ok:
 			ts.tween_callback(func() -> void:
 				Sfx.play(Sfx.STAR_POP)
-				star.scale = Vector2.ONE * 0.3)  # keep-code: pose hoạt cảnh runtime (tween)
+				star.scale = Vector2.ONE * 0.3)  # EXCEPTION(R1-keep): pose hoạt cảnh runtime (tween)
 			ts.tween_property(star, "scale", Vector2(1.4, 1.4), 0.14) \
 				.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 			ts.tween_property(star, "scale", Vector2.ONE, 0.1)
@@ -349,8 +349,8 @@ func _red_flash() -> void:
 	for n: Control in [fx_soft, fx_rays]:
 		n.pivot_offset = n.size * 0.5
 		n.modulate = Color(GLOW_RED.r, GLOW_RED.g, GLOW_RED.b, 0.0)
-	fx_soft.scale = Vector2.ONE * 0.6  # keep-code: pose hoạt cảnh runtime (tween)
-	fx_rays.scale = Vector2.ONE * 0.7  # keep-code: pose hoạt cảnh runtime (tween)
+	fx_soft.scale = Vector2.ONE * 0.6  # EXCEPTION(R1-keep): pose hoạt cảnh runtime (tween)
+	fx_rays.scale = Vector2.ONE * 0.7  # EXCEPTION(R1-keep): pose hoạt cảnh runtime (tween)
 	var tw := _track(create_tween().set_parallel(true))
 	tw.tween_property(fx_soft, "modulate:a", 0.85, 0.12)
 	tw.tween_property(fx_soft, "scale", Vector2.ONE * 1.2, 0.4) \

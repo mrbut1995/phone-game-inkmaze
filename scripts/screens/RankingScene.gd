@@ -126,7 +126,7 @@ func _on_tab_pressed(board: String) -> void:
 func _connect_manager() -> void:
 	var m := Ranking.manager()
 	if m != null and m.has_signal("ranking_changed") and not m.is_connected("ranking_changed", _on_ranking_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		m.connect("ranking_changed", _on_ranking_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		m.connect("ranking_changed", _on_ranking_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _on_ranking_changed(board: String) -> void:

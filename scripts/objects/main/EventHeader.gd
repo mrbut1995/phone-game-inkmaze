@@ -41,6 +41,6 @@ func attach_dots(dots: Control) -> void:
 	if slot == null or dots == null or dots.get_parent() == slot:
 		return
 	dots.reparent(slot, false)
-	dots.custom_minimum_size = Vector2(DOTS_MIN_WIDTH, 6.0)  # keep-code: chấm trang sinh lúc chạy (runtime)
+	dots.custom_minimum_size = Vector2(DOTS_MIN_WIDTH, 6.0)  # EXCEPTION(R1-keep): chấm trang sinh lúc chạy (runtime)
 	dots.size_flags_horizontal = Control.SIZE_SHRINK_END  # keep-code: chấm trang sinh lúc chạy (runtime)
 	dots.size_flags_vertical = Control.SIZE_SHRINK_CENTER  # keep-code: chấm trang sinh lúc chạy (runtime)

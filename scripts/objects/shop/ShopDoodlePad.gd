@@ -220,5 +220,5 @@ func _end_stroke() -> void:
 func _move_tip(pos: Vector2) -> void:
 	if pen_tip == null:
 		return
-	pen_tip.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
+	pen_tip.visible = true  # EXCEPTION(R1-keep): trạng thái theo dữ liệu (runtime)
 	pen_tip.position = pos - pen_tip.size * 0.5

@@ -43,10 +43,10 @@ var _snap_tween: Tween
 
 func _ready() -> void:
 	if scroll != null:
-		scroll.resized.connect(_update_cards_layout)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		scroll.get_h_scroll_bar().value_changed.connect(_on_scroll_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		scroll.resized.connect(_update_cards_layout)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		scroll.get_h_scroll_bar().value_changed.connect(_on_scroll_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 		if scroll.has_signal("scroll_ended"):
-			scroll.scroll_ended.connect(_on_scroll_ended)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+			scroll.scroll_ended.connect(_on_scroll_ended)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 	if event_card_scene == null:
 		event_card_scene = load("res://scenes/objects/main/event_card.tscn")
 	if daily_card_scene == null:

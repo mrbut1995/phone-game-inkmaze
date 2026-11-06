@@ -56,7 +56,7 @@ func _on_step_entered(_index: int, _data: Dictionary) -> void:
 	nav_bar.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 	btn_skip.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 	if lbl_step_num != null:
-		lbl_step_num.get_parent().visible = false  # keep-code: ẩn huy hiệu số bước ở màn chúc mừng
+		lbl_step_num.get_parent().visible = false  # EXCEPTION(R2-keep): ẩn huy hiệu số bước ở màn chúc mừng
 	if lbl_step_of != null:
 		lbl_step_of.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 	if dots_container != null:
@@ -65,7 +65,7 @@ func _on_step_entered(_index: int, _data: Dictionary) -> void:
 	# phần rơi con dấu + hiện dần 2 nút khai trong animation "congrats" của scene.
 	if stamp != null:
 		stamp.pivot_offset = stamp.size * 0.5
-		stamp.scale = Vector2(1.6, 1.6)  # keep-code: hoạt cảnh/trạng thái runtime (tween)
+		stamp.scale = Vector2(1.6, 1.6)  # EXCEPTION(R1-keep): hoạt cảnh/trạng thái runtime (tween)
 		stamp.modulate.a = 0.0
 		stamp.rotation = deg_to_rad(-5.0)
 	for btn_node in [btn_continue, btn_main]:
@@ -73,7 +73,7 @@ func _on_step_entered(_index: int, _data: Dictionary) -> void:
 		if b != null:
 			b.pivot_offset = b.size * 0.5
 			b.modulate.a = 0.0
-			b.scale = Vector2(0.88, 0.88)  # keep-code: hoạt cảnh/trạng thái runtime (tween)
+			b.scale = Vector2(0.88, 0.88)  # EXCEPTION(R1-keep): hoạt cảnh/trạng thái runtime (tween)
 	if fx_anim != null and fx_anim.has_animation(&"congrats"):
 		fx_anim.play(&"congrats")
 		return

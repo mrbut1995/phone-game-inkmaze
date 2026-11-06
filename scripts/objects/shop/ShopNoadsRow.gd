@@ -7,8 +7,8 @@ extends Control
 
 signal action_pressed(item_id: String)
 
-const BTN := preload("res://assets/images-png/shop/btn_noads.png")  # keep-code: màu/art hiệu ứng runtime — không thuộc theme tĩnh
-const OWNED_BTN := preload("res://assets/images-png/shop/btn_equipped.png")  # keep-code: màu/art hiệu ứng runtime — không thuộc theme tĩnh
+const BTN := preload("res://assets/images-png/shop/btn_noads.png")  # EXCEPTION(R1-keep): màu/art hiệu ứng runtime — không thuộc theme tĩnh
+const OWNED_BTN := preload("res://assets/images-png/shop/btn_equipped.png")  # EXCEPTION(R1-keep): màu/art hiệu ứng runtime — không thuộc theme tĩnh
 
 var item_id: String = ""
 var item_data: Dictionary = {}
@@ -49,8 +49,8 @@ func _set_button() -> void:
 		btn.texture_hover = OWNED_BTN  # keep-code: art theo trạng thái món hàng (runtime)
 		btn.texture_disabled = OWNED_BTN  # keep-code: art theo trạng thái món hàng (runtime)
 		btn.disabled = true
-		label.theme_type_variation = &"ShopBtnTextDone"  # keep-code: biến thể chữ theo trạng thái (runtime)
-		label.add_theme_color_override("font_color", Color(0.0863, 0.3961, 0.2039))  # keep-code: màu theo dữ liệu (runtime)
+		label.theme_type_variation = &"ShopBtnTextDone"  # EXCEPTION(R2-keep): biến thể chữ theo trạng thái (runtime)
+		label.add_theme_color_override("font_color", Color(0.0863, 0.3961, 0.2039))  # EXCEPTION(R1-keep): màu theo dữ liệu (runtime)
 		label.text = TranslationServer.translate("STR_SHOP_OWNED_BTN")
 		return
 	btn.disabled = false

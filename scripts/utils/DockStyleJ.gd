@@ -40,7 +40,7 @@ static func apply_panel(panel: Control) -> void:
 	if art == null:
 		return
 	var fit := func() -> void:
-		art.position = Vector2(0.0, -PANEL_OVERHANG)  # keep-code: pose tính theo cỡ panel thật
+		art.position = Vector2(0.0, -PANEL_OVERHANG)  # EXCEPTION(R1-keep): pose tính theo cỡ panel thật
 		art.size = Vector2(holder.size.x, holder.size.y + PANEL_OVERHANG) * 2.0
 	# keep-code: callback phụ thuộc KÍCH THƯỚC lúc chạy (không khai tĩnh trong .tscn được)
 	if not bool(holder.get_meta("j_fit_wired", false)):

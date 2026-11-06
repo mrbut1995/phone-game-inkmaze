@@ -17,7 +17,7 @@ extends GameSceneLayout
 ## ============================================================================
 
 ## Bề rộng HUD thiết kế (bản ngang 810 theo mockup 16:9)
-const HUD_DESIGN_WIDTH := 405  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const HUD_DESIGN_WIDTH := 405  # EXCEPTION(R1-keep): hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 
 func is_landscape_layout() -> bool:
 	return true
@@ -59,7 +59,7 @@ func fit_hud(hud: Control) -> void:
 	if host == null or host.size.x <= 0.0:
 		return
 	var factor := clampf(host.size.x / HUD_DESIGN_WIDTH, 0.5, 1.0)
-	hud.pivot_offset = Vector2.ZERO  # keep-code: pivot trước hiệu ứng (runtime)
+	hud.pivot_offset = Vector2.ZERO  # EXCEPTION(R1-keep): pivot trước hiệu ứng (runtime)
 	if absf(hud.scale.x - factor) > 0.001:
 		hud.scale = Vector2(factor, factor)
 

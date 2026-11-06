@@ -489,7 +489,7 @@ func play_celebration() -> void:
 func play_spawn_drop(_target_pos: Vector2) -> void:
 	_kill_move_tween()
 	if icon != null:
-		icon.position = Vector2(0.0, -42.0)  # keep-code: hoạt cảnh/trạng thái runtime (tween)
+		icon.position = Vector2(0.0, -42.0)  # EXCEPTION(R1-keep): hoạt cảnh/trạng thái runtime (tween)
 	scale = Vector2(0.7, 1.35)
 	modulate.a = 0.0
 	if not _play_anim(&"spawn_drop"):

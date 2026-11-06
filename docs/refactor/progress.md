@@ -35,12 +35,12 @@ Hệ quả: baseline sạch (3027 thay vì 3230; G-INT 18 thay vì 637 với 516
 - [x] P0 prepare
 - [x] P1 maps (va chạm 0 · review 9 → 3, đã duyệt)
 - [x] P2 structure (G-INT 18 · G-GODOT 0 lỗi · G-LEG **17/20** PASS)
-- [ ] P3.1 autoload class_name · [ ] P3.2 guard rails · [ ] P3.3 baseline · [ ] P3.4 tags · [ ] P3.5 constants
+- [x] P3.1 autoload class_name · [x] P3.2 guard rails · [x] P3.3 baseline · [x] P3.4 tags · [~] P3.5 constants (chỉ ToolIds)
 - [ ] P4 scene contracts (0/…)
 - [ ] P5.1 GODOT3 0/78 · [ ] P5.2 R3-err 0/… · [ ] P5.3 R2-err 0/… · [ ] P5.4 R4-err 0/549
 - [ ] P5.5..9 warnings (tuỳ chọn) · [ ] P6 tests · [ ] P7 docs
 
-Lint total history: 2026-11-06 = 3027 (baseline P0, chưa tạo lint_baseline — việc của P3.3)
+Lint total history: 2026-11-06 = 3027 (P0) → **2564** (P3.3 baseline) → **2445** (P3.4 sau khi đổi 125 tag keep-code)
 
 ## P1 đã làm (maps — commit `P1`)
 
@@ -115,3 +115,29 @@ Thứ tự đã chạy (đúng instruction, dry-run trước mỗi map):
 - `python3 -I` của instruction ↔ trên Windows dùng `.venv\Scripts\python.exe`; tool donor **không** chạy với `-I`.
 - `scripts/test_case/` (68 file) sẽ thành `tests/legacy/legacy_*.gd` + `debug/probes/` ở P2 ⇒ 16 E-line hiện tại
   sẽ tự hết (G-INT phải **giảm**, không được tăng).
+
+## P3 đã làm (commit `509c1ce1` P3.1 · `40936767` P3.3 · P3.2/P3.4 cùng commit sau)
+
+**P3.1 — bỏ `class_name` của autoload**
+- 25 file `scripts/autoload/*.gd`: xoá dòng `class_name XxxClass` (kể cả `SceneTransition`).
+- `scripts/utils/Svc.gd`: kiểu trả về `XxxClass` → `Node`, bỏ `as XxxClass`.
+- `GameManagerClass.TOOL_*` ở `GameController`/`DebugScene`/3 test legacy → `ToolIds.*`
+  (tạo `scripts/constants/ToolIds.gd`, `GameManager` giữ API `TOOL_SKIP/TOOL_TELEPORT/TOOL_HINT` bằng uỷ thác).
+- `GameManagerClass.period_key/current_period_key` trong test → `FloorRecordsStore.*` (nơi thật sự giữ hàm).
+- Gate: G-GODOT **0 lỗi**; G-LEG 17/20 (không đổi).
+
+**P3.2 — guard rails**: `docs/refactor/lint_before.txt` → **2564 finding** (674 ERROR):
+DEAD 1 · GODOT3 78 · R1 1336 · R2 207 · R3 304 · R4 544 · R5 48 · R7 10 · R8 29 · STYLE 7 · **STRUCT 0**.
+GODOT3 đúng là toàn bộ dạng `obj.connect("sig", cb)` / `is_connected("sig", cb)` như instruction dự đoán.
+
+**P3.3 — baseline**: `--update-baseline` → 2564, `G-LINT = 0 new`.
+
+**P3.4 — đổi tag**: `convert_keep_code.py` đổi **125** `# keep-code` → `# EXCEPTION(R<n>-keep)`.
+36 dòng vừa có GODOT3 (ERROR) vừa có R3 (WARN) nên tag chỉ che được R3 ⇒ 54 dòng "new" là CÙNG finding cũ,
+chỉ đổi nội dung dòng ⇒ cập nhật baseline theo rule B: **2564 → 2445** (giảm 119), `G-LINT = 0 new`.
+
+**P3.5 — constants**: chỉ tạo `ToolIds` (đã cần ở P3.1). `SceneIds`/`PopupIds`/`InputActions` **bỏ qua** —
+instruction ghi optional và mỗi literal hiện dùng < 3 nơi.
+
+**Gate cuối P3**: G-INT 18 · G-GODOT 0 lỗi · G-LINT 0 new (2445 baselined) · G-LEG **18/20** (chỉ còn
+`test_ui_scenes` + `test_challenge_mode` — đều do test hardcode đường dẫn cũ / hỏng sẵn từ baseline).

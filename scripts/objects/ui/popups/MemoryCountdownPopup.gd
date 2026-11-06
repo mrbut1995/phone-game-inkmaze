@@ -59,7 +59,7 @@ func _show_step(text: String) -> void:
 	number_label.text = text
 	number_label.modulate = Color(0.847, 0.267, 0.267, 1) if text != "GO!" else Color(0.180, 0.490, 0.196, 1)
 	number_label.pivot_offset = number_label.size * 0.5
-	number_label.scale = Vector2(1.35, 1.35)  # keep-code: hoạt cảnh/trạng thái runtime (tween)
+	number_label.scale = Vector2(1.35, 1.35)  # EXCEPTION(R1-keep): hoạt cảnh/trạng thái runtime (tween)
 	if fx_anim == null or not fx_anim.has_animation(&"number_pop"):
 		# Fallback khi scene thiếu FxAnim
 		var tw := create_tween()

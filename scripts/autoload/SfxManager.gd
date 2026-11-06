@@ -41,7 +41,7 @@ func _ready() -> void:
 	_refresh_gain()
 	var sm: Variant = Svc.setting()
 	if sm != null and sm.has_signal("volume_changed"):
-		sm.connect("volume_changed", _on_volume_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		sm.connect("volume_changed", _on_volume_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 # ---------------------------------------------------------------------------

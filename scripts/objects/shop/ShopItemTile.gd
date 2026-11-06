@@ -13,7 +13,7 @@ signal action_pressed(item_id: String)
 ## Chạm vào thân thẻ (ngoài nút) = chọn ngòi bút này để XEM THỬ ở Bàn nháp thử bút
 signal preview_pressed(item_id: String)
 
-const BTN_TILE := preload("res://assets/images-png/common/btn_tile.png")  # keep-code: màu/art hiệu ứng runtime — không thuộc theme tĩnh
+const BTN_TILE := preload("res://assets/images-png/common/btn_tile.png")  # EXCEPTION(R1-keep): màu/art hiệu ứng runtime — không thuộc theme tĩnh
 const MAT_TILE_NORMAL := preload("res://data/materials/btn_tile_normal.tres")
 const MAT_TILE_DONE := preload("res://data/materials/btn_tile_done.tres")
 const MAT_TILE_VIP := preload("res://data/materials/btn_tile_vip.tres")
@@ -22,8 +22,8 @@ const ICONS := {
 	"ink": preload("res://assets/images-png/icons/icon_ink.png"),
 	"paper": preload("res://assets/images-png/icons/icon_paper.png"),
 }
-const CARD_NORMAL := preload("res://assets/images-png/shop/card_tile.png")  # keep-code: màu/art hiệu ứng runtime — không thuộc theme tĩnh
-const CARD_SELECTED := preload("res://assets/images-png/shop/card_tile_selected.png")  # keep-code: màu/art hiệu ứng runtime — không thuộc theme tĩnh
+const CARD_NORMAL := preload("res://assets/images-png/shop/card_tile.png")  # EXCEPTION(R1-keep): màu/art hiệu ứng runtime — không thuộc theme tĩnh
+const CARD_SELECTED := preload("res://assets/images-png/shop/card_tile_selected.png")  # EXCEPTION(R1-keep): màu/art hiệu ứng runtime — không thuộc theme tĩnh
 const VIP_BADGE := "STR_SHOP_BADGE_VIP"
 
 ## ============================================================================
@@ -163,8 +163,8 @@ func _set_button(color: Color) -> void:
 		btn.texture_normal = BTN_TILE  # keep-code: art theo trạng thái món hàng (runtime)
 		btn.material = MAT_TILE_DONE
 		btn.disabled = true
-		label.theme_type_variation = &"ShopBtnTextDone"  # keep-code: biến thể chữ theo trạng thái (runtime)
-		label.add_theme_color_override("font_color", Color(0.0863, 0.3961, 0.2039))  # keep-code: màu theo dữ liệu (runtime)
+		label.theme_type_variation = &"ShopBtnTextDone"  # EXCEPTION(R2-keep): biến thể chữ theo trạng thái (runtime)
+		label.add_theme_color_override("font_color", Color(0.0863, 0.3961, 0.2039))  # EXCEPTION(R1-keep): màu theo dữ liệu (runtime)
 		label.text = TranslationServer.translate("STR_SHOP_EQUIPPED")
 		if coin != null:
 			coin.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)

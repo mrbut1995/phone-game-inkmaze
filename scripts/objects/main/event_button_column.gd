@@ -61,7 +61,7 @@ func _make_item(ev: Object) -> Control:
 	button.texture_normal = _load_icon(ev, theme_id, "normal")
 	button.texture_pressed = _load_icon(ev, theme_id, "pressed")
 	button.texture_disabled = _load_icon(ev, theme_id, "disabled")
-	# keep-code: `item` sinh lúc chạy nên signal phải nối bằng code (mang theo event_id)
+	# EXCEPTION(R3-keep): `item` sinh lúc chạy nên signal phải nối bằng code (mang theo event_id)
 	button.pressed.connect(func() -> void: event_pressed.emit(id))
 	_time_labels[id] = item.get_node("Pill/Label") as Label
 	return item

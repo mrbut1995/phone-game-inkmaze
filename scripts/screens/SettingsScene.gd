@@ -233,7 +233,7 @@ func _on_language_pressed() -> void:
 	if popup == null:
 		return
 	if not popup.is_connected("locale_applied", _on_locale_applied):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		popup.connect("locale_applied", _on_locale_applied)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		popup.connect("locale_applied", _on_locale_applied)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _on_locale_applied(_code: String) -> void:

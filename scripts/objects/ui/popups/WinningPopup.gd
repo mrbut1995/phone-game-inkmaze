@@ -155,12 +155,12 @@ func _set_stars(earned_stars: int) -> void:
 		h.pivot_offset = h.size * 0.5
 		h.rotation = 0.0  # keep-code: pose hoạt cảnh runtime (tween)
 		if on:
-			h.scale = Vector2.ONE * 0.3  # keep-code: pose hoạt cảnh runtime (tween)
-			h.rotation_degrees = -30.0  # keep-code: pose hoạt cảnh runtime (tween)
+			h.scale = Vector2.ONE * 0.3  # EXCEPTION(R1-keep): pose hoạt cảnh runtime (tween)
+			h.rotation_degrees = -30.0  # EXCEPTION(R1-keep): pose hoạt cảnh runtime (tween)
 			h.modulate.a = 0.0
 			_pop_star(h, i, i == earned - 1 and earned == COUNT)
 		else:
-			h.scale = Vector2.ONE * 0.85  # keep-code: pose hoạt cảnh runtime (tween)
+			h.scale = Vector2.ONE * 0.85  # EXCEPTION(R1-keep): pose hoạt cảnh runtime (tween)
 			h.modulate.a = 0.0
 			var tw := _track(create_tween())
 			tw.tween_interval(STAR_DELAY)
@@ -211,7 +211,7 @@ func _ring(star: Control) -> void:
 	if r == null:
 		return
 	r.pivot_offset = r.size * 0.5
-	r.scale = Vector2.ONE * 0.7  # keep-code: pose hoạt cảnh runtime (tween)
+	r.scale = Vector2.ONE * 0.7  # EXCEPTION(R1-keep): pose hoạt cảnh runtime (tween)
 	r.modulate = Color(RING_COLOR.r, RING_COLOR.g, RING_COLOR.b, 0.9)
 	var tw := _track(create_tween().set_parallel(true))
 	tw.tween_property(r, "scale", Vector2.ONE * 2.6, 0.55) \
@@ -252,7 +252,7 @@ func _start_halo() -> void:
 		if n != null:
 			n.pivot_offset = n.size * 0.5
 			n.modulate = Color(GLOW_COLOR.r, GLOW_COLOR.g, GLOW_COLOR.b, 0.0)
-			n.scale = Vector2.ONE * 0.3  # keep-code: pose hoạt cảnh runtime (tween)
+			n.scale = Vector2.ONE * 0.3  # EXCEPTION(R1-keep): pose hoạt cảnh runtime (tween)
 
 	for entry: Array in _halo_plan():
 		var n := entry[0] as Control
@@ -334,7 +334,7 @@ func _firework(slot: int, pos: Vector2, color: Color, amount: int, power: float)
 	var f := fw.get_node_or_null("Flash") as Control
 	if f != null:
 		f.pivot_offset = f.size * 0.5
-		f.scale = Vector2.ONE * 0.3  # keep-code: pose hoạt cảnh runtime (tween)
+		f.scale = Vector2.ONE * 0.3  # EXCEPTION(R1-keep): pose hoạt cảnh runtime (tween)
 		f.modulate = Color(color.r, color.g, color.b, 0.9)
 		var tw := _track(create_tween().set_parallel(true))
 		tw.tween_property(f, "scale", Vector2.ONE * (1.2 * power), 0.4) \
@@ -396,7 +396,7 @@ func _play_intro(earned: int, rows: Array, secs: int, used: int, maxs: int, wall
 
 	label_level.pivot_offset = label_level.size * 0.5
 	label_level.modulate.a = 0.0
-	label_level.scale = Vector2.ONE * 0.8  # keep-code: pose hoạt cảnh runtime (tween)
+	label_level.scale = Vector2.ONE * 0.8  # EXCEPTION(R1-keep): pose hoạt cảnh runtime (tween)
 	var tl := _track(create_tween())
 	tl.tween_interval(0.3)
 	tl.tween_property(label_level, "modulate:a", 1.0, 0.2)
@@ -414,7 +414,7 @@ func _play_intro(earned: int, rows: Array, secs: int, used: int, maxs: int, wall
 			continue
 		c.pivot_offset = c.size * 0.5
 		c.modulate.a = 0.0
-		c.scale = Vector2.ONE * 0.85  # keep-code: pose hoạt cảnh runtime (tween)
+		c.scale = Vector2.ONE * 0.85  # EXCEPTION(R1-keep): pose hoạt cảnh runtime (tween)
 		var tw := _track(create_tween())
 		tw.tween_interval(t0 + 0.1 * float(i))
 		tw.tween_property(c, "modulate:a", 1.0, 0.18)
@@ -424,7 +424,7 @@ func _play_intro(earned: int, rows: Array, secs: int, used: int, maxs: int, wall
 		if done and i < m_stars.size():
 			var s := m_stars[i]
 			s.pivot_offset = s.size * 0.5
-			s.scale = Vector2.ONE * 0.2  # keep-code: pose hoạt cảnh runtime (tween)
+			s.scale = Vector2.ONE * 0.2  # EXCEPTION(R1-keep): pose hoạt cảnh runtime (tween)
 			tw.tween_property(s, "scale", Vector2(1.3, 1.3), 0.16) \
 				.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 			tw.tween_property(s, "scale", Vector2.ONE, 0.1)

@@ -102,7 +102,7 @@ func _bind_setting_manager() -> void:
 		return
 	var cb := Callable(self, "_on_volume_changed")
 	if not settings.is_connected("volume_changed", cb):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		settings.connect("volume_changed", cb)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		settings.connect("volume_changed", cb)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _bind_theme_manager() -> void:
@@ -111,7 +111,7 @@ func _bind_theme_manager() -> void:
 		return
 	var cb := Callable(self, "_on_skin_changed")
 	if not themes.is_connected("skin_changed", cb):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		themes.connect("skin_changed", cb)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		themes.connect("skin_changed", cb)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _bind_scene_manager() -> void:
@@ -120,7 +120,7 @@ func _bind_scene_manager() -> void:
 		return
 	var cb := Callable(self, "_on_scene_changed")
 	if not scenes.is_connected("scene_changed", cb):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		scenes.connect("scene_changed", cb)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		scenes.connect("scene_changed", cb)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _ensure_player() -> void:

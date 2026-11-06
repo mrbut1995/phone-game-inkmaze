@@ -8,7 +8,7 @@ extends Control
 
 signal action_pressed(item_id: String)
 
-const CARD_ART := preload("res://assets/images-png/shop/card_coin.png")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const CARD_ART := preload("res://assets/images-png/shop/card_coin.png")  # EXCEPTION(R1-keep): hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 const ICONS := {
 	"coin_t1": preload("res://assets/images-png/icons/icon_coin_t1.png"),
 	"coin_t2": preload("res://assets/images-png/icons/icon_coin_t2.png"),

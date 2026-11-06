@@ -8,13 +8,13 @@ extends Control
 
 signal action_pressed(item_id: String)
 
-const ICON_BOX := preload("res://assets/images-png/icons/icon_box.png")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const ICON_BOX := preload("res://assets/images-png/icons/icon_box.png")  # EXCEPTION(R1-keep): hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 ## Ô THÔNG TIN giá/trạng thái (PHẲNG, không bấm riêng) + art thẻ
-const INFO_BLUE := preload("res://assets/images-png/shop/info_blue.png")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
-const INFO_DONE := preload("res://assets/images-png/shop/btn_equipped.png")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
-const INFO_AMBER := preload("res://assets/images-png/shop/btn_coin.png")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
-const CARD_NORMAL := preload("res://assets/images-png/shop/card_row.png")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
-const CARD_ARMED := preload("res://assets/images-png/shop/card_row_selected.png")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const INFO_BLUE := preload("res://assets/images-png/shop/info_blue.png")  # EXCEPTION(R1-keep): hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const INFO_DONE := preload("res://assets/images-png/shop/btn_equipped.png")  # EXCEPTION(R1-keep): hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const INFO_AMBER := preload("res://assets/images-png/shop/btn_coin.png")  # EXCEPTION(R1-keep): hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const CARD_NORMAL := preload("res://assets/images-png/shop/card_row.png")  # EXCEPTION(R1-keep): hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const CARD_ARMED := preload("res://assets/images-png/shop/card_row_selected.png")  # EXCEPTION(R1-keep): hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 const ICONS := {
 	"pen": preload("res://assets/images-png/icons/icon_pen.png"),
 	"ink": preload("res://assets/images-png/icons/icon_ink.png"),
@@ -53,7 +53,7 @@ func _refresh() -> void:
 func _set_icon(color: Color) -> void:
 	var box := get_node_or_null("Panel/IconBox") as TextureRect
 	if box != null:
-		box.texture = ICON_BOX  # keep-code: art theo trạng thái (runtime)
+		box.texture = ICON_BOX  # EXCEPTION(R1-keep): art theo trạng thái (runtime)
 		box.self_modulate = Color(color.r, color.g, color.b, 1.0).lerp(Color.WHITE, 0.78)
 	var icon := get_node_or_null("Panel/IconBox/Icon") as TextureRect
 	if icon != null:

@@ -71,4 +71,4 @@ static func apply_fog(width: int, height: int, cell_at: Callable, maze: MazeData
 			if explored.has(p):
 				cell_node.modulate = Color(1, 1, 1, 1.0)  # keep-code: màu theo dữ liệu (runtime)
 			else:
-				cell_node.modulate = Color(0.6, 0.6, 0.6, 0.4)  # keep-code: màu theo dữ liệu (runtime)
+				cell_node.modulate = Color(0.6, 0.6, 0.6, 0.4)  # EXCEPTION(R1-keep): màu theo dữ liệu (runtime)

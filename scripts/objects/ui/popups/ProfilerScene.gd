@@ -106,7 +106,7 @@ func _rebind_after_orientation() -> void:
 func _connect_manager() -> void:
 	var m := Profile.manager()
 	if m != null and m.has_signal("profile_changed") and not m.is_connected("profile_changed", _on_profile_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		m.connect("profile_changed", _on_profile_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		m.connect("profile_changed", _on_profile_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _on_profile_changed() -> void:

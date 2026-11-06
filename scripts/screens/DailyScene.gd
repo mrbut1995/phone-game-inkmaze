@@ -181,7 +181,7 @@ func _wire_buttons() -> void:
 			UIAnim.play_pulse(layout.play_card, 1.02, 2.0)
 	if _daily != null and _daily.has_signal("daily_changed") \
 			and not _daily.is_connected("daily_changed", _refresh):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		_daily.connect("daily_changed", _refresh)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		_daily.connect("daily_changed", _refresh)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 ## Cập nhật số Xu trên ví (ví dùng chung `AchievementManager.coins` với Main Screen)
@@ -522,7 +522,7 @@ func _request_ad_then_play(is_challenge: bool) -> void:
 		_start_day(_selected_day, is_challenge)
 		return
 	if not ads.is_connected("rewarded_completed", _on_ad_rewarded):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		ads.connect("rewarded_completed", _on_ad_rewarded)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		ads.connect("rewarded_completed", _on_ad_rewarded)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 	_ad_challenge_pending = is_challenge
 	if not bool(ads.call("show_rewarded", ADS_REWARD_ID)):
 		_ad_challenge_pending = false

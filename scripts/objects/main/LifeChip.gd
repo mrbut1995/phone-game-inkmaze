@@ -37,7 +37,7 @@ func _ready() -> void:
 	var game_manager := Svc.game()
 	if game_manager != null and game_manager.has_signal("life_changed") \
 			and not game_manager.is_connected("life_changed", _on_life_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
-		game_manager.connect("life_changed", _on_life_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		game_manager.connect("life_changed", _on_life_changed)  # EXCEPTION(R3-keep): signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 	refresh()
 
 
