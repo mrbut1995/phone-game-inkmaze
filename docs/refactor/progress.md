@@ -36,11 +36,23 @@ Hệ quả: baseline sạch (3027 thay vì 3230; G-INT 18 thay vì 637 với 516
 - [x] P1 maps (va chạm 0 · review 9 → 3, đã duyệt)
 - [x] P2 structure (G-INT 18 · G-GODOT 0 lỗi · G-LEG **17/20** PASS)
 - [x] P3.1 autoload class_name · [x] P3.2 guard rails · [x] P3.3 baseline · [x] P3.4 tags · [~] P3.5 constants (chỉ ToolIds)
-- [ ] P4 scene contracts (0/…)
+- [x] P4 scene contracts (**155/155**)
 - [ ] P5.1 GODOT3 0/78 · [ ] P5.2 R3-err 0/… · [ ] P5.3 R2-err 0/… · [ ] P5.4 R4-err 0/549
 - [ ] P5.5..9 warnings (tuỳ chọn) · [ ] P6 tests · [ ] P7 docs
 
-Lint total history: 2026-11-06 = 3027 (P0) → **2564** (P3.3 baseline) → **2445** (P3.4 sau khi đổi 125 tag keep-code)
+Lint total history: 2026-11-06 = 3027 (P0) → **2564** (P3.3) → **2445** (P3.4) → **2290** (P4 xong 155 header)
+
+## P4 đã làm (commit `bfbfcdef`)
+
+- Sinh `## Scene contract` cho **155** script gốc scene/component (danh sách R3 "missing '## Scene contract'").
+  Mỗi header 4 dòng: `Exports` (@export) · `Emits` (signal) · `Handlers wired in scene`
+  (`[connection … method="_on_*"]` của node mang script đó) · `Subscribes in code` (các `.connect(`).
+- Sinh bằng script tạm: đọc `.tscn` map node → script, resolve `to="."` về node gốc, chèn NGAY SAU khối `##`
+  đầu file (trước khai báo đầu tiên). Đã kiểm tra mẫu `SceneTransition`, `GameScene`, `MazeCell`, `ShopScene`.
+- **Lỗi đã gặp**: `startswith((…, ''))` — chuỗi rỗng làm điều kiện LUÔN đúng ⇒ header bị chèn cuối file;
+  đã revert 10 file đầu, sửa hàm `_is_header()` rồi làm lại (lần 2 đúng).
+- Baseline R3 giảm: 2445 → **2290** (−155), G-LINT 0 new.
+- Gate: G-GODOT 0 lỗi · G-LEG **18/20** (không đổi — chỉ còn `test_ui_scenes` + `test_challenge_mode`).
 
 ## P1 đã làm (maps — commit `P1`)
 
