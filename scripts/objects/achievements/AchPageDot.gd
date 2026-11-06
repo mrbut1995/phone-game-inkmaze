@@ -7,6 +7,12 @@ extends TextureButton
 ## ============================================================================
 
 ## Art chấm — gán trong `page_dot.tscn` (ExtResource)
+## Scene contract
+## Exports:  dot_active, dot_inactive, SIZE_ACTIVE, SIZE_INACTIVE
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 @export var dot_active: Texture2D = null
 @export var dot_inactive: Texture2D = null
 

@@ -11,6 +11,12 @@ extends BaseScene
 ## Cài đặt lưu qua SettingManager (/root) nên không tham chiếu autoload trực tiếp.
 ## ============================================================================
 
+## Scene contract
+## Exports:  PLAYER_ID_PLACEHOLDER, DEBUG_TAP_COUNT
+## Emits:    guide_requested
+## Handlers wired in scene: _on_auto_mark_toggled, _on_back_pressed, _on_bgm_changed, _on_credits_pressed, _on_glow_toggled, _on_guide_pressed, _on_haptic_toggled, _on_language_pressed, _on_reset_pressed, _on_sfx_changed, _on_stamp_gui_input
+## Subscribes in code (EventBus/Model): orientation_changed, popup
+
 signal guide_requested
 
 @export var PLAYER_ID_PLACEHOLDER := "#NM-8924-VN"

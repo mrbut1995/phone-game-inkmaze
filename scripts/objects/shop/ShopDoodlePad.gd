@@ -12,6 +12,12 @@ extends Control
 ## - Đổi ngòi: xoá nét cũ + vẽ sẵn 1 NÉT MẪU để thấy ngay chất liệu mới.
 ## ============================================================================
 
+## Scene contract
+## Exports:  stamp_try, stamp_using, STROKE_WIDTH, MIN_POINT_DIST, MAX_POINTS, MAX_STROKES, DEFAULT_AREA, draw_area, strokes_layer, pen_tip, badge_eyebrow, badge_name_label, badge_icon, stamp, stamp_label
+## Emits:    pen_changed
+## Handlers wired in scene: _on_draw_input
+## Subscribes in code (EventBus/Model): (none)
+
 signal pen_changed(pen_id: String)
 
 ## Bảng màu cho con dấu THỬ (art trắng dẫn xuất: xoá nét viền, giữ nền trắng)

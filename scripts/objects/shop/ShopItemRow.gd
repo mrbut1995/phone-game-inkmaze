@@ -6,6 +6,12 @@ extends Control
 ##   MUA / MUA THÊM (dụng cụ) · giá VNĐ (gói nạp) · SỬ DỤNG · ĐANG DÙNG ✓
 ## ============================================================================
 
+## Scene contract
+## Exports:  (none)
+## Emits:    action_pressed
+## Handlers wired in scene: _on_action_pressed
+## Subscribes in code (EventBus/Model): (none)
+
 signal action_pressed(item_id: String)
 
 const ICON_BOX := preload("res://assets/images-png/icons/icon_box.png")  # EXCEPTION(R1-keep): hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)

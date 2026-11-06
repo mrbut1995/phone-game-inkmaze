@@ -6,6 +6,12 @@ extends Control
 ## Bấm → mở POPUP Hồ sơ (do MainScene nối `pressed`).
 ## ============================================================================
 
+## Scene contract
+## Exports:  (none)
+## Emits:    pressed
+## Handlers wired in scene: _on_profile_pressed
+## Subscribes in code (EventBus/Model): (none)
+
 @onready var avatar: TextureRect = $Bg/Content/Profile/Frame/Avatar
 @onready var frame: TextureRect = $Bg/Content/Profile/Frame
 @onready var level_label: Label = $Bg/Content/Profile/Level/LevelText

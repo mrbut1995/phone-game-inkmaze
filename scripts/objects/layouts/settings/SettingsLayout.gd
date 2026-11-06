@@ -1,6 +1,12 @@
 class_name SettingsLayout
 extends BaseLayout
 
+## Scene contract
+## Exports:  btn_back, content_root, bgm_slider, bgm_value, sfx_slider, sfx_value, chk_haptic, chk_auto_mark, chk_glow, btn_language, lbl_language, lbl_player_id, btn_guide, btn_rules, btn_credits, btn_reset, lbl_version
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 @export var btn_back: TextureButton = null
 @export var content_root: Control = null
 @export var bgm_slider: HSlider = null

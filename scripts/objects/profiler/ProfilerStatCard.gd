@@ -13,6 +13,12 @@ extends Control
 ## Trạng thái MỜ (`muted`): chế độ chưa từng chơi → làm mờ cả thẻ (modulate).
 ## ============================================================================
 
+## Scene contract
+## Exports:  icon, name_label, value_label, squiggle
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 @export var icon: TextureRect = null
 @export var name_label: Label = null
 @export var value_label: Label = null

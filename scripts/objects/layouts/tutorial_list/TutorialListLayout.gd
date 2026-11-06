@@ -10,6 +10,12 @@ extends BaseLayout
 ## `GameManager.request_tutorial(id, true)`.
 ## ============================================================================
 
+## Scene contract
+## Exports:  btn_back, lbl_title, mode_list, btn_first_time, btn_move, btn_checking_wall, btn_wall_builder, btn_blind_memory, btn_use_tool
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 @export var btn_back: BaseButton = null
 @export var lbl_title: Label = null
 ## Node chứa danh sách (ScrollContainer/VBox) — chỉ để canh/ẩn khi cần

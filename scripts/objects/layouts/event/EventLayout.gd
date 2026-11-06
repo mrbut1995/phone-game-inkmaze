@@ -5,6 +5,12 @@ extends BaseLayout
 ## Dùng chung cho cả Portrait lẫn Landscape (cùng tên node).
 ## ============================================================================
 
+## Scene contract
+## Exports:  btn_back, event_title, event_subtitle, event_timer, progress_label, progress_unit, cta_button, cta_label, reward_container
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 @export var btn_back: BaseButton = null
 @export var event_title: Label = null
 @export var event_subtitle: Label = null

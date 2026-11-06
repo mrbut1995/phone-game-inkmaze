@@ -2,6 +2,12 @@ class_name BoardTutorial
 extends BoardView
 ## Bàn cờ Tutorial — kế thừa BoardView với dữ liệu ô/tường chỉ định tay.
 
+## Scene contract
+## Exports:  callout_0, callout_1
+## Emits:    cell_drag_stepped, cell_step_attempted, wall_toggled
+## Handlers wired in scene: _on_tutorial_anchor_connected
+## Subscribes in code (EventBus/Model): timeout
+
 signal cell_drag_stepped(from_cell: Vector2i, to_cell: Vector2i)
 signal cell_step_attempted(next_cell: Vector2i)
 signal wall_toggled(wall_key: String, active: bool)

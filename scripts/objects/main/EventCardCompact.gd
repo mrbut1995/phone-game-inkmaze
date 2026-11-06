@@ -9,3 +9,9 @@ extends EventCard
 ## (`buttons_v2`, §13.31) nên thẻ chỉ còn NỀN GRADIENT + chữ; cửa sổ cắt art cũng bỏ theo. Trên Main khối thẻ **bị ẩn** — event hiện
 ## thành CỘT NÚT icon bên phải bản đồ (`EventButtonColumn`).
 ## ============================================================================
+
+## Scene contract
+## Exports:  (none)
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)

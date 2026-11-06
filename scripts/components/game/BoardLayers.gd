@@ -19,6 +19,12 @@ extends Control
 
 
 ## Node KHAI SẴN trong scene — board KHÔNG được xoá khi dọn tầng (nét mực · chỉ dẫn · con trỏ · mẫu)
+## Scene contract
+## Exports:  (none)
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 func fixed_nodes() -> Array:
 	return [
 		moving_line(), drag_guide_line(), cursor(),

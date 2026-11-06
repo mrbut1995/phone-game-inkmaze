@@ -10,6 +10,12 @@ extends Control
 ## Snap theo trang khi thả tay (vuốt có quán tính nhẹ).
 ## ============================================================================
 
+## Scene contract
+## Exports:  event_card_scene, daily_card_scene, show_all_events_for_preview, dot_active_color, dot_inactive_color
+## Emits:    event_card_pressed
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): scroll.resized, value_changed, scroll.scroll_ended, card.card_pressed
+
 signal event_card_pressed(event_id: StringName)
 
 ## Khe giữa các thẻ (px)

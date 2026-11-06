@@ -12,6 +12,12 @@ extends Button
 ## ============================================================================
 
 ## Độ lún của nội dung khi nhấn — khớp phần vé bị ấn xuống trong `dungeon_ticket_pressed.png`
+## Scene contract
+## Exports:  icon_tex, lbl_title, lbl_floor, art, content, art_pressed
+## Emits:    (none)
+## Handlers wired in scene: _on_button_down, _on_button_up, _on_pointer_exited
+## Subscribes in code (EventBus/Model): (none)
+
 const PRESS_SHIFT := Vector2(2, 3)
 
 @export var icon_tex: TextureRect = null

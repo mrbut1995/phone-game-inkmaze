@@ -10,6 +10,12 @@ extends GameOverLevelPopup
 ## ============================================================================
 
 ## Nút HỒI SINH của layout gốc — ẩn trong bản thử thách
+## Scene contract
+## Exports:  btn_revive, label_subtitle, revive_desc
+## Emits:    (none)
+## Handlers wired in scene: _on_menu_pressed, _on_retry_pressed, _on_revive_pressed
+## Subscribes in code (EventBus/Model): (none)
+
 @export var btn_revive: BaseButton = null
 ## Popup thử thách giữ layout CŨ (có Subtitle + Banner hồi sinh) nên tự khai 2 node này;
 ## `gameover_level.gd` đã đổi sang layout "Bản đồ đường đi" và gỡ 2 export tương ứng.

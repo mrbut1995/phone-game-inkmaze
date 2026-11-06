@@ -16,6 +16,12 @@ extends BaseScene
 ##     (host `process_mode = DISABLED`) ⇒ đóng là về ĐÚNG ván đang chơi.
 ## ============================================================================
 
+## Scene contract
+## Exports:  tutorial_controller
+## Emits:    (none)
+## Handlers wired in scene: _on_back_pressed, _on_sequence_finished
+## Subscribes in code (EventBus/Model): orientation_changed, loc
+
 const NavHelper := preload("res://scripts/utils/Nav.gd")
 
 @export var tutorial_controller: TutorialController = null

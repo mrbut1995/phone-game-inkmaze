@@ -6,6 +6,12 @@ extends BaseScene
 ## - Hiển thị theme giấy đang dùng để người chơi thấy nhạc đổi theo theme.
 ## ============================================================================
 
+## Scene contract
+## Exports:  (none)
+## Emits:    (none)
+## Handlers wired in scene: _on_back_pressed
+## Subscribes in code (EventBus/Model): themes, music
+
 const UIAnim := preload("res://scripts/utils/UIAnim.gd")
 
 ## Node UI của màn nằm trong BỐ CỤC đang hiển thị (`Portrait` / `Landscape` — 2 hướng dùng

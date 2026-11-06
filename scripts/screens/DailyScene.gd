@@ -17,6 +17,12 @@ extends BaseScene
 ## `nodes/daily/*.tscn`); script chỉ đọc/ghi dữ liệu qua `@export` của layout.
 ## ============================================================================
 
+## Scene contract
+## Exports:  MILESTONE_CHIP, REWARD_TIP, STAR_BAR_FX
+## Emits:    (none)
+## Handlers wired in scene: _on_back_pressed, _on_challenge_pressed, _on_day_selected, _on_play_pressed, _on_reset_timer_timeout
+## Subscribes in code (EventBus/Model): orientation_changed, vp.size_changed, _daily, chip.claim_requested, chip.hold_started, chip.hold_ended, ads
+
 const UIAnim := preload("res://scripts/utils/UIAnim.gd")
 ## Id "phần thưởng" gửi cho AdsManager khi mở khoá ngày bỏ lỡ bằng quảng cáo
 const ADS_REWARD_ID := "daily_unlock"

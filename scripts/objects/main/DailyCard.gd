@@ -16,6 +16,12 @@ extends EventCardBase
 ## ============================================================================
 
 ## Khoá dịch thứ trong tuần (Time.weekday: 0 = Chủ nhật … 6 = Thứ Bảy)
+## Scene contract
+## Exports:  (none)
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 const _WEEKDAY_KEYS := [
 	"STR_WEEKDAY_SUN", "STR_WEEKDAY_MON", "STR_WEEKDAY_TUE", "STR_WEEKDAY_WED",
 	"STR_WEEKDAY_THU", "STR_WEEKDAY_FRI", "STR_WEEKDAY_SAT",

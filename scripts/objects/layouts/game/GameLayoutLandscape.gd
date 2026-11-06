@@ -17,6 +17,12 @@ extends GameSceneLayout
 ## ============================================================================
 
 ## Bề rộng HUD thiết kế (bản ngang 810 theo mockup 16:9)
+## Scene contract
+## Exports:  landscape_action_bar
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 const HUD_DESIGN_WIDTH := 405  # EXCEPTION(R1-keep): hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 
 func is_landscape_layout() -> bool:

@@ -14,6 +14,12 @@ extends BaseLayout
 ## ============================================================================
 
 ## Sao bay xong + thanh Sao đã chạy đủ (màn Daily nghe để bật hiệu ứng chip mốc thưởng)
+## Scene contract
+## Exports:  btn_back, calendar, lbl_star_total, milestones_host, road, week_strip, lbl_road_hint, chip_scene, tag_vertical, month_sheet, sheet_anim, play_card, challenge_card, lbl_reset, coin_chip, star_big, vfx_anim, arrive_anim, fly_host
+## Emits:    star_gain_finished
+## Handlers wired in scene: _on_back_pressed, _on_challenge_pressed, _on_day_selected, _on_play_pressed, _on_sheet_close_pressed, _on_vfx_anim_finished
+## Subscribes in code (EventBus/Model): sort_children
+
 signal star_gain_finished
 
 @export var btn_back: BaseButton = null

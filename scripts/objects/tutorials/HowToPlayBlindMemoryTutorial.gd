@@ -7,6 +7,12 @@ extends BaseInteractivePathTutorial
 ## Kế thừa BaseInteractivePathTutorial (SOLID - OCP/SRP).
 ## ============================================================================
 
+## Scene contract
+## Exports:  lbl_hud_walls, START_POS, FINISH_POS
+## Emits:    (none)
+## Handlers wired in scene: _on_cell_step_attempted
+## Subscribes in code (EventBus/Model): timeout
+
 @export var lbl_hud_walls: Label = null
 
 var _demo_tween: Tween = null

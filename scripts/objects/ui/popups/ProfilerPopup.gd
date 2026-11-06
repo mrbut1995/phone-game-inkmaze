@@ -18,6 +18,12 @@ extends BasePopup
 
 ## Nội dung hồ sơ (profiler_content) — nhận `owner_popup` khi mở.
 ## Binding trong `profiler_popup.tscn` (node `Panel/Content/Profiler`).
+## Scene contract
+## Exports:  content_node
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 @export var content_node: Node = null
 
 

@@ -10,6 +10,12 @@ extends BaseLayout
 ## ============================================================================
 
 ## Logo/tiêu đề game (nhỏ, đầu màn)
+## Scene contract
+## Exports:  logo, profile_card, coin_chip, star_chip, btn_settings, event_header, event_carousel, level_section, dock_shop, dock_ranking, dock_badges, dock_daily, stamp_panel, stamp_label
+## Emits:    profile_pressed
+## Handlers wired in scene: _on_profile_card_pressed
+## Subscribes in code (EventBus/Model): (none)
+
 @export var logo: TextureRect = null
 ## Khối hồ sơ (avatar · cấp · tên · thanh XP) — bấm mở popup Hồ sơ
 @export var profile_card: ProfileCard = null

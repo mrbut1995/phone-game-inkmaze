@@ -19,6 +19,12 @@ extends BasePopup
 ##                 best_floor_week?, best_floor_month?, guided? })
 ## ============================================================================
 
+## Scene contract
+## Exports:  label_floor, label_reason, label_hint, ruler, value_progress, value_walls, value_score, pencils, label_count, btn_menu, btn_retry, fx_tape, fx_shake_a, fx_shake_b, fx_header, fx_ruler_card, fx_stats, fx_pencil_card, fx_buttons, fx_rays, fx_soft, fx_ash
+## Emits:    retry_requested, menu_requested, revive_requested
+## Handlers wired in scene: _on_menu_pressed, _on_retry_pressed, _refresh_pencils
+## Subscribes in code (EventBus/Model): gm
+
 signal retry_requested
 signal menu_requested
 ## ĐÃ BỎ (Hồi sinh nằm ở popup Retry). Giữ khai báo, KHÔNG BAO GIỜ phát, để các

@@ -17,6 +17,12 @@ extends Control
 ## ============================================================================
 
 ## Người chơi bấm MỞ KHÓA (màn Chọn màn gọi `GameManager.unlock_chapter`)
+## Scene contract
+## Exports:  dim, icon, lbl_index, lbl_title, lbl_subtitle, lbl_size, lbl_require, lbl_progress, star_bar, lbl_status, btn_unlock, lbl_unlock, btn_close, sheet_anim, art_icon_locked, art_icon_ready, art_bar_locked, art_bar_ready, color_status_locked, color_status_ready, color_unlock_ready, color_unlock_locked, dim_overscan
+## Emits:    unlock_requested, closed
+## Handlers wired in scene: _on_close_pressed, _on_unlock_pressed
+## Subscribes in code (EventBus/Model): loc
+
 signal unlock_requested(chapter_id: int)
 ## Sheet đã đóng (kể cả bấm nền mờ / nút ✕)
 signal closed

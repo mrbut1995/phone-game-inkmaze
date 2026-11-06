@@ -10,6 +10,12 @@ extends Control
 ## ============================================================================
 
 ## Art nền hàng + node binding: khai `node_paths` + NodePath trong `rank_row.tscn`
+## Scene contract
+## Exports:  row_art, row_you_art, bg, rank_label, flag, name_label, record_label, points_label
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 @export var row_art: Texture2D = null
 @export var row_you_art: Texture2D = null
 @export var bg: TextureRect = null

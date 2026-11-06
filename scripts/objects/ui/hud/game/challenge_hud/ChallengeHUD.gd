@@ -12,6 +12,12 @@ extends LevelHUD
 ## số chính chuyển ĐỎ để cảnh báo người chơi.
 ## ============================================================================
 
+## Scene contract
+## Exports:  head_node
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 const COLOR_WARN := Color(0.85, 0.2, 0.2)  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 
 ## Node binding: khai `node_paths` + `NodePath` trong `challenge_hud.tscn` (2 bản dọc/ngang)

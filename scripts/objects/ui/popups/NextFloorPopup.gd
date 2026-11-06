@@ -20,6 +20,12 @@ extends BasePopup
 ##   rest_requested  -> _emit_home      enter_requested -> _emit_continue
 ## ============================================================================
 
+## Scene contract
+## Exports:  label_floor, ruler, row_move, row_perfect, value_base, value_move, value_perfect, value_total, bonus_card, value_bonus, go_label, fx_anim, fx_tape, fx_header, fx_ruler_card, fx_score_rows, fx_buttons, btn_enter, fx_rays, fx_rays2, fx_rays3, fx_soft, fx_confetti, fx_fireworks
+## Emits:    rest_requested, enter_requested
+## Handlers wired in scene: _on_enter_pressed, _on_rest_pressed
+## Subscribes in code (EventBus/Model): (none)
+
 signal rest_requested
 signal enter_requested
 

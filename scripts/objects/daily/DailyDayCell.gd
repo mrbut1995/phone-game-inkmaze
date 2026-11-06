@@ -13,6 +13,12 @@ extends Control
 ## Toàn bộ art trạng thái lấy từ bảng TEXTURES bên dưới.
 ## ============================================================================
 
+## Scene contract
+## Exports:  day_number, state, stars, weekend, unlocked, hit, bg, selected_ring, number_label, number_big, state_icon, pill, pill_label, today_ribbon, today_label
+## Emits:    day_selected
+## Handlers wired in scene: _on_pressed
+## Subscribes in code (EventBus/Model): (none)
+
 signal day_selected(day_number: int)
 
 enum State {

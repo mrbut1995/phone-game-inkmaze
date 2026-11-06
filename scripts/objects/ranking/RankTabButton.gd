@@ -7,6 +7,12 @@ extends NinePatchButton
 ## Nhãn là Label xoay 90° (khai trong scene) — vẫn dịch bằng `label_key`.
 ## ============================================================================
 
+## Scene contract
+## Exports:  art_active, art_normal, LABEL_ACTIVE_COLOR, LABEL_IDLE_COLOR, WIDTH_NORMAL, WIDTH_ACTIVE, TAB_HEIGHT, SLIDE_TIME, board_id, label_key, label
+## Emits:    tab_pressed
+## Handlers wired in scene: _emit_tab_pressed
+## Subscribes in code (EventBus/Model): (none)
+
 const UIAnim := preload("res://scripts/utils/UIAnim.gd")
 
 signal tab_pressed(board_id: String)

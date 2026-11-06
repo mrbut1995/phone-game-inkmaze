@@ -18,6 +18,12 @@ extends VBoxContainer
 ## 8px hai bên cho thoáng.
 ## ============================================================================
 
+## Scene contract
+## Exports:  tape_bg, tape_label, header_row, header_dash, cards_grid
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 const CARD_SCENE := preload("res://scenes/objects/profiler/stat_card.tscn")
 const CARD_WIDE_SCENE := preload("res://scenes/objects/profiler/stat_card_wide.tscn")
 

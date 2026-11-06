@@ -11,6 +11,12 @@ extends BasePopup
 ## (pending) nên bấm HUỶ là thoát nguyên trạng.
 ## ============================================================================
 
+## Scene contract
+## Exports:  ITEMS_PER_PAGE, SWIPE_DRAG_THRESHOLD, SWIPE_PAGE_THRESHOLD, COLOR_TAB_ON, COLOR_TAB_OFF, COLOR_HINT, COLOR_WARN, preview_avatar, preview_frame, preview_disc, name_edit, name_hint, item_grid, page_bar, tab_avatar, tab_avatar_bg_off, tab_avatar_bg_on, tab_avatar_text, tab_avatar_icon, tab_frame, tab_frame_bg_off, tab_frame_bg_on, tab_frame_text, tab_frame_icon, btn_prev, btn_next, dots_box, btn_close, btn_cancel, btn_save
+## Emits:    profile_saved
+## Handlers wired in scene: _on_cancel_pressed, _on_dim_gui_input, _on_name_changed, _on_page_next_pressed, _on_page_prev_pressed, _on_save_pressed, _on_scroll_gui_input, _on_tab_avatar_pressed, _on_tab_frame_pressed
+## Subscribes in code (EventBus/Model): item.pressed, dot.pressed
+
 const ITEM_SCENE := preload("res://scenes/objects/ui/popups/edit_profile_item.tscn")
 const PROFILE_DOT_SCENE := preload("res://scenes/objects/ui/popups/profile_dot.tscn")
 

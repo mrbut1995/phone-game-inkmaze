@@ -9,6 +9,12 @@ extends Control
 ## Cửa hàng, nơi nút `+` chỉ chuyển sang tab NẠP XU.
 ## ============================================================================
 
+## Scene contract
+## Exports:  navigate_on_plus, large, large_height, large_width_scale, large_icon_width, large_value_font, large_plus_size, large_plus_font
+## Emits:    plus_pressed
+## Handlers wired in scene: _on_plus_pressed
+## Subscribes in code (EventBus/Model): wallet
+
 signal plus_pressed
 
 @export var navigate_on_plus := true

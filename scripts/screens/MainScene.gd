@@ -11,6 +11,12 @@ extends BaseScene
 ## Node UI nằm trong bố cục đang hiển thị (`Portrait` / `Landscape`) và đã BIND SẴN
 ## bằng `@export` trong `scenes/layout/<hướng>/main.tscn` ⇒ code đọc qua `layout.<tên>`.
 ## ============================================================================
+## Scene contract
+## Exports:  (none)
+## Emits:    (none)
+## Handlers wired in scene: _on_profile_pressed
+## Subscribes in code (EventBus/Model): orientation_changed, m, _event_buttons.event_pressed, em.events_changed
+
 const UIAnim := preload("res://scripts/utils/UIAnim.gd")
 const EventButtonColumnScene := preload("res://scenes/objects/main/event_button_column.tscn")
 ## Dock kiểu "J": art khai trong `.tscn` (panel + `dock_button.tscn`); ở đây chỉ gọi phần co giãn runtime

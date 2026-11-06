@@ -10,6 +10,12 @@ extends Control
 ## script chỉ `@export`, KHÔNG hard-code; binding node khai bằng `node_paths`.
 ## ============================================================================
 
+## Scene contract
+## Exports:  grid_pos, NORMAL_MODULATE, FOCUS_MODULATE, BOMB_TEXT_OUTLINE_SIZE, BOMB_TEXT_OUTLINE_COLOR, texture_normal, texture_start, texture_finish, WARN_TEXT_RATIO, FADED_TEXT_RATIO, VISITED_TEXT_RATIO, button, label, bomb, warn, warn_label, faded, faded_badge, faded_label, visited, visited_label, satisfied, lock, key_icon, teleport_glow, anim, entrance_timer, win_timer
+## Emits:    (none)
+## Handlers wired in scene: _play_entrance_now, _play_win_now
+## Subscribes in code (EventBus/Model): timeout
+
 @export var grid_pos: Vector2i = Vector2i.ZERO
 
 @export var NORMAL_MODULATE := Color(1.0, 1.0, 1.0, 1.0)

@@ -16,6 +16,12 @@ extends Node2D
 ## sang nút kế (đầu vệt có chấm sáng như đầu bút).
 ## ============================================================================
 
+## Scene contract
+## Exports:  color_complete, color_complete_dots, color_upcoming, color_skipped, color_locked, width_ribbon, width_locked, dots_width, dots_length, dots_gap, sample_step, path_node
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 enum PathState {
 	LOCKED,   ## Cả 2 node chưa unlock
 	UPCOMING, ## Node trước đã mở, node sau chưa chơi

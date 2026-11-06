@@ -9,6 +9,12 @@ extends Control
 ## Màu món hàng (data.color) tô cho: lề trái · vòng icon · icon · nét mực · nút.
 ## ============================================================================
 
+## Scene contract
+## Exports:  (none)
+## Emits:    action_pressed, preview_pressed
+## Handlers wired in scene: _on_action_pressed
+## Subscribes in code (EventBus/Model): (none)
+
 signal action_pressed(item_id: String)
 ## Chạm vào thân thẻ (ngoài nút) = chọn ngòi bút này để XEM THỬ ở Bàn nháp thử bút
 signal preview_pressed(item_id: String)

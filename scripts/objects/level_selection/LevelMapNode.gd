@@ -21,6 +21,12 @@ extends Node2D
 ## hàng sao + ổ khoá + vòng halo được TRÔI THEO cùng độ lệch — nội dung dính vào nút.
 ## ============================================================================
 
+## Scene contract
+## Exports:  star_highlight, star_empty, color_number_current, color_number_normal, color_number_outline, tex_current, tex_bonus_normal, tex_bonus_pressed, tex_bonus_current, tex_bonus_disabled, button, halo, label, stars_box, star1, star2, star3, lock_icon, lock_number, stars_pill, bonus_ribbon, bonus_label, anim
+## Emits:    pressed, star_stamped, complete_finished, unlock_finished
+## Handlers wired in scene: _on_anim_finished, _on_button_hover_changed, _on_button_press_changed, _on_button_pressed
+## Subscribes in code (EventBus/Model): (none)
+
 signal pressed(level_id: int)
 ## Đóng dấu xong ngôi sao thứ `index` (0..2) — nơi nghe có thể phát SFX
 signal star_stamped(index: int)

@@ -18,6 +18,12 @@ extends NinePatchButton
 ## ============================================================================
 
 ## Art 2 trạng thái tab — gán trong `tab_button*.tscn` (ExtResource), KHÔNG hard-code
+## Scene contract
+## Exports:  art_active, art_idle, LABEL_ACTIVE_COLOR, LABEL_IDLE_COLOR, j_style, j_side, J_LABEL_COLOR, J_LABEL_ACTIVE_COLOR, category, label, tab_icon
+## Emits:    tab_pressed
+## Handlers wired in scene: _emit_tab_pressed
+## Subscribes in code (EventBus/Model): (none)
+
 @export var art_active: Texture2D = null
 @export var art_idle: Texture2D = null
 const UIAnim := preload("res://scripts/utils/UIAnim.gd")

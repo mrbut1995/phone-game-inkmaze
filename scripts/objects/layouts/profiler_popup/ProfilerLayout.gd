@@ -16,6 +16,12 @@ extends BaseLayout
 ##   · info_list  : nơi gắn các nhóm số liệu (nodes/profiler/stat_group.tscn)
 ## ============================================================================
 
+## Scene contract
+## Exports:  btn_close, lbl_title, level_chip, hero, info_scroll, info_list, hero_exp_remain, hero_join, stamp, hero_btn_avatar, hero_avatar, hero_frame, hero_name, hero_tier_text, hero_exp_value, hero_uid, hero_track, hero_fill
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 @export var btn_close: BaseButton = null
 @export var lbl_title: Label = null
 @export var level_chip: Control = null

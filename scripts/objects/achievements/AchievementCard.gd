@@ -10,6 +10,12 @@ extends Control
 ## Nhận dữ liệu đã tính sẵn từ AchievementManager qua `setup(entry)`.
 ## ============================================================================
 
+## Scene contract
+## Exports:  bg_claimed, bg_claimable, bg_progress, bg_locked, icon_lock, COLOR_CLAIMED, COLOR_CLAIMABLE, COLOR_PROGRESS, COLOR_LOCKED, COLOR_DESC, COLOR_DESC_LOCKED, bg, icon_ring, icon, title_label, desc_label, bar, bar_track, bar_fill, progress_label, stamp, stamp_state, stamp_reward, claim_btn, claim_label, chip, chip_label
+## Emits:    claim_requested
+## Handlers wired in scene: _on_claim_pressed
+## Subscribes in code (EventBus/Model): (none)
+
 signal claim_requested(id: String)
 
 ## Nền 4 trạng thái + ổ khoá gán trong `card.tscn` (ExtResource) — KHÔNG hard-code

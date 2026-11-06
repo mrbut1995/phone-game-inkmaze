@@ -6,6 +6,12 @@ extends Control
 ## Chỉ theo dõi THÁNG HIỆN TẠI (dữ liệu Daily theo tháng); ô ngoài tháng chỉ hiện số mờ.
 ## ============================================================================
 
+## Scene contract
+## Exports:  days_host, btn_month
+## Emits:    day_selected, month_requested
+## Handlers wired in scene: _on_month_pressed
+## Subscribes in code (EventBus/Model): cell.day_selected
+
 signal day_selected(day: int)
 ## Bấm nút lịch: màn Daily mở bảng lịch tháng
 signal month_requested

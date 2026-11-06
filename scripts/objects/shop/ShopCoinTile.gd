@@ -6,6 +6,12 @@ extends Control
 ##   · tên gói · mô tả · dòng ưu đãi · nút giá VNĐ (STUB IAP)
 ## ============================================================================
 
+## Scene contract
+## Exports:  (none)
+## Emits:    action_pressed
+## Handlers wired in scene: _on_action_pressed
+## Subscribes in code (EventBus/Model): (none)
+
 signal action_pressed(item_id: String)
 
 const CARD_ART := preload("res://assets/images-png/shop/card_coin.png")  # EXCEPTION(R1-keep): hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)

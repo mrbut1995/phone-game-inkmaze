@@ -10,5 +10,11 @@ extends Control
 
 
 ## Cột/lưới chứa các thẻ danh hiệu của trang (GridContainer: bản dọc 1 cột, bản NGANG nhiều cột)
+## Scene contract
+## Exports:  (none)
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 func column() -> Container:
 	return $Column

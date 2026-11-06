@@ -7,6 +7,12 @@ extends Control
 ## - Ngày hôm nay / ngày đã chơi lấy dữ liệu từ DailyManager
 ## ============================================================================
 
+## Scene contract
+## Exports:  COLS, ROWS, month_label, btn_prev, btn_next, dow_row, grid
+## Emits:    day_selected
+## Handlers wired in scene: _on_month_switch_pressed
+## Subscribes in code (EventBus/Model): cell.day_selected
+
 signal day_selected(day: int)
 
 @export var COLS := 7

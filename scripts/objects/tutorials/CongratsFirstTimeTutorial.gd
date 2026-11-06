@@ -6,6 +6,12 @@ extends BaseTutorial
 ##   · VỀ MÀN HÌNH CHÍNH  → về Main
 ## Màn này dùng 2 nút riêng ở đáy nên ẩn thanh điều hướng mặc định (nút Tiếp tục · chấm bước).
 
+## Scene contract
+## Exports:  stamp, btn_continue, btn_main, fx_anim, confetti, stat_cards, lbl_stat_a, lbl_stat_b
+## Emits:    (none)
+## Handlers wired in scene: _on_continue_pressed, _on_main_pressed
+## Subscribes in code (EventBus/Model): (none)
+
 const TITLE_KEY := "STR_TUT_CONGRATS_TITLE"
 
 ## Con dấu "HOÀN THÀNH" trang trí giữa màn + 2 nút lựa chọn (bind trong .tscn)

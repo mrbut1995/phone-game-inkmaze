@@ -4,6 +4,12 @@ extends BaseHUD
 ## Đây là chế độ DUY NHẤT có bộ đếm bước còn lại (xem Design.md — quy ước "Số bước").
 
 ## Số bước còn lại (`Content/ModeInformation/Control/Step/Value` — bản NGANG gom trong `Control`)
+## Scene contract
+## Exports:  step_value_node, floor_value_node
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 @export var step_value_node : Label
 ## Số tầng hiện tại (`Content/ModeInformation/Control/Floor/Value`)
 @export var floor_value_node : Label

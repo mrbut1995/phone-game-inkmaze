@@ -13,6 +13,12 @@ extends BaseScene
 ## ============================================================================
 
 ## Art của các hàng/mục do code dựng — gán trong `scenes/debug.tscn` (ExtResource)
+## Scene contract
+## Exports:  ROW_NORMAL, ROW_PRESSED, ROW_FOCUS, ROW_DANGER_N, ROW_DANGER_P, ROW_DANGER_F, CHIP, DIVIDER, CHECK_ON, CHECK_OFF, CHECK_PRESS, CHECK_FOCUS, FALLBACK_TOTAL_LEVELS, DIFFICULTIES, TEST_FLOORS, STATS_REFRESH_SEC
+## Emits:    (none)
+## Handlers wired in scene: _on_back_pressed
+## Subscribes in code (EventBus/Model): amount.value_changed, button.pressed, check.toggled, btn.pressed
+
 @export var ROW_NORMAL: Texture2D = null
 @export var ROW_PRESSED: Texture2D = null
 @export var ROW_FOCUS: Texture2D = null

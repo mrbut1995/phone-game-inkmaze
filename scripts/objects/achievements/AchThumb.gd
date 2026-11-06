@@ -6,6 +6,12 @@ extends TextureButton
 ## Thumb đang xem = to hơn + có vầng sáng (Halo). Bấm ⇒ phát `pressed` (màn tự nhảy trang).
 ## ============================================================================
 
+## Scene contract
+## Exports:  icon_lock, halo, ring, face, icon, SIZE_IDLE, SIZE_SELECTED, COLOR_CLAIMED, COLOR_CLAIMABLE, COLOR_PROGRESS, COLOR_LOCKED
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 @export var icon_lock: Texture2D = null
 @export var halo: Control = null
 @export var ring: Control = null

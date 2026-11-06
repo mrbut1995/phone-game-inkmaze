@@ -11,6 +11,12 @@ extends Control
 ## Script chỉ chọn animation + đổ dữ liệu (hiệu ứng nằm trong scene).
 ## ============================================================================
 
+## Scene contract
+## Exports:  lbl_title, btn_prev, btn_next, anim
+## Emits:    prev_requested, next_requested
+## Handlers wired in scene: _on_next_pressed, _on_prev_pressed
+## Subscribes in code (EventBus/Model): (none)
+
 signal prev_requested
 signal next_requested
 

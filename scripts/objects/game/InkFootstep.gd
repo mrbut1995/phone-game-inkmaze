@@ -10,6 +10,12 @@ extends Control
 ## MỌI tham số (node · cỡ · alpha) chỉnh TRONG `ink_footstep.tscn` — script chỉ `@export`.
 ## ============================================================================
 
+## Scene contract
+## Exports:  SIZE, ALPHA, mark
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 @export var SIZE := Vector2(18, 18)
 @export var ALPHA := 0.45
 

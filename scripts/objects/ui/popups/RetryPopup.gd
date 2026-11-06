@@ -17,6 +17,12 @@ extends BasePopup
 ## Back / đóng popup mà chưa chọn = Bỏ qua (xem _on_close) ⇒ cũng mất 1 lượt.
 ## ============================================================================
 
+## Scene contract
+## Exports:  DEFAULT_GOLD_COST, label_title, label_subtitle, btn_ad, btn_gold, btn_skip, label_gold_cost, skip_cost, pencils, label_warning
+## Emits:    revive_requested, skip_requested
+## Handlers wired in scene: _on_ad_pressed, _on_gold_pressed, _on_skip_pressed, _refresh_pencils
+## Subscribes in code (EventBus/Model): gm
+
 signal revive_requested(method: String)
 signal skip_requested
 

@@ -1,6 +1,12 @@
 class_name AchievementLayout
 extends BaseLayout
 
+## Scene contract
+## Exports:  btn_back, overview_bar, overview_fill, overview_pct, overview_summary, tabs_box, card_area, scroll, pages_host, dots_box, empty_label, stamp_label, card_scene, cards_per_page, page_width, peek_tilt, thumbs_box, thumb_scene, thumb_count
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 @export var btn_back: BaseButton = null
 @export var overview_bar: Control = null
 ## Bản DỌC dùng TextureRect, bản NGANG dùng NinePatchRect ⇒ khai kiểu chung `Control`

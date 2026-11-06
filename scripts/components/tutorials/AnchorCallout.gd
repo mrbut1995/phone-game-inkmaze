@@ -3,6 +3,12 @@ extends Control
 ## Vòng đánh số tại neo trên bàn tutorial — "nở" ra rồi phập phồng khi hiện.
 
 ## Node binding: khai `node_paths` + NodePath trong `anchor_callout.tscn`
+## Scene contract
+## Exports:  num, anim_player
+## Emits:    (none)
+## Handlers wired in scene: _on_animation_finished
+## Subscribes in code (EventBus/Model): (none)
+
 @export var num: Label = null
 @export var anim_player: AnimationPlayer = null
 

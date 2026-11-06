@@ -8,6 +8,12 @@ extends BaseTutorial
 ## Kế thừa BaseTutorial (SOLID - SRP & DIP).
 ## ============================================================================
 
+## Scene contract
+## Exports:  board_tutorial, lbl_hud_counter, btn_submit, TARGET_COUNT
+## Emits:    (none)
+## Handlers wired in scene: _on_submit_pressed, _on_wall_toggled
+## Subscribes in code (EventBus/Model): (none)
+
 @export var board_tutorial: BoardTutorial = null
 @export var lbl_hud_counter: Label = null
 @export var btn_submit: Button = null

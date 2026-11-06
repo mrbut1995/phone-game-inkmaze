@@ -11,3 +11,9 @@ extends DailyCard
 ## m?i c? th? (d?c 189 px ? ngang 340 px) m? kh?ng m?o. Nh?n Th?ng/Ng?y/Th? ??t theo
 ## anchor ch?ng l?n l?; d?i d??i c?ng l? ti?u ?? 2 d?ng + n?t CTA.
 ## ============================================================================
+
+## Scene contract
+## Exports:  (none)
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)

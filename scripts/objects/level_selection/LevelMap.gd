@@ -24,6 +24,12 @@ extends Node2D
 ## ============================================================================
 
 ## Cạnh art nút màn ở cỡ 1.0 (px)
+## Scene contract
+## Exports:  node_scene, path_scene, gate_scene, tracks, items, marker, goal, anim_enabled
+## Emits:    level_selected, gate_pressed, scrolled
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): area.resized, viewport.size_changed, node.pressed, gate.pressed
+
 const ART_SIZE := 112.0  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 
 signal level_selected(level_id: int)

@@ -7,3 +7,9 @@ extends Control
 ## Là SCENE riêng (không dựng bằng code) — thuộc tính chỉnh được ngay trong scene:
 ##   · full-rect (bám kín màn hình) · mouse_filter = IGNORE (không chặn input).
 ## ============================================================================
+
+## Scene contract
+## Exports:  (none)
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)

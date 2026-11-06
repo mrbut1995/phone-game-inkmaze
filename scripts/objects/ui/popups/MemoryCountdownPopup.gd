@@ -7,6 +7,12 @@ extends BasePopup
 ## - Không đóng bằng nút Back (close_on_back = false trong scene).
 ## ============================================================================
 
+## Scene contract
+## Exports:  number_label, title_label, fx_anim
+## Emits:    finished
+## Handlers wired in scene: _start_countdown
+## Subscribes in code (EventBus/Model): (none)
+
 signal finished
 
 @export_group("Nhịp đếm")

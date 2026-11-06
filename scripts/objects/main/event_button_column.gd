@@ -9,6 +9,12 @@ extends VBoxContainer
 ## (nguồn SVG: assets/images/event_btn/ — đổi theme = sửa SVG hoặc gen/gen_event_icons.py).
 ## ============================================================================
 
+## Scene contract
+## Exports:  gutter, left_inset
+## Emits:    event_pressed
+## Handlers wired in scene: _refresh_times
+## Subscribes in code (EventBus/Model): button.pressed
+
 signal event_pressed(event_id: StringName)
 
 ## Cấu trúc tĩnh (khung, offset, separation, Timer, stylebox "Còn N ngày") nằm trong

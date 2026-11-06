@@ -13,6 +13,12 @@ extends Button
 ## Art dùng lại của chest_chip.gd (assets/images-png/daily + level_selector).
 ## ============================================================================
 
+## Scene contract
+## Exports:  ring, chest, badge_done, badge_ready, glow, lbl_stars, anim
+## Emits:    claim_requested
+## Handlers wired in scene: _on_pressed
+## Subscribes in code (EventBus/Model): (none)
+
 signal claim_requested(index: int)
 
 const TEX_DIR := "res://assets/images-png/daily/"  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)

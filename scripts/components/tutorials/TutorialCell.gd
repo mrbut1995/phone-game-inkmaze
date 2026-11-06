@@ -9,6 +9,12 @@ extends Control
 ## ============================================================================
 
 ## Texture 4 trạng thái ô — gán trong `tutorial_cell.tscn` (ExtResource), KHÔNG hard-code
+## Scene contract
+## Exports:  texture_normal, texture_start, texture_finish, texture_finish_closed, grid_pos, cell_text, text_color, text_size, sprite, label, anim, entrance_timer, win_timer
+## Emits:    (none)
+## Handlers wired in scene: _play_entrance_now, _play_win_now
+## Subscribes in code (EventBus/Model): timeout
+
 @export var texture_normal: Texture2D = null
 @export var texture_start: Texture2D = null
 @export var texture_finish: Texture2D = null

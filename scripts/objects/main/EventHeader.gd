@@ -6,6 +6,12 @@ extends Control
 ## có thể ẩn — xem §B5).
 ## ============================================================================
 
+## Scene contract
+## Exports:  (none)
+## Emits:    view_all_pressed
+## Handlers wired in scene: _on_view_all_pressed
+## Subscribes in code (EventBus/Model): (none)
+
 signal view_all_pressed
 
 ## Bề rộng tối thiểu của cụm chấm phân trang khi dời cạnh badge số event.

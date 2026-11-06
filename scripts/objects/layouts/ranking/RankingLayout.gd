@@ -1,6 +1,12 @@
 class_name RankingLayout
 extends BaseLayout
 
+## Scene contract
+## Exports:  btn_back, tabs_box, podium, scroll, rows_box, my_rank_bar, content
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 @export var btn_back: BaseButton = null
 ## Cột tab gáy sổ dọc (VBox) — 3 RankTabButton khai sẵn trong scene
 @export var tabs_box: BoxContainer = null

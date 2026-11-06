@@ -18,6 +18,12 @@ extends BasePopup
 ## Dữ liệu: open({ progress, wall_hits, time, stars, missions:[{title,done}], guided, reason })
 ## ============================================================================
 
+## Scene contract
+## Exports:  COUNT, star_full, star_empty, label_title, path, label_percent, label_walked, label_stats, label_count, pencils, btn_menu, btn_retry, row1_star, row1_name, row2_star, row2_name, row3_star, row3_name, fx_tape, fx_shake_a, fx_shake_b, fx_path_card, fx_missions, fx_pencil_card, fx_buttons, fx_rays, fx_soft, fx_ash
+## Emits:    retry_requested, menu_requested, revive_requested
+## Handlers wired in scene: _on_menu_pressed, _on_retry_pressed, _refresh_pencils
+## Subscribes in code (EventBus/Model): gm
+
 signal retry_requested
 signal menu_requested
 ## ĐÃ BỎ (Hồi sinh nằm ở popup Retry). Giữ khai báo, KHÔNG BAO GIỜ phát, để các

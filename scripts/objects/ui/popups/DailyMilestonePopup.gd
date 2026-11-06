@@ -20,6 +20,12 @@ extends BasePopup
 ## ============================================================================
 
 ## Node binding: khai `node_paths` + NodePath trong `daily_milestone.tscn`
+## Scene contract
+## Exports:  title_label, sub_label, reward_label, chest_sprite, btn_ok, lbl_ok, fx_anim
+## Emits:    (none)
+## Handlers wired in scene: _on_ok_pressed
+## Subscribes in code (EventBus/Model): (none)
+
 @export var title_label: Label = null
 @export var sub_label: Label = null
 @export var reward_label: Label = null

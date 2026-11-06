@@ -8,6 +8,12 @@ extends Button
 ## ============================================================================
 
 ## Cờ dự phòng khi thiếu art — gán trong `language_row.tscn` (ExtResource)
+## Scene contract
+## Exports:  fallback_flag, flag, name_label, sub_label, check
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 @export var fallback_flag: Texture2D = null
 
 ## Node binding: khai `node_paths` + `NodePath` trong `language_row.tscn`

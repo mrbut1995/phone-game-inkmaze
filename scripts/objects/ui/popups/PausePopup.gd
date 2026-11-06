@@ -9,6 +9,12 @@ extends BasePopup
 ##   4. Nút TIẾP TỤC (lớn) + 2 nút icon: Chơi lại · Về menu
 ## ============================================================================
 
+## Scene contract
+## Exports:  slider_music, slider_sfx, label_music, label_sfx, check_haptic, check_safe, label_floor_caption, value_floor, value_steps, btn_restart, btn_menu
+## Emits:    resume_requested, restart_requested, menu_requested
+## Handlers wired in scene: _on_haptic_toggled, _on_menu_pressed, _on_music_value_changed, _on_restart_pressed, _on_resume_pressed, _on_safe_toggled, _on_sfx_value_changed
+## Subscribes in code (EventBus/Model): (none)
+
 signal resume_requested
 signal restart_requested
 signal menu_requested

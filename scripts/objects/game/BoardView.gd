@@ -8,6 +8,12 @@ extends Control
 ##   - Các ô liền sát nhau 100% không có khe hở.
 ## ============================================================================
 
+## Scene contract
+## Exports:  FALLBACK_CELL_SIZE, FALLBACK_ANCHOR_SIZE, FALLBACK_WALL_WIDTH, FALLBACK_CURSOR_SIZE, FALLBACK_MOVING_LINE_WIDTH, FALLBACK_FONT_SIZE, BOARD_PADDING, MIN_FIT_SCALE, MIN_WALL_WIDTH, MIN_ANCHOR_SIZE, MIN_CURSOR_SIZE, MIN_FONT_SIZE, WRITING_MODE, LEAN_PER_SPEED, LEAN_MAX, PULSE_CELLS_WHILE_WRITING, FOOTSTEP_ON_STEP, HAPTIC_ON_STEP, HAPTIC_MS, HIDE_HISTORY_UNDER_PATH, ANCHOR_AXIS_SNAP, ANCHOR_MIN_TOUCH, TAP_EDGE_TO_MARK, ANCHOR_SHOW_CANDIDATES, PAPER_INSET, PAPER_AVOID_MARGIN, PAPER_MARGIN_GAP, layers, CURSOR_TIP_UV
+## Emits:    drag_updated, anchor_tapped, anchor_connected, no_moves_retry_pressed, teleport_chosen, teleport_cancelled
+## Handlers wired in scene: _on_no_moves_retry_btn_pressed, _update_layout_positions
+## Subscribes in code (EventBus/Model): themes
+
 signal drag_updated(pos: Vector2i)
 signal anchor_tapped(anchor_id: int)
 signal anchor_connected(corner_a: Vector2i, corner_b: Vector2i)

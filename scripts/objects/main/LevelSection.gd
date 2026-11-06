@@ -16,6 +16,12 @@ extends Control
 ## ============================================================================
 
 ## Kéo bản đồ ⇒ Main chuyển cho nền giấy parallax trượt theo
+## Scene contract
+## Exports:  map, chapter_chip, chest, dungeon_pill, lock_sheet, continuous
+## Emits:    scrolled, chest_claimed
+## Handlers wired in scene: _on_chest_claim_requested, _on_gate_pressed, _on_level_selected, _on_map_scrolled
+## Subscribes in code (EventBus/Model): visibility_changed, loc, save, lock_sheet.unlock_requested
+
 signal scrolled(delta_y: float)
 ## Vừa nhận rương ⇒ Main cập nhật ví Xu / tổng Sao
 signal chest_claimed

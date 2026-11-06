@@ -14,6 +14,12 @@ extends BasePopup
 ## Dữ liệu: open({ max_lives })
 ## ============================================================================
 
+## Scene contract
+## Exports:  label_title, label_subtitle, pencils, btn_exit, btn_shop
+## Emits:    exit_requested, shop_requested
+## Handlers wired in scene: _on_exit_pressed, _on_shop_pressed, _refresh
+## Subscribes in code (EventBus/Model): gm
+
 signal exit_requested
 signal shop_requested
 

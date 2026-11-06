@@ -7,6 +7,12 @@ extends BaseScene
 ## - Chuyển cảnh sang màn hình chính (Main Screen) bằng âm thanh lật trang sổ tay.
 ## ============================================================================
 
+## Scene contract
+## Exports:  (none)
+## Emits:    (none)
+## Handlers wired in scene: _on_exit_animation_finished, _on_start_pressed
+## Subscribes in code (EventBus/Model): layout.anim_player.animation_finished
+
 const UIAnim := preload("res://scripts/utils/UIAnim.gd")
 const SCENE_MAIN := "res://scenes/screens/main.tscn"
 

@@ -14,6 +14,12 @@ extends BaseScene
 ## Bài ĐÃ XEM = nút ACTIVE · bài CHƯA XEM = nút KHOÁ (mờ, không bấm được) — `_refresh_list_state`.
 ## ============================================================================
 
+## Scene contract
+## Exports:  (none)
+## Emits:    (none)
+## Handlers wired in scene: _on_back_pressed, _on_select_tutorial
+## Subscribes in code (EventBus/Model): orientation_changed, loc
+
 const NavHelper := preload("res://scripts/utils/Nav.gd")
 
 var layout: TutorialListLayout = null

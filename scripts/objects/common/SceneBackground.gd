@@ -27,6 +27,12 @@ extends Control
 ## Quãng cuộn TỐI ĐA của MÀN HÌNH (px) mà nền còn trượt theo. Lớp nhân thêm `scroll_scale`
 ## của chính nó ⇒ quãng trượt thật của lớp = `parallax_range × scroll_scale` (đệm quanh
 ## canvas cũng lấy đúng số này nên không bao giờ hở mép).
+## Scene contract
+## Exports:  paper_design_width, paper_ref_width, paper_patch_left, paper_patch_right, paper_margin_x, hole_density, layer_far, layer_mid, layer_near, paper_art, holes_art, doodles_art
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 @export_range(0.0, 3000.0, 10.0) var parallax_range := 1400.0
 ## Đệm thêm quanh canvas để lớp trượt không hở mép
 @export_range(0.0, 300.0, 1.0) var edge_pad := 60.0

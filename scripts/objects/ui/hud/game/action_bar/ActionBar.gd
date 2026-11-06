@@ -19,6 +19,12 @@ extends Control
 ## chế độ tự bày nút theo bố cục của hướng màn hình tương ứng.
 ## ============================================================================
 
+## Scene contract
+## Exports:  (none)
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 var _landscape := false
 
 

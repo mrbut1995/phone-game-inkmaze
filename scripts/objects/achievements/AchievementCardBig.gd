@@ -9,6 +9,12 @@ extends AchievementCard
 ## Hai khoá trên do AchievementScene nhét thêm vào entry; thiếu khoá ⇒ phần đó tự ẩn.
 ## ============================================================================
 
+## Scene contract
+## Exports:  cat_chip, cat_label, index_sticker, index_label
+## Emits:    (none)
+## Handlers wired in scene: _on_claim_pressed
+## Subscribes in code (EventBus/Model): p.finished
+
 const COIN_TEX := preload("res://assets/images-png/icons/icon_coin.png")  # EXCEPTION(R1-keep): hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 
 @export var cat_chip: Control = null

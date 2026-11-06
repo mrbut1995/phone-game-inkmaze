@@ -5,6 +5,12 @@ extends Control
 ## (mockup/shopping_coin.svg): nhãn đỏ · tiêu đề lớn · mô tả · nút giá VNĐ đỏ.
 ## ============================================================================
 
+## Scene contract
+## Exports:  (none)
+## Emits:    action_pressed
+## Handlers wired in scene: _on_action_pressed
+## Subscribes in code (EventBus/Model): (none)
+
 signal action_pressed(item_id: String)
 
 const BTN := preload("res://assets/images-png/shop/btn_noads.png")  # EXCEPTION(R1-keep): màu/art hiệu ứng runtime — không thuộc theme tĩnh

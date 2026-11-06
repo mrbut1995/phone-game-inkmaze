@@ -18,6 +18,12 @@ extends CanvasLayer
 ##       └── FadeRect        (lớp mờ dần)
 ## ============================================================================
 
+## Scene contract
+## Exports:  color_ink, transition_root, blocker, paper_page, page_bg, page_shadow_left, page_shadow_right, watermark, ink_circle_drawer, fade_rect
+## Emits:    transition_started, scene_swapped, transition_finished
+## Handlers wired in scene: _on_ink_draw
+## Subscribes in code (EventBus/Model): (none)
+
 signal transition_started(style: String)
 signal scene_swapped
 signal transition_finished(style: String)

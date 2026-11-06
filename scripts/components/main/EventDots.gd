@@ -7,6 +7,12 @@ extends Control
 ## còn ActiveTemplate giữ cỡ và StyleBox của chấm đang chọn.
 ## ============================================================================
 
+## Scene contract
+## Exports:  active_color, inactive_color, dot_scene
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 @export var active_color: Color = Color("#256C96")
 @export var inactive_color: Color = Color("#D8E2E8")
 @export var dot_scene: PackedScene

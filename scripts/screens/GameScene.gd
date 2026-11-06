@@ -4,6 +4,12 @@ extends BaseScene
 ## View Controller: Quản lý Scene chính của Game Screen (scenes/game.tscn).
 ## Khởi tạo và liên kết các Controller theo chuẩn MVC & Component.
 ## ============================================================================
+## Scene contract
+## Exports:  game_controller, grid_controller, anchor_controller, floor_controller, timer_controller, ui_controller, tool_controller, undo_controller, hint_controller, game_mode_controller, mission_controller
+## Emits:    (none)
+## Handlers wired in scene: _on_pause_pressed
+## Subscribes in code (EventBus/Model): source, orientation_changed, resized, restart_btn.pressed, skip_btn.pressed, submit_btn.pressed, teleport_btn.pressed, hint_btn.pressed, replay_btn.pressed
+
 const UIAnim := preload("res://scripts/utils/UIAnim.gd")
 
 ## Bố cục đang hiển thị (Portrait / Landscape). Node UI của màn chơi (nút thanh trạng thái ·

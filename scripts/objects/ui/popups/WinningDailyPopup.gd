@@ -24,6 +24,12 @@ extends BasePopup
 ## Mốc rương + ngày đã hoàn thành đọc thẳng từ DailyManager.
 ## ============================================================================
 
+## Scene contract
+## Exports:  star_full, star_empty, style_cell_on, style_cell_off, label_title, days_row, hero1, hero2, hero3, month_remain, month_bar, day_value, day_stars_row, value_time, value_steps, value_walls, label_daily, fx_tape, fx_week, fx_month, fx_day, fx_stats, fx_buttons, chest, fx_rays, fx_rays2, fx_rays3, fx_soft, fx_confetti, fx_fireworks
+## Emits:    replay_requested, daily_requested
+## Handlers wired in scene: _on_daily_pressed, _on_replay_pressed
+## Subscribes in code (EventBus/Model): (none)
+
 signal replay_requested
 signal daily_requested
 

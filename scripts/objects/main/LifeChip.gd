@@ -8,6 +8,12 @@ extends Control
 ## `navigate_on_plus = false` dành cho màn Cửa hàng (đang ở Shop thì không mở lại Shop).
 ## ============================================================================
 
+## Scene contract
+## Exports:  navigate_on_plus, show_max, hide_plus_when_full, large, large_height, large_width_scale, large_icon_width, large_value_font, large_plus_size, large_plus_font
+## Emits:    plus_pressed
+## Handlers wired in scene: _on_plus_pressed
+## Subscribes in code (EventBus/Model): game_manager
+
 signal plus_pressed
 
 @export var navigate_on_plus := true

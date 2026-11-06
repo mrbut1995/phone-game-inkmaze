@@ -14,6 +14,12 @@ extends BaseScene
 ## Dữ liệu & công thức điểm: xem scripts/autoload/RankingManager.gd
 ## ============================================================================
 
+## Scene contract
+## Exports:  ROW_SCENE, DRAG_THRESHOLD, OUT_TIME, IN_TIME, SLIDE_DISTANCE, ROW_STAGGER, MAX_STAGGER_ROWS
+## Emits:    (none)
+## Handlers wired in scene: _on_back_pressed, _on_tab_pressed
+## Subscribes in code (EventBus/Model): orientation_changed, m
+
 @export var ROW_SCENE: PackedScene = preload("res://scenes/objects/ranking/rank_row.tscn")
 
 const TAB_KEYS := {

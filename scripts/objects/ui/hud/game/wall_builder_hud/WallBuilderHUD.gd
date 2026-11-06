@@ -8,3 +8,9 @@ extends BaseHUD
 ## người chơi đọc trực tiếp trên TỪNG Ô của bàn cờ (ô đủ tường sáng nền xanh), lượt GỬI còn lại
 ## hiện ở popup kết quả khi GỬI sai.
 ## ============================================================================
+
+## Scene contract
+## Exports:  (none)
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)

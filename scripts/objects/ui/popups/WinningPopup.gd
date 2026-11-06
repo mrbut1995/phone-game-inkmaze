@@ -21,6 +21,12 @@ extends BasePopup
 ## Popup Daily (winning_daily) là scene riêng, KHÔNG dùng lớp này.
 ## ============================================================================
 
+## Scene contract
+## Exports:  star_full, star_empty, label_level, hero1, hero2, hero3, m1_star, m1_name, m2_star, m2_name, m3_star, m3_name, value_time, value_steps, value_walls, label_next, fx_tape, fx_missions, fx_stats, fx_buttons, fx_rays, fx_soft, fx_rays2, fx_rays3, fx_confetti, fx_fireworks
+## Emits:    replay_requested, next_requested
+## Handlers wired in scene: _on_next_pressed, _on_replay_pressed
+## Subscribes in code (EventBus/Model): (none)
+
 signal replay_requested
 signal next_requested
 

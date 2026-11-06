@@ -7,6 +7,12 @@ extends TextureButton
 ## 4 tab (pen · theme · tool · coin) KHAI SẴN trong scene bố cục (`Tabs/*`), mỗi tab tự khai
 ## `category` + `label_key` + `icon_texture`. Bề rộng do HBox chia đều; cao = art × hệ số màn hình.
 ## ============================================================================
+## Scene contract
+## Exports:  category, label_key, icon_texture, LABEL_COLOR, panel_h, IDLE_TOP, IDLE_LABEL_TOP, FOCUS_BOTTOM, FOCUS_LABEL_FRAC, label, icon, art
+## Emits:    tab_pressed
+## Handlers wired in scene: _emit_tab_pressed
+## Subscribes in code (EventBus/Model): (none)
+
 const UIAnim := preload("res://scripts/utils/UIAnim.gd")
 ## Art theo TỪNG tab (kiểu DOCK): `tab_idle_<category>.png` (huy hiệu + icon) và `tab_focus_<category>.png`
 ## (thẻ trắng + huy hiệu to + icon) — xuất 2× (xem tools/gen_tabs_k.py). Icon đã NẰM TRONG art ⇒ script không vẽ gì.

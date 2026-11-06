@@ -12,6 +12,12 @@ extends Control
 ##     Scene dọc KHÔNG bind các node/art đó ⇒ giữ nguyên như trước.
 ## ============================================================================
 
+## Scene contract
+## Exports:  star_full, star_empty, NEXT_COLOR, level_id, is_locked, rating, is_done, chapter, index_in_chapter, panel_btn, level_lbl, lock_icon, stamp_done, star1, star2, star3, next_card_normal, next_card_pressed, next_halo, next_ribbon, prefix_lbl, seperator, next_seperator, locked_star_art
+## Emits:    selected
+## Handlers wired in scene: _on_pressed
+## Subscribes in code (EventBus/Model): (none)
+
 signal selected(level_id: int)
 
 ## Art sao — gán trong `level_card.tscn` + `level_card_landscape.tscn` (ExtResource)

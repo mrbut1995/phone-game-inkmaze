@@ -14,6 +14,12 @@ extends EventCardBase
 ## ============================================================================
 
 ## Node con — bind bằng @onready (không dùng %UniqueName theo §13.10)
+## Scene contract
+## Exports:  (none)
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 @onready var card_lip: Panel = $Content/Background/Lip
 @onready var card_frame: Panel = $Content/Background/Frame
 @onready var bg_gradient: ColorRect = $Content/Background/ContentMask/BgGradient

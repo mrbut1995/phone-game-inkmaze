@@ -27,6 +27,12 @@ extends BaseUI
 ## ============================================================================
 
 ## Scene 1 NHÓM số liệu (băng washi + lưới thẻ) — dựng vào `layout.info_list`
+## Scene contract
+## Exports:  (none)
+## Emits:    (none)
+## Handlers wired in scene: _on_close_pressed, _on_edit_pressed
+## Subscribes in code (EventBus/Model): orientation_changed, m
+
 const GROUP_SCENE := preload("res://scenes/objects/profiler/stat_group.tscn")
 
 ## Icon từng ô số liệu: icon tách từ mockup (không còn icon riêng cho từng chế độ)

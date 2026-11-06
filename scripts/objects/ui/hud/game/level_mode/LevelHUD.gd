@@ -7,3 +7,9 @@ extends BaseHUD
 ## HUD không có thẻ NHIỆM VỤ (3 dải nhiệm vụ + số Sao); kết quả nhiệm vụ/Sao vẫn hiện đầy
 ## đủ ở POPUP kết quả ván (`MissionController` vẫn tính + đưa vào popup thắng/thua).
 ## ============================================================================
+
+## Scene contract
+## Exports:  (none)
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)

@@ -24,6 +24,12 @@ extends Node2D
 ## ============================================================================
 
 ## Người chơi bấm cổng (LOCKED / READY) — LevelMap chuyển thành popup mở khoá hoặc `reject_gate`
+## Scene contract
+## Exports:  body, button, sheet, cover, lbl_chapter, lbl_number, lbl_progress, anim, tex_open, key_chapter, fallback_chapter, fit_width_chapter, fit_width_number, fit_width_progress, color_progress_locked, color_progress_ready
+## Emits:    pressed, opened
+## Handlers wired in scene: _on_anim_finished, _on_button_hover_changed, _on_button_press_changed, _on_button_pressed
+## Subscribes in code (EventBus/Model): loc
+
 signal pressed(chapter_id: int)
 ## Animation mở cổng xong (cổng đã chuyển sang OPEN)
 signal opened

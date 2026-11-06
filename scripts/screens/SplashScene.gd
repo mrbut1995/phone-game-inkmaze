@@ -10,6 +10,12 @@ extends BaseScene
 ## - Chuyển cảnh mượt mà bằng hiệu ứng lật trang sổ tay & fade giấy ngà.
 ## ============================================================================
 
+## Scene contract
+## Exports:  (none)
+## Emits:    (none)
+## Handlers wired in scene: _on_touch_pressed
+## Subscribes in code (EventBus/Model): loading, layout.anim_player.animation_finished
+
 const UIAnim := preload("res://scripts/utils/UIAnim.gd")
 const SCENE_TITLE := "res://scenes/screens/title.tscn"
 

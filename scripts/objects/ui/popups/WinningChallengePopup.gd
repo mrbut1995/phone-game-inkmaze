@@ -10,6 +10,12 @@ extends WinningPopup
 ## ============================================================================
 
 ## Bấm "TRỞ VỀ" — UIController nối signal này tới GameController._on_back_requested
+## Scene contract
+## Exports:  (none)
+## Emits:    back_requested
+## Handlers wired in scene: _on_back_pressed, _on_replay_pressed
+## Subscribes in code (EventBus/Model): (none)
+
 signal back_requested
 
 ## Tên luật dài hơn "MÀN 12" -> thu cỡ chữ cho vừa thẻ

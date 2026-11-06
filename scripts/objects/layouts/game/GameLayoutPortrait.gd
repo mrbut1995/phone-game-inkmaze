@@ -15,6 +15,12 @@ extends GameSceneLayout
 ##   · `fit_hud()`
 ## ============================================================================
 
+## Scene contract
+## Exports:  (none)
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 func is_landscape_layout() -> bool:
 	return false
 

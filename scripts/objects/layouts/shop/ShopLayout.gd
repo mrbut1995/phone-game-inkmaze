@@ -1,6 +1,12 @@
 class_name ShopLayout
 extends BaseLayout
 
+## Scene contract
+## Exports:  btn_back, tabs_box, list_box, scroll, wallet_count, wallet_plus, pager, page_label, btn_prev, btn_next, dots_box, btn_gift, top_bar, wallet_bar, life_chip, gift_banner, tab_line, pad_slot, item_grid, doodle_pad, noads_row, nav_bar, content_body
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 @export var btn_back: BaseButton = null
 @export var tabs_box: HBoxContainer = null
 @export var list_box: VBoxContainer = null

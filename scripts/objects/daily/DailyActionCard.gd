@@ -15,6 +15,12 @@ extends Control
 ## cần đặt 2 thẻ và nối tín hiệu `pressed`.
 ## ============================================================================
 
+## Scene contract
+## Exports:  paper, icon_box, icon, tape_blue, tape_amber, lbl_title, lbl_sub, stars_row, btn_cta, lbl_cta, icon_cta, fx_anim
+## Emits:    pressed
+## Handlers wired in scene: _on_btn_cta_pressed, _on_fx_finished
+## Subscribes in code (EventBus/Model): (none)
+
 signal pressed
 
 ## Số Sao tối đa của một thẻ (khớp `DailyManager.PLAY_STARS_MAX` / `CHALLENGE_STARS_MAX`)

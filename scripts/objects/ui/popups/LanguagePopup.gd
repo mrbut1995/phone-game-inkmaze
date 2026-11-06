@@ -7,6 +7,12 @@ extends BasePopup
 ## - "ÁP DỤNG" mới đổi ngôn ngữ thật, "HỦY BỎ" đóng mà không đổi
 ## ============================================================================
 
+## Scene contract
+## Exports:  flag_fallback, list, scroll
+## Emits:    locale_applied
+## Handlers wired in scene: _on_apply_pressed, _on_cancel_pressed, _on_dim_gui_input
+## Subscribes in code (EventBus/Model): row.pressed
+
 signal locale_applied(code: String)
 
 const ROW_SCENE := preload("res://scenes/objects/ui/popups/language_row.tscn")

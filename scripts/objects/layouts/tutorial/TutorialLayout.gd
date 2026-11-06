@@ -15,6 +15,12 @@ extends BaseLayout
 ## còn 2 tiêu đề chồng nhau như khi danh sách và bài học dùng chung 1 màn.
 ## ============================================================================
 
+## Scene contract
+## Exports:  btn_back, lbl_title, tutorial_container
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 @export var btn_back: BaseButton = null
 @export var lbl_title: Label = null
 @export var tutorial_container: Control = null

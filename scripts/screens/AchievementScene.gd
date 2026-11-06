@@ -12,6 +12,12 @@ extends BaseScene
 ## Cấu trúc node (scenes/achievement.tscn): TopBar/Sheet{Overview, Tabs, CardArea{Scroll/Pages}, Dots, Footer}
 ## ============================================================================
 
+## Scene contract
+## Exports:  CARD_SCENE, PAGE_SCENE, DOT_SCENE, CARDS_PER_PAGE, PORTRAIT_COLUMNS, CARD_SIZE, GRID_SEP, SNAP_TIME, DRAG_THRESHOLD, CLICK_LOCK_TIME, FX_COIN_COUNT
+## Emits:    (none)
+## Handlers wired in scene: _on_back_pressed, _on_tab_pressed
+## Subscribes in code (EventBus/Model): orientation_changed, resized, manager, card, dot.pressed, thumb.pressed, bar.value_changed
+
 @export var CARD_SCENE: PackedScene = preload("res://scenes/objects/achievements/card.tscn")
 @export var PAGE_SCENE: PackedScene = preload("res://scenes/objects/achievements/page.tscn")
 @export var DOT_SCENE: PackedScene = preload("res://scenes/objects/achievements/page_dot.tscn")

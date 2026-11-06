@@ -10,6 +10,12 @@ extends Control
 ## Script chỉ nhận `set_fraction(0..1)` để đặt vị trí đầu thanh + độ rộng vùng quét.
 ## ============================================================================
 
+## Scene contract
+## Exports:  tip, sheen_clip, sheen, anim
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): resized
+
 @export var tip: Control = null
 @export var sheen_clip: Control = null
 @export var sheen: Control = null

@@ -1,6 +1,12 @@
 class_name TitleLayout
 extends BaseLayout
 
+## Scene contract
+## Exports:  logo_container, logo, pencil, title_label, subtitle_label, tap_container, play_icon, tap_label, stamp_label, touch_button, fade_overlay, anim_player
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 @export var logo_container: Control = null
 @export var logo: TextureRect = null
 @export var pencil: TextureRect = null

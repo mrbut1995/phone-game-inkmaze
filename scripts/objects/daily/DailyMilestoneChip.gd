@@ -13,6 +13,12 @@ extends Button
 ## Dùng chung cho cả 2 hướng màn hình.
 ## ============================================================================
 
+## Scene contract
+## Exports:  ring, chest, badge, lbl_stars, lbl_reward, tag, fx_anim, hold_timer
+## Emits:    claim_requested, hold_started, hold_ended
+## Handlers wired in scene: _on_button_down, _on_button_up, _on_hold_timeout, _on_pressed
+## Subscribes in code (EventBus/Model): (none)
+
 signal claim_requested(threshold: int)
 signal hold_started(chip: DailyMilestoneChip)
 signal hold_ended

@@ -14,6 +14,12 @@ extends Control
 ##     bám sát đầu nét mực (`write_at`), ấn nhẹ xuống giấy (scale nhỏ lại) và nghiêng theo hướng quẹt.
 ## ============================================================================
 
+## Scene contract
+## Exports:  icon, anim, HOP_LENGTH, tip_uv
+## Emits:    run_finished, celebration_finished
+## Handlers wired in scene: _on_anim_finished
+## Subscribes in code (EventBus/Model): (none)
+
 signal run_finished()
 signal celebration_finished()
 

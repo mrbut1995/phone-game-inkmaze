@@ -7,6 +7,12 @@ extends Line2D
 ## Tích hợp animation vẽ nét bút chì (Pencil Stroke) & phản hồi va chạm nảy nét.
 ## ============================================================================
 
+## Scene contract
+## Exports:  anim, COLOR_VISIBLE, COLOR_SUSPECTED, COLOR_HIT, COLOR_BUILT, HALO_COLOR
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 var _state := "invisible"
 var _base_width := 11.0
 var _p1 := Vector2.ZERO

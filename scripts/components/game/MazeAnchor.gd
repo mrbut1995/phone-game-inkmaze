@@ -13,6 +13,12 @@ extends Control
 ## MỌI tham số (node · hiệu ứng · màu) chỉnh TRONG `anchor.tscn` — script chỉ `@export`.
 ## ============================================================================
 
+## Scene contract
+## Exports:  anchor_id, SELECTED_MODULATE, NORMAL_MODULATE, texture_selected, button, anim, entrance_timer
+## Emits:    anchor_tapped
+## Handlers wired in scene: _on_button_pressed, _play_entrance_now
+## Subscribes in code (EventBus/Model): timeout
+
 signal anchor_tapped(anchor_id: int)
 
 @export var anchor_id: int = -1

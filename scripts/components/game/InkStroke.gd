@@ -19,6 +19,12 @@ extends Line2D
 ## Không gọi 2 hàm trên (chỉ dùng `set_stroke()` / `points`) thì node vẫn là Line2D thường.
 ## ============================================================================
 
+## Scene contract
+## Exports:  glow_line, use_pen_feel
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 var _pen_id := ""
 var _base_width := 0.0
 var _alpha_scale := 1.0

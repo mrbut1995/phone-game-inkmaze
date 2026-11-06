@@ -11,6 +11,12 @@ extends Control
 ## ============================================================================
 
 ## Khoảng đệm giữa bóng và chip + mép an toàn của khung thiết kế
+## Scene contract
+## Exports:  bg, tail, content, lbl_title, lbl_reward, lbl_status, anim, pad
+## Emits:    (none)
+## Handlers wired in scene: _on_anim_finished
+## Subscribes in code (EventBus/Model): (none)
+
 const GAP := 4.0  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 const EDGE := 6.0
 

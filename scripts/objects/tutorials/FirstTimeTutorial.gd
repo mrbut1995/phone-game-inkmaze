@@ -8,6 +8,12 @@ extends BaseTutorial
 ## ============================================================================
 
 ## 3 ô preview S — giữa — F (theo thứ tự trái → phải), bind trong .tscn
+## Scene contract
+## Exports:  preview_cells, preview_line
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): timeout
+
 @export var preview_cells: Array[TutorialCell] = []
 ## Nét vẽ mẫu nối 3 ô (child của AnimContainer để toạ độ trùng tâm ô)
 @export var preview_line: Line2D = null

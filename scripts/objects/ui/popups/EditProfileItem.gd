@@ -9,6 +9,12 @@ extends TextureButton
 ##   ĐANG DÙNG (viền xanh + dấu tick) · SỞ HỮU · KHOÁ theo mốc · giá XU
 ## ============================================================================
 
+## Scene contract
+## Exports:  COLOR_EQUIPPED, COLOR_OWNED, COLOR_LOCK_DUNGEON, COLOR_LOCK_STREAK, COLOR_LOCK_POINTS, COLOR_CHIP_EQUIPPED, selected_bg, icon, frame, lock_icon, check, name_label, state_bg, state_label, price_chip, price_text
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): (none)
+
 @export var COLOR_EQUIPPED := Color(0.1176, 0.2510, 0.6980)   # #1E40AF
 @export var COLOR_OWNED := Color(0.3922, 0.4549, 0.5451)      # #64748B
 @export var COLOR_LOCK_DUNGEON := Color(0.8627, 0.1490, 0.1490)  # #DC2626

@@ -7,6 +7,12 @@ extends Control
 ## Trạng thái dùng chung enum với `DailyDayCell.State` (cùng quy tắc với lịch tháng).
 ## ============================================================================
 
+## Scene contract
+## Exports:  hit, today_bg, selected_ring, lbl_dow, lbl_num, mark
+## Emits:    day_selected
+## Handlers wired in scene: _on_pressed
+## Subscribes in code (EventBus/Model): (none)
+
 signal day_selected(day_number: int)
 
 const TEX_DIR := "res://assets/images-png/daily/"  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)

@@ -7,6 +7,12 @@ extends BaseScene
 ## thêm vào scene tree.
 ## ============================================================================
 
+## Scene contract
+## Exports:  (none)
+## Emits:    (none)
+## Handlers wired in scene: (none)
+## Subscribes in code (EventBus/Model): orientation_changed, _layout.cta_button.pressed, _layout.btn_back.pressed
+
 var _event_id: StringName = &""
 var _layout: EventLayout = null
 

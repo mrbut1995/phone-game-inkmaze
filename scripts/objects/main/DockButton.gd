@@ -10,6 +10,12 @@ extends Button
 ## Kiểu "J" (giấy lò xo): art + bố cục khai trong `nodes/main/dock_button.tscn`; ở đây chỉ
 ## gán texture theo `art_key` và đổi trạng thái focus khi nhấn giữ (signal khai trong `.tscn`).
 ## ============================================================================
+## Scene contract
+## Exports:  icon_texture, label_key, outline_color, art_key
+## Emits:    (none)
+## Handlers wired in scene: _on_dock_button_down, _on_dock_button_up, _on_dock_pointer_exited
+## Subscribes in code (EventBus/Model): (none)
+
 const DockStyleJ := preload("res://scripts/utils/DockStyleJ.gd")
 
 ## Icon trắng của nút (nạp từ `.tscn` của màn dùng)

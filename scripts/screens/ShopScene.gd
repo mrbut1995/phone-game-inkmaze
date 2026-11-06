@@ -13,6 +13,12 @@ extends BaseScene
 ## - VUỐT DỌC để cuộn danh sách (tự xử lý ở `_input` vì nút trên thẻ "ăn" sự kiện kéo)
 ## ============================================================================
 
+## Scene contract
+## Exports:  ROW_SCENE, TILE_SCENE, COIN_SCENE, PAGE_DOT_SCENE, TILES_PER_PAGE, GRID_COLUMNS, GRID_COLUMNS_MAX, TILE_MIN_W, GRID_H_SEP, GRID_V_SEP, LIST_SEP, DRAG_THRESHOLD, SWIPE_MIN, CLICK_LOCK_TIME, DESIGN_CANVAS_H, SCREEN_SCALE_MIN, SCREEN_SCALE_MAX, TILE_SCALE, FALLBACK_PAD_H
+## Emits:    (none)
+## Handlers wired in scene: _on_back_pressed, _on_gift_pressed, _on_next_page, _on_pad_pen_changed, _on_prev_page, _on_tab_pressed, _on_wallet_plus_pressed
+## Subscribes in code (EventBus/Model): orientation_changed, vp.size_changed, layout.life_chip.plus_pressed, card, row
+
 @export var ROW_SCENE: PackedScene = preload("res://scenes/objects/shop/item_row.tscn")
 @export var TILE_SCENE: PackedScene = preload("res://scenes/objects/shop/item_tile.tscn")
 @export var COIN_SCENE: PackedScene = preload("res://scenes/objects/shop/coin_tile.tscn")
