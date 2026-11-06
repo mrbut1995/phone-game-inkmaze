@@ -1,4 +1,3 @@
-class_name SfxManagerClass
 extends Node
 ## ============================================================================
 ## Manager: SfxManager - Phát hiệu ứng âm thanh (SFX) toàn cục.

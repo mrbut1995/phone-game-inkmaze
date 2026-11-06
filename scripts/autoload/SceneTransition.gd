@@ -1,4 +1,3 @@
-class_name SceneTransition
 extends CanvasLayer
 ## ============================================================================
 ## Component: SceneTransition - Lớp phủ hiệu ứng chuyển cảnh toàn cục.

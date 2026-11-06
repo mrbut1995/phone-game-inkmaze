@@ -1,4 +1,3 @@
-class_name MusicManagerClass
 extends Node
 ## ============================================================================
 ## Manager: MusicManager - Phát soundtrack nền theo chủ đề đang dùng.

@@ -1,4 +1,3 @@
-class_name LevelManagerClass
 extends Node
 ## ============================================================================
 ## Manager: Quản lý nạp, lưu trữ và cung cấp LevelData Resource

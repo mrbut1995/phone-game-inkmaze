@@ -1,4 +1,3 @@
-class_name ScreenManagerClass
 extends Node
 ## ============================================================================
 ## Manager: ScreenManager - Lịch sử điều hướng màn hình.

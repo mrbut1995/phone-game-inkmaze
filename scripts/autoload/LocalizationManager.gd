@@ -1,4 +1,3 @@
-class_name LocalizationManagerClass
 extends Node
 ## ============================================================================
 ## Manager: LocalizationManager - Quản lý ngôn ngữ hiển thị (vi/en).

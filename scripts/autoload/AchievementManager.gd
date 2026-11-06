@@ -1,4 +1,3 @@
-class_name AchievementManagerClass
 extends Node
 ## ============================================================================
 ## Manager: AchievementManager (autoload) — "Sổ tay thành tựu" (Danh hiệu).

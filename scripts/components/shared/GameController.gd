@@ -199,9 +199,9 @@ func _update_hud() -> void:
 	if ui_controller == null or game_state == null:
 		return
 	var mode: BaseGameMode = game_mode_controller.game_mode if game_mode_controller != null else null
-	skip_left = _tool_uses_left(GameManagerClass.TOOL_SKIP)
-	teleport_left = _tool_uses_left(GameManagerClass.TOOL_TELEPORT)
-	hint_left = _tool_uses_left(GameManagerClass.TOOL_HINT)
+	skip_left = _tool_uses_left(ToolIds.SKIP)
+	teleport_left = _tool_uses_left(ToolIds.TELEPORT)
+	hint_left = _tool_uses_left(ToolIds.HINT)
 	var extra_info := game_mode_controller.game_mode.get_hud_extra_info() if game_mode_controller.game_mode != null else ""
 	var title := game_mode_controller.game_mode.get_hud_floor_title(game_state.floor_number) if game_mode_controller.game_mode != null else "TẦNG %d" % game_state.floor_number
 	var subtitle := game_mode_controller.game_mode.get_hud_subtitle(game_state.floor_number) if game_mode_controller.game_mode != null else ""
@@ -628,9 +628,9 @@ func skip_current_level() -> bool:
 	var gm: Node = Svc.game()
 	if gm == null or not bool(gm.get("level_run")):
 		return false
-	if _tool_uses_left(GameManagerClass.TOOL_SKIP) <= 0:
+	if _tool_uses_left(ToolIds.SKIP) <= 0:
 		return false
-	if not bool(gm.call("consume_tool_use", GameManagerClass.TOOL_SKIP)):
+	if not bool(gm.call("consume_tool_use", ToolIds.SKIP)):
 		return false
 	if ui_controller != null:
 		ui_controller.hide_overlays()
@@ -804,7 +804,7 @@ func teleport() -> void:
 		_update_hud()
 		return
 	# Hết lượt toàn tài khoản (nút đã bị khoá ở HUD) → không làm gì
-	if _tool_uses_left(GameManagerClass.TOOL_TELEPORT) <= 0:
+	if _tool_uses_left(ToolIds.TELEPORT) <= 0:
 		return
 	if grid_controller == null or grid_view == null:
 		return
@@ -828,7 +828,7 @@ func _on_teleport_chosen(pos: Vector2i) -> void:
 	Sfx.play(Sfx.TELEPORT)
 	if game_state != null:
 		game_state.teleports_used += 1     # nhiệm vụ "không dùng dịch chuyển"
-	_consume_tool_use(GameManagerClass.TOOL_TELEPORT)
+	_consume_tool_use(ToolIds.TELEPORT)
 	_update_hud()
 
 
@@ -855,7 +855,7 @@ func hint() -> void:
 		_challenge_fail(ChallengeGameMode.NO_TOOL)
 		return
 	# Hết lượt gợi ý toàn tài khoản (nút đã bị khoá ở HUD) → không làm gì
-	if _tool_uses_left(GameManagerClass.TOOL_HINT) <= 0:
+	if _tool_uses_left(ToolIds.HINT) <= 0:
 		return
 	# SFX: chuông gió khi bấm Gợi ý
 	Sfx.play(Sfx.HINT)
@@ -864,13 +864,13 @@ func hint() -> void:
 			and game_mode_controller.game_mode.hint_wall(grid_controller.anchor_controller, grid_controller.maze):
 		if game_state != null:
 			game_state.hints_used += 1     # nhiệm vụ "không dùng gợi ý"
-		_consume_tool_use(GameManagerClass.TOOL_HINT)
+		_consume_tool_use(ToolIds.HINT)
 		_update_hud()
 		return
 	grid_controller.give_hint()
 	if game_state != null:
 		game_state.hints_used += 1     # nhiệm vụ "không dùng gợi ý"
-	_consume_tool_use(GameManagerClass.TOOL_HINT)
+	_consume_tool_use(ToolIds.HINT)
 	_update_hud()
 
 

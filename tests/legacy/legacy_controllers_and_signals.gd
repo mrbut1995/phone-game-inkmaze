@@ -123,34 +123,34 @@ func _init() -> void:
 	# 5c. Số dư công cụ toàn game: hết lượt thì CHẶN, lượt Hint đã dùng không được nạp lại.
 	var manager: Node = root.get_node("GameManager")
 	var saved_tool_uses: Dictionary = (manager.get("tool_uses") as Dictionary).duplicate()
-	var hint_before_grant := int(manager.call("tool_uses_left", GameManagerClass.TOOL_HINT))
-	assert(not bool(manager.call("grant_tool_uses", GameManagerClass.TOOL_HINT, 1, "debug")),
+	var hint_before_grant := int(manager.call("tool_uses_left", ToolIds.HINT))
+	assert(not bool(manager.call("grant_tool_uses", ToolIds.HINT, 1, "debug")),
 			"Chi mua hang/nhiem vu moi duoc cap them luot qua API gameplay")
-	assert(bool(manager.call("grant_tool_uses", GameManagerClass.TOOL_HINT, 1, "mission")),
+	assert(bool(manager.call("grant_tool_uses", ToolIds.HINT, 1, "mission")),
 			"Nhiem vu co the cap them luot cong cu")
-	assert(int(manager.call("tool_uses_left", GameManagerClass.TOOL_HINT)) == hint_before_grant + 1,
+	assert(int(manager.call("tool_uses_left", ToolIds.HINT)) == hint_before_grant + 1,
 			"Cap thuong cong cu phai tang dung so luot")
-	manager.call("debug_set_tool_uses", GameManagerClass.TOOL_TELEPORT, 0)
-	manager.call("debug_set_tool_uses", GameManagerClass.TOOL_HINT, 1)
-	manager.call("debug_set_tool_uses", GameManagerClass.TOOL_SKIP, 0)
+	manager.call("debug_set_tool_uses", ToolIds.TELEPORT, 0)
+	manager.call("debug_set_tool_uses", ToolIds.HINT, 1)
+	manager.call("debug_set_tool_uses", ToolIds.SKIP, 0)
 	gc._update_hud()
 	gc.teleport()
-	assert(int(manager.call("tool_uses_left", GameManagerClass.TOOL_TELEPORT)) == 0,
+	assert(int(manager.call("tool_uses_left", ToolIds.TELEPORT)) == 0,
 			"Het luot dich chuyen thi bam TELEPORT khong tru them luot")
 	assert(gc._teleport_selecting == false, "Het luot -> bam TELEPORT khong vao che do chon o")
 	gc._update_hud()
 	assert(teleport_btn.disabled == true, "Het luot -> nut TELEPORT bi KHOA")
 	assert(hint_btn.disabled == false, "Con luot -> nut HINT khong bi khoa")
 	game_scene._on_hint_pressed()
-	assert(int(manager.call("tool_uses_left", GameManagerClass.TOOL_HINT)) == 0,
+	assert(int(manager.call("tool_uses_left", ToolIds.HINT)) == 0,
 			"Bam HINT phai tru mot luot dung chung")
 	gc._update_hud()
 	assert(hint_btn.disabled == true, "Het luot -> nut HINT bi KHOA")
 	assert(skip_btn.disabled == true, "Het luot -> nut SKIP bi KHOA")
 	var inventory_snapshot: Dictionary = manager.call("export_progress")
-	manager.call("debug_set_tool_uses", GameManagerClass.TOOL_HINT, 9)
+	manager.call("debug_set_tool_uses", ToolIds.HINT, 9)
 	manager.call("import_progress", inventory_snapshot)
-	assert(int(manager.call("tool_uses_left", GameManagerClass.TOOL_HINT)) == 0,
+	assert(int(manager.call("tool_uses_left", ToolIds.HINT)) == 0,
 			"So du cong cu phai duoc khoi phuc tu du lieu da luu")
 	for tool_id in saved_tool_uses:
 		manager.call("debug_set_tool_uses", str(tool_id), int(saved_tool_uses[tool_id]))
@@ -249,9 +249,9 @@ func _init() -> void:
 	# 3 SpinBox công cụ (SKIP · TELEPORT · HINT) + 1 SpinBox LƯỢT CHƠI (lives)
 	assert(tool_spinners.size() == 4, "Debug Console phai co SpinBox chinh 3 cong cu + luot choi")
 	var hint_spinner := tool_spinners[2] as SpinBox
-	var hint_balance := int(manager.call("tool_uses_left", GameManagerClass.TOOL_HINT))
+	var hint_balance := int(manager.call("tool_uses_left", ToolIds.HINT))
 	hint_spinner.value = hint_balance + 1
-	assert(int(manager.call("tool_uses_left", GameManagerClass.TOOL_HINT)) == hint_balance + 1,
+	assert(int(manager.call("tool_uses_left", ToolIds.HINT)) == hint_balance + 1,
 			"Debug SpinBox phai cap nhat so du cong cu")
 	hint_spinner.value = hint_balance
 	debug_scene.queue_free()

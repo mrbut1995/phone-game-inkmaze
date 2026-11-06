@@ -1,4 +1,3 @@
-class_name GameManagerClass
 extends Node
 ## ============================================================================
 ## Manager: Quản lý phiên chơi, chế độ được chọn, tiến trình mở khóa màn
@@ -16,9 +15,9 @@ signal floor_record_changed(kind: String, floor_number: int)
 ## Vừa nhận thưởng một RƯƠNG MỐC của chương (chapter_id, index 0..2)
 signal chapter_chest_claimed(chapter_id: int, index: int)
 
-const TOOL_SKIP := "skip"
-const TOOL_TELEPORT := "teleport"
-const TOOL_HINT := "hint"
+const TOOL_SKIP := ToolIds.SKIP
+const TOOL_TELEPORT := ToolIds.TELEPORT
+const TOOL_HINT := ToolIds.HINT
 const TOOL_IDS: Array[String] = [TOOL_SKIP, TOOL_TELEPORT, TOOL_HINT]
 const INITIAL_TOOL_USES := 3
 ## Scene của ván chơi (mọi chế độ đều vào đây)

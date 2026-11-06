@@ -1,4 +1,3 @@
-class_name EventManagerClass
 extends Node
 ## ============================================================================
 ## Autoload: EventManager — Quản lý toàn bộ Event System.

@@ -1,4 +1,3 @@
-class_name SceneManagerClass
 extends Node
 ## ============================================================================
 ## Manager: SceneManager - Điều hướng giữa các scene + Animation chuyển cảnh

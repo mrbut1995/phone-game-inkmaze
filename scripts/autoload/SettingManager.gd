@@ -1,4 +1,3 @@
-class_name SettingManagerClass
 extends Node
 ## ============================================================================
 ## Manager: SettingManager - Cài đặt người chơi (âm lượng, rung, ngôn ngữ).

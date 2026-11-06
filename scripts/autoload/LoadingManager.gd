@@ -1,4 +1,3 @@
-class_name LoadingManagerClass
 extends Node
 ## ============================================================================
 ## Autoload: LoadingManager — quản lý việc NẠP / KHỞI ĐỘNG của game.

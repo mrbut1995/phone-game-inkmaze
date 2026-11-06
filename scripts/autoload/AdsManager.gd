@@ -1,4 +1,3 @@
-class_name AdsManagerClass
 extends Node
 ## ============================================================================
 ## Manager: AdsManager - Cầu nối quảng cáo (PLACEHOLDER).

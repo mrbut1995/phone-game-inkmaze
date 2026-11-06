@@ -136,9 +136,9 @@ func _build_tool_balances() -> void:
 		_add_label("Không tìm thấy GameManager", &"PopupSubtitle")
 		return
 	for tool_data in [
-		[GameManagerClass.TOOL_SKIP, "Skip"],
-		[GameManagerClass.TOOL_TELEPORT, "Teleport"],
-		[GameManagerClass.TOOL_HINT, "Hint"],
+		[ToolIds.SKIP, "Skip"],
+		[ToolIds.TELEPORT, "Teleport"],
+		[ToolIds.HINT, "Hint"],
 	]:
 		var tool_id := str(tool_data[0])
 		var row := HBoxContainer.new()

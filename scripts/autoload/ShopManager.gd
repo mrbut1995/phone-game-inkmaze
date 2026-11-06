@@ -1,4 +1,3 @@
-class_name ShopManagerClass
 extends Node
 ## ============================================================================
 ## Manager: ShopManager — CỬA HÀNG (mockup/shopping_*.svg)

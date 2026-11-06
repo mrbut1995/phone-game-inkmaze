@@ -1,4 +1,3 @@
-class_name PlayerProfileManagerClass
 extends Node
 ## ============================================================================
 ## Manager: PlayerProfileManager — HỒ SƠ NGƯỜI CHƠI (Profiler)

@@ -1,4 +1,3 @@
-class_name PopupManagerClass
 extends Node
 ## ============================================================================
 ## Manager: PopupManager - Quản lý vòng đời popup cho toàn bộ game.

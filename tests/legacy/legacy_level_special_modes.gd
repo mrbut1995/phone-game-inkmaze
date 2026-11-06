@@ -300,15 +300,15 @@ func _section_4_skip_button(gm: Node) -> void:
 	scene.game_controller._update_hud()
 	var skip_label := scene.skip_btn.find_child("Label", true, false) as Label
 	_check(skip_label != null
-		and skip_label.text == str(gm.call("tool_uses_left", GameManagerClass.TOOL_SKIP)),
+		and skip_label.text == str(gm.call("tool_uses_left", ToolIds.SKIP)),
 		"Badge Skip hien so du dung chung")
-	var saved_skip_uses := int(gm.call("tool_uses_left", GameManagerClass.TOOL_SKIP))
-	gm.call("debug_set_tool_uses", GameManagerClass.TOOL_SKIP, 0)
+	var saved_skip_uses := int(gm.call("tool_uses_left", ToolIds.SKIP))
+	gm.call("debug_set_tool_uses", ToolIds.SKIP, 0)
 	scene.game_controller._update_hud()
 	_check(scene.skip_btn.disabled, "Het luot Skip: nut bi khoa")
 	_check(not scene.game_controller.skip_current_level(),
 		"Het luot Skip: bo qua man bi tu choi")
-	gm.call("debug_set_tool_uses", GameManagerClass.TOOL_SKIP, saved_skip_uses)
+	gm.call("debug_set_tool_uses", ToolIds.SKIP, saved_skip_uses)
 	scene.game_controller._update_hud()
 
 	scene.queue_free()

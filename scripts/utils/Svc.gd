@@ -21,97 +21,97 @@ static func node(singleton: StringName) -> Node:
 	return tree.root.get_node_or_null(NodePath(String(singleton)))
 
 
-static func safe_area() -> SafeAreaClass:
-	return node(&"SafeArea") as SafeAreaClass
+static func safe_area() -> Node:
+	return node(&"SafeArea")
 
 
-static func loading() -> LoadingManagerClass:
-	return node(&"LoadingManager") as LoadingManagerClass
+static func loading() -> Node:
+	return node(&"LoadingManager")
 
 
-static func level() -> LevelManagerClass:
-	return node(&"LevelManager") as LevelManagerClass
+static func level() -> Node:
+	return node(&"LevelManager")
 
 
-static func game() -> GameManagerClass:
-	return node(&"GameManager") as GameManagerClass
+static func game() -> Node:
+	return node(&"GameManager")
 
 
-static func app() -> AppManagerClass:
-	return node(&"AppManager") as AppManagerClass
+static func app() -> Node:
+	return node(&"AppManager")
 
 
-static func setting() -> SettingManagerClass:
-	return node(&"SettingManager") as SettingManagerClass
+static func setting() -> Node:
+	return node(&"SettingManager")
 
 
-static func scene() -> SceneManagerClass:
-	return node(&"SceneManager") as SceneManagerClass
+static func scene() -> Node:
+	return node(&"SceneManager")
 
 
-static func screen() -> ScreenManagerClass:
-	return node(&"ScreenManager") as ScreenManagerClass
+static func screen() -> Node:
+	return node(&"ScreenManager")
 
 
-static func popup() -> PopupManagerClass:
-	return node(&"PopupManager") as PopupManagerClass
+static func popup() -> Node:
+	return node(&"PopupManager")
 
 
-static func sfx() -> SfxManagerClass:
-	return node(&"SfxManager") as SfxManagerClass
+static func sfx() -> Node:
+	return node(&"SfxManager")
 
 
-static func music() -> MusicManagerClass:
-	return node(&"MusicManager") as MusicManagerClass
+static func music() -> Node:
+	return node(&"MusicManager")
 
 
-static func data() -> DataManagerClass:
-	return node(&"DataManager") as DataManagerClass
+static func data() -> Node:
+	return node(&"DataManager")
 
 
-static func daily() -> DailyManagerClass:
-	return node(&"DailyManager") as DailyManagerClass
+static func daily() -> Node:
+	return node(&"DailyManager")
 
 
-static func debug() -> DebugManagerClass:
-	return node(&"DebugManager") as DebugManagerClass
+static func debug() -> Node:
+	return node(&"DebugManager")
 
 
-static func ads() -> AdsManagerClass:
-	return node(&"AdsManager") as AdsManagerClass
+static func ads() -> Node:
+	return node(&"AdsManager")
 
 
-static func loc() -> LocalizationManagerClass:
-	return node(&"LocalizationManager") as LocalizationManagerClass
+static func loc() -> Node:
+	return node(&"LocalizationManager")
 
 
-static func save() -> SaveManagerClass:
-	return node(&"SaveManager") as SaveManagerClass
+static func save() -> Node:
+	return node(&"SaveManager")
 
 
-static func shop() -> ShopManagerClass:
-	return node(&"ShopManager") as ShopManagerClass
+static func shop() -> Node:
+	return node(&"ShopManager")
 
 
-static func achievement() -> AchievementManagerClass:
-	return node(&"AchievementManager") as AchievementManagerClass
+static func achievement() -> Node:
+	return node(&"AchievementManager")
 
 
-static func profile() -> PlayerProfileManagerClass:
-	return node(&"PlayerProfileManager") as PlayerProfileManagerClass
+static func profile() -> Node:
+	return node(&"PlayerProfileManager")
 
 
-static func ranking() -> RankingManagerClass:
-	return node(&"RankingManager") as RankingManagerClass
+static func ranking() -> Node:
+	return node(&"RankingManager")
 
 
-static func theme() -> ThemeManagerClass:
-	return node(&"ThemeManager") as ThemeManagerClass
+static func theme() -> Node:
+	return node(&"ThemeManager")
 
 
-static func tutorial() -> TutorialManagerClass:
-	return node(&"TutorialManager") as TutorialManagerClass
+static func tutorial() -> Node:
+	return node(&"TutorialManager")
 
 
-static func event() -> EventManagerClass:
-	return node(&"EventManager") as EventManagerClass
+static func event() -> Node:
+	return node(&"EventManager")

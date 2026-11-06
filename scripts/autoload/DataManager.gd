@@ -1,4 +1,3 @@
-class_name DataManagerClass
 extends Node
 ## ============================================================================
 ## Manager: DataManager - Lưu/đọc dữ liệu người chơi dạng JSON.

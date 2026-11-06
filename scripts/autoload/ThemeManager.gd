@@ -1,4 +1,3 @@
-class_name ThemeManagerClass
 extends Node
 ## ============================================================================
 ## Manager: ThemeManager — ÁP DỤNG CHỦ ĐỀ GIẤY + MÀU MỰC (skin) cho toàn game.

@@ -1,4 +1,3 @@
-class_name SaveManagerClass
 extends Node
 ## ============================================================================
 ## Manager: SaveManager - Lưu/đọc dữ liệu người chơi qua backend thay thế được.

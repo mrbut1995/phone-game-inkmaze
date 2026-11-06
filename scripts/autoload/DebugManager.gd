@@ -1,4 +1,3 @@
-class_name DebugManagerClass
 extends Node
 ## ============================================================================
 ## Manager: DebugManager - Cờ debug, log phân loại và màn hình Debug Console.

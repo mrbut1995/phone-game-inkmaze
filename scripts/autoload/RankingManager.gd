@@ -1,4 +1,3 @@
-class_name RankingManagerClass
 extends Node
 ## ============================================================================
 ## Manager: BẢNG XẾP HẠNG (Ranking) — màn "BẢNG XẾP HẠNG" theo mockup/ranking.svg

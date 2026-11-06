@@ -56,24 +56,24 @@ func _section_keys() -> void:
 	print("[1] Khoa ky (day/week/month)...")
 	# 2026-10-21 là THỨ TƯ (Godot: 0 = Chủ nhật) -> thứ Hai của tuần là 2026-10-19
 	var wed := {"year": 2026, "month": 10, "day": 21, "weekday": 3}
-	_check(GameManagerClass.period_key("day", wed) == "2026-10-21", "Khoa ngay = 2026-10-21")
-	_check(GameManagerClass.period_key("week", wed) == "2026-10-19", "Khoa tuan = thu Hai 2026-10-19")
-	_check(GameManagerClass.period_key("month", wed) == "2026-10", "Khoa thang = 2026-10")
+	_check(FloorRecordsStore.period_key("day", wed) == "2026-10-21", "Khoa ngay = 2026-10-21")
+	_check(FloorRecordsStore.period_key("week", wed) == "2026-10-19", "Khoa tuan = thu Hai 2026-10-19")
+	_check(FloorRecordsStore.period_key("month", wed) == "2026-10", "Khoa thang = 2026-10")
 
 	# Chủ nhật phải lùi 6 ngày về thứ Hai của CÙNG tuần (2026-10-25 -> 2026-10-19)
 	var sun := {"year": 2026, "month": 10, "day": 25, "weekday": 0}
-	_check(GameManagerClass.period_key("week", sun) == "2026-10-19",
+	_check(FloorRecordsStore.period_key("week", sun) == "2026-10-19",
 		"Chu nhat 25/10 cung tuan voi thu Hai 19/10")
 
 	# Thứ Hai đầu tháng lùi sang tháng trước
 	var mon := {"year": 2026, "month": 11, "day": 2, "weekday": 1}
-	_check(GameManagerClass.period_key("week", mon) == "2026-11-02", "Thu Hai 2/11 giu nguyen")
+	_check(FloorRecordsStore.period_key("week", mon) == "2026-11-02", "Thu Hai 2/11 giu nguyen")
 	var mon2 := {"year": 2026, "month": 11, "day": 1, "weekday": 0}
-	_check(GameManagerClass.period_key("week", mon2) == "2026-10-26",
+	_check(FloorRecordsStore.period_key("week", mon2) == "2026-10-26",
 		"Chu nhat 1/11 lui ve thu Hai 26/10 (thang truoc)")
 
 	# Khoá hiện tại phải khác rỗng và đúng định dạng
-	var now_day := GameManagerClass.current_period_key("day")
+	var now_day := FloorRecordsStore.current_period_key("day")
 	_check(now_day.length() == 10 and now_day.substr(4, 1) == "-", "Khoa ngay hien tai '%s'" % now_day)
 
 
@@ -137,7 +137,7 @@ func _section_expiry(gm: Node) -> void:
 
 	var blob: Dictionary = gm.call("export_progress")
 	var day_key := str(((blob.get("floor_records", {}) as Dictionary).get("day", {}) as Dictionary).get("key", ""))
-	_check(day_key == GameManagerClass.current_period_key("day"), "Khoa ngay da cap nhat (%s)" % day_key)
+	_check(day_key == FloorRecordsStore.current_period_key("day"), "Khoa ngay da cap nhat (%s)" % day_key)
 
 
 # ---------------------------------------------------------------------------

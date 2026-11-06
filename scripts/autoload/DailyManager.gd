@@ -1,4 +1,3 @@
-class_name DailyManagerClass
 extends Node
 ## ============================================================================
 ## Manager: DailyManager — Thử thách hằng ngày (v2.28 "1 Màn + 1 Thử thách").
