@@ -4,7 +4,7 @@ var _failed := 0
 var _checks := 0
 
 func _init() -> void:
-	var scene: Node = (load("res://nodes/tutorials/how_to_play_move.tscn") as PackedScene).instantiate()
+	var scene: Node = (load("res://scenes/objects/tutorials/how_to_play_move.tscn") as PackedScene).instantiate()
 	root.add_child(scene)
 	await process_frame
 	await process_frame

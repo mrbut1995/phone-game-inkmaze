@@ -148,7 +148,7 @@ func _check_board_scene(gm: Node, level_id: int, info: Dictionary) -> int:
 	gm.set("current_mode", "play")
 	gm.set("current_level", level_id)
 
-	var game_scene: Node = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	var game_scene: Node = (load("res://scenes/screens/game.tscn") as PackedScene).instantiate()
 	root.add_child(game_scene)
 	await process_frame
 	await process_frame

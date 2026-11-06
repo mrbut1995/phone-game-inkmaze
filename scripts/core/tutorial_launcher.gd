@@ -61,7 +61,7 @@ static func launch(host: Node, ids: Array) -> void:
 static func _open_overlay(host: Node) -> void:
 	if host.has_node("TutorialOverlay"):
 		return
-	var scene := load("res://scenes/tutorial.tscn") as PackedScene
+	var scene := load("res://scenes/screens/tutorial.tscn") as PackedScene
 	if scene == null:
 		return
 	var overlay := scene.instantiate()

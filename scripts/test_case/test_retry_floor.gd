@@ -37,7 +37,7 @@ func _init() -> void:
 	var level_data: LevelData = (root.get_node("LevelManager") as Node).call("load_level", TEST_LEVEL)
 	assert(level_data != null, "Level %d phai nap duoc" % TEST_LEVEL)
 
-	var game_scene: Node = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	var game_scene: Node = (load("res://scenes/screens/game.tscn") as PackedScene).instantiate()
 	root.add_child(game_scene)
 	await process_frame
 	await process_frame
@@ -148,7 +148,7 @@ func _init() -> void:
 
 	# --- 7. Popup HỒI SINH (Retry) hiện đúng số bước cộng thêm của Dungeon ---
 	# Luồng thua mới: popup RETRY hiện trước (mô tả cách hồi sinh), bấm BỎ QUA mới tới Game Over.
-	var revive_popup := (load("res://nodes/popups/retry.tscn") as PackedScene).instantiate() as RetryPopup
+	var revive_popup := (load("res://scenes/objects/ui/popups/retry.tscn") as PackedScene).instantiate() as RetryPopup
 	root.add_child(revive_popup)
 	await process_frame
 	revive_popup.call("open", {

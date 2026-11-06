@@ -31,7 +31,7 @@ func _flow(size: Vector2i, mode: String) -> void:
 	if gm != null:
 		gm.set("current_mode", mode)
 		gm.set("current_level", 1)
-	var main: Node = (load("res://scenes/main.tscn") as PackedScene).instantiate()
+	var main: Node = (load("res://scenes/screens/main.tscn") as PackedScene).instantiate()
 	root.add_child(main)
 	current_scene = main
 	await _frames(6)

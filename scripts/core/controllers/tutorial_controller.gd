@@ -12,13 +12,13 @@ signal tutorial_finished(tutorial_id: String)
 signal sequence_finished()
 
 const TUTORIAL_SCENES := {
-	"first_time": "res://nodes/tutorials/first_time.tscn",
-	"how_to_play_move": "res://nodes/tutorials/how_to_play_move.tscn",
-	"how_to_play_checking_wall": "res://nodes/tutorials/how_to_play_checking_wall.tscn",
-	"how_to_play_wall_builder": "res://nodes/tutorials/how_to_play_wall_builder.tscn",
-	"how_to_play_blind_memory": "res://nodes/tutorials/how_to_play_blind_memory.tscn",
-	"how_to_use_tool": "res://nodes/tutorials/how_to_use_tool.tscn",
-	"congrats_first_time": "res://nodes/tutorials/congrats_first_time.tscn",
+	"first_time": "res://scenes/objects/tutorials/first_time.tscn",
+	"how_to_play_move": "res://scenes/objects/tutorials/how_to_play_move.tscn",
+	"how_to_play_checking_wall": "res://scenes/objects/tutorials/how_to_play_checking_wall.tscn",
+	"how_to_play_wall_builder": "res://scenes/objects/tutorials/how_to_play_wall_builder.tscn",
+	"how_to_play_blind_memory": "res://scenes/objects/tutorials/how_to_play_blind_memory.tscn",
+	"how_to_use_tool": "res://scenes/objects/tutorials/how_to_use_tool.tscn",
+	"congrats_first_time": "res://scenes/objects/tutorials/congrats_first_time.tscn",
 }
 
 const CORE_SEQUENCE := [

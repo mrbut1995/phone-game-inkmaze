@@ -12,7 +12,7 @@ func _initialize() -> void:
 
 
 func _go() -> void:
-	var screen = load("res://scenes/main.tscn").instantiate()
+	var screen = load("res://scenes/screens/main.tscn").instantiate()
 	root.add_child(screen)
 	await process_frame
 	await process_frame

@@ -11,33 +11,33 @@ extends Node
 signal scene_changing(path: String, previous_path: String)
 signal scene_changed(path: String)
 
-const SCENE_MAIN := "res://scenes/main.tscn"
-const SCENE_SPLASH := "res://scenes/splash.tscn"
-const SCENE_TITLE := "res://scenes/title.tscn"
+const SCENE_MAIN := "res://scenes/screens/main.tscn"
+const SCENE_SPLASH := "res://scenes/screens/splash.tscn"
+const SCENE_TITLE := "res://scenes/screens/title.tscn"
 ## Màn CHỌN MÀN đã GỘP vào Main (bản đồ nằm ngay trong Main)
-const SCENE_LEVELS := "res://scenes/main.tscn"
-const SCENE_GAME := "res://scenes/game.tscn"
-const SCENE_DAILY := "res://scenes/daily.tscn"
-const SCENE_SETTINGS := "res://scenes/settings.tscn"
-const SCENE_DEBUG := "res://scenes/debug.tscn"
+const SCENE_LEVELS := "res://scenes/screens/main.tscn"
+const SCENE_GAME := "res://scenes/screens/game.tscn"
+const SCENE_DAILY := "res://scenes/screens/daily.tscn"
+const SCENE_SETTINGS := "res://scenes/screens/settings.tscn"
+const SCENE_DEBUG := "res://scenes/screens/debug.tscn"
 ## Sổ tay thành tựu (danh hiệu) — xem scripts/ui/screens/achievement.gd
-const SCENE_ACHIEVEMENT := "res://scenes/achievement.tscn"
+const SCENE_ACHIEVEMENT := "res://scenes/screens/achievement.tscn"
 ## Bảng xếp hạng — xem scripts/ui/screens/ranking.gd
-const SCENE_RANKING := "res://scenes/ranking.tscn"
+const SCENE_RANKING := "res://scenes/screens/ranking.tscn"
 ## Màn CỬA HÀNG — xem scripts/ui/screens/shop.gd
-const SCENE_SHOP := "res://scenes/shop.tscn"
+const SCENE_SHOP := "res://scenes/screens/shop.tscn"
 ## Màn CREDIT — soundtrack + ghi công đội ngũ
-const SCENE_CREDIT := "res://scenes/credit.tscn"
+const SCENE_CREDIT := "res://scenes/screens/credit.tscn"
 ## Màn CHI TIẾT SỰ KIỆN — xem scripts/ui/screens/event.gd
-const SCENE_EVENT := "res://scenes/event.tscn"
+const SCENE_EVENT := "res://scenes/screens/event.tscn"
 
 ## ID event sẽ nạp khi vào màn Event (truyền trước khi gọi goto_event)
 var _pending_event_id: StringName = &""
 ## (HỒ SƠ CÁ NHÂN nay là POPUP — xem PopupManager.POPUPS["profiler"])
 ## Lớp phủ chuyển cảnh: node giao diện (trang giấy, mực loang, fade, chặn input)
 ## được khai báo SẴN trong scene này — xem scripts/ui/widgets/common/scene_transition.gd
-const SCENE_LOADING := "res://scenes/loading.tscn"
-const LoadingScene := preload("res://scenes/loading.tscn")
+const SCENE_LOADING := "res://scenes/autoload/loading.tscn"
+const LoadingScene := preload("res://scenes/autoload/loading.tscn")
 
 var transition: CanvasLayer = null
 

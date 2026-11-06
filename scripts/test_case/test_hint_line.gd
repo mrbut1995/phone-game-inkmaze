@@ -32,7 +32,7 @@ func _init() -> void:
 	gm.set("current_level", TEST_LEVEL)
 	gm.set("unlocked_levels", 9)
 
-	var game_scene: GameScene = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	var game_scene: GameScene = (load("res://scenes/screens/game.tscn") as PackedScene).instantiate()
 	root.add_child(game_scene)
 	await process_frame
 	await process_frame

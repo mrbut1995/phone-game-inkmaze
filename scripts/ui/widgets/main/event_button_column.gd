@@ -13,7 +13,7 @@ signal event_pressed(event_id: StringName)
 
 ## Cấu trúc tĩnh (khung, offset, separation, Timer, stylebox "Còn N ngày") nằm trong
 ## `nodes/main/event_button_column.tscn`; 1 nút event = `nodes/main/event_button_item.tscn`.
-const ITEM_SCENE := preload("res://nodes/main/event_button_item.tscn")
+const ITEM_SCENE := preload("res://scenes/objects/main/event_button_item.tscn")
 
 const MAX_EVENTS := 5
 const ICON_DIR := "res://assets/images-png/event_btn/"  # keep-code: đường dẫn art chọn theo theme_id của event (dữ liệu runtime)

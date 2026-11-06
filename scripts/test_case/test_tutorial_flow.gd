@@ -14,11 +14,11 @@ extends SceneTree
 ## 6. Màn thực hành 1·2·3: đúng vai (1 toàn tường hiện · 2·3 có tường ẩn · luôn có đường).
 ## ============================================================================
 
-const TUTORIAL_SCENE_PATH := "res://scenes/tutorial.tscn"
+const TUTORIAL_SCENE_PATH := "res://scenes/screens/tutorial.tscn"
 ## Màn DANH SÁCH bài học (tách khỏi màn CHI TIẾT — mỗi màn 1 việc)
-const TUTORIAL_LIST_SCENE_PATH := "res://scenes/tutorial_list.tscn"
-const GAME_SCENE_PATH := "res://scenes/game.tscn"
-const MAIN_SCENE_PATH := "res://scenes/main.tscn"
+const TUTORIAL_LIST_SCENE_PATH := "res://scenes/screens/tutorial_list.tscn"
+const GAME_SCENE_PATH := "res://scenes/screens/game.tscn"
+const MAIN_SCENE_PATH := "res://scenes/screens/main.tscn"
 const BLIND_MEMORY_LEVEL := 15
 ## Màn mẫu (tools/level_designer/make_samples.py) — level 15 = blind_memory. Màn THẬT id 15 là
 ## 'play' nên section 4 phải trỏ LevelManager vào thư mục màn mẫu.
@@ -134,7 +134,7 @@ func _section_2_walkthrough() -> void:
 	_set_flow_state(0, false, 1)
 
 	# Title của người chơi mới -> mở màn Tutorial (first_time)
-	var title: Node = (load("res://scenes/title.tscn") as PackedScene).instantiate()
+	var title: Node = (load("res://scenes/screens/title.tscn") as PackedScene).instantiate()
 	root.add_child(title)
 	await _settle(2)
 	title.call("_on_start_pressed")
@@ -218,7 +218,7 @@ func _section_2b_skip_all() -> void:
 	print("\n-- 2b. Bo qua tat ca --")
 	_set_flow_state(0, false, 1)
 
-	var title: Node = (load("res://scenes/title.tscn") as PackedScene).instantiate()
+	var title: Node = (load("res://scenes/screens/title.tscn") as PackedScene).instantiate()
 	root.add_child(title)
 	await _settle(2)
 	title.call("_on_start_pressed")
@@ -324,7 +324,7 @@ func _section_2e_list() -> void:
 	_gm.call("set_tutorial_completed", "first_time", true)
 
 	# Nut LUAT CHOI da CHUYEN tu dock Main sang man CAI DAT (xem 06_...LUAT_CHOI_SANG_SETTINGS)
-	var settings: Node = (load("res://scenes/settings.tscn") as PackedScene).instantiate()
+	var settings: Node = (load("res://scenes/screens/settings.tscn") as PackedScene).instantiate()
 	root.add_child(settings)
 	current_scene = settings
 	await _settle(3)
@@ -393,7 +393,7 @@ func _section_2e_list() -> void:
 	if current_scene != null:
 		current_scene.call("_on_back_pressed")
 	await _settle(4)
-	_check(_scene_path() == "res://scenes/settings.tscn",
+	_check(_scene_path() == "res://scenes/screens/settings.tscn",
 		"Nut BACK o man DANH SACH -> ve man DA MO no (Cai dat) (dang '%s')" % _scene_path())
 
 	if current_scene != null:
@@ -640,7 +640,7 @@ func _clear_current_level() -> void:
 
 ## Mở màn Title như lúc khởi động app rồi bấm "CHẠM ĐỂ BẮT ĐẦU" (chờ đổi scene xong)
 func _open_title_start() -> void:
-	var title: Node = (load("res://scenes/title.tscn") as PackedScene).instantiate()
+	var title: Node = (load("res://scenes/screens/title.tscn") as PackedScene).instantiate()
 	root.add_child(title)
 	await _settle(2)
 	title.call("_on_start_pressed")

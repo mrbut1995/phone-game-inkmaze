@@ -6,7 +6,7 @@ func _init() -> void:
 	print("  INTEGRATION TEST: GAME SCENE & BOARD RUNTIME FLOW")
 	print("========================================================\n")
 
-	var game_scene_packed: PackedScene = load("res://scenes/game.tscn")
+	var game_scene_packed: PackedScene = load("res://scenes/screens/game.tscn")
 	assert(game_scene_packed != null, "scenes/game.tscn phai load duoc")
 
 	var game_scene: GameScene = game_scene_packed.instantiate()

@@ -59,7 +59,7 @@ func _init() -> void:
 	stage.size = Vector2(540, 570)          # khung bản đồ (khớp MapArea thật)
 	stage.mouse_filter = Control.MOUSE_FILTER_IGNORE   # không nuốt input của nút Node2D
 	root.add_child(stage)
-	var map: LevelMap = (load("res://nodes/level_selection/level_map.tscn") as PackedScene).instantiate()
+	var map: LevelMap = (load("res://scenes/objects/level_selection/level_map.tscn") as PackedScene).instantiate()
 	stage.add_child(map)
 	await process_frame
 	var stars: Dictionary = gm.get("level_stars")
@@ -74,7 +74,7 @@ func _init() -> void:
 	failures += await _check_scroll_to(map)
 
 	# ------------------------------------------------- B. B?N ?? TRONG MAIN (b?n G?P)
-	var scene: MainScene = (load("res://scenes/main.tscn") as PackedScene).instantiate()
+	var scene: MainScene = (load("res://scenes/screens/main.tscn") as PackedScene).instantiate()
 	root.add_child(scene)
 	await process_frame
 	# Test này giữ hành vi CŨ (mỗi lần xem MỘT chương + chip ‹ CHƯƠNG n ›):

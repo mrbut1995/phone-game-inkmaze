@@ -14,7 +14,7 @@ extends BaseScene
 ## Dữ liệu & công thức điểm: xem scripts/autoload/RankingManager.gd
 ## ============================================================================
 
-@export var ROW_SCENE: PackedScene = preload("res://nodes/ranking/rank_row.tscn")
+@export var ROW_SCENE: PackedScene = preload("res://scenes/objects/ranking/rank_row.tscn")
 
 const TAB_KEYS := {
 	"dungeon": "STR_RANK_TAB_DUNGEON",

@@ -24,9 +24,9 @@ func _init() -> void:
 		DisplayServer.window_set_size(size)
 		await _frames(5)
 		print("── %dx%d canvas=%s" % [size.x, size.y, str(root.get_visible_rect().size)])
-		await _screen("main", "res://scenes/main.tscn", size)
-		await _screen("daily", "res://scenes/daily.tscn", size)
-		await _screen("shop", "res://scenes/shop.tscn", size)
+		await _screen("main", "res://scenes/screens/main.tscn", size)
+		await _screen("daily", "res://scenes/screens/daily.tscn", size)
+		await _screen("shop", "res://scenes/screens/shop.tscn", size)
 		await _game_play(size)
 		for mode_id in ["countdown_cost", "fading_ink", "sum_path", "fog_of_war", "one_stroke", "wall_builder"]:
 			await _game_mode(mode_id, size)
@@ -51,7 +51,7 @@ func _game_play(size: Vector2i) -> void:
 	if gm != null:
 		gm.set("current_mode", "play")
 		gm.set("current_level", 1)
-	var packed := load("res://scenes/game.tscn") as PackedScene
+	var packed := load("res://scenes/screens/game.tscn") as PackedScene
 	var scene: Node = packed.instantiate()
 	root.add_child(scene)
 	await _frames(24)
@@ -82,7 +82,7 @@ func _game_mode(mode_id: String, size: Vector2i) -> void:
 	if gm != null:
 		gm.set("current_mode", mode_id)
 		gm.set("current_level", 1)
-	var packed := load("res://scenes/game.tscn") as PackedScene
+	var packed := load("res://scenes/screens/game.tscn") as PackedScene
 	var scene: Node = packed.instantiate()
 	root.add_child(scene)
 	await _frames(24)

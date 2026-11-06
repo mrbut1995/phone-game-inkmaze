@@ -18,8 +18,8 @@ extends VBoxContainer
 ## 8px hai bên cho thoáng.
 ## ============================================================================
 
-const CARD_SCENE := preload("res://nodes/profiler/stat_card.tscn")
-const CARD_WIDE_SCENE := preload("res://nodes/profiler/stat_card_wide.tscn")
+const CARD_SCENE := preload("res://scenes/objects/profiler/stat_card.tscn")
+const CARD_WIDE_SCENE := preload("res://scenes/objects/profiler/stat_card_wide.tscn")
 
 @export var tape_bg: TextureRect = null
 @export var tape_label: Label = null

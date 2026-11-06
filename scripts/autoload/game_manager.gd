@@ -22,7 +22,7 @@ const TOOL_HINT := "hint"
 const TOOL_IDS: Array[String] = [TOOL_SKIP, TOOL_TELEPORT, TOOL_HINT]
 const INITIAL_TOOL_USES := 3
 ## Scene của ván chơi (mọi chế độ đều vào đây)
-const GAME_SCENE := "res://scenes/game.tscn"
+const GAME_SCENE := "res://scenes/screens/game.tscn"
 
 var current_mode: String = "dungeon"
 var current_difficulty: String = "medium"
@@ -784,7 +784,7 @@ func start_mode(mode_id: String, difficulty := "medium", test_run := false,
 
 ## Điều hướng tới Main Menu
 func go_to_main_menu() -> void:
-	_change_scene("res://scenes/main.tscn")
+	_change_scene("res://scenes/screens/main.tscn")
 
 
 ## DEPRECATED — Levels đã GỘP vào Main: bản đồ màn chơi nằm ngay trong Main.
@@ -797,17 +797,17 @@ func go_to_levels() -> void:
 ## KHÔNG đẩy màn CHƠI vào lịch sử và gỡ luôn mục Main đã đẩy lúc vào ván ⇒ Back ở Main về
 ## đúng màn trước đó, không nhảy ngược lại ván vừa chơi.
 func return_to_levels() -> void:
-	_return_to("res://scenes/main.tscn")
+	_return_to("res://scenes/screens/main.tscn")
 
 
 ## Điều hướng tới Màn hình Daily Mission (đi TIẾN — có ghi lịch sử)
 func go_to_daily() -> void:
-	_change_scene("res://scenes/daily.tscn")
+	_change_scene("res://scenes/screens/daily.tscn")
 
 
 ## Quay về Màn hình Daily sau khi ván Daily kết thúc (xem `return_to_levels()`)
 func return_to_daily() -> void:
-	_return_to("res://scenes/daily.tscn")
+	_return_to("res://scenes/screens/daily.tscn")
 
 
 ## Lùi về `path` như một thao tác BACK: gỡ mục `path` còn sót trên đỉnh lịch sử (do lúc vào

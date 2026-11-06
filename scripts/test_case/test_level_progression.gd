@@ -101,7 +101,7 @@ func _init() -> void:
 
 ## Mo scenes/game.tscn va doi 1 vai frame cho moi controller san sang
 func _open_game_scene() -> Node:
-	var packed: PackedScene = load("res://scenes/game.tscn")
+	var packed: PackedScene = load("res://scenes/screens/game.tscn")
 	assert(packed != null, "scenes/game.tscn phai load duoc")
 	var scene: Node = packed.instantiate()
 	root.add_child(scene)

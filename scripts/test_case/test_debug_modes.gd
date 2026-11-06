@@ -121,7 +121,7 @@ func _section_2_mode_mapping(gm: Node) -> void:
 # ---------------------------------------------------------------------------
 func _section_3_debug_scene(gm: Node) -> void:
 	print("\n--- 3. DEBUG SCENE: MUC SPECIAL MODES ---")
-	var scene: Node = (load("res://scenes/debug.tscn") as PackedScene).instantiate()
+	var scene: Node = (load("res://scenes/screens/debug.tscn") as PackedScene).instantiate()
 	root.add_child(scene)
 	await process_frame
 
@@ -168,7 +168,7 @@ func _section_3_debug_scene(gm: Node) -> void:
 func _section_4_no_progress(gm: Node, dm: Node, today: int, mask_before: int, arch: Node) -> void:
 	print("\n--- 4. VAN TEST KHONG GHI TIEN TRINH ---")
 	gm.call("prepare_mode_run", MINESWEEPER, "medium", true, 1)
-	var game_scene: Node = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	var game_scene: Node = (load("res://scenes/screens/game.tscn") as PackedScene).instantiate()
 	root.add_child(game_scene)
 	await process_frame
 	await process_frame
@@ -212,7 +212,7 @@ func _section_5_floor_override(gm: Node) -> void:
 	var sizes := {}
 	for floor_number in [1, 3]:
 		gm.call("prepare_mode_run", MINESWEEPER, "medium", true, floor_number)
-		var game_scene: Node = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+		var game_scene: Node = (load("res://scenes/screens/game.tscn") as PackedScene).instantiate()
 		root.add_child(game_scene)
 		await process_frame
 		await process_frame
@@ -241,7 +241,7 @@ func _section_5_floor_override(gm: Node) -> void:
 # ---------------------------------------------------------------------------
 func _section_6_tutorials(gm: Node, saved: Dictionary) -> void:
 	print("\n--- 6. DEBUG CONSOLE: MUC TUTORIAL (TEST) ---")
-	var scene: Node = (load("res://scenes/debug.tscn") as PackedScene).instantiate()
+	var scene: Node = (load("res://scenes/screens/debug.tscn") as PackedScene).instantiate()
 	root.add_child(scene)
 	await process_frame
 
@@ -270,7 +270,7 @@ func _section_6_tutorials(gm: Node, saved: Dictionary) -> void:
 	# Màn Tutorial tiêu thụ yêu cầu: vào là mở ĐÚNG bài được yêu cầu
 	gm.set("debug_run", true)
 	gm.call("request_tutorial", "how_to_play_move")
-	var tut: Node = (load("res://scenes/tutorial.tscn") as PackedScene).instantiate()
+	var tut: Node = (load("res://scenes/screens/tutorial.tscn") as PackedScene).instantiate()
 	root.add_child(tut)
 	await process_frame
 	await process_frame
@@ -293,7 +293,7 @@ func _section_6_tutorials(gm: Node, saved: Dictionary) -> void:
 	# Test mode TẮT + KHÔNG yêu cầu gì ⇒ chỉ HIỆN DANH SÁCH (không tự chạy chuỗi CORE)
 	gm.set("debug_run", false)
 	gm.call("request_tutorial", "")
-	var tut2: Node = (load("res://scenes/tutorial.tscn") as PackedScene).instantiate()
+	var tut2: Node = (load("res://scenes/screens/tutorial.tscn") as PackedScene).instantiate()
 	root.add_child(tut2)
 	await process_frame
 	await process_frame
@@ -342,7 +342,7 @@ func _section_7_reset_progress(gm: Node) -> void:
 		"Truoc reset: ruong chuong 1 va 2 da duoc danh dau da nhan")
 
 	# Bấm "Reset progress" trong Debug Console (không cần UI: gọi thẳng handler)
-	var debug_scene: Node = (load("res://scenes/debug.tscn") as PackedScene).instantiate()
+	var debug_scene: Node = (load("res://scenes/screens/debug.tscn") as PackedScene).instantiate()
 	root.add_child(debug_scene)
 	await process_frame
 	debug_scene.call("_reset_progress")

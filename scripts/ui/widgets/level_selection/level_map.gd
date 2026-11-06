@@ -39,10 +39,10 @@ signal scrolled(delta_y: float)
 ## ============================================================================
 @export_group("Scene con")
 ## Scene nút màn + scene đường nối (đổi art/logic không cần sửa code)
-@export var node_scene: PackedScene = preload("res://nodes/level_selection/level_node.tscn")
-@export var path_scene: PackedScene = preload("res://nodes/level_selection/level_path.tscn")
+@export var node_scene: PackedScene = preload("res://scenes/objects/level_selection/level_node.tscn")
+@export var path_scene: PackedScene = preload("res://scenes/objects/level_selection/level_path.tscn")
 ## Scene CỔNG chương (chỉ dùng khi dựng đường liền nhiều chương — `build(..., gates)`)
-@export var gate_scene: PackedScene = preload("res://nodes/main/chapter_gate.tscn")
+@export var gate_scene: PackedScene = preload("res://scenes/objects/main/chapter_gate.tscn")
 
 @export_group("Bố cục")
 ## Số CỘT của bản đồ kiểu RẮN (snake): hàng 0 ở ĐÁY đi trái→phải, hàng 1 đi phải→trái…

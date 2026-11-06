@@ -2735,7 +2735,7 @@ popup đang mở ⇒ đóng popup trên cùng · còn lịch sử ⇒ lùi màn 
 - Frame đầu **397 ms** (đo lại vòng này **411 ms**), lúc đó `done=false`, `pending=4`, `progress=0.00`, `event_init=false`
   ⇒ Splash hiện TRƯỚC, việc nạp nằm sau frame đầu. Tiến độ chạy **0 → 0,43 → 0,57 → 0,71 → 0,86 → 1,0** (mỗi bước 1 frame),
   nhãn hiện `"Đang nạp 29%"` → `"Đang nạp 100%"` (đã dịch, không lộ khoá), `_preloaded` = **3** scene, và
-  `ResourceLoader.has_cached("res://scenes/title.tscn")` = **true** ⇒ sang Title tức thì. Splash ở lại đúng `MIN_DISPLAY_SEC`
+  `ResourceLoader.has_cached("res://scenes/screens/title.tscn")` = **true** ⇒ sang Title tức thì. Splash ở lại đúng `MIN_DISPLAY_SEC`
   rồi mới sang Title (tổng ≈ 1,2 s kể từ lúc mở Splash).
 - Back Android mô phỏng bằng `root.propagate_notification(NOTIFICATION_WM_GO_BACK_REQUEST)`: ở Chọn Màn ⇒ về Main
   (lịch sử sạch `[]`), ở Main ⇒ thoát app.
@@ -2889,7 +2889,7 @@ Mockup chuẩn: "InkMaze Main v8 map toàn màn, Dungeon nổi" (bản ngang t�
 
 **5. Điều hướng — "vào màn Chọn màn" nay là "về Main".** Giữ tên hàm để khỏi sửa ~10 chỗ gọi:
 `Nav.goto_levels()` / `Nav.back_to_levels()` / `SceneManager.goto_levels()` / `GameManager.go_to_levels()` →
-`back_to_main()` · `GameManager.return_to_levels()` → `_return_to("res://scenes/main.tscn")` (gỡ mục Main khỏi lịch sử
+`back_to_main()` · `GameManager.return_to_levels()` → `_return_to("res://scenes/screens/main.tscn")` (gỡ mục Main khỏi lịch sử
 ⇒ Back ở Main về màn trước, không nhảy lại ván — xem §13.25b). `Nav.SCENE_LEVELS`/`SceneManager.SCENE_LEVELS` giữ tên
 nhưng trỏ `main.tscn`. `LoadingManager.PRELOAD_SCENES` bỏ `levels.tscn` (còn `title` + `main`).
 
@@ -3379,7 +3379,7 @@ python tools/content/fix_mojibake.py
 | `DAILY` | **Daily Challenge** — event ẢO, **ghim đầu**, làm mới 00:00 giờ máy | `Sao hôm nay / 6` |
 
 > **Daily KHÔNG bị viết lại.** `EventManager` tạo một `EventData` **ảo** (không phải file `.tres`) từ logic Daily có sẵn (`DailyManager`): tiến độ = **Sao của hôm nay** (`get_day_stars()` / `EventData.DAILY_STARS_TOTAL = 6` — 3 Sao CHƠI + 3 Sao THỬ THÁCH, xem §6).
-> **Bấm thẻ Daily trên Main (2026-10-15):** mở **THẲNG** `scenes/daily.tscn` — `MainScene._on_event_card_pressed()` tra loại event qua `EventManager.get_event()` và định tuyến `type == DAILY` sang `Nav.goto_daily()`, các loại khác (kể cả `LOGIN_STREAK`) vẫn mở màn chi tiết `scenes/event.tscn`. Trước đây MỌI thẻ đều đi qua `Nav.goto_event()` nên bấm Daily lại mở màn Event (phải bấm thêm 1 lần ở CTA mới tới Daily) — `test_main_layout` nay gác: bấm thẻ Daily phải ra `res://scenes/daily.tscn`.
+> **Bấm thẻ Daily trên Main (2026-10-15):** mở **THẲNG** `scenes/daily.tscn` — `MainScene._on_event_card_pressed()` tra loại event qua `EventManager.get_event()` và định tuyến `type == DAILY` sang `Nav.goto_daily()`, các loại khác (kể cả `LOGIN_STREAK`) vẫn mở màn chi tiết `scenes/event.tscn`. Trước đây MỌI thẻ đều đi qua `Nav.goto_event()` nên bấm Daily lại mở màn Event (phải bấm thêm 1 lần ở CTA mới tới Daily) — `test_main_layout` nay gác: bấm thẻ Daily phải ra `res://scenes/screens/daily.tscn`.
 
 ### 15.2. Dữ liệu (Resource, data-driven)
 

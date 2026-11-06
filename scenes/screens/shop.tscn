@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://b0h3vgcltapi4"]
+
+[ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base/base_scene.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://cjab7f0ksog8i" path="res://scripts/ui/screens/shop.gd" id="2_script"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://data/config/theme_default.tres" id="3_theme"]
+[ext_resource type="PackedScene" uid="uid://djbuylas5mnqj" path="res://scenes/objects/layouts/shop/landscape.tscn" id="L_Landscape"]
+[ext_resource type="PackedScene" uid="uid://drdanfkglu2nk" path="res://scenes/objects/layouts/shop/portrait.tscn" id="L_Portrait"]
+
+[node name="Control" unique_id=1284806110 instance=ExtResource("1_base")]
+theme = ExtResource("3_theme")
+script = ExtResource("2_script")
+
+[node name="Portrait" parent="." index="1" unique_id=380138198 instance=ExtResource("L_Portrait")]
+layout_mode = 1
+
+[node name="Landscape" parent="." index="2" unique_id=1694339658 instance=ExtResource("L_Landscape")]
+layout_mode = 1
+
+[connection signal="pressed" from="Portrait/TopBar/HeaderRow/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Portrait/TopBar/CoinChip/Content/Plus" to="." method="_on_wallet_plus_pressed"]
+[connection signal="pressed" from="Portrait/Pager/ChangePage/Prev" to="." method="_on_prev_page"]
+[connection signal="pressed" from="Portrait/Pager/ChangePage/Next" to="." method="_on_next_page"]
+[connection signal="pressed" from="Portrait/GiftBanner/GiftBtn" to="." method="_on_gift_pressed"]
+[connection signal="tab_pressed" from="Portrait/Tabs/Tab_pen" to="." method="_on_tab_pressed"]
+[connection signal="tab_pressed" from="Portrait/Tabs/Tab_theme" to="." method="_on_tab_pressed"]
+[connection signal="tab_pressed" from="Portrait/Tabs/Tab_tool" to="." method="_on_tab_pressed"]
+[connection signal="tab_pressed" from="Portrait/Tabs/Tab_coin" to="." method="_on_tab_pressed"]
+[connection signal="pen_changed" from="Portrait/Content/List/Pad" to="." method="_on_pad_pen_changed"]
+[connection signal="pressed" from="Landscape/TopBar/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Landscape/TopBar/CoinChip/Content/Plus" to="." method="_on_wallet_plus_pressed"]
+[connection signal="pressed" from="Landscape/Body/RightCol/Pager/Prev" to="." method="_on_prev_page"]
+[connection signal="pressed" from="Landscape/Body/RightCol/Pager/Next" to="." method="_on_next_page"]
+[connection signal="pressed" from="Landscape/Body/LeftCol/GiftBanner/GiftBtn" to="." method="_on_gift_pressed"]
+[connection signal="tab_pressed" from="Landscape/Body/RightCol/Tabs/Tab_pen" to="." method="_on_tab_pressed"]
+[connection signal="tab_pressed" from="Landscape/Body/RightCol/Tabs/Tab_theme" to="." method="_on_tab_pressed"]
+[connection signal="tab_pressed" from="Landscape/Body/RightCol/Tabs/Tab_tool" to="." method="_on_tab_pressed"]
+[connection signal="tab_pressed" from="Landscape/Body/RightCol/Tabs/Tab_coin" to="." method="_on_tab_pressed"]
+[connection signal="pen_changed" from="Landscape/Body/LeftCol/PadSlot/Pad" to="." method="_on_pad_pen_changed"]

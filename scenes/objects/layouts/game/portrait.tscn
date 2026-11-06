@@ -1,0 +1,105 @@
+[gd_scene format=3 uid="uid://wwrw355dsr83"]
+
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/base/base_layout.tscn" id="1_parent"]
+[ext_resource type="Script" uid="uid://hw0s8tromsjw" path="res://scripts/ui/layouts/game_layout_portrait.gd" id="2_bgd8i"]
+[ext_resource uid="uid://d25r76ii2rmgm" type="Texture2D" path="res://assets/images-png/game/btn_pause_chip_normal.png" id="3_5newe"]
+[ext_resource uid="uid://b3hedxw3x2brm" type="Texture2D" path="res://assets/images-png/game/btn_pause_chip_pressed.png" id="4_37s47"]
+[ext_resource uid="uid://3248n6sv34y8" type="Texture2D" path="res://assets/images-png/game/btn_pause_chip_disabled.png" id="5_bt5mj"]
+[ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://scenes/objects/ui/hud/game/game_hud/portrait.tscn" id="14_nepv3"]
+[ext_resource uid="uid://cqnbjrmogy3ut" type="Texture2D" path="res://assets/images-png/game/btn_help_chip_normal.png" id="47_help_n"]
+[ext_resource uid="uid://c6x746gj44e10" type="Texture2D" path="res://assets/images-png/game/btn_help_chip_pressed.png" id="48_help_p"]
+[ext_resource uid="uid://dgyndat5d1775" type="Texture2D" path="res://assets/images-png/game/btn_help_chip_disabled.png" id="49_help_d"]
+
+[node name="Portrait" unique_id=1240041642 node_paths=PackedStringArray("status_bar", "hud_slot", "board_holder", "pause_btn", "instruction_btn", "level_label", "subtitle_label", "header_anchor") instance=ExtResource("1_parent")]
+script = ExtResource("2_bgd8i")
+header_anchor = NodePath("TopBarAnchor")
+status_bar = NodePath("TopBar")
+hud_slot = NodePath("Information")
+board_holder = NodePath("BoardSlot")
+pause_btn = NodePath("TopBar/Pause")
+instruction_btn = NodePath("TopBar/Instruction")
+level_label = NodePath("TopBar/Title/LevelLabel")
+subtitle_label = NodePath("TopBar/Title/Subtitle")
+
+[node name="BoardSlot" type="Control" parent="." index="0" unique_id=181012636]
+layout_mode = 1
+anchor_left = 0.037777815
+anchor_top = 0.21864584
+anchor_right = 0.9827778
+anchor_bottom = 0.7496459
+offset_left = 0.0999794
+offset_top = 0.0999908
+offset_right = -0.200012
+offset_bottom = 0.339966
+mouse_filter = 2
+
+[node name="TopBarAnchor" type="Control" parent="." index="1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.085
+anchor_top = 0.027
+anchor_right = 0.974
+anchor_bottom = 0.09
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+mouse_filter = 2
+
+[node name="Pause" type="TextureButton" parent="TopBar" index="0" unique_id=1819656562]
+custom_minimum_size = Vector2(56, 56)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+ignore_texture_size = true
+stretch_mode = 5
+texture_normal = ExtResource("3_5newe")
+texture_pressed = ExtResource("4_37s47")
+texture_hover = ExtResource("3_5newe")
+texture_disabled = ExtResource("5_bt5mj")
+
+[node name="Title" type="VBoxContainer" parent="TopBar" index="1" unique_id=759259273]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Subtitle" type="Label" parent="TopBar/Title" index="0" unique_id=1420793601]
+modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
+layout_mode = 2
+theme_type_variation = &"GameCardLabel"
+horizontal_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="LevelLabel" type="Label" parent="TopBar/Title" index="1" unique_id=1375018799]
+layout_mode = 2
+text = "MÀN 01"
+theme_type_variation = &"GameTitle"
+horizontal_alignment = 1
+
+[node name="Instruction" type="TextureButton" parent="TopBar" index="4" unique_id=1619339572]
+custom_minimum_size = Vector2(56, 56)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+ignore_texture_size = true
+stretch_mode = 5
+texture_normal = ExtResource("47_help_n")
+texture_pressed = ExtResource("48_help_p")
+texture_hover = ExtResource("47_help_n")
+texture_disabled = ExtResource("49_help_d")
+
+[node name="Information" parent="." index="2" unique_id=1383101299 instance=ExtResource("14_nepv3")]
+layout_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="." index="3" unique_id=1660297945]
+layout_mode = 0
+offset_right = 20.0
+offset_bottom = 20.0
+
+[node name="CoinChip" parent="TopBar" index="2"]
+large_width_scale = 1.1
+
+[node name="LifeChip" parent="TopBar" index="3"]
+large_width_scale = 1.1

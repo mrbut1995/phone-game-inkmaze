@@ -13,7 +13,7 @@ signal day_selected(day: int)
 @export var ROWS := 5
 ## Ô ngày được DỰNG LÚC CHẠY (35 ô) vào `grid` — cùng quy ước với các danh sách
 ## động khác của project (`test_ui_scenes` vẫn thấy scene `day.tscn` + script riêng).
-const DAY_SCENE: PackedScene = preload("res://nodes/daily/day.tscn")
+const DAY_SCENE: PackedScene = preload("res://scenes/objects/daily/day.tscn")
 const DOW_KEYS: Array[String] = [
 	"STR_DOW_MON", "STR_DOW_TUE", "STR_DOW_WED", "STR_DOW_THU",
 	"STR_DOW_FRI", "STR_DOW_SAT", "STR_DOW_SUN",

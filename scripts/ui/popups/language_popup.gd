@@ -9,7 +9,7 @@ extends BasePopup
 
 signal locale_applied(code: String)
 
-const ROW_SCENE := preload("res://nodes/popups/language_row.tscn")
+const ROW_SCENE := preload("res://scenes/objects/ui/popups/language_row.tscn")
 ## Cờ dự phòng khi thiếu art — gán trong `language.tscn` (ExtResource)
 @export var flag_fallback: Texture2D = null
 

@@ -21,11 +21,11 @@ const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 ## Id "phần thưởng" gửi cho AdsManager khi mở khoá ngày bỏ lỡ bằng quảng cáo
 const ADS_REWARD_ID := "daily_unlock"
 ## Thẻ mốc thưởng (instantiate cho MỌI mốc trong `DailyManager.MILESTONES`)
-@export var MILESTONE_CHIP: PackedScene = preload("res://nodes/daily/milestone_chip.tscn")
+@export var MILESTONE_CHIP: PackedScene = preload("res://scenes/objects/daily/milestone_chip.tscn")
 ## Bong bóng thông tin phần thưởng (hiện khi NHẤN GIỮ chip mốc)
-@export var REWARD_TIP: PackedScene = preload("res://nodes/daily/reward_tip.tscn")
+@export var REWARD_TIP: PackedScene = preload("res://scenes/objects/daily/reward_tip.tscn")
 ## Hiệu ứng trang trí thanh Sao (đầu thanh sáng + dải sáng quét)
-@export var STAR_BAR_FX: PackedScene = preload("res://nodes/daily/star_bar_fx.tscn")
+@export var STAR_BAR_FX: PackedScene = preload("res://scenes/objects/daily/star_bar_fx.tscn")
 
 ## Node UI của màn nằm trong BỐ CỤC đang hiển thị (`Portrait` / `Landscape` — 2 hướng dùng
 ## CÙNG tên node) và đã BIND SẴN bằng `@export` trong `scenes/layout/<hướng>/daily.tscn`

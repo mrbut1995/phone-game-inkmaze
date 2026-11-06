@@ -5,7 +5,7 @@ extends EventCardBase
 ## (nodes/main/event_card.tscn). Thẻ Thử thách hằng ngày tách riêng: `DailyCard`.
 ##
 ## Cách dùng:
-##   var card = preload("res://nodes/main/event_card.tscn").instantiate()
+##   var card = preload("res://scenes/objects/main/event_card.tscn").instantiate()
 ##   add_child(card)
 ##   card.setup(event_data)
 ##

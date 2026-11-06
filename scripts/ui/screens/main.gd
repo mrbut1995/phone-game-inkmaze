@@ -12,7 +12,7 @@ extends BaseScene
 ## bằng `@export` trong `scenes/layout/<hướng>/main.tscn` ⇒ code đọc qua `layout.<tên>`.
 ## ============================================================================
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
-const EventButtonColumnScene := preload("res://nodes/main/event_button_column.tscn")
+const EventButtonColumnScene := preload("res://scenes/objects/main/event_button_column.tscn")
 ## Dock kiểu "J": art khai trong `.tscn` (panel + `dock_button.tscn`); ở đây chỉ gọi phần co giãn runtime
 const DockStyleJ := preload("res://scripts/ui/widgets/main/dock_style_j.gd")
 

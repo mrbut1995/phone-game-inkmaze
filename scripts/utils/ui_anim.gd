@@ -12,7 +12,7 @@ extends RefCounted
 
 ## Nhãn "chữ nổi" (+5 · BONUS · PERFECT): cỡ · pivot · canh lề KHAI TRONG SCENE,
 ## code chỉ đặt nội dung + chạy hiệu ứng (không tạo Label bằng `.new()`).
-const FLOATING_TEXT_SCENE := preload("res://nodes/game/floating_text.tscn")
+const FLOATING_TEXT_SCENE := preload("res://scenes/objects/game/floating_text.tscn")
 
 ## Chạy hoạt cảnh khai sẵn trong LAYOUT (player phụ như PulseAnim/IdleAnim/TapAnim…).
 ## Trả về TRUE nếu đã chạy animation; FALSE = scene thiếu player/animation ⇒ phía gọi

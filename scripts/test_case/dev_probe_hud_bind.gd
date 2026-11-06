@@ -3,9 +3,9 @@ extends SceneTree
 ##   godot --headless --path . -s res://scripts/test_case/dev_probe_hud_bind.gd
 
 const PATHS := [
-	"res://nodes/hud/portrait/game/game_hud.tscn",
-	"res://nodes/hud/landscape/game/game_hud.tscn",
-	"res://nodes/hud/portrait/game/level_mode.tscn",
+	"res://scenes/objects/ui/hud/game/game_hud/portrait.tscn",
+	"res://scenes/objects/ui/hud/game/game_hud/landscape.tscn",
+	"res://scenes/objects/ui/hud/game/level_mode/portrait.tscn",
 	"res://nodes/hud/landscape/game/fog_of_war_hud.tscn",
 	"res://nodes/hud/portrait/game/sum_path_hud.tscn",
 	"res://nodes/hud/portrait/game/countdown_hud.tscn",

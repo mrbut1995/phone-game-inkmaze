@@ -296,7 +296,7 @@ func _section_4_game_manager(gm: Node, dm: Node) -> void:
 # ---------------------------------------------------------------------------
 func _section_5_scene(dm: Node) -> void:
 	print("--- 5. Man Daily: 2 the + 4 chip moc + lich ---")
-	var packed: PackedScene = load("res://scenes/daily.tscn")
+	var packed: PackedScene = load("res://scenes/screens/daily.tscn")
 	_check(packed != null, "scenes/daily.tscn load duoc")
 	if packed == null:
 		return
@@ -351,7 +351,7 @@ func _section_5_scene(dm: Node) -> void:
 # ---------------------------------------------------------------------------
 func _section_5b_selection_and_ads(dm: Node, arch: Node) -> void:
 	print("--- 5b. Vong sang o dang chon + mo khoa bang quang cao ---")
-	var packed: PackedScene = load("res://scenes/daily.tscn")
+	var packed: PackedScene = load("res://scenes/screens/daily.tscn")
 	if packed == null:
 		return
 	var scene: DailyScene = packed.instantiate()
@@ -425,7 +425,7 @@ func _section_5b_selection_and_ads(dm: Node, arch: Node) -> void:
 # ---------------------------------------------------------------------------
 func _section_5c_milestone_popup(dm: Node) -> void:
 	print("--- 5c. Nhan moc -> popup nho bao thuong ---")
-	var packed: PackedScene = load("res://scenes/daily.tscn")
+	var packed: PackedScene = load("res://scenes/screens/daily.tscn")
 	if packed == null:
 		return
 	var scene: DailyScene = packed.instantiate()
@@ -471,7 +471,7 @@ func _section_5c_milestone_popup(dm: Node) -> void:
 # ---------------------------------------------------------------------------
 func _section_5d_wallet_and_celebrate(dm: Node, gm: Node, arch: Node) -> void:
 	print("--- 5d. Vi Xu + hieu ung Sao khi hoan thanh van ---")
-	var packed: PackedScene = load("res://scenes/daily.tscn")
+	var packed: PackedScene = load("res://scenes/screens/daily.tscn")
 	if packed == null:
 		return
 	var scene: DailyScene = packed.instantiate()
@@ -562,7 +562,7 @@ func _cell_for(scene: DailyScene, day: int) -> DailyDayCell:
 # ---------------------------------------------------------------------------
 func _section_6_popup() -> void:
 	print("--- 6. Popup thang Daily hien SAO ---")
-	var packed: PackedScene = load("res://nodes/popups/winning_daily.tscn")
+	var packed: PackedScene = load("res://scenes/objects/ui/popups/winning_daily.tscn")
 	_check(packed != null, "winning_daily.tscn load duoc")
 	if packed == null:
 		return
@@ -608,7 +608,7 @@ func _section_7_challenge_run(gm: Node, dm: Node) -> void:
 	gm.call("prepare_daily_run", day, "challenge")
 	_check(str(gm.get("daily_variant")) == "challenge", "Chuan bi van THU THACH")
 
-	var packed: PackedScene = load("res://scenes/game.tscn")
+	var packed: PackedScene = load("res://scenes/screens/game.tscn")
 	if packed == null:
 		_check(false, "scenes/game.tscn load duoc")
 		return

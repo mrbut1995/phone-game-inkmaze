@@ -10,8 +10,8 @@ const PATHS := [
 	"res://nodes/hud/landscape/game/fog_of_war_hud.tscn",
 	"res://nodes/hud/portrait/game/sum_path_hud.tscn",
 	"res://nodes/hud/landscape/game/sum_path_hud.tscn",
-	"res://nodes/hud/portrait/game/dungeon_mode.tscn",
-	"res://nodes/hud/landscape/game/dungeon_mode.tscn",
+	"res://scenes/objects/ui/hud/game/dungeon_mode/portrait.tscn",
+	"res://scenes/objects/ui/hud/game/dungeon_mode/landscape.tscn",
 ]
 
 

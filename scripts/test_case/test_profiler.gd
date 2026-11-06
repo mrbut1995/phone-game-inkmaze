@@ -378,7 +378,7 @@ func _section_5_scene(manager: Node) -> void:
 
 	# Bố cục NGANG: nạp CHÍNH dữ liệu đó vào layout Landscape để chắc chắn binding
 	# (node paths trong scenes/layout/landscape/profiler_popup.tscn) khớp tên node script dùng.
-	var land := (load("res://scenes/layout/landscape/profiler_popup.tscn") as PackedScene).instantiate() as ProfilerLayout
+	var land := (load("res://scenes/objects/layouts/profiler_popup/landscape.tscn") as PackedScene).instantiate() as ProfilerLayout
 	scene.add_child(land)
 	await process_frame
 	scene.layout = land

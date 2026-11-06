@@ -13,10 +13,10 @@ extends BaseScene
 ## - VUỐT DỌC để cuộn danh sách (tự xử lý ở `_input` vì nút trên thẻ "ăn" sự kiện kéo)
 ## ============================================================================
 
-@export var ROW_SCENE: PackedScene = preload("res://nodes/shop/item_row.tscn")
-@export var TILE_SCENE: PackedScene = preload("res://nodes/shop/item_tile.tscn")
-@export var COIN_SCENE: PackedScene = preload("res://nodes/shop/coin_tile.tscn")
-@export var PAGE_DOT_SCENE: PackedScene = preload("res://nodes/shop/page_dot.tscn")
+@export var ROW_SCENE: PackedScene = preload("res://scenes/objects/shop/item_row.tscn")
+@export var TILE_SCENE: PackedScene = preload("res://scenes/objects/shop/item_tile.tscn")
+@export var COIN_SCENE: PackedScene = preload("res://scenes/objects/shop/coin_tile.tscn")
+@export var PAGE_DOT_SCENE: PackedScene = preload("res://scenes/objects/shop/page_dot.tscn")
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
 ## Số món mỗi trang ở lưới 2 cột — GIÁ TRỊ THIẾT KẾ (màn 1080×1920).

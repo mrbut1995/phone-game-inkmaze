@@ -15,9 +15,9 @@ signal soundtrack_changed(track_path: String, theme_id: String, context_name: St
 const DEFAULT_SOUNDTRACK := "res://assets/audio/music/Wallpaper.mp3"  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 const DEFAULT_THEME := "theme_gride_4ly"
 
-const SCENE_GAME := "res://scenes/game.tscn"
-const SCENE_DAILY := "res://scenes/daily.tscn"
-const SCENE_CREDIT := "res://scenes/credit.tscn"
+const SCENE_GAME := "res://scenes/screens/game.tscn"
+const SCENE_DAILY := "res://scenes/screens/daily.tscn"
+const SCENE_CREDIT := "res://scenes/screens/credit.tscn"
 
 ## 2026-10-03: KHÔNG chênh CAO ĐỘ nữa — nhạc phải nghe đúng như bản gốc (người chơi báo
 ## vào màn chơi là "nhạc lên cao độ"); chỉ giữ chênh ÂM LƯỢNG nhẹ theo context/theme.

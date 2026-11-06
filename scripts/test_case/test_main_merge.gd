@@ -7,7 +7,7 @@ extends SceneTree
 ##   · Khung "chương đang khoá" phủ cả màn (`ChapterLockSheet`) + Back chỉ đóng khung.
 ## ============================================================================
 
-const MAIN := "res://scenes/main.tscn"
+const MAIN := "res://scenes/screens/main.tscn"
 
 var _checks := 0
 var _failed := 0
@@ -72,10 +72,10 @@ func _section_files() -> void:
 	]:
 		_check(not ResourceLoader.exists(path), "Da xoa %s" % path.get_file())
 	for path in [
-		"res://nodes/main/level_section.tscn",
-		"res://nodes/main/chapter_chip.tscn",
-		"res://nodes/main/chest_widget.tscn",
-		"res://nodes/main/dungeon_pill.tscn",
+		"res://scenes/objects/main/level_section.tscn",
+		"res://scenes/objects/main/chapter_chip.tscn",
+		"res://scenes/components/main/chest_widget.tscn",
+		"res://scenes/components/main/dungeon_pill.tscn",
 	]:
 		_check(ResourceLoader.exists(path), "Co component %s" % path.get_file())
 
@@ -96,7 +96,7 @@ func _section_navigation() -> void:
 
 	var sm: Node = root.get_node("SceneManager")
 	var gm: Node = root.get_node("GameManager")
-	sm.call("change_scene", "res://scenes/daily.tscn")
+	sm.call("change_scene", "res://scenes/screens/daily.tscn")
 	await process_frame
 	await process_frame
 	gm.call("go_to_levels")

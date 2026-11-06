@@ -10,7 +10,7 @@ extends EventCardBase
 ## LÁ LỊCH (tháng / ngày / thứ) + tiêu đề 2 dòng + khung **Sao hôm nay x/6** + CTA.
 ##
 ## Cách dùng:
-##   var card = preload("res://nodes/main/daily_card.tscn").instantiate()
+##   var card = preload("res://scenes/objects/main/daily_card.tscn").instantiate()
 ##   add_child(card)
 ##   card.setup(daily_event_data)
 ## ============================================================================

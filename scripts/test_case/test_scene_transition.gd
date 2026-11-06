@@ -34,7 +34,7 @@ func _init() -> void:
 	await process_frame
 
 	# 2. Test SceneTransition Component — node giao diện KHAI BÁO SẴN trong scenes/loading.tscn
-	var packed: PackedScene = load("res://scenes/loading.tscn")
+	var packed: PackedScene = load("res://scenes/autoload/loading.tscn")
 	assert(packed != null, "scenes/loading.tscn phai load duoc")
 	var transition: SceneTransition = packed.instantiate()
 	root.add_child(transition)
@@ -70,7 +70,7 @@ func _init() -> void:
 	await process_frame
 	assert(not bare.has_ui(), "SceneTransition.new() khong duoc tu sinh node giao dien")
 	var bare_called := [false]
-	await bare.play_transition("res://scenes/main.tscn", func() -> void: bare_called[0] = true, "page_turn_forward")
+	await bare.play_transition("res://scenes/screens/main.tscn", func() -> void: bare_called[0] = true, "page_turn_forward")
 	assert(bare_called[0], "Khong co node giao dien thi van phai goi callback doi scene")
 	Engine.print_error_messages = prev_print_errors
 	print("[CHECK] Thieu node giao dien -> chuyen canh tuc thi (khong crash).")
@@ -93,7 +93,7 @@ func _init() -> void:
 
 	# Chạy transition với await
 	await transition.play_transition(
-		"res://scenes/main.tscn",
+		"res://scenes/screens/main.tscn",
 		func() -> void: callback_called[0] = true,
 		"page_turn_forward"
 	)
@@ -107,7 +107,7 @@ func _init() -> void:
 	# 4. Test Transition Ink Circle
 	var ink_called := [false]
 	await transition.play_transition(
-		"res://scenes/game.tscn",
+		"res://scenes/screens/game.tscn",
 		func() -> void: ink_called[0] = true,
 		"ink_circle"
 	)
@@ -119,7 +119,7 @@ func _init() -> void:
 	# 5. Test Transition Paper Fade
 	var fade_called := [false]
 	await transition.play_transition(
-		"res://scenes/settings.tscn",
+		"res://scenes/screens/settings.tscn",
 		func() -> void: fade_called[0] = true,
 		"paper_fade"
 	)
@@ -148,30 +148,30 @@ func _check_back_after_run() -> void:
 	screen.call("clear_history")
 
 	# Main → Chọn màn (đi TIẾN) → vào ván màn 9
-	sm.call("change_scene", "res://scenes/main.tscn")
+	sm.call("change_scene", "res://scenes/screens/main.tscn")
 	await _frames(3)
 	gm.call("go_to_levels")
 	await _frames(3)
-	assert(current_scene.scene_file_path == "res://scenes/main.tscn", "go_to_levels() phai ve Main (ban do nam trong Main)")
-	sm.call("change_scene", "res://scenes/game.tscn")
+	assert(current_scene.scene_file_path == "res://scenes/screens/main.tscn", "go_to_levels() phai ve Main (ban do nam trong Main)")
+	sm.call("change_scene", "res://scenes/screens/game.tscn")
 	await _frames(3)
-	assert(str(screen.call("peek_history")) == "res://scenes/main.tscn",
+	assert(str(screen.call("peek_history")) == "res://scenes/screens/main.tscn",
 		"Vao van tu Main: lich su phai giu Main de Back con dung")
 
 	# Thắng màn cuối chương (nút "CHỌN CHƯƠNG" ⇒ `return_to_levels()`)
 	gm.call("return_to_levels")
 	await _frames(3)
-	assert(current_scene.scene_file_path == "res://scenes/main.tscn", "return_to_levels phai ve Main")
-	assert(str(screen.call("peek_history")) != "res://scenes/game.tscn",
+	assert(current_scene.scene_file_path == "res://scenes/screens/main.tscn", "return_to_levels phai ve Main")
+	assert(str(screen.call("peek_history")) != "res://scenes/screens/game.tscn",
 		"Man CHƠI KHONG duoc nam trong lich su sau khi van ket thuc")
-	assert(not _history_has(screen, "res://scenes/game.tscn"),
+	assert(not _history_has(screen, "res://scenes/screens/game.tscn"),
 		"Man CHOI khong con trong lich su sau khi van ket thuc")
 	print("[CHECK] Van ket thuc -> ve Main KHONG day man choi vao lich su.")
 
 	# Back ở Main: KHÔNG quay lại ván vừa chơi (lịch sử đã gỡ mục màn chơi/Main)
 	screen.call("go_back")
 	await _frames(4)
-	assert(current_scene.scene_file_path != "res://scenes/game.tscn",
+	assert(current_scene.scene_file_path != "res://scenes/screens/game.tscn",
 		"Back o Main KHONG quay lai van vua choi")
 	print("[CHECK] Back o Main khong quay lai van vua choi.")
 
@@ -179,12 +179,12 @@ func _check_back_after_run() -> void:
 	screen.call("clear_history")
 	gm.call("go_to_daily")
 	await _frames(3)
-	sm.call("change_scene", "res://scenes/game.tscn")
+	sm.call("change_scene", "res://scenes/screens/game.tscn")
 	await _frames(3)
 	gm.call("return_to_daily")
 	await _frames(3)
-	assert(current_scene.scene_file_path == "res://scenes/daily.tscn", "return_to_daily phai ve man Daily")
-	assert(str(screen.call("peek_history")) == "res://scenes/main.tscn",
+	assert(current_scene.scene_file_path == "res://scenes/screens/daily.tscn", "return_to_daily phai ve man Daily")
+	assert(str(screen.call("peek_history")) == "res://scenes/screens/main.tscn",
 		"return_to_daily phai go muc 'Daily' da day luc vao van, chi con man truoc do")
 	print("[CHECK] Van Daily ket thuc -> ve Daily khong de lai lich su man choi.")
 

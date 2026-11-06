@@ -29,7 +29,7 @@ func _init() -> void:
 	gm.set("current_level", 3)
 	gm.set("unlocked_levels", 30)
 
-	var packed: PackedScene = load("res://scenes/game.tscn")
+	var packed: PackedScene = load("res://scenes/screens/game.tscn")
 	assert(packed != null, "scenes/game.tscn phai load duoc")
 	var scene: GameScene = packed.instantiate()
 	root.add_child(scene)

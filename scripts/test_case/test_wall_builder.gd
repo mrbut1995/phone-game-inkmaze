@@ -24,7 +24,7 @@ func _init() -> void:
 	root.size = Vector2i(1080, 1920)
 	TranslationServer.set_locale("vi")
 
-	var scene: GameScene = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	var scene: GameScene = (load("res://scenes/screens/game.tscn") as PackedScene).instantiate()
 	assert(scene != null, "Phai load duoc scenes/game.tscn")
 	root.add_child(scene)
 	await process_frame

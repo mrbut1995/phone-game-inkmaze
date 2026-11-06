@@ -10,9 +10,9 @@ var _pressed: Control = null
 
 
 func _initialize() -> void:
-	var packed := load("res://scenes/main.tscn") as PackedScene
+	var packed := load("res://scenes/screens/main.tscn") as PackedScene
 	if packed == null:
-		_fails.append("không nạp được res://scenes/main.tscn")
+		_fails.append("không nạp được res://scenes/screens/main.tscn")
 		return
 	_main = packed.instantiate()
 	root.add_child(_main)

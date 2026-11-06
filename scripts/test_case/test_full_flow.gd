@@ -9,7 +9,7 @@ func _init() -> void:
 	print("========================================================\n")
 
 	# 1. Test Main Scene
-	var main_packed: PackedScene = load("res://scenes/main.tscn")
+	var main_packed: PackedScene = load("res://scenes/screens/main.tscn")
 	assert(main_packed != null, "scenes/main.tscn phai load duoc")
 	var main_scene: MainScene = main_packed.instantiate()
 	root.add_child(main_scene)
@@ -67,7 +67,7 @@ func _init() -> void:
 	await process_frame
 
 	# 3. Test Daily Mission Scene
-	var daily_packed: PackedScene = load("res://scenes/daily.tscn")
+	var daily_packed: PackedScene = load("res://scenes/screens/daily.tscn")
 	assert(daily_packed != null, "scenes/daily.tscn phai load duoc")
 	var daily_scene: DailyScene = daily_packed.instantiate()
 	root.add_child(daily_scene)
@@ -84,7 +84,7 @@ func _init() -> void:
 	await process_frame
 
 	# 4. Test Game Scene
-	var game_packed: PackedScene = load("res://scenes/game.tscn")
+	var game_packed: PackedScene = load("res://scenes/screens/game.tscn")
 	assert(game_packed != null, "scenes/game.tscn phai load duoc")
 	var game_scene: GameScene = game_packed.instantiate()
 	root.add_child(game_scene)
@@ -96,7 +96,7 @@ func _init() -> void:
 	assert(game_scene.find_child("Popups", true, false) != null, "GameScene phai co node Popups de chua popup")
 
 	# 5. Test Debug Scene (man hinh dev)
-	var debug_packed: PackedScene = load("res://scenes/debug.tscn")
+	var debug_packed: PackedScene = load("res://scenes/screens/debug.tscn")
 	assert(debug_packed != null, "scenes/debug.tscn phai load duoc")
 	var debug_scene: Node = debug_packed.instantiate()
 	root.add_child(debug_scene)

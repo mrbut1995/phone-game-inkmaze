@@ -16,7 +16,7 @@ extends SceneTree
 ## ============================================================================
 
 const TITLE := "CỬA HÀNG"
-const SCENE_PATH := "res://scenes/shop.tscn"
+const SCENE_PATH := "res://scenes/screens/shop.tscn"
 const EXPECTED_COUNTS := {"pen": 10, "theme": 8, "tool": 7, "coin": 6}
 
 var _backup := ""

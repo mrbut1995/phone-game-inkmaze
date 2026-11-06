@@ -96,7 +96,7 @@ func _section_2_game(shop: Node) -> void:
 	gm.set("current_mode", "play")
 	gm.set("current_level", 1)
 
-	var scene: Node = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	var scene: Node = (load("res://scenes/screens/game.tscn") as PackedScene).instantiate()
 	root.add_child(scene)
 	await process_frame
 	await process_frame

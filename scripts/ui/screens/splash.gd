@@ -11,7 +11,7 @@ extends BaseScene
 ## ============================================================================
 
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
-const SCENE_TITLE := "res://scenes/title.tscn"
+const SCENE_TITLE := "res://scenes/screens/title.tscn"
 
 ## Giữ Splash tối thiểu bao lâu (giây) để người chơi kịp thấy logo + thanh nạp
 const MIN_DISPLAY_SEC := 1.2

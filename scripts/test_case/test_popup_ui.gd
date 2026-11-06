@@ -11,9 +11,9 @@ extends SceneTree
 ## ============================================================================
 
 const SCENES := {
-	"winning": "res://nodes/popups/winning.tscn",
-	"next_floor": "res://nodes/popups/next_floor.tscn",
-	"language": "res://nodes/popups/language.tscn",
+	"winning": "res://scenes/objects/ui/popups/winning.tscn",
+	"next_floor": "res://scenes/objects/ui/popups/next_floor.tscn",
+	"language": "res://scenes/objects/ui/popups/language.tscn",
 }
 ## Icon CỤC TẨY trên nút Restart — cả 4 trạng thái dùng CHUNG một nhóm glyph (chỉ đổi nền):
 ## thân cục tẩy + vạch chia + đáy cục tẩy (đường dẫn dưới đây lấy từ art hiện tại).

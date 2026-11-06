@@ -9,26 +9,26 @@ extends RefCounted
 ## thẳng `SceneManager`. Node autoload lấy qua `Svc.scene()` / `Svc.screen()`.
 ## ============================================================================
 
-const SCENE_MAIN := "res://scenes/main.tscn"
+const SCENE_MAIN := "res://scenes/screens/main.tscn"
 ## Màn CHỌN MÀN đã GỘP vào Main (bản đồ nằm ngay trong Main) — giữ tên hằng để code cũ
 ## không vỡ, nhưng trỏ về Main.
-const SCENE_LEVELS := "res://scenes/main.tscn"
-const SCENE_GAME := "res://scenes/game.tscn"
-const SCENE_DAILY := "res://scenes/daily.tscn"
-const SCENE_SETTINGS := "res://scenes/settings.tscn"
-const SCENE_DEBUG := "res://scenes/debug.tscn"
-const SCENE_ACHIEVEMENT := "res://scenes/achievement.tscn"
-const SCENE_RANKING := "res://scenes/ranking.tscn"
+const SCENE_LEVELS := "res://scenes/screens/main.tscn"
+const SCENE_GAME := "res://scenes/screens/game.tscn"
+const SCENE_DAILY := "res://scenes/screens/daily.tscn"
+const SCENE_SETTINGS := "res://scenes/screens/settings.tscn"
+const SCENE_DEBUG := "res://scenes/screens/debug.tscn"
+const SCENE_ACHIEVEMENT := "res://scenes/screens/achievement.tscn"
+const SCENE_RANKING := "res://scenes/screens/ranking.tscn"
 ## Màn CỬA HÀNG — xem scripts/ui/screens/shop.gd
-const SCENE_SHOP := "res://scenes/shop.tscn"
+const SCENE_SHOP := "res://scenes/screens/shop.tscn"
 ## Màn CREDIT — soundtrack + ghi công
-const SCENE_CREDIT := "res://scenes/credit.tscn"
+const SCENE_CREDIT := "res://scenes/screens/credit.tscn"
 ## Màn TUTORIAL — CHI TIẾT bài hướng dẫn (mount đúng bài được yêu cầu)
-const SCENE_TUTORIAL := "res://scenes/tutorial.tscn"
+const SCENE_TUTORIAL := "res://scenes/screens/tutorial.tscn"
 ## Màn DANH SÁCH bài hướng dẫn — bấm 1 bài mới mở `SCENE_TUTORIAL`
-const SCENE_TUTORIAL_LIST := "res://scenes/tutorial_list.tscn"
+const SCENE_TUTORIAL_LIST := "res://scenes/screens/tutorial_list.tscn"
 ## Màn CHI TIẾT SỰ KIỆN — xem scripts/ui/screens/event.gd
-const SCENE_EVENT := "res://scenes/event.tscn"
+const SCENE_EVENT := "res://scenes/screens/event.tscn"
 ## (HỒ SƠ CÁ NHÂN nay là POPUP — mở bằng `Popups.open(Popups.PROFILER)`)
 
 

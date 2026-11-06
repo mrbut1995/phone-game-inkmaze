@@ -40,7 +40,7 @@ func _init() -> void:
 
 
 func _shoot(tid: String, extra_step: int, size: Vector2i) -> void:
-	var packed := load("res://scenes/tutorial.tscn") as PackedScene
+	var packed := load("res://scenes/screens/tutorial.tscn") as PackedScene
 	if packed == null:
 		print("  [LOI] khong load duoc scenes/tutorial.tscn")
 		return

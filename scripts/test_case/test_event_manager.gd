@@ -276,7 +276,7 @@ func _section_all_active_events_and_dots() -> void:
 	_check((preview_events[0] as EventData).type == EventData.Type.DAILY,
 		"Daily van dung dau danh sach xem thu")
 
-	var packed := load("res://nodes/main/event_dots.tscn") as PackedScene
+	var packed := load("res://scenes/components/main/event_dots.tscn") as PackedScene
 	var event_dots: EventDots = null
 	if packed != null:
 		event_dots = packed.instantiate() as EventDots
@@ -292,7 +292,7 @@ func _section_all_active_events_and_dots() -> void:
 	_check(last_dot.visible, "Cham trang cuoi hien thi khi danh sach vuot 8 event")
 	event_dots.queue_free()
 
-	var carousel_packed := load("res://nodes/main/event_carousel.tscn") as PackedScene
+	var carousel_packed := load("res://scenes/objects/main/event_carousel.tscn") as PackedScene
 	var carousel: EventCarousel = null
 	if carousel_packed != null:
 		carousel = carousel_packed.instantiate() as EventCarousel

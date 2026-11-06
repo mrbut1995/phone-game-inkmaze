@@ -67,7 +67,7 @@ func _init() -> void:
 func _section_1_shop() -> void:
 	print("[1] Scene con màn Cửa hàng...")
 
-	var tab := _spawn("res://nodes/shop/tab_button.tscn") as ShopTabButton
+	var tab := _spawn("res://scenes/objects/shop/tab_button.tscn") as ShopTabButton
 	_entry(tab != null, "tab_button.tscn instantiate ra ShopTabButton")
 	if tab == null:
 		return
@@ -100,7 +100,7 @@ func _section_1_shop() -> void:
 	tab.queue_free()
 
 	# Tab khai san trong scene: gan `category` + `label_key` TRƯỚC khi vào cây ⇒ `_ready` tự dịch nhãn
-	var packed_tab := load("res://nodes/shop/tab_button.tscn") as PackedScene
+	var packed_tab := load("res://scenes/objects/shop/tab_button.tscn") as PackedScene
 	var scene_tab := packed_tab.instantiate() as ShopTabButton
 	scene_tab.category = "theme"
 	scene_tab.label_key = "STR_SHOP_TAB_THEME"
@@ -109,7 +109,7 @@ func _section_1_shop() -> void:
 		"tab khai trong scene tu dich nhan ('%s')" % scene_tab.label.text)
 	scene_tab.queue_free()
 
-	var grid := _spawn("res://nodes/shop/item_grid.tscn") as ShopItemGrid
+	var grid := _spawn("res://scenes/objects/shop/item_grid.tscn") as ShopItemGrid
 	_entry(grid != null, "item_grid.tscn instantiate ra ShopItemGrid")
 	if grid != null:
 		_entry(grid.columns == 2, "luoi the: 2 cot")
@@ -117,7 +117,7 @@ func _section_1_shop() -> void:
 		_entry(grid.get_theme_constant("v_separation") == 12, "khe doc 12 (tu scene)")
 		grid.queue_free()
 
-	var dot := _spawn("res://nodes/shop/page_dot.tscn") as ShopPageDot
+	var dot := _spawn("res://scenes/objects/shop/page_dot.tscn") as ShopPageDot
 	_entry(dot != null, "page_dot.tscn instantiate ra ShopPageDot")
 	if dot != null:
 		dot.set_current(true)
@@ -135,7 +135,7 @@ func _section_1_shop() -> void:
 func _section_2_achievement() -> void:
 	print("[2] Scene con màn Sổ tay...")
 
-	var tab := _spawn("res://nodes/achievements/tab_button.tscn") as AchTabButton
+	var tab := _spawn("res://scenes/objects/achievements/tab_button.tscn") as AchTabButton
 	_entry(tab != null, "tab_button.tscn instantiate ra AchTabButton")
 	var portrait_tab_h := 0.0
 	if tab != null:
@@ -154,7 +154,7 @@ func _section_2_achievement() -> void:
 		tab.queue_free()
 
 	# TAB có HAI scene riêng theo hướng: dọc = hàng 5 tab (nhỏ gọn) · ngang = lưới 2 cột (to rõ)
-	var tab_land := _spawn("res://nodes/achievements/tab_button_landscape.tscn") as AchTabButton
+	var tab_land := _spawn("res://scenes/objects/achievements/tab_button_landscape.tscn") as AchTabButton
 	_entry(tab_land != null, "tab_button_landscape.tscn instantiate ra AchTabButton")
 	if tab_land != null:
 		_entry(tab_land.get_node_or_null("Label") != null, "tab NGANG co nhan tu scene")
@@ -163,17 +163,17 @@ func _section_2_achievement() -> void:
 		tab_land.queue_free()
 
 	# Mỗi layout Sổ tay phải instance ĐÚNG scene tab (segment) của hướng mình
-	_check_layout_tab("res://scenes/layout/portrait/achievement.tscn",
+	_check_layout_tab("res://scenes/objects/layouts/achievement/portrait.tscn",
 		"tab_button_seg.tscn", "tab_button_seg_land.tscn")
-	_check_layout_tab("res://scenes/layout/landscape/achievement.tscn",
+	_check_layout_tab("res://scenes/objects/layouts/achievement/landscape.tscn",
 		"tab_button_seg_land.tscn", "tab_button_seg.tscn")
 	# Cỡ chữ khai trong scene: dọc 9 (5 tab/hàng 355px) · ngang 16 (lưới 2 cột rộng)
-	_entry(FileAccess.get_file_as_string("res://nodes/achievements/tab_button.tscn").contains("font_size = 9"),
+	_entry(FileAccess.get_file_as_string("res://scenes/objects/achievements/tab_button.tscn").contains("font_size = 9"),
 		"tab DOC khai co chu 9 trong scene")
-	_entry(FileAccess.get_file_as_string("res://nodes/achievements/tab_button_landscape.tscn").contains("font_size = 16"),
+	_entry(FileAccess.get_file_as_string("res://scenes/objects/achievements/tab_button_landscape.tscn").contains("font_size = 16"),
 		"tab NGANG khai co chu 16 trong scene")
 
-	var page := _spawn("res://nodes/achievements/page.tscn") as AchPage
+	var page := _spawn("res://scenes/objects/achievements/page.tscn") as AchPage
 	_entry(page != null, "page.tscn instantiate ra AchPage")
 	if page != null:
 		_entry(page.get_node_or_null("Column") != null,
@@ -187,7 +187,7 @@ func _section_2_achievement() -> void:
 		_entry(page.column().get_child_count() == 1, "them the vao cot = vao dung trang")
 		page.queue_free()
 
-	var dot := _spawn("res://nodes/achievements/page_dot.tscn")
+	var dot := _spawn("res://scenes/objects/achievements/page_dot.tscn")
 	_entry(dot != null, "page_dot.tscn instantiate duoc")
 	if dot != null:
 		dot.call("set_current", true)
@@ -202,7 +202,7 @@ func _section_2_achievement() -> void:
 func _section_3_levels() -> void:
 	print("[3] Scene con màn Chọn màn...")
 
-	var page := _spawn("res://nodes/level_selection/page.tscn") as LevelsPage
+	var page := _spawn("res://scenes/objects/level_selection/page.tscn") as LevelsPage
 	_entry(page != null, "page.tscn instantiate ra LevelsPage")
 	if page != null:
 		_entry(page.get_node_or_null("Grid") != null,
@@ -217,7 +217,7 @@ func _section_3_levels() -> void:
 		page.queue_free()
 
 	# Bản NGANG: trang canh giữa lưới + thẻ nằm ngang (tỉ lệ như mockup level_selection_landscape)
-	var land_page := _spawn("res://nodes/level_selection/page_landscape.tscn") as LevelsPage
+	var land_page := _spawn("res://scenes/objects/level_selection/page_landscape.tscn") as LevelsPage
 	_entry(land_page != null, "page_landscape.tscn instantiate ra LevelsPage")
 	if land_page != null:
 		_entry(land_page.get_node_or_null("Center/Grid") != null, "trang NGANG co Center/Grid")
@@ -226,7 +226,7 @@ func _section_3_levels() -> void:
 		_entry(land_page.grid().columns == 3, "luoi ngang 3 cot (tu scene)")
 		land_page.queue_free()
 
-	var land_card := _spawn("res://nodes/level_selection/level_card_landscape.tscn") as LevelCard
+	var land_card := _spawn("res://scenes/objects/level_selection/level_card_landscape.tscn") as LevelCard
 	_entry(land_card != null, "level_card_landscape.tscn instantiate ra LevelCard")
 	if land_card != null:
 		var design := land_card.custom_minimum_size
@@ -256,7 +256,7 @@ func _section_3_levels() -> void:
 			"the thuong tra ve nhan goc '%s'" % tr("STR_LEVEL_PREFIX"))
 		land_card.queue_free()
 
-	var dot := _spawn("res://nodes/level_selection/page_dot.tscn")
+	var dot := _spawn("res://scenes/objects/level_selection/page_dot.tscn")
 	_entry(dot != null, "page_dot.tscn instantiate duoc")
 	if dot != null:
 		dot.call("set_current", true)
@@ -270,7 +270,7 @@ func _section_3_levels() -> void:
 func _section_4_ranking() -> void:
 	print("[4] Scene con màn Xếp hạng...")
 
-	var tab := _spawn("res://nodes/ranking/tab_button.tscn") as RankTabButton
+	var tab := _spawn("res://scenes/objects/ranking/tab_button.tscn") as RankTabButton
 	_entry(tab != null, "tab_button.tscn instantiate ra RankTabButton")
 	if tab == null:
 		return
@@ -282,7 +282,7 @@ func _section_4_ranking() -> void:
 			% [tab.custom_minimum_size.x, tab.custom_minimum_size.y])
 
 	# Tab khai trong scene bo cuc: gan `board_id` + `label_key` TRUOC khi vao cay ⇒ `_ready` tu dich nhan
-	var packed_rank_tab := load("res://nodes/ranking/tab_button.tscn") as PackedScene
+	var packed_rank_tab := load("res://scenes/objects/ranking/tab_button.tscn") as PackedScene
 	var scene_tab := packed_rank_tab.instantiate() as RankTabButton
 	scene_tab.board_id = "play"
 	scene_tab.label_key = "STR_RANK_TAB_PLAY"
@@ -310,7 +310,7 @@ func _section_4_ranking() -> void:
 func _section_5_host() -> void:
 	print("[5] Lop phu popup...")
 
-	var host := _spawn("res://nodes/popups/host.tscn") as PopupHost
+	var host := _spawn("res://scenes/objects/ui/popups/host.tscn") as PopupHost
 	_entry(host != null, "host.tscn instantiate ra PopupHost")
 	if host == null:
 		return
@@ -402,7 +402,7 @@ func _section_8_fixed_scenes() -> void:
 func _section_7_board_hud_popup() -> void:
 	print("[7] Scene con bàn chơi · HUD · hàng ngôn ngữ...")
 
-	var layers: BoardLayers = _spawn("res://nodes/game/board_layers.tscn") as BoardLayers
+	var layers: BoardLayers = _spawn("res://scenes/components/game/board_layers.tscn") as BoardLayers
 	_entry(layers != null, "board_layers.tscn instantiate ra BoardLayers")
 	if layers != null:
 		_entry(layers.cells() != null and layers.lines() != null and layers.walls() != null
@@ -428,14 +428,14 @@ func _section_7_board_hud_popup() -> void:
 			"cỡ THIẾT KẾ đọc từ node mẫu (tường 5.5 · vệt mực 20)")
 		layers.queue_free()
 
-	var board: BoardView = _spawn("res://nodes/game/board.tscn") as BoardView
+	var board: BoardView = _spawn("res://scenes/objects/game/board.tscn") as BoardView
 	_entry(board != null, "board.tscn instantiate ra BoardView")
 	if board != null:
 		_entry(board.get_node_or_null("Layers") is BoardLayers,
 			"board.tscn khai sẵn node Layers (không instantiate lúc chạy)")
 		board.queue_free()
 
-	var footstep: InkFootstep = _spawn("res://nodes/game/ink_footstep.tscn") as InkFootstep
+	var footstep: InkFootstep = _spawn("res://scenes/objects/game/ink_footstep.tscn") as InkFootstep
 	_entry(footstep != null, "ink_footstep.tscn instantiate ra InkFootstep")
 	if footstep != null:
 		_entry(footstep.mark != null, "vệt mực có node con 'Mark' (parent=\".\")")
@@ -445,7 +445,7 @@ func _section_7_board_hud_popup() -> void:
 		_entry(is_equal_approx(footstep.mark.modulate.a, 0.45), "độ mờ vệt mực 0.45")
 		footstep.queue_free()
 
-	var row: LanguageRow = _spawn("res://nodes/popups/language_row.tscn") as LanguageRow
+	var row: LanguageRow = _spawn("res://scenes/objects/ui/popups/language_row.tscn") as LanguageRow
 	_entry(row != null, "language_row.tscn instantiate ra LanguageRow")
 	if row != null:
 		_entry(row.check != null and row.flag != null, "hàng ngôn ngữ đủ cờ + dấu tích")
@@ -641,14 +641,14 @@ func _section_10_hud_minimal() -> void:
 #     — script chỉ giữ luật + bind qua `@export`; xem GDD §10.2g.
 # ---------------------------------------------------------------------------
 const TUTORIAL_SCENES := [
-	"res://nodes/tutorials/base_tutorial.tscn",
-	"res://nodes/tutorials/first_time.tscn",
-	"res://nodes/tutorials/how_to_play_move.tscn",
-	"res://nodes/tutorials/how_to_play_checking_wall.tscn",
-	"res://nodes/tutorials/how_to_play_wall_builder.tscn",
-	"res://nodes/tutorials/how_to_play_blind_memory.tscn",
-	"res://nodes/tutorials/how_to_use_tool.tscn",
-	"res://nodes/tutorials/congrats_first_time.tscn",
+	"res://scenes/base/base_tutorial.tscn",
+	"res://scenes/objects/tutorials/first_time.tscn",
+	"res://scenes/objects/tutorials/how_to_play_move.tscn",
+	"res://scenes/objects/tutorials/how_to_play_checking_wall.tscn",
+	"res://scenes/objects/tutorials/how_to_play_wall_builder.tscn",
+	"res://scenes/objects/tutorials/how_to_play_blind_memory.tscn",
+	"res://scenes/objects/tutorials/how_to_use_tool.tscn",
+	"res://scenes/objects/tutorials/congrats_first_time.tscn",
 ]
 ## Số phần tử mong đợi của export MẢNG (`Array[TutorialCell]` — ô XEM TRƯỚC của bài mở đầu)
 const TUTORIAL_EXPECTED_ARRAYS := {
@@ -896,10 +896,10 @@ func _section_12_stars() -> void:
 	print("[12] Ngôi sao khong bi phong to...")
 
 	var scenes := [
-		["res://nodes/popups/winning.tscn", 0],
-		["res://nodes/popups/gameover_level.tscn", 0],
-		["res://nodes/level_selection/level_card.tscn", 0],
-			["res://scenes/daily.tscn", 0],
+		["res://scenes/objects/ui/popups/winning.tscn", 0],
+		["res://scenes/objects/ui/popups/gameover_level.tscn", 0],
+		["res://scenes/objects/level_selection/level_card.tscn", 0],
+			["res://scenes/screens/daily.tscn", 0],
 	]
 	var worst := 0.0
 	var worst_where := ""

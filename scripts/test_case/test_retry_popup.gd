@@ -38,7 +38,7 @@ func _entry(ok: bool, desc: String) -> void:
 
 
 func _test_scene_and_bindings() -> void:
-	var packed := load("res://nodes/popups/retry.tscn") as PackedScene
+	var packed := load("res://scenes/objects/ui/popups/retry.tscn") as PackedScene
 	_entry(packed != null, "Load duoc nodes/popups/retry.tscn")
 	if packed == null:
 		return
@@ -64,7 +64,7 @@ func _test_scene_and_bindings() -> void:
 
 
 func _test_retry_actions() -> void:
-	var packed := load("res://nodes/popups/retry.tscn") as PackedScene
+	var packed := load("res://scenes/objects/ui/popups/retry.tscn") as PackedScene
 	var popup := packed.instantiate() as RetryPopup
 	root.add_child(popup)
 	await process_frame
@@ -192,7 +192,7 @@ func _test_revive_unlocks_board() -> void:
 		ads_before = bool(ads.get("enabled"))
 		ads.set("enabled", true)
 
-	var scene := (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	var scene := (load("res://scenes/screens/game.tscn") as PackedScene).instantiate()
 	root.add_child(scene)
 	await process_frame
 	await process_frame

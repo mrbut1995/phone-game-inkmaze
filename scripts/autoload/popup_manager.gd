@@ -16,30 +16,30 @@ signal popup_closed(id: String)
 
 ## Id -> scene của các popup có sẵn trong game
 const POPUPS := {
-	"win": "res://nodes/popups/winning.tscn",
-	"win_daily": "res://nodes/popups/winning_daily.tscn",
-	"win_challenge": "res://nodes/popups/winning_challenge.tscn",
-	"game_over": "res://nodes/popups/gameover.tscn",
-	"game_over_level": "res://nodes/popups/gameover_level.tscn",
-	"game_over_challenge": "res://nodes/popups/gameover_challenge.tscn",
-	"retry": "res://nodes/popups/retry.tscn",
-	"next_floor": "res://nodes/popups/next_floor.tscn",
-	"pause": "res://nodes/popups/pause.tscn",
-	"language": "res://nodes/popups/language.tscn",
-	"memory_countdown": "res://nodes/popups/memory_countdown.tscn",
+	"win": "res://scenes/objects/ui/popups/winning.tscn",
+	"win_daily": "res://scenes/objects/ui/popups/winning_daily.tscn",
+	"win_challenge": "res://scenes/objects/ui/popups/winning_challenge.tscn",
+	"game_over": "res://scenes/objects/ui/popups/gameover.tscn",
+	"game_over_level": "res://scenes/objects/ui/popups/gameover_level.tscn",
+	"game_over_challenge": "res://scenes/objects/ui/popups/gameover_challenge.tscn",
+	"retry": "res://scenes/objects/ui/popups/retry.tscn",
+	"next_floor": "res://scenes/objects/ui/popups/next_floor.tscn",
+	"pause": "res://scenes/objects/ui/popups/pause.tscn",
+	"language": "res://scenes/objects/ui/popups/language.tscn",
+	"memory_countdown": "res://scenes/objects/ui/popups/memory_countdown.tscn",
 	# Hồ sơ cá nhân: đổi avatar / viền khung / tên hiển thị
-	"edit_profile": "res://nodes/popups/edit_profile.tscn",
+	"edit_profile": "res://scenes/objects/ui/popups/edit_profile.tscn",
 	# HỒ SƠ CÁ NHÂN (toàn khung) — mở từ sticker ở màn chính; edit_profile xếp lên trên
-	"profiler": "res://nodes/popups/profiler_popup.tscn",
+	"profiler": "res://scenes/objects/ui/popups/profiler_popup.tscn",
 	# Nhận thưởng MỐC SAO của màn Daily (popup nhỏ)
-	"daily_milestone": "res://nodes/popups/daily_milestone.tscn",
+	"daily_milestone": "res://scenes/objects/ui/popups/daily_milestone.tscn",
 	# HẾT LƯỢT CHƠI (life = 0): thoát ra hoặc vào Cửa hàng mua thêm lượt
-	"out_of_life": "res://nodes/popups/out_of_life.tscn",
+	"out_of_life": "res://scenes/objects/ui/popups/out_of_life.tscn",
 }
 
 const HOST_NAME := "Popups"
 ## Lớp phủ chứa popup khi scene không có sẵn node "Popups" (là SCENE, không tạo bằng code)
-const HOST_SCENE := preload("res://nodes/popups/host.tscn")
+const HOST_SCENE := preload("res://scenes/objects/ui/popups/host.tscn")
 
 var _stack: Array[BasePopup] = []
 var _host: Control = null

@@ -8,7 +8,7 @@ extends BaseScene
 ## ============================================================================
 
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
-const SCENE_MAIN := "res://scenes/main.tscn"
+const SCENE_MAIN := "res://scenes/screens/main.tscn"
 
 ## Node UI của màn nằm trong BỐ CỤC đang hiển thị (`Portrait` / `Landscape` — 2 hướng dùng
 ## CÙNG tên node). Các node đã BIND SẴN bằng `@export` trong `scenes/layout/<hướng>/title.tscn`

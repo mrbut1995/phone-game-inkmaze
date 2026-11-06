@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://be8p7wihflq85"]
+
+[ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base/base_scene.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://brqfldyq6omr" path="res://scripts/ui/screens/ranking.gd" id="2_script"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://data/config/theme_default.tres" id="18_theme"]
+[ext_resource type="PackedScene" uid="uid://blqmr7o13tvys" path="res://scenes/objects/layouts/ranking/portrait.tscn" id="L_Portrait"]
+[ext_resource type="PackedScene" uid="uid://dk7hw8k4h4rom" path="res://scenes/objects/layouts/ranking/landscape.tscn" id="L_Landscape"]
+
+[node name="Control" instance=ExtResource("1_base")]
+theme = ExtResource("18_theme")
+script = ExtResource("2_script")
+
+[node name="Portrait" parent="." index="1" instance=ExtResource("L_Portrait")]
+
+[node name="Landscape" parent="." index="2" instance=ExtResource("L_Landscape")]
+
+[connection signal="pressed" from="Portrait/TopBar/Back" to="." method="_on_back_pressed"]
+[connection signal="tab_pressed" from="Portrait/Sheet/Tabs/Tab_dungeon" to="." method="_on_tab_pressed"]
+[connection signal="tab_pressed" from="Portrait/Sheet/Tabs/Tab_play" to="." method="_on_tab_pressed"]
+[connection signal="tab_pressed" from="Portrait/Sheet/Tabs/Tab_daily" to="." method="_on_tab_pressed"]
+[connection signal="pressed" from="Landscape/TopBar/Back" to="." method="_on_back_pressed"]
+[connection signal="tab_pressed" from="Landscape/Sheet/Tabs/Tab_dungeon" to="." method="_on_tab_pressed"]
+[connection signal="tab_pressed" from="Landscape/Sheet/Tabs/Tab_play" to="." method="_on_tab_pressed"]
+[connection signal="tab_pressed" from="Landscape/Sheet/Tabs/Tab_daily" to="." method="_on_tab_pressed"]

@@ -1,0 +1,484 @@
+[gd_scene format=3 uid="uid://n4k0ip5qwh74"]
+
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/base/base_layout.tscn" id="1_parent"]
+[ext_resource type="Script" uid="uid://dflm08pygt1p8" path="res://scripts/ui/layouts/profiler_layout.gd" id="2_layout"]
+[ext_resource type="Texture2D" uid="uid://c7ng3gx7uq2fr" path="res://assets/images-png/btn_header_cancel_normal.png" id="3_close_n"]
+[ext_resource type="Texture2D" uid="uid://ptgbk5np0gkd" path="res://assets/images-png/btn_header_cancel_pressed.png" id="4_close_p"]
+[ext_resource type="Texture2D" uid="uid://d3gb4gf2rwnyd" path="res://assets/images-png/profiler/sheet_land.png" id="5_sheet"]
+[ext_resource type="Texture2D" uid="uid://ruoaaeu82tl0" path="res://assets/images-png/popups/washi_tape.png" id="6_tape"]
+[ext_resource type="Texture2D" uid="uid://blmy5cbx5kmeg" path="res://assets/images-png/popups/paper_clip.png" id="7_clip"]
+[ext_resource uid="uid://cmlxyub4bj30v" type="Texture2D" path="res://assets/images-png/common/chip_pill.png" id="8_chip_gold"]
+[ext_resource type="Texture2D" uid="uid://dqkp11d7wudn2" path="res://assets/images-png/profiler/card_blue.png" id="10_card_blue"]
+[ext_resource uid="uid://hv0sne6ucuxk" type="Texture2D" path="res://assets/images-png/common/bar_pill.png" id="14_bar_track"]
+[ext_resource uid="uid://hv0sne6ucuxk" type="Texture2D" path="res://assets/images-png/common/bar_pill.png" id="15_bar_fill"]
+[ext_resource type="Texture2D" uid="uid://dx7gk3075tpxu" path="res://assets/images-png/profiler/profiler_disc_normal.png" id="16_disc_n"]
+[ext_resource type="Texture2D" uid="uid://d1b6ds3wgbpty" path="res://assets/images-png/profiler/profiler_disc_pressed.png" id="17_disc_p"]
+[ext_resource type="Texture2D" uid="uid://cid3n7oklo1fq" path="res://assets/images-png/profiler/profiler_disc_disabled.png" id="18_disc_d"]
+[ext_resource type="Texture2D" uid="uid://c721ocng7punk" path="res://assets/images-png/profiler/profiler_disc_focus.png" id="19_disc_f"]
+[ext_resource uid="uid://cd635wxi2hio4" type="Texture2D" path="res://assets/images-png/frames/frame_default.png" id="20_frame"]
+[ext_resource type="Texture2D" uid="uid://de1fy87ucyxya" path="res://assets/images-png/avatars/avatar-baby-child-kid.png" id="21_avatar"]
+[ext_resource type="Texture2D" uid="uid://b4778ot7wu5gx" path="res://assets/images-png/profiler/badge_edit.png" id="22_badge"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://data/config/theme_default.tres" id="60_theme"]
+[ext_resource type="Texture2D" uid="uid://c01iwhf75vw5v" path="res://assets/images-png/icons/icon_pen_name.png" id="70_pen_name"]
+[ext_resource type="Script" path="res://scripts/ui/widgets/profiler/scroll_drag.gd" id="9_info_scroll"]
+
+[sub_resource type="StyleBoxFlat" id="Sb_list_panel"]
+bg_color = Color(0.984314, 0.968627, 0.92549, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.898039, 0.866667, 0.784314, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="Landscape" unique_id=587724805 node_paths=PackedStringArray("btn_close", "lbl_title", "level_chip", "hero", "info_scroll", "info_list", "hero_exp_remain", "hero_join", "hero_btn_avatar", "hero_avatar", "hero_frame", "hero_name", "hero_tier_text", "hero_exp_value", "hero_uid", "hero_track", "hero_fill", "header_anchor") instance=ExtResource("1_parent")]
+theme = ExtResource("60_theme")
+script = ExtResource("2_layout")
+header_anchor = NodePath("Sheet/TopBarAnchor")
+btn_close = NodePath("TopBar/HeaderRow/Close")
+lbl_title = NodePath("TopBar/HeaderRow/Title")
+level_chip = NodePath("TopBar/HeaderRow/LevelChip")
+hero = NodePath("Sheet/LeftCol/Hero")
+info_scroll = NodePath("Sheet/RightCol/InfoScroll")
+info_list = NodePath("Sheet/RightCol/InfoScroll/InfoList")
+hero_exp_remain = NodePath("Sheet/LeftCol/Hero/Bg/Content/ExpSub")
+hero_join = NodePath("Sheet/LeftCol/Hero/Bg/Content/UidBlock/Join")
+hero_btn_avatar = NodePath("Sheet/LeftCol/Hero/Bg/Content/Profile")
+hero_avatar = NodePath("Sheet/LeftCol/Hero/Bg/Content/Profile/Frame/Avatar")
+hero_frame = NodePath("Sheet/LeftCol/Hero/Bg/Content/Profile/Frame")
+hero_name = NodePath("Sheet/LeftCol/Hero/Bg/Content/NameRow/Name")
+hero_tier_text = NodePath("Sheet/LeftCol/Hero/Bg/Content/TierChip/Bg/Text")
+hero_exp_value = NodePath("Sheet/LeftCol/Hero/Bg/Content/Exp/ExpValue")
+hero_uid = NodePath("Sheet/LeftCol/Hero/Bg/Content/UidBlock/Uid")
+hero_track = NodePath("Sheet/LeftCol/Hero/Bg/Content/Bar")
+hero_fill = NodePath("Sheet/LeftCol/Hero/Bg/Content/Bar/BarFill")
+
+[node name="Sheet" type="NinePatchRect" parent="." index="0" unique_id=1129321426]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_sheet")
+patch_margin_left = 94
+patch_margin_top = 77
+patch_margin_right = 114
+patch_margin_bottom = 61
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Tape" type="TextureRect" parent="Sheet" index="0" unique_id=1156817010]
+layout_mode = 0
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -96.5
+offset_top = -19.0
+offset_right = 96.5
+offset_bottom = 22.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("6_tape")
+expand_mode = 1
+
+[node name="Clip" type="TextureRect" parent="Sheet" index="1" unique_id=924855171]
+layout_mode = 0
+offset_left = 65.0
+offset_top = -9.0
+offset_right = 83.0
+offset_bottom = 33.0
+mouse_filter = 2
+texture = ExtResource("7_clip")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TopBarAnchor" type="Control" parent="Sheet" index="2"]
+layout_mode = 1
+anchor_left = 0.0806
+anchor_right = 0.943
+offset_left = -9.05904
+offset_top = 25.599998
+offset_right = -9.0590515
+offset_bottom = 74.6
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="HeaderRow" type="Control" parent="TopBar" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Close" type="TextureButton" parent="TopBar/HeaderRow" index="0" unique_id=308425477]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -49.0
+offset_bottom = 49.0
+grow_horizontal = 0
+texture_normal = ExtResource("3_close_n")
+texture_pressed = ExtResource("4_close_p")
+texture_hover = ExtResource("3_close_n")
+texture_disabled = ExtResource("3_close_n")
+texture_focused = ExtResource("3_close_n")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="TopBar/HeaderRow" index="1" unique_id=1584219335]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "STR_PROFILE_TITLE"
+theme_type_variation = &"ProfilerTitleLand"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelChip" type="Control" parent="TopBar/HeaderRow" index="2" unique_id=1647743014]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -114.0
+offset_top = 5.7
+offset_bottom = 43.3
+grow_horizontal = 0
+mouse_filter = 2
+
+[node name="Bg" type="TextureRect" parent="TopBar/HeaderRow/LevelChip" index="0" unique_id=595758012]
+self_modulate = Color(0.996078, 0.952941, 0.780392, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("8_chip_gold")
+expand_mode = 1
+
+[node name="Text" type="Label" parent="TopBar/HeaderRow/LevelChip" index="1" unique_id=205843368]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "LV. 1"
+theme_type_variation = &"ProfilerChipGoldLand"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LeftCol" type="Control" parent="Sheet" index="3" unique_id=190987533]
+layout_mode = 1
+anchor_left = 0.0599
+anchor_top = 0.152
+anchor_right = 0.2943
+anchor_bottom = 0.901
+offset_top = -29.090393
+offset_bottom = -28.814392
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Hero" type="Control" parent="Sheet/LeftCol" index="0" unique_id=1596386811]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Bg" type="NinePatchRect" parent="Sheet/LeftCol/Hero" index="0" unique_id=450486954]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_card_blue")
+patch_margin_left = 22
+patch_margin_top = 22
+patch_margin_right = 22
+patch_margin_bottom = 22
+
+[node name="Margin" type="ColorRect" parent="Sheet/LeftCol/Hero/Bg" index="0" unique_id=482310985]
+layout_mode = 1
+anchor_bottom = 1.0
+offset_left = 22.0
+offset_right = 23.6
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.847059, 0.266667, 0.266667, 0.7)
+
+[node name="Content" type="VBoxContainer" parent="Sheet/LeftCol/Hero/Bg" index="1" unique_id=1297830328]
+layout_mode = 1
+anchor_left = 0.1333
+anchor_top = 0.0645
+anchor_right = 0.9222
+anchor_bottom = 0.9448
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 9
+metadata/_edit_use_anchors_ = true
+
+[node name="Profile" type="TextureButton" parent="Sheet/LeftCol/Hero/Bg/Content" index="0" unique_id=805858140]
+self_modulate = Color(0.878431, 0.94902, 0.996078, 1)
+custom_minimum_size = Vector2(122, 122)
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("16_disc_n")
+texture_pressed = ExtResource("17_disc_p")
+texture_hover = ExtResource("16_disc_n")
+texture_disabled = ExtResource("18_disc_d")
+texture_focused = ExtResource("19_disc_f")
+stretch_mode = 5
+
+[node name="Frame" type="TextureRect" parent="Sheet/LeftCol/Hero/Bg/Content/Profile" index="0" unique_id=1984070926]
+texture_filter = 4
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.113
+anchor_top = -0.113
+anchor_right = 1.113
+anchor_bottom = 1.113
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("20_frame")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Avatar" type="TextureRect" parent="Sheet/LeftCol/Hero/Bg/Content/Profile/Frame" index="0" unique_id=1452298376]
+texture_filter = 4
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15714286
+anchor_top = 0.15714286
+anchor_right = 0.8428571
+anchor_bottom = 0.8428571
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("21_avatar")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="EditBadge" type="TextureRect" parent="Sheet/LeftCol/Hero/Bg/Content/Profile/Frame" index="1" unique_id=1600638266]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7772
+anchor_top = 0.7772
+anchor_right = 0.9588
+anchor_bottom = 0.9588
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("22_badge")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NameRow" type="HBoxContainer" parent="Sheet/LeftCol/Hero/Bg/Content" index="1" unique_id=1511635350]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.12
+alignment = 1
+mouse_filter = 2
+theme_override_constants/separation = 5
+
+[node name="Name" type="Label" parent="Sheet/LeftCol/Hero/Bg/Content/NameRow" index="0" unique_id=1249245509]
+layout_mode = 2
+text = "MazeWalker #1024"
+theme_type_variation = &"ProfilerName"
+vertical_alignment = 1
+
+[node name="Pen" type="TextureRect" parent="Sheet/LeftCol/Hero/Bg/Content/NameRow" index="1" unique_id=1288934857]
+custom_minimum_size = Vector2(13, 13)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("70_pen_name")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TierChip" type="HBoxContainer" parent="Sheet/LeftCol/Hero/Bg/Content" index="2" unique_id=1749866006]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.05
+alignment = 1
+mouse_filter = 2
+
+[node name="Bg" type="NinePatchRect" parent="Sheet/LeftCol/Hero/Bg/Content/TierChip" index="0" unique_id=651457363]
+self_modulate = Color(0.996078, 0.952941, 0.780392, 1)
+custom_minimum_size = Vector2(100, 16)
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("8_chip_gold")
+patch_margin_left = 9
+patch_margin_top = 6
+patch_margin_right = 11
+patch_margin_bottom = 6
+
+[node name="Text" type="Label" parent="Sheet/LeftCol/Hero/Bg/Content/TierChip/Bg" index="0" unique_id=1582709291]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 2.0
+offset_right = -6.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "ROOKIE"
+theme_type_variation = &"ProfilerChipGold"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Divider" type="ColorRect" parent="Sheet/LeftCol/Hero/Bg/Content" index="3" unique_id=1178195870]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.886275, 0.909804, 0.941176, 1)
+
+[node name="Exp" type="HBoxContainer" parent="Sheet/LeftCol/Hero/Bg/Content" index="4" unique_id=1449470628]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.08
+
+[node name="ExpLabel" type="Label" parent="Sheet/LeftCol/Hero/Bg/Content/Exp" index="0" unique_id=1016326146]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "STR_PROFILE_EXP_LABEL"
+theme_type_variation = &"ProfilerLabel"
+resize_font_to_fit = true
+
+[node name="ExpValue" type="Label" parent="Sheet/LeftCol/Hero/Bg/Content/Exp" index="1" unique_id=544936882]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "0 / 200"
+theme_type_variation = &"ProfilerState"
+theme_override_font_sizes/font_size = 10
+horizontal_alignment = 2
+
+[node name="Bar" type="TextureRect" parent="Sheet/LeftCol/Hero/Bg/Content" index="5" unique_id=674762722]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("14_bar_track")
+self_modulate = Color(0.886275, 0.909804, 0.941176, 1)
+expand_mode = 5
+
+[node name="BarFill" type="TextureRect" parent="Sheet/LeftCol/Hero/Bg/Content/Bar" index="0" unique_id=1194130482]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("15_bar_fill")
+self_modulate = Color(0.145098, 0.423529, 0.588235, 1)
+expand_mode = 1
+
+[node name="ExpSub" type="Label" parent="Sheet/LeftCol/Hero/Bg/Content" index="6"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.08
+text = "—"
+theme_type_variation = &"ProfilerLabel"
+resize_font_to_fit = true
+
+[node name="DividerBottom" type="ColorRect" parent="Sheet/LeftCol/Hero/Bg/Content" index="7"]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.886275, 0.909804, 0.941176, 1)
+
+[node name="UidBlock" type="VBoxContainer" parent="Sheet/LeftCol/Hero/Bg/Content" index="8"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.6
+theme_override_constants/separation = 3
+
+[node name="UidLabel" type="Label" parent="Sheet/LeftCol/Hero/Bg/Content/UidBlock" index="0"]
+layout_mode = 2
+text = "UID"
+theme_type_variation = &"ProfilerLabel"
+
+[node name="Uid" type="Label" parent="Sheet/LeftCol/Hero/Bg/Content/UidBlock" index="1"]
+layout_mode = 2
+text = "#IM-0000"
+theme_type_variation = &"ProfilerValue"
+theme_override_font_sizes/font_size = 12
+
+[node name="JoinLabel" type="Label" parent="Sheet/LeftCol/Hero/Bg/Content/UidBlock" index="2"]
+layout_mode = 2
+text = "STR_PROFILE_JOIN_LABEL"
+theme_type_variation = &"ProfilerLabel"
+
+[node name="Join" type="Label" parent="Sheet/LeftCol/Hero/Bg/Content/UidBlock" index="3"]
+layout_mode = 2
+text = "00/0000"
+theme_type_variation = &"ProfilerValue"
+theme_override_font_sizes/font_size = 12
+
+[node name="RightCol" type="Control" parent="Sheet" index="4" unique_id=297693424]
+layout_mode = 1
+anchor_left = 0.3125
+anchor_top = 0.152
+anchor_right = 0.9167
+anchor_bottom = 0.901
+offset_top = -29.090393
+offset_bottom = -28.814392
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="Sheet/RightCol" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Sb_list_panel")
+
+[node name="InfoScroll" type="ScrollContainer" parent="Sheet/RightCol" index="1" unique_id=778200001]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = -12.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_info_scroll")
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 1
+
+[node name="InfoList" type="VBoxContainer" parent="Sheet/RightCol/InfoScroll" index="0" unique_id=778200002]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="CoinChip" parent="TopBar"]
+mouse_filter = 2
+process_mode = 4
+visible = false
+
+[node name="LifeChip" parent="TopBar"]
+mouse_filter = 2
+process_mode = 4
+visible = false

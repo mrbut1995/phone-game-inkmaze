@@ -5,7 +5,7 @@ extends SceneTree
 
 func _init() -> void:
 	await process_frame
-	var scene: Node = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	var scene: Node = (load("res://scenes/screens/game.tscn") as PackedScene).instantiate()
 	root.add_child(scene)
 	current_scene = scene
 	await _frames(12)

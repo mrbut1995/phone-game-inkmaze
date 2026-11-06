@@ -47,7 +47,7 @@ func _case_game_over() -> void:
 	if gm != null:
 		gm.set("current_mode", "play")
 		gm.set("current_level", 1)
-	var scene: Node = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	var scene: Node = (load("res://scenes/screens/game.tscn") as PackedScene).instantiate()
 	root.add_child(scene)
 	await _frames(12)
 	var controller: Node = scene.get("game_controller")
@@ -69,7 +69,7 @@ func _case_game_over_race() -> void:
 	if gm != null:
 		gm.set("current_mode", "play")
 		gm.set("current_level", 1)
-	var scene: Node = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	var scene: Node = (load("res://scenes/screens/game.tscn") as PackedScene).instantiate()
 	root.add_child(scene)
 	current_scene = scene      # PopupManager.get_host() tìm host theo current_scene
 	await _frames(12)
@@ -125,7 +125,7 @@ func _case_next_floor() -> void:
 	if gm != null:
 		gm.set("current_mode", "dungeon")
 		gm.set("current_level", 1)
-	var scene: Node = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	var scene: Node = (load("res://scenes/screens/game.tscn") as PackedScene).instantiate()
 	root.add_child(scene)
 	await _frames(12)
 	Popups.open(Popups.NEXT_FLOOR, {
@@ -146,7 +146,7 @@ func _case_next_floor() -> void:
 ## cùng, Profiler vẫn mở, Dim của Edit Profile phủ TOÀN canvas (kể cả 2 bên cột),
 ## và bấm CHUỘT THẬT vào vùng tối ngoài thẻ thì Edit Profile đóng lại.
 func _case_edit_profile() -> void:
-	var scene: Node = (load("res://scenes/main.tscn") as PackedScene).instantiate()
+	var scene: Node = (load("res://scenes/screens/main.tscn") as PackedScene).instantiate()
 	root.add_child(scene)
 	current_scene = scene      # PopupManager.get_host() tìm host theo current_scene
 	await _frames(12)
@@ -228,11 +228,11 @@ func _case_edit_profile() -> void:
 
 
 func _case_loading(size: Vector2i) -> void:
-	var layer: CanvasLayer = (load("res://scenes/loading.tscn") as PackedScene).instantiate() as CanvasLayer
+	var layer: CanvasLayer = (load("res://scenes/autoload/loading.tscn") as PackedScene).instantiate() as CanvasLayer
 	root.add_child(layer)
 	await _frames(4)
 	var transition := layer as Node
-	transition.call("play_transition", "res://scenes/main.tscn", func() -> void: pass, "page_turn_forward")
+	transition.call("play_transition", "res://scenes/screens/main.tscn", func() -> void: pass, "page_turn_forward")
 	await _frames(14)          # giữa hiệu ứng lật trang
 	await _shot("loading_mid_%dx%d" % [size.x, size.y])
 	_transition_dump(transition)

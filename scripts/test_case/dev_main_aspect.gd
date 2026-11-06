@@ -28,7 +28,7 @@ func _rotate_test() -> void:
 	print("\n──────── XOAY MÀN HÌNH THỜI GIAN THỰC ────────")
 	DisplayServer.window_set_size(Vector2i(1080, 1920))
 	await _frames(4)
-	var scene := (load("res://scenes/main.tscn") as PackedScene).instantiate() as MainScene
+	var scene := (load("res://scenes/screens/main.tscn") as PackedScene).instantiate() as MainScene
 	root.add_child(scene)
 	await _frames(6)
 	var portrait := scene.get_node_or_null("Portrait") as Control
@@ -63,7 +63,7 @@ func _frames(n: int) -> void:
 func _run(size: Vector2i) -> void:
 	var canvas := root.get_visible_rect().size
 	print("\n──────── %dx%d  →  canvas %.0fx%.0f" % [size.x, size.y, canvas.x, canvas.y])
-	var scene := (load("res://scenes/main.tscn") as PackedScene).instantiate() as MainScene
+	var scene := (load("res://scenes/screens/main.tscn") as PackedScene).instantiate() as MainScene
 	root.add_child(scene)
 	await _frames(8)
 

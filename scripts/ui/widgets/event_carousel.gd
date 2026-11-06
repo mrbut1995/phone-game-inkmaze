@@ -48,9 +48,9 @@ func _ready() -> void:
 		if scroll.has_signal("scroll_ended"):
 			scroll.scroll_ended.connect(_on_scroll_ended)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 	if event_card_scene == null:
-		event_card_scene = load("res://nodes/main/event_card.tscn")
+		event_card_scene = load("res://scenes/objects/main/event_card.tscn")
 	if daily_card_scene == null:
-		daily_card_scene = load("res://nodes/main/daily_card.tscn")
+		daily_card_scene = load("res://scenes/objects/main/daily_card.tscn")
 
 
 ## Nạp lại danh sách thẻ từ EventManager

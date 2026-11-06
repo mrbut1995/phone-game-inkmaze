@@ -21,7 +21,7 @@ func _run() -> void:
 	if gm != null:
 		gm.set("current_mode", "play")
 		gm.set("current_level", 1)
-	var scene: Node = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	var scene: Node = (load("res://scenes/screens/game.tscn") as PackedScene).instantiate()
 	root.add_child(scene)
 	await _frames(12)
 	_report(scene, "1. ban đầu — NGANG, Play Mode")

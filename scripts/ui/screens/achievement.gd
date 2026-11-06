@@ -12,9 +12,9 @@ extends BaseScene
 ## Cấu trúc node (scenes/achievement.tscn): TopBar/Sheet{Overview, Tabs, CardArea{Scroll/Pages}, Dots, Footer}
 ## ============================================================================
 
-@export var CARD_SCENE: PackedScene = preload("res://nodes/achievements/card.tscn")
-@export var PAGE_SCENE: PackedScene = preload("res://nodes/achievements/page.tscn")
-@export var DOT_SCENE: PackedScene = preload("res://nodes/achievements/page_dot.tscn")
+@export var CARD_SCENE: PackedScene = preload("res://scenes/objects/achievements/card.tscn")
+@export var PAGE_SCENE: PackedScene = preload("res://scenes/objects/achievements/page.tscn")
+@export var DOT_SCENE: PackedScene = preload("res://scenes/objects/achievements/page_dot.tscn")
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
 ## Số thẻ danh hiệu mỗi trang ở bản DỌC (1 cột × 5 hàng — khe nằm trong nodes/achievements/page.tscn)

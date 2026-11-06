@@ -27,7 +27,7 @@ extends BaseUI
 ## ============================================================================
 
 ## Scene 1 NHÓM số liệu (băng washi + lưới thẻ) — dựng vào `layout.info_list`
-const GROUP_SCENE := preload("res://nodes/profiler/stat_group.tscn")
+const GROUP_SCENE := preload("res://scenes/objects/profiler/stat_group.tscn")
 
 ## Icon từng ô số liệu: icon tách từ mockup (không còn icon riêng cho từng chế độ)
 const ICONS := {

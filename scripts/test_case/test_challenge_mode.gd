@@ -131,7 +131,7 @@ func _section_2_texts() -> void:
 # ---------------------------------------------------------------------------
 func _section_3_run() -> void:
 	print("\n[3] Van thu thach (vi pham / hoan thanh)...")
-	var scene: GameScene = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	var scene: GameScene = (load("res://scenes/screens/game.tscn") as PackedScene).instantiate()
 	assert(scene != null, "Phai load duoc scenes/game.tscn")
 	root.add_child(scene)
 	await process_frame
@@ -310,7 +310,7 @@ func _start_challenge_run(scene: GameScene, id: String, param: int) -> void:
 # ---------------------------------------------------------------------------
 func _section_4_hud() -> void:
 	print("\n[4] HUD thu thach + hint guide...")
-	var scene: GameScene = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	var scene: GameScene = (load("res://scenes/screens/game.tscn") as PackedScene).instantiate()
 	root.add_child(scene)
 	await process_frame
 	await process_frame

@@ -9,7 +9,7 @@ extends SceneTree
 ## 5. Popup Game Over (Dungeon): hiện tầng cao nhất tuần/tháng, chưa có thì hiện "--".
 ## ============================================================================
 
-const POPUP_SCENE := "res://nodes/popups/gameover.tscn"
+const POPUP_SCENE := "res://scenes/objects/ui/popups/gameover.tscn"
 
 var _backup := ""
 var _checks := 0
@@ -238,7 +238,7 @@ func _section_dungeon(gm: Node) -> void:
 	gm.call("reset_progress")
 	gm.set("current_mode", "dungeon")
 
-	var scene := (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	var scene := (load("res://scenes/screens/game.tscn") as PackedScene).instantiate()
 	root.add_child(scene)
 	await process_frame
 	await process_frame
@@ -260,7 +260,7 @@ func _section_dungeon(gm: Node) -> void:
 	gm.set("current_mode", "play")
 	gm.set("current_level", 3)
 	gm.set("unlocked_levels", 9)
-	var level_scene := (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	var level_scene := (load("res://scenes/screens/game.tscn") as PackedScene).instantiate()
 	root.add_child(level_scene)
 	await process_frame
 	await process_frame

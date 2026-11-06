@@ -28,7 +28,7 @@ func _init() -> void:
 		music.call("set_context", "menu", false)
 
 	# 1. Test Splash Scene
-	var splash_packed: PackedScene = load("res://scenes/splash.tscn")
+	var splash_packed: PackedScene = load("res://scenes/screens/splash.tscn")
 	assert(splash_packed != null, "scenes/splash.tscn phai load duoc")
 	var splash_inst = splash_packed.instantiate()
 	assert(splash_inst != null, "scenes/splash.tscn phai instantiate duoc")
@@ -88,7 +88,7 @@ func _init() -> void:
 	await process_frame
 
 	# 2. Test Title Scene
-	var title_packed: PackedScene = load("res://scenes/title.tscn")
+	var title_packed: PackedScene = load("res://scenes/screens/title.tscn")
 	assert(title_packed != null, "scenes/title.tscn phai load duoc")
 	var title_inst = title_packed.instantiate()
 	assert(title_inst != null, "scenes/title.tscn phai instantiate duoc")
@@ -112,7 +112,7 @@ func _init() -> void:
 	await process_frame
 
 	# 3. Test Shop Scene
-	var shop_packed: PackedScene = load("res://scenes/shop.tscn")
+	var shop_packed: PackedScene = load("res://scenes/screens/shop.tscn")
 	assert(shop_packed != null, "scenes/shop.tscn phai load duoc")
 	var shop_inst = shop_packed.instantiate()
 	assert(shop_inst != null, "scenes/shop.tscn phai instantiate duoc")
@@ -130,7 +130,7 @@ func _init() -> void:
 	await process_frame
 
 	# 4. Test Credit Scene
-	var credit_packed: PackedScene = load("res://scenes/credit.tscn")
+	var credit_packed: PackedScene = load("res://scenes/screens/credit.tscn")
 	assert(credit_packed != null, "scenes/credit.tscn phai load duoc")
 	var credit_inst = credit_packed.instantiate()
 	assert(credit_inst != null, "scenes/credit.tscn phai instantiate duoc")

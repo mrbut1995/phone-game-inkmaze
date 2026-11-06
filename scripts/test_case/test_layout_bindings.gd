@@ -34,7 +34,7 @@ const SCREENS := {
 ## Nội dung POPUP hồ sơ cá nhân — file nằm ở `nodes/popups/profiler_content.tscn`
 ## (trước đây là màn hình `scenes/profiler_popup.tscn`) nên kiểm bằng ĐƯỜNG DẪN TƯỜNG MINH.
 const LAYOUT_CONTENTS := {
-	"profiler_content": {"path": "res://nodes/popups/profiler_content.tscn", "layout": "ProfilerLayout"},
+	"profiler_content": {"path": "res://scenes/objects/ui/popups/profiler_content.tscn", "layout": "ProfilerLayout"},
 }
 ## Node được phép THIẾU ở 1 hướng (bố cục ngang chưa dựng node đó) — khoá "<màn>|<hướng>"
 ## `hud_slot` của màn chơi: HUD bị THAY bằng code ngay khi vào màn (đổi theo chế độ chơi) nên

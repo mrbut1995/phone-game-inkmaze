@@ -37,18 +37,18 @@ const ASPECTS := [
 ]
 
 const SCREENS := [
-	{"id": "main", "path": "res://scenes/main.tscn"},
-	{"id": "event", "path": "res://scenes/event.tscn"},
-	{"id": "splash", "path": "res://scenes/splash.tscn"},
-	{"id": "title", "path": "res://scenes/title.tscn"},
-	{"id": "daily", "path": "res://scenes/daily.tscn"},
-	{"id": "settings", "path": "res://scenes/settings.tscn"},
-	{"id": "shop", "path": "res://scenes/shop.tscn"},
-	{"id": "ranking", "path": "res://scenes/ranking.tscn"},
-	{"id": "achievement", "path": "res://scenes/achievement.tscn"},
-	{"id": "profiler", "path": "res://nodes/popups/profiler_content.tscn", "embedded": true},
-	{"id": "credit", "path": "res://scenes/credit.tscn"},
-	{"id": "debug", "path": "res://scenes/debug.tscn"},
+	{"id": "main", "path": "res://scenes/screens/main.tscn"},
+	{"id": "event", "path": "res://scenes/screens/event.tscn"},
+	{"id": "splash", "path": "res://scenes/screens/splash.tscn"},
+	{"id": "title", "path": "res://scenes/screens/title.tscn"},
+	{"id": "daily", "path": "res://scenes/screens/daily.tscn"},
+	{"id": "settings", "path": "res://scenes/screens/settings.tscn"},
+	{"id": "shop", "path": "res://scenes/screens/shop.tscn"},
+	{"id": "ranking", "path": "res://scenes/screens/ranking.tscn"},
+	{"id": "achievement", "path": "res://scenes/screens/achievement.tscn"},
+	{"id": "profiler", "path": "res://scenes/objects/ui/popups/profiler_content.tscn", "embedded": true},
+	{"id": "credit", "path": "res://scenes/screens/credit.tscn"},
+	{"id": "debug", "path": "res://scenes/screens/debug.tscn"},
 ]
 
 const GAME_MODES := ["play", "dungeon", "minesweeper", "sum_path",
@@ -151,7 +151,7 @@ func _run_game(mode_id: String, size: Vector2i) -> void:
 	if gm != null:
 		gm.set("current_mode", mode_id)
 		gm.set("current_level", 1)
-	var packed := load("res://scenes/game.tscn") as PackedScene
+	var packed := load("res://scenes/screens/game.tscn") as PackedScene
 	var scene: Node = packed.instantiate()
 	root.add_child(scene)
 	current_scene = scene      # PopupManager.get_host() tìm host theo current_scene

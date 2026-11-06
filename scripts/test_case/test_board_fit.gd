@@ -44,7 +44,7 @@ func _check_sample_level() -> int:
 	gm.set("current_mode", "play")
 	gm.set("current_level", SAMPLE_LEVEL)
 
-	var scene: Node = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	var scene: Node = (load("res://scenes/screens/game.tscn") as PackedScene).instantiate()
 	root.add_child(scene)
 	await process_frame
 	await process_frame
@@ -66,7 +66,7 @@ func _check_sample_level() -> int:
 
 ## Sinh maze các cỡ khác nhau rồi nạp trực tiếp vào board
 func _check_generated_sizes() -> int:
-	var scene: Node = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	var scene: Node = (load("res://scenes/screens/game.tscn") as PackedScene).instantiate()
 	root.add_child(scene)
 	await process_frame
 	await process_frame

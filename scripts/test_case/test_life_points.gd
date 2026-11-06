@@ -13,7 +13,7 @@ extends SceneTree
 ## 9. Mọi layout có CoinChip đều có đúng 1 LifeChip (Settings/Tutorial/Splash/Profiler: 0).
 ## ============================================================================
 
-const LIFE_POPUP_SCENE := "res://nodes/popups/out_of_life.tscn"
+const LIFE_POPUP_SCENE := "res://scenes/objects/ui/popups/out_of_life.tscn"
 const LAYOUT_CHIP_EXCLUDED := ["settings", "tutorial", "tutorial_list", "splash", "title", "profiler_popup"]
 ## Ngoại lệ: màn có "thanh trên" KHÔNG phải dải ngang nên 2 chip dùng chung của base_layout không
 ## hiển thị được — màn tự khai 2 chip cục bộ đặt đúng chỗ và ẩn 2 chip dùng chung (`visible = false`).
@@ -231,7 +231,7 @@ func _section_popup() -> void:
 # ---------------------------------------------------------------------------
 func _section_chip() -> void:
 	print("[7] LifeChip...")
-	var chip: LifeChip = (load("res://nodes/main/life_chip.tscn") as PackedScene).instantiate() as LifeChip
+	var chip: LifeChip = (load("res://scenes/objects/main/life_chip.tscn") as PackedScene).instantiate() as LifeChip
 	_check(chip != null, "Nap duoc life_chip.tscn")
 	if chip == null:
 		return
@@ -275,12 +275,12 @@ func _section_shop(gm: Node) -> void:
 		wallet.call("notify_coins_changed")
 
 	# Back của Shop quay về ĐÚNG màn trước đó khi vào từ popup hết lượt
-	gm.set("shop_return_path", "res://scenes/main.tscn")
-	var shop_scene := (load("res://scenes/shop.tscn") as PackedScene).instantiate()
+	gm.set("shop_return_path", "res://scenes/screens/main.tscn")
+	var shop_scene := (load("res://scenes/screens/shop.tscn") as PackedScene).instantiate()
 	root.add_child(shop_scene)
 	await process_frame
 	await process_frame
-	_check(str(shop_scene.get("_return_path")) == "res://scenes/main.tscn",
+	_check(str(shop_scene.get("_return_path")) == "res://scenes/screens/main.tscn",
 		"Shop doc duoc man can quay ve ('%s')" % str(shop_scene.get("_return_path")))
 	_check(str(gm.get("shop_return_path")).is_empty(), "Man quay ve chi dung 1 lan")
 	shop_scene.queue_free()
@@ -292,7 +292,7 @@ func _section_shop(gm: Node) -> void:
 # ---------------------------------------------------------------------------
 func _section_layouts() -> void:
 	print("[9] Chip dung chung trong base_layout + an/hien khai trong tscn...")
-	var base_text := FileAccess.get_file_as_string("res://scenes/layout/base_layout.tscn")
+	var base_text := FileAccess.get_file_as_string("res://scenes/base/base_layout.tscn")
 	_check(_count_nodes(base_text, "CoinChip") == 1, "base_layout co dung 1 CoinChip")
 	_check(_count_nodes(base_text, "LifeChip") == 1, "base_layout co dung 1 LifeChip")
 	_check(base_text.contains('parent="TopBar"'), "Hai chip nam trong TopBar cua base_layout")
@@ -326,8 +326,8 @@ func _section_layouts() -> void:
 				% [file, hides, should_hide])
 
 	# Xác nhận RUNTIME: `.tscn` khai `visible = false` thì 2 chip thật sự ẩn, màn có ví thì vẫn hiện
-	await _check_shared_chip_visibility("res://scenes/layout/portrait/title.tscn", false)
-	await _check_shared_chip_visibility("res://scenes/layout/portrait/main.tscn", true)
+	await _check_shared_chip_visibility("res://scenes/objects/layouts/title/portrait.tscn", false)
+	await _check_shared_chip_visibility("res://scenes/objects/layouts/main/portrait.tscn", true)
 
 
 ## Nạp thẳng 1 layout và kiểm tra 2 chip dùng chung hiện/ẩn đúng như khai trong `.tscn`.

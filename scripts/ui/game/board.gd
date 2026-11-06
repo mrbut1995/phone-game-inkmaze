@@ -18,9 +18,9 @@ signal teleport_chosen(pos: Vector2i)
 ## Người chơi chạm ra ngoài các ô sáng khi đang chọn Teleport -> huỷ chọn
 signal teleport_cancelled
 
-const CRASH_SFX_SCENE := preload("res://nodes/sfx/crash.tscn")
-const MINE_SFX_SCENE := preload("res://nodes/sfx/mine_explosion.tscn")
-const FOOTSTEP_SCENE := preload("res://nodes/game/ink_footstep.tscn")
+const CRASH_SFX_SCENE := preload("res://scenes/objects/vfx/crash.tscn")
+const MINE_SFX_SCENE := preload("res://scenes/objects/vfx/mine_explosion.tscn")
+const FOOTSTEP_SCENE := preload("res://scenes/objects/game/ink_footstep.tscn")
 
 ## Cỡ THIẾT KẾ đọc 1 LẦN từ scene gốc (dùng cho mọi tầng/bàn , không đọc lại mỗi tầng)
 static var _design_wall_width := 0.0

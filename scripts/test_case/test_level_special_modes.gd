@@ -264,8 +264,8 @@ func _section_4_skip_button(gm: Node) -> void:
 	print("\n--- 4. NUT SKIP: CO O CA 2 HUONG + CHI HIEN KHI CHOI MAN ---")
 
 	for path in [
-		"res://nodes/hud/portrait/game/action_bar.tscn",
-		"res://nodes/hud/landscape/game/action_bar.tscn",
+		"res://scenes/objects/ui/hud/game/action_bar/portrait.tscn",
+		"res://scenes/objects/ui/hud/game/action_bar/landscape.tscn",
 	]:
 		var packed := load(path) as PackedScene
 		var bar := packed.instantiate() as ActionBar if packed != null else null
@@ -277,7 +277,7 @@ func _section_4_skip_button(gm: Node) -> void:
 
 	# Ván THƯỜNG (Dungeon/Daily/Debug) -> nút Skip phải ẨN
 	gm.call("prepare_mode_run", "play", "medium", true, 0)
-	var scene: GameScene = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	var scene: GameScene = (load("res://scenes/screens/game.tscn") as PackedScene).instantiate()
 	root.add_child(scene)
 	await process_frame
 	await process_frame

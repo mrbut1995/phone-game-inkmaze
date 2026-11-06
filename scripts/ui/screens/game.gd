@@ -45,19 +45,19 @@ var _mode_id := "level"
 
 ## HUD theo chế độ chơi — mỗi chế độ có 2 scene HUD: bản DỌC (nodes/hud/<mode>.tscn, kế thừa
 ## portrait/portrait.tscn) và bản NGANG (nodes/hud/landscape/game/<mode>.tscn). Xem scripts/ui/hud/base.gd
-const HUD_LEVEL := preload("res://nodes/hud/portrait/game/level_mode.tscn")
-const HUD_DUNGEON := preload("res://nodes/hud/portrait/game/dungeon_mode.tscn")
-const HUD_BLIND_MEMORY := preload("res://nodes/hud/portrait/game/blind_memory_hud.tscn")
+const HUD_LEVEL := preload("res://scenes/objects/ui/hud/game/level_mode/portrait.tscn")
+const HUD_DUNGEON := preload("res://scenes/objects/ui/hud/game/dungeon_mode/portrait.tscn")
+const HUD_BLIND_MEMORY := preload("res://scenes/objects/ui/hud/game/blind_memory_hud/portrait.tscn")
 ## Wall Builder: THỜI GIAN + BẢNG TƯỜNG ĐÃ VẼ (đoạn đã dựng · lượt gửi) — không có thẻ Nhiệm vụ
-const HUD_WALL_BUILDER := preload("res://nodes/hud/portrait/game/wall_builder_hud.tscn")
-const HUD_CHALLENGE := preload("res://nodes/hud/portrait/game/challenge_hud.tscn")
+const HUD_WALL_BUILDER := preload("res://scenes/objects/ui/hud/game/wall_builder_hud/portrait.tscn")
+const HUD_CHALLENGE := preload("res://scenes/objects/ui/hud/game/challenge_hud/portrait.tscn")
 
 ## Bản NGANG của từng chế độ (thẻ nằm trên · action bar 2 hàng nằm dưới, trong cùng HUD)
-const HUD_LAND_LEVEL := preload("res://nodes/hud/landscape/game/level_mode.tscn")
-const HUD_LAND_DUNGEON := preload("res://nodes/hud/landscape/game/dungeon_mode.tscn")
-const HUD_LAND_BLIND_MEMORY := preload("res://nodes/hud/landscape/game/blind_memory_hud.tscn")
-const HUD_LAND_WALL_BUILDER := preload("res://nodes/hud/landscape/game/wall_builder_hud.tscn")
-const HUD_LAND_CHALLENGE := preload("res://nodes/hud/landscape/game/challenge_hud.tscn")
+const HUD_LAND_LEVEL := preload("res://scenes/objects/ui/hud/game/level_mode/landscape.tscn")
+const HUD_LAND_DUNGEON := preload("res://scenes/objects/ui/hud/game/dungeon_mode/landscape.tscn")
+const HUD_LAND_BLIND_MEMORY := preload("res://scenes/objects/ui/hud/game/blind_memory_hud/landscape.tscn")
+const HUD_LAND_WALL_BUILDER := preload("res://scenes/objects/ui/hud/game/wall_builder_hud/landscape.tscn")
+const HUD_LAND_CHALLENGE := preload("res://scenes/objects/ui/hud/game/challenge_hud/landscape.tscn")
 #@export var game_mode : BaseGameMode
 ## HUD đang gắn thuộc bản NGANG hay bản DỌC (đổi hướng màn hình là phải đổi cả biến thể HUD)
 var _hud_variant_landscape := false

@@ -19,8 +19,8 @@ signal progress_changed(progress: float, label: String)
 
 ## Scene nạp sẵn để màn kế tiếp mở tức thì (thêm/bớt chỉ cần sửa danh sách này)
 const PRELOAD_SCENES := [
-	"res://scenes/title.tscn",
-	"res://scenes/main.tscn",
+	"res://scenes/screens/title.tscn",
+	"res://scenes/screens/main.tscn",
 ]
 
 ## Số frame nhường trước khi chạy bước đầu (để engine vẽ xong frame Splash đầu tiên)

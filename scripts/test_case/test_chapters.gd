@@ -274,7 +274,7 @@ func _section_4b_chapter_gate(gm: Node, lm: Node) -> void:
 # ---------------------------------------------------------------------------
 func _section_8_win_popup(gm: Node) -> void:
 	print("[8] Popup thang man...")
-	var packed := load("res://nodes/popups/winning.tscn") as PackedScene
+	var packed := load("res://scenes/objects/ui/popups/winning.tscn") as PackedScene
 	_entry(packed != null, "Load duoc popup winning.tscn")
 	if packed == null:
 		return
@@ -358,7 +358,7 @@ func _section_9_wiring() -> void:
 	_entry(gm_src.contains("\"unlocked_chapters\""), "GameManager luu unlocked_chapters")
 	_entry(not gm_src.contains("func go_to_chapters"), "GameManager khong con go_to_chapters()")
 	_entry(gm_src.contains("func go_to_levels"), "GameManager co go_to_levels() (nay ve Main)")
-	_entry(gm_src.contains("res://scenes/main.tscn"), "go_to_levels() tro ve Main (Levels da gop)")
+	_entry(gm_src.contains("res://scenes/screens/main.tscn"), "go_to_levels() tro ve Main (Levels da gop)")
 
 
 func _entry(condition: bool, label: String) -> void:

@@ -9,7 +9,7 @@ func _init() -> void:
 	print("  TEST: 10 CONTROLLERS, SIGNAL BINDING & LEVEL MANAGER")
 	print("========================================================\n")
 
-	var game_scene_packed: PackedScene = load("res://scenes/game.tscn")
+	var game_scene_packed: PackedScene = load("res://scenes/screens/game.tscn")
 	assert(game_scene_packed != null, "scenes/game.tscn phai load duoc")
 
 	var game_scene: GameScene = game_scene_packed.instantiate()
@@ -242,7 +242,7 @@ func _init() -> void:
 	await create_timer(0.4).timeout
 	print("[SUCCESS] Popup Gameover level an 'Ve Menu' trong luong hoc lan dau!")
 
-	var debug_scene := (load("res://scenes/debug.tscn") as PackedScene).instantiate()
+	var debug_scene := (load("res://scenes/screens/debug.tscn") as PackedScene).instantiate()
 	root.add_child(debug_scene)
 	await process_frame
 	var tool_spinners := debug_scene.find_children("*", "SpinBox", true, false)

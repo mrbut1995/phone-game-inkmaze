@@ -45,7 +45,7 @@ func _check_integration() -> void:
 		gm.set("unlocked_levels", 99)
 		gm.set("pending_tutorial", "")
 		gm.set("pending_return_to_game", false)
-		var scene: GameScene = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+		var scene: GameScene = (load("res://scenes/screens/game.tscn") as PackedScene).instantiate()
 		root.add_child(scene)
 		await process_frame
 		await process_frame
@@ -76,7 +76,7 @@ func _check_integration() -> void:
 # Layout ngang: nut ? tren status bar
 func _check_status_bar_landscape() -> void:
 	print("-- Layout ngang: nut ? tren status bar --")
-	var ls: Node = (load("res://scenes/layout/landscape/game.tscn") as PackedScene).instantiate()
+	var ls: Node = (load("res://scenes/objects/layouts/game/landscape.tscn") as PackedScene).instantiate()
 	root.add_child(ls)
 	await process_frame
 	_check(ls.get("instruction_btn") != null, "layout ngang: co bind instruction_btn")

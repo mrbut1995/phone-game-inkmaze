@@ -22,8 +22,8 @@ func _init() -> void:
 		await _frames(5)
 		print("\n────── %dx%d   canvas=%s" % [size.x, size.y, str(root.get_visible_rect().size)])
 		await _dump_game()
-		await _dump_simple("daily", "res://scenes/daily.tscn")
-		await _dump_simple("shop", "res://scenes/shop.tscn")
+		await _dump_simple("daily", "res://scenes/screens/daily.tscn")
+		await _dump_simple("shop", "res://scenes/screens/shop.tscn")
 	quit(0)
 
 
@@ -38,7 +38,7 @@ func _dump_game() -> void:
 	if gm != null:
 		gm.set("current_mode", "play")
 		gm.set("current_level", 1)
-	var scene: Node = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	var scene: Node = (load("res://scenes/screens/game.tscn") as PackedScene).instantiate()
 	root.add_child(scene)
 	await _frames(20)
 	var canvas := root.get_visible_rect().size

@@ -11,8 +11,8 @@ extends BasePopup
 ## (pending) nên bấm HUỶ là thoát nguyên trạng.
 ## ============================================================================
 
-const ITEM_SCENE := preload("res://nodes/popups/edit_profile_item.tscn")
-const PROFILE_DOT_SCENE := preload("res://nodes/popups/profile_dot.tscn")
+const ITEM_SCENE := preload("res://scenes/objects/ui/popups/edit_profile_item.tscn")
+const PROFILE_DOT_SCENE := preload("res://scenes/objects/ui/popups/profile_dot.tscn")
 
 const TAB_AVATAR := "avatar"
 const TAB_FRAME := "frame"

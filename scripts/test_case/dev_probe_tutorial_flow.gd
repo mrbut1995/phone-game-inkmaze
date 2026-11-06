@@ -5,18 +5,18 @@ extends SceneTree
 ## (Gộp stderr vào stdout khi chạy để quy đúng lỗi theo marker: `... 2>&1`)
 
 const TUTORIALS := [
-	"res://nodes/tutorials/first_time.tscn",
-	"res://nodes/tutorials/how_to_play_move.tscn",
-	"res://nodes/tutorials/how_to_play_checking_wall.tscn",
+	"res://scenes/objects/tutorials/first_time.tscn",
+	"res://scenes/objects/tutorials/how_to_play_move.tscn",
+	"res://scenes/objects/tutorials/how_to_play_checking_wall.tscn",
 	"res://nodes/tutorials/how_to_play_minesweeper.tscn",
 	"res://nodes/tutorials/how_to_play_one_stroke.tscn",
 	"res://nodes/tutorials/how_to_play_sum_path.tscn",
-	"res://nodes/tutorials/how_to_play_wall_builder.tscn",
+	"res://scenes/objects/tutorials/how_to_play_wall_builder.tscn",
 	"res://nodes/tutorials/how_to_play_countdown_cost.tscn",
 	"res://nodes/tutorials/how_to_play_fading_ink.tscn",
 	"res://nodes/tutorials/how_to_play_fog_of_war.tscn",
-	"res://nodes/tutorials/how_to_play_blind_memory.tscn",
-	"res://nodes/tutorials/how_to_use_tool.tscn",
+	"res://scenes/objects/tutorials/how_to_play_blind_memory.tscn",
+	"res://scenes/objects/tutorials/how_to_use_tool.tscn",
 ]
 const FRAMES_STEP := 6
 const FRAMES_TAIL := 10

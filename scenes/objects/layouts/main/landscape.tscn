@@ -1,0 +1,252 @@
+[gd_scene format=3 uid="uid://btocfh1b2n54"]
+
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/base/base_layout.tscn" id="1_parent"]
+[ext_resource type="Script" uid="uid://dmhi5353c17ko" path="res://scripts/ui/layouts/main_layout.gd" id="2_layout"]
+[ext_resource type="PackedScene" uid="uid://kk7tudhk7r3m" path="res://scenes/objects/main/profile_card.tscn" id="3_profile"]
+[ext_resource type="PackedScene" uid="uid://dxm1sm66f5qi1" path="res://scenes/objects/main/star_chip.tscn" id="5_star"]
+[ext_resource type="PackedScene" uid="uid://xuj64d8yo0mg" path="res://scenes/objects/main/event_header.tscn" id="6_header"]
+[ext_resource type="PackedScene" uid="uid://cb8r4phad4ar5" path="res://scenes/objects/main/event_carousel.tscn" id="7_carousel"]
+[ext_resource uid="uid://dne2dakefjwwd" type="Texture2D" path="res://assets/images-png/common/settings_btn_normal.png" id="8_o5gjt"]
+[ext_resource type="PackedScene" uid="uid://k2k3skjevrxy" path="res://scenes/objects/main/dock_button.tscn" id="9_dock"]
+[ext_resource uid="uid://dp0k1h7hbrked" type="Texture2D" path="res://assets/images-png/dock/dock_panel.png" id="tex_dock_panel"]
+[ext_resource uid="uid://y87cylmhadlo" type="Texture2D" path="res://assets/images-png/common/settings_btn_pressed.png" id="9_kncrx"]
+[ext_resource type="Texture2D" uid="uid://bssvcnaam8t6i" path="res://assets/images-png/main/logo_doodle_maze.png" id="10_logo"]
+[ext_resource type="Script" uid="uid://cpgvknnr8kupu" path="res://scripts/ui/widgets/common/ui_scaler.gd" id="15_scaler"]
+[ext_resource type="PackedScene" path="res://scenes/objects/main/level_section.tscn" id="L_section"]
+[ext_resource type="PackedScene" path="res://scenes/objects/level_selection/chapter_lock_sheet.tscn" id="L_sheet"]
+[ext_resource type="PackedScene" path="res://scenes/objects/main/event_card_compact.tscn" id="L_evc"]
+[ext_resource type="PackedScene" path="res://scenes/objects/main/daily_card_compact.tscn" id="L_dlc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dock"]
+
+[node name="Landscape" unique_id=1978474116 node_paths=PackedStringArray("logo", "profile_card", "coin_chip", "star_chip", "btn_settings", "event_header", "event_carousel", "level_section", "dock_shop", "dock_ranking", "dock_daily", "dock_badges", "stamp_panel", "stamp_label", "header_anchor") instance=ExtResource("1_parent")]
+script = ExtResource("2_layout")
+header_inset_left = 10.0
+logo = NodePath("TopBar/LogoBlock/Logo")
+profile_card = NodePath("TopBar/ProfileCard")
+coin_chip = NodePath("TopBar/CoinChip")
+star_chip = NodePath("TopBar/StarChip")
+btn_settings = NodePath("TopBar/Settings")
+event_header = NodePath("Scaler/Body/Mid/Left/EventHeader")
+event_carousel = NodePath("Scaler/Body/Mid/Left/EventCarousel")
+level_section = NodePath("Scaler/Body/Mid/LevelSection")
+dock_shop = NodePath("Scaler/Body/Dock/Row/DockShop")
+dock_ranking = NodePath("Scaler/Body/Dock/Row/DockRanking")
+dock_daily = NodePath("Scaler/Body/Dock/Row/DockDaily")
+dock_badges = NodePath("Scaler/Body/Dock/Row/DockBadges")
+stamp_panel = NodePath("Scaler/Body/Mid/Left/Stamp")
+stamp_label = NodePath("Scaler/Body/Mid/Left/Stamp/Label")
+header_anchor = NodePath("Scaler/Body/TopBarAnchor")
+mouse_filter = 2
+
+[node name="Scaler" type="Control" parent="." index="0" node_paths=PackedStringArray("inset_target")]
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("15_scaler")
+inset_target = NodePath("Body")
+
+[node name="Body" type="VBoxContainer" parent="Scaler" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 31.0
+offset_top = 24.0
+offset_right = -12.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="TopBarAnchor" type="Control" parent="Scaler/Body"]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="HeadGap" type="Control" parent="Scaler/Body"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Mid" type="HBoxContainer" parent="Scaler/Body"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/separation = 14
+
+[node name="Left" type="VBoxContainer" parent="Scaler/Body/Mid"]
+visible = false
+process_mode = 4
+custom_minimum_size = Vector2(330, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.42
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="EventHeader" parent="Scaler/Body/Mid/Left" instance=ExtResource("6_header")]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+process_mode = 4
+
+[node name="EventCarousel" parent="Scaler/Body/Mid/Left" instance=ExtResource("7_carousel")]
+visible = false
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+size_flags_vertical = 1
+mouse_filter = 2
+process_mode = 4
+event_card_scene = ExtResource("L_evc")
+daily_card_scene = ExtResource("L_dlc")
+
+[node name="Stamp" type="Control" parent="Scaler/Body/Mid/Left"]
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Scaler/Body/Mid/Left/Stamp"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"SettingsVersion"
+text = "STR_SETTINGS_VERSION"
+horizontal_alignment = 2
+
+[node name="LevelSection" parent="Scaler/Body/Mid" node_paths=PackedStringArray("lock_sheet") instance=ExtResource("L_section")]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.58
+size_flags_vertical = 3
+lock_sheet = NodePath("../../../../LockSheet")
+
+[node name="Dock" type="PanelContainer" parent="Scaler/Body"]
+custom_minimum_size = Vector2(0, 106)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_dock")
+
+[node name="PaperHolder" type="Control" parent="Scaler/Body/Dock"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="PaperArt" type="NinePatchRect" parent="Scaler/Body/Dock/PaperHolder"]
+layout_mode = 0
+offset_top = -12.0
+offset_right = 640.0
+offset_bottom = 200.0
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+texture = ExtResource("tex_dock_panel")
+patch_margin_left = 56
+patch_margin_top = 60
+patch_margin_right = 56
+patch_margin_bottom = 60
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 0
+
+[node name="Row" type="HBoxContainer" parent="Scaler/Body/Dock"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="DockShop" parent="Scaler/Body/Dock/Row" instance=ExtResource("9_dock")]
+layout_mode = 2
+art_key = &"shop"
+label_key = &"STR_BTN_SHOP"
+
+[node name="DockRanking" parent="Scaler/Body/Dock/Row" instance=ExtResource("9_dock")]
+layout_mode = 2
+art_key = &"rank"
+label_key = &"STR_BTN_LEADERBOARD"
+
+[node name="DockDaily" parent="Scaler/Body/Dock/Row" instance=ExtResource("9_dock")]
+layout_mode = 2
+art_key = &"daily"
+label_key = &"STR_MAIN_DOCK_DAILY"
+
+[node name="DockBadges" parent="Scaler/Body/Dock/Row" instance=ExtResource("9_dock")]
+layout_mode = 2
+art_key = &"badges"
+label_key = &"STR_BTN_ACHIEVEMENT"
+
+[node name="LockSheet" parent="." instance=ExtResource("L_sheet")]
+z_index = 20
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ProfileCard" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="0" unique_id=225078020 instance=ExtResource("3_profile")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="SpacerL" type="Control" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="1" unique_id=195009206]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="LogoBlock" type="VBoxContainer" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="2" unique_id=1700000102]
+visible = false
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 1
+
+[node name="Logo" type="TextureRect" parent="TopBar/LogoBlock" index="0" unique_id=1295283578]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+texture = ExtResource("10_logo")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="Tagline" type="Label" parent="TopBar/LogoBlock" index="1" unique_id=2115060436]
+layout_mode = 2
+theme_type_variation = &"TopProfileXP"
+text = "STR_GENRE_SUBTITLE"
+horizontal_alignment = 1
+
+[node name="SpacerR" type="Control" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="3" unique_id=1700000103]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="CoinChip" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="4"]
+large = true
+
+[node name="LifeChip" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="5"]
+large = true
+
+[node name="StarChip" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="6" unique_id=1568568062 instance=ExtResource("5_star")]
+visible = false
+mouse_filter = 2
+process_mode = 4
+custom_minimum_size = Vector2(75, 32)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Settings" type="TextureButton" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="7" unique_id=772786432]
+custom_minimum_size = Vector2(56, 56)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("8_o5gjt")
+texture_pressed = ExtResource("9_kncrx")
+texture_hover = ExtResource("8_o5gjt")
+ignore_texture_size = true
+stretch_mode = 5
+
+[connection signal="pressed" from="TopBar/ProfileCard" to="." method="_on_profile_card_pressed"]

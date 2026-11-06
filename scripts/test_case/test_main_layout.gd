@@ -15,7 +15,7 @@ func _init() -> void:
 	root.size = Vector2i(1080, 1920)
 	await process_frame
 
-	var main_packed: PackedScene = load("res://scenes/main.tscn")
+	var main_packed: PackedScene = load("res://scenes/screens/main.tscn")
 	var main_scene: MainScene = main_packed.instantiate()
 	root.add_child(main_scene)
 	for i in 25:
@@ -125,7 +125,7 @@ func _init() -> void:
 			await process_frame
 		var sm := root.get_node_or_null("SceneManager")
 		var now_path := str(sm.call("current_scene_path")) if sm != null else ""
-		assert(now_path == "res://scenes/daily.tscn",
+		assert(now_path == "res://scenes/screens/daily.tscn",
 			"Bam nut Thu thach phai mo scenes/daily.tscn (dang '%s')" % now_path)
 
 	print("\n[SUCCESS] Bo cuc Main Screen moi dung: thanh tren · su kien · 2 the che do · dock 4 nut.\n")

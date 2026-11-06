@@ -205,7 +205,7 @@ func _section_4_save_roundtrip(manager: Node) -> void:
 func _section_5_scene(manager: Node) -> void:
 	print("\n--- 5. SCENE SO TAY THANH TUU ---")
 	var total := int(manager.call("total_count"))
-	var scene: AchievementScene = (load("res://scenes/achievement.tscn") as PackedScene).instantiate()
+	var scene: AchievementScene = (load("res://scenes/screens/achievement.tscn") as PackedScene).instantiate()
 	root.add_child(scene)
 	await process_frame
 	await process_frame

@@ -204,7 +204,7 @@ func _section_6_format() -> void:
 # ---------------------------------------------------------------------------
 func _section_7_scene(manager: Node) -> void:
 	print("[7] Scene...")
-	var packed := load("res://scenes/ranking.tscn") as PackedScene
+	var packed := load("res://scenes/screens/ranking.tscn") as PackedScene
 	_entry(packed != null, "Load duoc scenes/ranking.tscn")
 	if packed == null:
 		return
@@ -337,7 +337,7 @@ func _section_7_scene(manager: Node) -> void:
 func _section_8_wiring() -> void:
 	print("[8] Noi dieu huong...")
 	var nav_consts: Dictionary = load("res://scripts/utils/nav.gd").get_script_constant_map()
-	_entry(str(nav_consts.get("SCENE_RANKING", "")) == "res://scenes/ranking.tscn",
+	_entry(str(nav_consts.get("SCENE_RANKING", "")) == "res://scenes/screens/ranking.tscn",
 		"Nav.SCENE_RANKING tro dung scenes/ranking.tscn")
 	_entry(FileAccess.get_file_as_string("res://scripts/utils/nav.gd").contains("func goto_ranking"),
 		"Nav co ham goto_ranking()")
@@ -345,7 +345,7 @@ func _section_8_wiring() -> void:
 	_entry(scene_manager != null, "Autoload SceneManager ton tai")
 	if scene_manager != null:
 		var sm_consts: Dictionary = scene_manager.get_script().get_script_constant_map()
-		_entry(str(sm_consts.get("SCENE_RANKING", "")) == "res://scenes/ranking.tscn",
+		_entry(str(sm_consts.get("SCENE_RANKING", "")) == "res://scenes/screens/ranking.tscn",
 			"SceneManager.SCENE_RANKING tro dung scenes/ranking.tscn")
 		_entry(scene_manager.has_method("goto_ranking"), "SceneManager co goto_ranking()")
 	var main_src := FileAccess.get_file_as_string("res://scripts/ui/screens/main.gd")
