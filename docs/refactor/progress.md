@@ -32,7 +32,7 @@ Hệ quả: baseline sạch (3027 thay vì 3230; G-INT 18 thay vì 637 với 516
 ## Checklist
 
 - [x] P0 prepare
-- [ ] P1 maps
+- [x] P1 maps (va chạm 0 · review 9 → 3, đã duyệt)
 - [ ] P2 structure
 - [ ] P3.1 autoload class_name · [ ] P3.2 guard rails · [ ] P3.3 baseline · [ ] P3.4 tags · [ ] P3.5 constants
 - [ ] P4 scene contracts (0/…)
@@ -40,6 +40,21 @@ Hệ quả: baseline sạch (3027 thay vì 3230; G-INT 18 thay vì 637 với 516
 - [ ] P5.5..9 warnings (tuỳ chọn) · [ ] P6 tests · [ ] P7 docs
 
 Lint total history: 2026-11-06 = 3027 (baseline P0, chưa tạo lint_baseline — việc của P3.3)
+
+## P1 đã làm (maps — commit `P1`)
+
+- `python -X utf8 -I tools/refactor/gen_move_map.py . --out docs/refactor/maps`. **Phải thêm `-X utf8`** vì `-I`
+  bỏ qua biến môi trường `PYTHONUTF8` ⇒ trên Windows rơi về cp1252 và chết ở ký tự tiếng Việt.
+- Lần 1: va chạm 0 · **review 9** → người dùng duyệt toàn bộ đề xuất ⇒ `docs/refactor/overrides.txt` (8 override).
+- Xoá `nodes/daily/daily_milestone.tscn` (scene **trùng UID**, không ai tham chiếu — `PopupManager` chỉ nạp
+  `nodes/popups/daily_milestone.tscn`) rồi sinh lại map.
+- Lần 2: **va chạm 0 · review 3** — cả 3 là mục đã duyệt giữ nguyên (`PaperGeometry`→`utils/`, `DebugData`→`utils/`,
+  `ShopCardTap`→`systems/`), không còn mục nào chưa quyết.
+- Kết quả map: P2a **15** dòng · P2b **169 scene** (screens 14 · base 5 · objects 136 · autoload 1 · components 13) ·
+  P2c **257 script** · P2d **68 test/probe** · dir_refs **13** tiền tố.
+- Override quan trọng: `BoardCellsView`→`systems/`, `MissionCard`→`components/hud/`, `AutoFitLabel`→`components/shared/`,
+  `DockStyleJ`→`utils/`, `DailyMilestonePopup`→`objects/ui/popups/`, layout màn Game →
+  `objects/layouts/game/{GameSceneLayout,GameLayoutLandscape,GameLayoutPortrait}.gd`.
 
 ## P0 đã làm (commit `47e6f0ac`, `6284b77f`, + commit D-ENV)
 
