@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://bug68ja7lmkgd"
-path="res://.godot/imported/sfx_day_switch.wav-a0d222ff62098ff9b1d38ea8dc0771a9.sample"
+path="res://.godot/imported/sfx_day_switch.wav-32c7321f517e554ca6f00810428e38ce.sample"
 
 [deps]
 
 source_file="res://assets/audio/sfx/sfx_day_switch.wav"
-dest_files=["res://.godot/imported/sfx_day_switch.wav-a0d222ff62098ff9b1d38ea8dc0771a9.sample"]
+dest_files=["res://.godot/imported/sfx_day_switch.wav-32c7321f517e554ca6f00810428e38ce.sample"]
 
 [params]
 

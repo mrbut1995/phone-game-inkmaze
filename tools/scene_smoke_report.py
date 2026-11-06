@@ -1,8 +1,8 @@
-"""Gom lỗi trong log của `scripts/test_case/dev_scene_smoke.gd` theo TỪNG scene.
+"""Gom lỗi trong log của `debug/probes/dev_scene_smoke.gd` theo TỪNG scene.
 
 Cách dùng (chạy harness với stderr GỘP vào stdout để giữ đúng thứ tự dòng):
 
-    & .venv\\Scripts\\python.exe -c "import subprocess; p=subprocess.run([r'<godot_console>','--headless','--path','.','--script','res://scripts/test_case/dev_scene_smoke.gd'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,encoding='utf-8',errors='replace'); open('tmp_scene_smoke.log','w',encoding='utf-8').write(p.stdout or '')"
+    & .venv\\Scripts\\python.exe -c "import subprocess; p=subprocess.run([r'<godot_console>','--headless','--path','.','--script','res://debug/probes/dev_scene_smoke.gd'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,encoding='utf-8',errors='replace'); open('tmp_scene_smoke.log','w',encoding='utf-8').write(p.stdout or '')"
     python tools/scene_smoke_report.py tmp_scene_smoke.log
 
 Kết quả: danh sách scene + số dòng lỗi theo từng kiểu (SCRIPT ERROR / ERROR: / …).

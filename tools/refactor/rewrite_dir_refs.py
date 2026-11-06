@@ -4,7 +4,7 @@
 Cách chạy:  python3 -I tools/refactor/rewrite_dir_refs.py <project_root> <map> [--dry-run] [--only-py]
 <map>: dir_refs.txt (`cũ/ -> mới/`) HOẶC bất kỳ P2*.map (`file cũ -> file mới`), tương đối project root, không có res://.
 Thay `res://cũ/...` và `res://cũ"` (hằng số thư mục như `const DIR := "res://resources/levels/"`).
---only-py: chỉ sửa file .py (move_map.py bỏ qua .py; tool Python như level_designer ghi `res://scripts/data/level_data.gd`).
+--only-py: chỉ sửa file .py (move_map.py bỏ qua .py; tool Python như level_designer ghi `res://scripts/models/definitions/LevelData.gd`).
 Chạy thêm với P2b/P2c/P2d map + --only-py để tool Python không trỏ vào đường dẫn cũ.
 In ra các dòng còn chứa tiền tố cũ sau khi thay (thường là chuỗi ghép `"resources/" + x` -> sửa tay).
 """
@@ -23,7 +23,11 @@ pats = [(re.compile(r"res://" + re.escape(a) + r"(?![\w])"), "res://" + b) for a
 changed = 0
 left = []
 for d, dirs, fs in os.walk(root):
-    dirs[:] = [x for x in dirs if x not in (".git", ".godot", "node_modules", "__pycache__", "dist", "build")]
+    # InkMaze: bỏ thêm .venv / android / thư mục rác (xem docs/refactor/progress.md, D-ENV)
+    dirs[:] = [x for x in dirs if x not in (".git", ".godot", "node_modules", "__pycache__", "dist",
+                                            "build", ".venv", "android", "what-changes",
+                                            "_removed_unused", "optimizing_clean", "mockup", "helpers")
+               and not x.startswith("tmp_")]
     for f in fs:
         if not (f.endswith(EXT) or (f == "project.godot" and ".py" not in EXT)):
             continue

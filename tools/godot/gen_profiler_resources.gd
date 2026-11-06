@@ -6,9 +6,9 @@ extends SceneTree
 ##   godot --headless --path . --script res://tools/godot/gen_profiler_resources.gd
 ##
 ## Kết quả (68 file .tres — lớp AvatarData / FrameData / ProfilerTitleData):
-##   · resources/profiler/avatars/avatar_<id>.tres   (34 avatar)
-##   · resources/profiler/frames/frame_<id>.tres     (29 viền khung mới)
-##   · resources/profiler/titles/tier_<n>.tres       (5 bậc danh hiệu)
+##   · data/profiler/avatars/avatar_<id>.tres   (34 avatar)
+##   · data/profiler/frames/frame_<id>.tres     (29 viền khung mới)
+##   · data/profiler/titles/tier_<n>.tres       (5 bậc danh hiệu)
 ##
 ## SAU KHI CHẠY: PlayerProfileManager tự quét 3 thư mục này lúc khởi động —
 ## thêm món mới chỉ cần TẠO THÊM 1 FILE .tres (không phải sửa code/danh sách).
@@ -143,7 +143,7 @@ func _make_dirs() -> void:
 	var root := DirAccess.open("res://")
 	if root == null:
 		return
-	for path in ["resources/profiler/avatars", "resources/profiler/frames", "resources/profiler/titles"]:
+	for path in ["data/profiler/avatars", "data/profiler/frames", "data/profiler/titles"]:
 		root.make_dir_recursive(path)
 
 

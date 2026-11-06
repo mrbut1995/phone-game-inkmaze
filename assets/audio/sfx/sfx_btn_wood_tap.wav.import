@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://ci7ptonkm01j0"
-path="res://.godot/imported/sfx_btn_wood_tap.wav-d1bde69ff37ed3ad5cd93cb98b5c0c5b.sample"
+path="res://.godot/imported/sfx_btn_wood_tap.wav-b4f61267547cdacc7115f3a04475784d.sample"
 
 [deps]
 
 source_file="res://assets/audio/sfx/sfx_btn_wood_tap.wav"
-dest_files=["res://.godot/imported/sfx_btn_wood_tap.wav-d1bde69ff37ed3ad5cd93cb98b5c0c5b.sample"]
+dest_files=["res://.godot/imported/sfx_btn_wood_tap.wav-b4f61267547cdacc7115f3a04475784d.sample"]
 
 [params]
 

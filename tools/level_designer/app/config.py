@@ -32,16 +32,16 @@ def _find_project_root() -> Path:
 
 
 PROJECT_ROOT = _find_project_root()
-LEVELS_DIR = PROJECT_ROOT / "resources" / "levels"
-CHAPTERS_DIR = PROJECT_ROOT / "resources" / "chapters"
+LEVELS_DIR = PROJECT_ROOT / "data" / "levels"
+CHAPTERS_DIR = PROJECT_ROOT / "data" / "chapters"
 
 # Đường dẫn script Godot mà file .tres trỏ tới (giữ nguyên như Godot sinh ra)
-LEVEL_SCRIPT_RES = "res://scripts/data/level_data.gd"
+LEVEL_SCRIPT_RES = "res://scripts/models/definitions/LevelData.gd"
 # Id ext_resource trong file .tres (Godot dùng id nội bộ, giá trị nào cũng hợp lệ)
 LEVEL_SCRIPT_ID = "1_level"
 
-# CHƯƠNG (màn "CHỌN CHƯƠNG" của game) - xem scripts/resources/chapter_data.gd
-CHAPTER_SCRIPT_RES = "res://scripts/data/chapter_data.gd"
+# CHƯƠNG (màn "CHỌN CHƯƠNG" của game) - xem scripts/models/definitions/ChapterData.gd
+CHAPTER_SCRIPT_RES = "res://scripts/models/definitions/ChapterData.gd"
 CHAPTER_SCRIPT_ID = "1_chapter"
 MIN_CHAPTER_ID = 1
 MAX_CHAPTER_ID = 99
@@ -227,13 +227,13 @@ TOOL_LABELS = (
 
 # --- Hàm tiện ích ----------------------------------------------------------
 def ensure_levels_dir() -> Path:
-    """Tạo thư mục resources/levels nếu chưa có và trả về đường dẫn."""
+    """Tạo thư mục data/levels nếu chưa có và trả về đường dẫn."""
     LEVELS_DIR.mkdir(parents=True, exist_ok=True)
     return LEVELS_DIR
 
 
 def ensure_chapters_dir() -> Path:
-    """Tạo thư mục resources/chapters nếu chưa có và trả về đường dẫn."""
+    """Tạo thư mục data/chapters nếu chưa có và trả về đường dẫn."""
     CHAPTERS_DIR.mkdir(parents=True, exist_ok=True)
     return CHAPTERS_DIR
 
@@ -267,7 +267,7 @@ def tool_dir() -> Path:
 
 
 def default_output_dir() -> Path:
-    """Thư mục mặc định cho các file xuất ra (không đụng vào resources/levels)."""
+    """Thư mục mặc định cho các file xuất ra (không đụng vào data/levels)."""
     return tool_dir() / "out"
 
 

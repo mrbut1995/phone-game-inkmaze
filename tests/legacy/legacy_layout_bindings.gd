@@ -1,0 +1,169 @@
+extends SceneTree
+## ============================================================================
+## Test Case: BINDING NODE CỦA MÀN ⇄ SCENE LAYOUT (Portrait / Landscape)
+##
+## Mỗi màn tách 2 bố cục `scenes/layout/{portrait,landscape}/<màn>.tscn`; script layout
+## (`scripts/ui/layouts/<màn>_layout.gd`) khai `@export` node và .tscn BIND SẴN bằng
+## `NodePath` — script màn chỉ đọc `layout.<tên>`.
+##
+## Test này mở từng màn, soi CẢ 2 bố cục và đòi:
+##   1. Node layout gắn ĐÚNG script layout của màn (class_name khớp).
+##   2. Mọi `@export` (kiểu Object) đều trỏ tới node THẬT — trừ node nằm trong OPTIONAL
+##      (bố cục ngang của splash/title chưa có node đó — thiếu có sẵn từ trước).
+## ============================================================================
+
+## Màn ⇄ class_name script layout + scene gốc
+const SCREENS := {
+	"settings": "SettingsLayout",
+	"main": "MainLayout",
+	"ranking": "RankingLayout",
+	"daily": "DailyLayout",
+	"shop": "ShopLayout",
+	"achievement": "AchievementLayout",
+	"credit": "CreditLayout",
+	"debug": "DebugLayout",
+	"splash": "SplashLayout",
+	"title": "TitleLayout",
+	## TUTORIAL tách đôi (2026-10): DANH SÁCH bài (`tutorial_list.tscn`) và CHI TIẾT bài đang
+	## xem (`tutorial.tscn`) — 2 màn, 2 script layout riêng.
+	"tutorial": "TutorialLayout",
+	"tutorial_list": "TutorialListLayout",
+	## Màn chơi: mỗi hướng 1 script riêng, đều kế thừa `GameSceneLayout`
+	"game": "GameSceneLayout|GameLayout",
+}
+## Nội dung POPUP hồ sơ cá nhân — file nằm ở `nodes/popups/profiler_content.tscn`
+## (trước đây là màn hình `scenes/profiler_popup.tscn`) nên kiểm bằng ĐƯỜNG DẪN TƯỜNG MINH.
+const LAYOUT_CONTENTS := {
+	"profiler_content": {"path": "res://scenes/objects/ui/popups/profiler_content.tscn", "layout": "ProfilerLayout"},
+}
+## Node được phép THIẾU ở 1 hướng (bố cục ngang chưa dựng node đó) — khoá "<màn>|<hướng>"
+## `hud_slot` của màn chơi: HUD bị THAY bằng code ngay khi vào màn (đổi theo chế độ chơi) nên
+## node Information ban đầu bị free — binding cũ trỏ vào node đã free là chuyện bình thường.
+## `pad_slot` của shop: CHỈ bố cục NGANG có khung riêng cho Bàn nháp (cột trái như mockup);
+## bản DỌC vẫn để bàn nháp trong danh sách nên không khai node này.
+const OPTIONAL := {
+	## Splash: ngòi bút chì (Pencil) đã bỏ khỏi cả 2 bố cục; bản NGANG không có FadeOverlay.
+	## Tagline/HintTap/Stamp + nhãn studio bỏ khỏi CẢ 2 bố cục (10/2026 — landscape giống
+	## portrait); các export này còn `NodePath("")` trong scene (rỗng ⇒ null) — là thiết kế,
+	## không phải lỗi binding.
+	"splash|portrait": ["pencil", "stamp_label", "studio_label", "tagline_label"],
+	"splash|landscape": ["fade_overlay", "pencil", "stamp_label", "studio_label", "tagline_label"],
+	"title|landscape": ["touch_button", "fade_overlay"],
+	"game|portrait": ["hud_slot", "landscape_action_bar"],
+	"game|landscape": ["hud_slot"],
+	"shop|portrait": ["pad_slot"],
+	## Shop NGANG: toàn bộ UI nằm trong `Body` (HBox) — không có `NavBar` nền dưới như bản
+	## DỌC nên 2 export safe-area (`nav_bar`, `content_body`) để trống ở hướng này.
+	"shop|landscape": ["nav_bar", "content_body"],
+	## Sticker HỒ SƠ ở bản dọc chỉ là avatar nhỏ (không có chỗ ghi tên);
+	## thẻ hồ sơ ở bản NGANG mới hiện tên người chơi.
+	## Main DỌC (bố cục gộp): KHÔNG có `Logo` lẫn carousel sự kiện — sự kiện là CỘT NÚT ICON nổi
+	## bên phải bản đồ; 2 export đó chỉ bản NGANG khai.
+	"main|portrait": ["profile_name", "logo", "event_carousel"],
+	## Sổ tay: khối "tổng quan" (thanh + %) của thiết kế cũ đã bỏ ở CẢ 2 bố cục.
+	"achievement|portrait": ["overview_bar", "overview_fill", "overview_pct", "overview_summary"],
+	"achievement|landscape": ["overview_bar", "overview_fill", "overview_pct", "overview_summary"],
+	## Màn Chọn màn: `level_map` là node DÙNG CHUNG nằm NGOÀI 2 bố cục (trong `scenes/levels.tscn`
+	## → `MapArea/LevelMap`) nên bố cục đứng riêng không thể bind — binding thật khai ở node gốc
+	## màn và được `test_levels_map` kiểm. `map_slot` CHỈ bản NGANG có (khung `FitStage`), bản DỌC
+	## giữ neo `MapArea` mặc định. `progress` (thanh ngang) chỉ bản NGANG, `rail` (dọc) chỉ bản DỌC.
+	## Nội dung Hồ sơ: bản DỌC không tách 2 nhãn riêng UID/THAM GIA + dòng "còn EXP" (chỉ bản
+	## NGANG theo mockup landscape mới); bản NGANG không có con dấu INK VERIFIED.
+	"profiler_content|portrait": ["hero_exp_remain", "hero_join"],
+	"profiler_content|landscape": ["stamp"],
+}
+
+var _failed := 0
+var _checks := 0
+
+
+func _init() -> void:
+	print("\n========================================================")
+	print("  TEST: BINDING LAYOUT (export ⇄ node trong .tscn)")
+	print("========================================================\n")
+	root.size = Vector2i(1080, 1920)
+	await process_frame
+
+	for screen: String in SCREENS:
+		await _check_screen(screen, SCREENS[screen])
+	for content_name: String in LAYOUT_CONTENTS:
+		var spec: Dictionary = LAYOUT_CONTENTS[content_name]
+		await _check_screen_at(content_name, str(spec.get("path", "")), str(spec.get("layout", "")))
+
+	print("\n--------------------------------------------------------")
+	if _failed == 0:
+		print("  KET QUA: %d/%d CHECK PASS" % [_checks, _checks])
+	else:
+		print("  KET QUA: FAIL %d/%d CHECK" % [_failed, _checks])
+	print("--------------------------------------------------------\n")
+	quit(1 if _failed > 0 else 0)
+
+
+func _check_screen(screen: String, layout_class: String) -> void:
+	await _check_screen_at(screen, "res://scenes/screens/%s.tscn" % screen, layout_class)
+
+
+## Kiểm scene theo ĐƯỜNG DẪN TƯỜNG MINH (dùng cho nội dung popup nằm ngoài `scenes/`)
+func _check_screen_at(screen: String, path: String, layout_class: String) -> void:
+	var packed := load(path) as PackedScene
+	if packed == null:
+		_entry(false, "%s: nạp được %s" % [screen, path])
+		return
+	var scene: Node = packed.instantiate()
+	root.add_child(scene)
+	await process_frame
+	await process_frame
+
+	for holder_name in ["Portrait", "Landscape"]:
+		var holder: Node = scene.get_node_or_null(holder_name)
+		if holder == null:
+			continue
+		var script: Script = holder.get_script()
+		if script == null:
+			_entry(false, "%s/%s: gắn script layout" % [screen, holder_name])
+			continue
+		var cls: String = script.get_global_name()
+		var allowed: PackedStringArray = layout_class.split("|")
+		if cls == "":
+			_entry(true, "%s/%s: script riêng theo hướng (kế thừa %s)" % [screen, holder_name, allowed[0]])
+		else:
+			_entry(allowed.has(cls), "%s/%s: script = %s (muốn %s)"
+				% [screen, holder_name, cls, " · ".join(allowed)])
+		_check_exports(scene, holder, screen, holder_name, script)
+	scene.queue_free()
+	await process_frame
+
+
+func _check_exports(scene: Node, holder: Node, screen: String, holder_name: String, script: Script) -> void:
+	var opt: Array = OPTIONAL.get(("%s|%s" % [screen, holder_name]).to_lower(), [])
+	var total := 0
+	var missing: Array[String] = []
+	for prop: Dictionary in script.get_script_property_list():
+		if not (int(prop.get("usage", 0)) & PROPERTY_USAGE_SCRIPT_VARIABLE):
+			continue
+		# Biến NỘI BỘ (bắt đầu bằng `_`) là trạng thái lúc chạy, KHÔNG phải binding trong .tscn
+		if str(prop.get("name", "")).begins_with("_"):
+			continue
+		if int(prop.get("type", 0)) != TYPE_OBJECT:
+			continue
+		total += 1
+		var value: Variant = holder.get(str(prop.get("name")))
+		# `header_anchor` / `bottom_safe_spacer` là hook TUỲ CHỌN của BaseLayout: chỉ màn
+		# có thanh trên cục bộ / khoảng đệm safe area mới bind.
+		var optional_name := str(prop.get("name")) in ["header_anchor", "bottom_safe_spacer"]
+		if value == null and not optional_name and not opt.has(str(prop.get("name"))):
+			missing.append(str(prop.get("name")))
+	_entry(total > 0, "%s/%s: có %d export node trên script layout" % [screen, holder_name, total])
+	_entry(missing.is_empty(), "%s/%s: mọi export trỏ tới node thật%s"
+		% [screen, holder_name, "" if missing.is_empty() else " — thiếu: " + ", ".join(missing)])
+
+	# script màn phải lấy được layout (2 bố cục dùng CÙNG class nên `active_layout()` trả về được)
+	if holder_name == "Portrait" and scene.get("layout") == null:
+		_entry(false, "%s: scene.layout chưa được gán sau _ready()" % screen)
+
+
+func _entry(ok: bool, label: String) -> void:
+	_checks += 1
+	if not ok:
+		_failed += 1
+	print("  %s %s" % ["[OK]" if ok else "[FAIL]", label])

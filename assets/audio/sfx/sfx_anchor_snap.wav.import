@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://bdk3h2shoevyb"
-path="res://.godot/imported/sfx_anchor_snap.wav-b8b37957ab0363a6d189158e48a80d5d.sample"
+path="res://.godot/imported/sfx_anchor_snap.wav-0727503a5dafd9ba105f3427235c9e8b.sample"
 
 [deps]
 
 source_file="res://assets/audio/sfx/sfx_anchor_snap.wav"
-dest_files=["res://.godot/imported/sfx_anchor_snap.wav-b8b37957ab0363a6d189158e48a80d5d.sample"]
+dest_files=["res://.godot/imported/sfx_anchor_snap.wav-0727503a5dafd9ba105f3427235c9e8b.sample"]
 
 [params]
 

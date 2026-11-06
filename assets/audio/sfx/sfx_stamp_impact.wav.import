@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://dmmcjgo5eeetm"
-path="res://.godot/imported/sfx_stamp_impact.wav-a0b68202a5660f3f92cbbd2253721a05.sample"
+path="res://.godot/imported/sfx_stamp_impact.wav-97e992f47d517f5a9da151cd1eccf0f5.sample"
 
 [deps]
 
 source_file="res://assets/audio/sfx/sfx_stamp_impact.wav"
-dest_files=["res://.godot/imported/sfx_stamp_impact.wav-a0b68202a5660f3f92cbbd2253721a05.sample"]
+dest_files=["res://.godot/imported/sfx_stamp_impact.wav-97e992f47d517f5a9da151cd1eccf0f5.sample"]
 
 [params]
 

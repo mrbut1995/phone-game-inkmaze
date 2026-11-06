@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://b0lx4mmi0k48w"
-path="res://.godot/imported/sfx_star_pop.wav-b921949a2f4807a7d63dc5da4961980d.sample"
+path="res://.godot/imported/sfx_star_pop.wav-55056003bdd8ab0fe4ea26d2f63ea46c.sample"
 
 [deps]
 
 source_file="res://assets/audio/sfx/sfx_star_pop.wav"
-dest_files=["res://.godot/imported/sfx_star_pop.wav-b921949a2f4807a7d63dc5da4961980d.sample"]
+dest_files=["res://.godot/imported/sfx_star_pop.wav-55056003bdd8ab0fe4ea26d2f63ea46c.sample"]
 
 [params]
 

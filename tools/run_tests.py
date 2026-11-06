@@ -79,7 +79,8 @@ def _user_save_path() -> pathlib.Path | None:
 
 
 def run(name: str, timeout: float) -> tuple[str, str]:
-    script = f"res://scripts/test_case/{name}.gd"
+    legacy = name[len("test_"):] if name.startswith("test_") else name
+    script = f"res://tests/legacy/legacy_{legacy}.gd"
     cmd = [GODOT, "--headless", "--path", str(ROOT), "--script", script]
     # ☠️ LƯỚI AN TOÀN cho SAVE NGƯỜI CHƠI: nhiều test đổi tiến trình (sao/màn/cửa hàng…),
     # thay đổi đó phát tín hiệu "changed" ⇒ SaveManager GHI NGAY vào `user://…/inkmaze_data.json`.

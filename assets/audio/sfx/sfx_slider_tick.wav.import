@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://dbi7vep0sdnjk"
-path="res://.godot/imported/sfx_slider_tick.wav-715293ceaec73591f5356579730d084f.sample"
+path="res://.godot/imported/sfx_slider_tick.wav-dc40b7975e0ae439288800c3071c0971.sample"
 
 [deps]
 
 source_file="res://assets/audio/sfx/sfx_slider_tick.wav"
-dest_files=["res://.godot/imported/sfx_slider_tick.wav-715293ceaec73591f5356579730d084f.sample"]
+dest_files=["res://.godot/imported/sfx_slider_tick.wav-dc40b7975e0ae439288800c3071c0971.sample"]
 
 [params]
 

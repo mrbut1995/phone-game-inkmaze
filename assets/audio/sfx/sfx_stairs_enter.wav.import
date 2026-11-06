@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://cjqqfkpd611oy"
-path="res://.godot/imported/sfx_stairs_enter.wav-90f5bc8ff2c54e12c6aabd50a761036c.sample"
+path="res://.godot/imported/sfx_stairs_enter.wav-b01465eda0a2ab1dad3dc16e129fa000.sample"
 
 [deps]
 
 source_file="res://assets/audio/sfx/sfx_stairs_enter.wav"
-dest_files=["res://.godot/imported/sfx_stairs_enter.wav-90f5bc8ff2c54e12c6aabd50a761036c.sample"]
+dest_files=["res://.godot/imported/sfx_stairs_enter.wav-b01465eda0a2ab1dad3dc16e129fa000.sample"]
 
 [params]
 

@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://b0e3rwtu1etys"
-path="res://.godot/imported/sfx_floor_bonus.wav-09a487c18d4e6fb68182334b20926317.sample"
+path="res://.godot/imported/sfx_floor_bonus.wav-7a440d732d0a505bd7fd807cc7300c86.sample"
 
 [deps]
 
 source_file="res://assets/audio/sfx/sfx_floor_bonus.wav"
-dest_files=["res://.godot/imported/sfx_floor_bonus.wav-09a487c18d4e6fb68182334b20926317.sample"]
+dest_files=["res://.godot/imported/sfx_floor_bonus.wav-7a440d732d0a505bd7fd807cc7300c86.sample"]
 
 [params]
 
