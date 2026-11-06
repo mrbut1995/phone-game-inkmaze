@@ -149,7 +149,7 @@ func _set_info(btn: TextureButton, label: Label, art: Texture2D, color: Color, v
 	btn.texture_disabled = art
 	btn.modulate = Color(1, 1, 1, 1)  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 	label.theme_type_variation = variation
-	label.add_theme_color_override("font_color", color)
+	label.add_theme_color_override("font_color", color)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 
 
 ## Trạng thái "xong" (ĐANG DÙNG / ĐÃ ĐẦY LƯỢT / ĐÃ SỞ HỮU): nền xanh nhạt + chữ xanh lục ĐẬM, dễ đọc

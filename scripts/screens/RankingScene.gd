@@ -52,8 +52,8 @@ var _tab_buttons: Dictionary = {}
 var _tab_order: Array[String] = []
 var _rows: Array[RankRow] = []
 
-var _transition: Tween = null
-var _rows_tween: Tween = null
+var _transition: Tween = null  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+var _rows_tween: Tween = null  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 var _content_rest := Vector2.ZERO
 
 # Trạng thái vuốt/cuộn danh sách (xem _input)
@@ -157,12 +157,12 @@ func _transition_to(board: String) -> void:
 	# Tab nở/co NGAY khi bấm; dữ liệu đổi giữa chừng khi nội dung cũ đã mờ hết
 	_board = board
 	_update_tabs()
-	_transition = create_tween().set_parallel(true).set_trans(Tween.TRANS_CUBIC)
-	_transition.tween_property(content, "modulate:a", 0.0, OUT_TIME).set_ease(Tween.EASE_IN)
-	_transition.tween_property(content, "position:x", _content_rest.x - dir * SLIDE_DISTANCE, OUT_TIME).set_ease(Tween.EASE_IN)
+	_transition = create_tween().set_parallel(true).set_trans(Tween.TRANS_CUBIC)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	_transition.tween_property(content, "modulate:a", 0.0, OUT_TIME).set_ease(Tween.EASE_IN)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	_transition.tween_property(content, "position:x", _content_rest.x - dir * SLIDE_DISTANCE, OUT_TIME).set_ease(Tween.EASE_IN)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	_transition.chain().tween_callback(_swap_board.bind(board, dir))
-	_transition.chain().tween_property(content, "modulate:a", 1.0, IN_TIME).set_ease(Tween.EASE_OUT)
-	_transition.parallel().tween_property(content, "position:x", _content_rest.x, IN_TIME).set_ease(Tween.EASE_OUT)
+	_transition.chain().tween_property(content, "modulate:a", 1.0, IN_TIME).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	_transition.parallel().tween_property(content, "position:x", _content_rest.x, IN_TIME).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 ## Giữa animation: nạp bảng mới, đặt nội dung ở phía ngược lại rồi cho hàng hiện lần lượt
@@ -175,7 +175,7 @@ func _swap_board(board: String, dir: int) -> void:
 
 func _stagger_rows() -> void:
 	_kill_tween(_rows_tween)
-	_rows_tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	_rows_tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	for i in mini(_rows.size(), MAX_STAGGER_ROWS):
 		var row := _rows[i]
 		if not is_instance_valid(row):
@@ -199,7 +199,7 @@ func _reset_transition() -> void:
 			row.modulate.a = 1.0
 
 
-func _kill_tween(tw: Tween) -> void:
+func _kill_tween(tw: Tween) -> void:  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	if tw != null and tw.is_valid():
 		tw.kill()
 

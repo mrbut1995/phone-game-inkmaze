@@ -145,8 +145,8 @@ func _run_page_turn(target_path: String, change_callback: Callable, forward: boo
 	paper_page.position = Vector2(start_x, 0.0)
 
 	# Phase 1: Trang giấy lướt vào che kín màn hình
-	var tw_in := create_tween()
-	tw_in.tween_property(paper_page, "position:x", 0.0, duration_page_in).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	var tw_in := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	tw_in.tween_property(paper_page, "position:x", 0.0, duration_page_in).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	await tw_in.finished
 
 	# Phase 2: Thực hiện đổi scene
@@ -156,8 +156,8 @@ func _run_page_turn(target_path: String, change_callback: Callable, forward: boo
 	await _wait_frames(2)
 
 	# Phase 3: Trang giấy lướt tiếp ra ngoài để hé mở scene mới
-	var tw_out := create_tween()
-	tw_out.tween_property(paper_page, "position:x", end_x, duration_page_out).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+	var tw_out := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	tw_out.tween_property(paper_page, "position:x", end_x, duration_page_out).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	await tw_out.finished
 
 
@@ -172,8 +172,8 @@ func _run_ink_circle(target_path: String, change_callback: Callable) -> void:
 	_ink_radius = 0.0
 
 	# Phase 1: Mực loang từ tâm che phủ màn hình
-	var tw_in := create_tween()
-	tw_in.tween_method(_set_ink_radius, 0.0, _ink_max_radius, duration_ink).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	var tw_in := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	tw_in.tween_method(_set_ink_radius, 0.0, _ink_max_radius, duration_ink).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	await tw_in.finished
 
 	# Phase 2: Đổi scene
@@ -183,10 +183,10 @@ func _run_ink_circle(target_path: String, change_callback: Callable) -> void:
 	await _wait_frames(2)
 
 	# Phase 3: Mực tan biến mờ dần hé lộ màn chơi
-	var tw_out := create_tween()
+	var tw_out := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	tw_out.set_parallel(true)
-	tw_out.tween_property(ink_circle_drawer, "modulate:a", 0.0, duration_page_out).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	tw_out.tween_method(_set_ink_radius, _ink_max_radius, _ink_max_radius * 1.3, duration_page_out).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tw_out.tween_property(ink_circle_drawer, "modulate:a", 0.0, duration_page_out).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	tw_out.tween_method(_set_ink_radius, _ink_max_radius, _ink_max_radius * 1.3, duration_page_out).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	await tw_out.finished
 
 
@@ -197,8 +197,8 @@ func _run_paper_fade(target_path: String, change_callback: Callable) -> void:
 	fade_rect.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 	fade_rect.modulate.a = 0.0
 
-	var tw_in := create_tween()
-	tw_in.tween_property(fade_rect, "modulate:a", 1.0, duration_fade).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	var tw_in := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	tw_in.tween_property(fade_rect, "modulate:a", 1.0, duration_fade).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	await tw_in.finished
 
 	if change_callback.is_valid():
@@ -206,8 +206,8 @@ func _run_paper_fade(target_path: String, change_callback: Callable) -> void:
 	scene_swapped.emit()
 	await _wait_frames(2)
 
-	var tw_out := create_tween()
-	tw_out.tween_property(fade_rect, "modulate:a", 0.0, duration_fade).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	var tw_out := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	tw_out.tween_property(fade_rect, "modulate:a", 0.0, duration_fade).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	await tw_out.finished
 
 

@@ -61,10 +61,10 @@ static func press_fx(node: Control, down: bool) -> void:
 		return
 	if node.has_meta("_tap_fx"):
 		var old: Variant = node.get_meta("_tap_fx")
-		if old is Tween and (old as Tween).is_valid():
-			(old as Tween).kill()
+		if old is Tween and (old as Tween).is_valid():  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+			(old as Tween).kill()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	node.pivot_offset = node.size * 0.5
-	var tw := node.create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+	var tw := node.create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	tw.tween_property(node, "scale", Vector2(0.97, 0.97) if down else Vector2.ONE, 0.07)
 	node.set_meta("_tap_fx", tw)
 
@@ -74,7 +74,7 @@ static func shake(node: Control, target: Control) -> void:
 	if node == null or target == null or not node.is_inside_tree():
 		return
 	var x := target.position.x
-	var tw := node.create_tween()
+	var tw := node.create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	for dx in [-5.0, 5.0, -3.0, 0.0]:
 		tw.tween_property(target, "position:x", x + dx, 0.05)
 
@@ -87,7 +87,8 @@ static func arm(node: Object) -> void:
 	if node is Node and (node as Node).is_inside_tree():
 		# Không bắt (capture) thẳng `node` — node có thể bị free trước khi hết giờ ⇒ dùng weakref
 		var ref: WeakRef = weakref(node)
-		(node as Node).get_tree().create_timer(ARM_SECONDS).timeout.connect(func() -> void:
+		# EXCEPTION(R3-lambda): closure bắt biến cục bộ — tách _on_ method phải truyền thêm tham số
+		(node as Node).get_tree().create_timer(ARM_SECONDS).timeout.connect(func() -> void:  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 			var target: Object = ref.get_ref()
 			if target != null:
 				_expire(target))

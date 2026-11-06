@@ -93,7 +93,7 @@ var _skin_default: Array[Texture2D] = []
 var _cover_base := Vector2.ZERO
 var _button_down := false
 var _button_hovered := false
-var _content_tween: Tween = null
+var _content_tween: Tween = null  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 func _ready() -> void:
@@ -127,7 +127,7 @@ func _apply_texts() -> void:
 		lbl_progress.text = "%d/%d" % [own, need]
 		_fit_font(lbl_progress, size_progress, fit_width_progress)
 		var ready := state == State.READY
-		lbl_progress.add_theme_color_override("font_color", color_progress_ready if ready else color_progress_locked)
+		lbl_progress.add_theme_color_override("font_color", color_progress_ready if ready else color_progress_locked)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 
 
 ## Dịch theo khoá; chưa có bản dịch (Godot trả lại chính khoá) thì dùng chữ dự phòng
@@ -143,7 +143,7 @@ func _fit_font(label: Label, base_size: int, max_width: float) -> void:
 	if font != null:
 		while font_px > 7 and font.get_string_size(label.text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_px).x > max_width:
 			font_px -= 1
-	label.add_theme_font_size_override(&"font_size", font_px)
+	label.add_theme_font_size_override(&"font_size", font_px)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 
 
 ## Đổi ngôn ngữ ⇒ viết lại chữ
@@ -242,10 +242,10 @@ func play_reject() -> void:
 		return
 	body.position = Vector2.ZERO
 	body.modulate = Color(1.0, 0.55, 0.5, 1.0)
-	var shake := create_tween()
+	var shake := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	for dx in [-5.0, 5.0, -4.0, 4.0, -2.0, 0.0]:
 		shake.tween_property(body, "position:x", dx, 0.05)
-	var flash := create_tween()
+	var flash := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	flash.tween_property(body, "modulate", Color.WHITE, 0.3)
 
 
@@ -288,6 +288,6 @@ func _follow_button_art() -> void:
 		_content_tween.kill()
 	if not is_inside_tree():
 		return
-	_content_tween = create_tween()
-	_content_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	_content_tween = create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	_content_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	_content_tween.tween_property(cover, "position", _cover_base + Vector2(0.0, target), content_follow_sec)

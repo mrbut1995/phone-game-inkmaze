@@ -60,7 +60,7 @@ signal revive_requested
 const GLOW_RED := Color(1.0, 0.33, 0.28, 1.0)  # keep-code: màu/art hiệu ứng runtime — không thuộc theme tĩnh
 const COUNT_TIME := 0.6
 
-var _tweens: Array[Tween] = []
+var _tweens: Array[Tween] = []  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 var _tape_rest := Vector2.ZERO
 var _tape_rot := 0.0
 var _tape_saved := false
@@ -138,7 +138,7 @@ func _play_intro(progress: int, walls: int, score: int) -> void:
 	_intro_tape()
 
 	# băng keo chạm giấy (~0.4s): rung + loé đỏ + tro rơi
-	var tl := _track(create_tween())
+	var tl := _track(create_tween())  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	tl.tween_interval(0.4)
 	tl.tween_callback(func() -> void:
 		Sfx.play(Sfx.BTN_WOOD_TAP)
@@ -152,11 +152,11 @@ func _play_intro(progress: int, walls: int, score: int) -> void:
 	# "TẦNG n" đập xuống
 	fx_header.pivot_offset = Vector2(60.0, fx_header.size.y * 0.5)
 	fx_header.scale = Vector2.ONE * 1.5  # EXCEPTION(R1-keep): pose hoạt cảnh runtime (tween)
-	var th := _track(create_tween())
+	var th := _track(create_tween())  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	th.tween_interval(0.55)
 	th.tween_property(fx_header, "modulate:a", 1.0, 0.08)
 	th.parallel().tween_property(fx_header, "scale", Vector2.ONE, 0.2) \
-		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	th.tween_callback(func() -> void:
 		Sfx.play(Sfx.BTN_WOOD_TAP)
 		_shake(4.0, 0.25))
@@ -164,10 +164,10 @@ func _play_intro(progress: int, walls: int, score: int) -> void:
 	# thước: thẻ hiện -> đoạn đỏ + ghim ✕ chạy tới tầng thua -> thẻ nảy khi tới
 	var t_r := 1.0
 	_fade_in(fx_ruler_card, t_r, 0.95)
-	var tr_ := _track(create_tween())
+	var tr_ := _track(create_tween())  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	tr_.tween_interval(t_r + 0.25)
 	tr_.tween_property(ruler, "progress", 1.0, 0.9) \
-		.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	tr_.tween_callback(func() -> void:
 		_shake(3.0, 0.2)
 		fx_ruler_card.pivot_offset = fx_ruler_card.size * 0.5)
@@ -183,11 +183,11 @@ func _play_intro(progress: int, walls: int, score: int) -> void:
 	var tc := _track(create_tween())
 	tc.tween_interval(t_s + 0.1)
 	tc.tween_method(_count_progress, 0.0, float(progress), COUNT_TIME) \
-		.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	tc.parallel().tween_method(_count_walls, 0.0, float(walls), COUNT_TIME) \
-		.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	tc.parallel().tween_method(_count_score, 0.0, float(score), COUNT_TIME + 0.2) \
-		.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 	# bút chì GÃY
 	var t_p := t_s + 0.7
@@ -200,14 +200,14 @@ func _play_intro(progress: int, walls: int, score: int) -> void:
 	_fade_in(fx_buttons, t_b, 0.9)
 	if btn_retry != null and _can_play():
 		btn_retry.pivot_offset = btn_retry.size * 0.5
-		var tp := _track(create_tween())
+		var tp := _track(create_tween())  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		tp.tween_interval(t_b + 0.5)
 		tp.tween_callback(func() -> void:
-			var loop := _track(create_tween().set_loops())
+			var loop := _track(create_tween().set_loops())  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 			loop.tween_property(btn_retry, "scale", Vector2(1.05, 1.05), 0.7) \
-				.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+				.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 			loop.tween_property(btn_retry, "scale", Vector2.ONE, 0.7) \
-				.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT))
+				.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT))  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 ## Hạt tro ~7–16px bất kể kích thước ảnh fx_sparkle
@@ -235,7 +235,7 @@ func _count_score(v: float) -> void:
 func _shake(amp: float, dur: float) -> void:
 	if not _rest_saved:
 		return
-	var tw := _track(create_tween())
+	var tw := _track(create_tween())  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	tw.tween_method(_shake_step.bind(amp), 0.0, 1.0, dur)
 	tw.tween_callback(func() -> void:
 		fx_shake_a.position = _rest_a
@@ -257,21 +257,21 @@ func _red_flash() -> void:
 		n.modulate = Color(GLOW_RED.r, GLOW_RED.g, GLOW_RED.b, 0.0)
 	fx_soft.scale = Vector2.ONE * 0.6  # EXCEPTION(R1-keep): pose hoạt cảnh runtime (tween)
 	fx_rays.scale = Vector2.ONE * 0.7  # EXCEPTION(R1-keep): pose hoạt cảnh runtime (tween)
-	var tw := _track(create_tween().set_parallel(true))
+	var tw := _track(create_tween().set_parallel(true))  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	tw.tween_property(fx_soft, "modulate:a", 0.85, 0.12)
 	tw.tween_property(fx_soft, "scale", Vector2.ONE * 1.2, 0.4) \
-		.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	tw.tween_property(fx_rays, "modulate:a", 0.28, 0.5)
 	tw.tween_property(fx_rays, "scale", Vector2.ONE, 0.6) \
-		.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	var rot := _track(create_tween().set_loops())
+		.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	var rot := _track(create_tween().set_loops())  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	rot.tween_property(fx_rays, "rotation", -TAU, 40.0).from(0.0)
-	var beat := _track(create_tween().set_loops())
+	var beat := _track(create_tween().set_loops())  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	beat.tween_interval(0.5)
 	beat.tween_property(fx_soft, "modulate:a", 0.3, 0.45) \
-		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	beat.tween_property(fx_soft, "modulate:a", 0.6, 0.35) \
-		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 ## Băng keo tiêu đề rơi "bịch" (nảy ngắn) rồi đứng yên
@@ -285,12 +285,12 @@ func _intro_tape() -> void:
 	fx_tape.position = _tape_rest + Vector2(0, -90)
 	fx_tape.rotation = _tape_rot + 0.1
 	fx_tape.modulate.a = 0.0
-	var tw := _track(create_tween().set_parallel(true))
+	var tw := _track(create_tween().set_parallel(true))  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	tw.tween_property(fx_tape, "position", _tape_rest, 0.4) \
-		.set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+		.set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	tw.tween_property(fx_tape, "modulate:a", 1.0, 0.12)
 	tw.tween_property(fx_tape, "rotation", _tape_rot, 0.5) \
-		.set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+		.set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 func _fade_in(node: Control, delay: float, from_scale: float) -> void:
@@ -299,14 +299,14 @@ func _fade_in(node: Control, delay: float, from_scale: float) -> void:
 	node.pivot_offset = node.size * 0.5
 	node.modulate.a = 0.0
 	node.scale = Vector2.ONE * from_scale
-	var tw := _track(create_tween())
+	var tw := _track(create_tween())  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	tw.tween_interval(delay)
 	tw.tween_property(node, "modulate:a", 1.0, 0.2)
 	tw.parallel().tween_property(node, "scale", Vector2.ONE, 0.26) \
-		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
-func _track(tw: Tween) -> Tween:
+func _track(tw: Tween) -> Tween:  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	_tweens.append(tw)
 	return tw
 

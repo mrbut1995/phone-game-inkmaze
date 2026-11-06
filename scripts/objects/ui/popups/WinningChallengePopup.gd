@@ -32,7 +32,7 @@ func _on_open() -> void:
 	if label_level != null and not name_key.is_empty():
 		var text := tr(name_key)
 		label_level.text = text
-		label_level.add_theme_font_size_override(&"font_size",
+		label_level.add_theme_font_size_override(&"font_size",  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 			NAME_FONT_SIZE_LONG if text.length() > LONG_NAME_CHARS else NAME_FONT_SIZE)
 		label_level.clip_text = true
 		label_level.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS

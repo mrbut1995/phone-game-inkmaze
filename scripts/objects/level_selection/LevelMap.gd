@@ -153,7 +153,7 @@ var _drag_active := false
 var _drag_start_y := 0.0
 var _tracks_start_y := 0.0
 var _velocity_y := 0.0
-var _scroll_tween: Tween = null
+var _scroll_tween: Tween = null  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 ## [TAP] Bản đồ TỰ bắt cú chạm vào nút màn (không phụ thuộc `_unhandled_input` của nút): mọi Control
 ## STOP phủ lên bản đồ (khung Main, layout...) đều làm nút Node2D không nhận được cú bấm.
@@ -233,8 +233,8 @@ func scroll_to(level_id: int, animate := true, duration := -1.0) -> void:
 	if not animate:
 		_set_scroll_y(target_y)
 		return
-	_scroll_tween = create_tween()
-	_scroll_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+	_scroll_tween = create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	_scroll_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	_scroll_tween.tween_method(_set_scroll_y, scroll_offset_y(), target_y, scroll_to_duration if duration <= 0.0 else duration)
 
 
@@ -709,11 +709,11 @@ func _schedule_anim() -> void:
 		return
 	_anim_token += 1
 	var token := _anim_token
-	await get_tree().create_timer(anim_start_delay).timeout
+	await get_tree().create_timer(anim_start_delay).timeout  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	# Chưa hiện ra (đang ở tab khác / chuyển màn) thì đợi thêm tối đa ~3 giây
 	var waited := 0.0
 	while is_inside_tree() and not is_visible_in_tree() and waited < 3.0 and token == _anim_token:
-		await get_tree().create_timer(0.2).timeout
+		await get_tree().create_timer(0.2).timeout  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		waited += 0.2
 	if token != _anim_token or _anim_steps.is_empty() or not is_inside_tree():
 		return
@@ -734,7 +734,7 @@ func _run_anim() -> void:
 			return
 		var speed := 1.0 if i == 0 else 1.6
 		scroll_to(id, true)
-		await get_tree().create_timer((scroll_to_duration + 0.1) / speed).timeout
+		await get_tree().create_timer((scroll_to_duration + 0.1) / speed).timeout  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		if not _busy or not is_instance_valid(node):
 			return
 		await node.play_complete(int(step["stars"]), int(step.get("prev_stars", 0)), speed)
@@ -835,7 +835,7 @@ var _reveal_active := false
 var _reveal_token := 0
 var _reveal_gate_id := 0
 var _reveal_list: Array[Dictionary] = []   # {id, node, scale: Vector2, instant: bool}
-var _reveal_tweens: Array[Tween] = []
+var _reveal_tweens: Array[Tween] = []  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 var _reveal_goal_was_visible := false
 var _reveal_marker_was_visible := false
 
@@ -885,7 +885,7 @@ func _begin_reveal(sorted_ids: Array) -> bool:
 
 
 func _run_reveal(token: int) -> void:
-	await get_tree().create_timer(reveal_start_delay).timeout
+	await get_tree().create_timer(reveal_start_delay).timeout  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	if token != _reveal_token:
 		return
 	var shown: Array[Dictionary] = []
@@ -901,8 +901,8 @@ func _run_reveal(token: int) -> void:
 			_min_scroll_y, _max_scroll_y)
 		if camera_target > scroll_offset_y() + 0.5:
 			_stop_scroll_tween()
-			_scroll_tween = create_tween()
-			_scroll_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+			_scroll_tween = create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+			_scroll_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 			_scroll_tween.tween_method(_set_scroll_y, scroll_offset_y(), camera_target,
 				step * float(shown.size()) + reveal_pop_sec * 0.5)
 	for entry in shown:
@@ -920,22 +920,22 @@ func _run_reveal(token: int) -> void:
 			var road_tween := _road.play_reveal_range(from_point, to_point, draw_time)
 			if road_tween != null:
 				_reveal_tweens.append(road_tween)
-		await get_tree().create_timer(draw_time).timeout
+		await get_tree().create_timer(draw_time).timeout  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		if token != _reveal_token:
 			return
 		# 3) Nút bật ra khi vệt chạm tới
 		if is_instance_valid(node):
-			var pop := create_tween()
+			var pop := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 			pop.set_parallel(true)
 			pop.tween_property(node, "modulate:a", 1.0, 0.14)
 			pop.tween_property(node, "scale", entry["scale"], reveal_pop_sec) \
-				.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+				.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 			_reveal_tweens.append(pop)
 		prev_id = id
-		await get_tree().create_timer(maxf(step - draw_time, 0.01)).timeout
+		await get_tree().create_timer(maxf(step - draw_time, 0.01)).timeout  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	if token != _reveal_token:
 		return
-	await get_tree().create_timer(reveal_pop_sec * 0.8).timeout
+	await get_tree().create_timer(reveal_pop_sec * 0.8).timeout  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	if token != _reveal_token:
 		return
 	_finish_reveal(false)

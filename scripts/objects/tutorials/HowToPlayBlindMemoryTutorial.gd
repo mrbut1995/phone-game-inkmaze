@@ -15,7 +15,7 @@ extends BaseInteractivePathTutorial
 
 @export var lbl_hud_walls: Label = null
 
-var _demo_tween: Tween = null
+var _demo_tween: Tween = null  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 @export var START_POS := Vector2i(0, 0)
 @export var FINISH_POS := Vector2i(1, 2)
@@ -126,7 +126,7 @@ func _run_memory_demo_cycle() -> void:
 	reset_path_with_walls(true)
 	board_tutorial.stop_cursor_animation()
 
-	_demo_tween = create_tween()
+	_demo_tween = create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	# Chờ 1.8s rồi ẩn tường
 	_demo_tween.tween_interval(1.8)
 	_demo_tween.tween_callback(func() -> void:
@@ -189,7 +189,8 @@ func _can_step_to(from_cell: Vector2i, to_cell: Vector2i) -> bool:
 		if board_tutorial != null:
 			for w in WALLS:
 				board_tutorial.reveal_wall_segment(w["is_h"], w["lattice"], true)
-		get_tree().create_timer(1.2).timeout.connect(func() -> void:
+		# EXCEPTION(R3-lambda): closure bắt biến cục bộ — tách _on_ method phải truyền thêm tham số
+		get_tree().create_timer(1.2).timeout.connect(func() -> void:  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 			if current_step_index == 3 and is_inside_tree() and board_tutorial != null:
 				for w in WALLS:
 					board_tutorial.reveal_wall_segment(w["is_h"], w["lattice"], false)

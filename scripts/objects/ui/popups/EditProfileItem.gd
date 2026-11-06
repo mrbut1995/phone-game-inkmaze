@@ -123,7 +123,7 @@ func _lock_color(stat_key: String) -> Color:
 
 func _tint(label: Label, color: Color) -> void:
 	if label.label_settings == null:
-		label.add_theme_color_override("font_color", color)
+		label.add_theme_color_override("font_color", color)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 		return
 	var settings := label.label_settings.duplicate() as LabelSettings
 	settings.font_color = color

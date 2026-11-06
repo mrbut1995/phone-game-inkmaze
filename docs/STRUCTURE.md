@@ -1,5 +1,9 @@
 # Cấu trúc dự án — InkMaze (Godot 4.8.dev)
 
+> ⚠️ **TÀI LIỆU LỖI THỜI** (viết trước đợt refactor P0–P7): các đường dẫn `nodes/`, `scripts/ui/`,
+> `scripts/core/`, `scripts/modes/`, `scripts/tests_case/` **không còn tồn tại**.
+> Cấu trúc hiện tại: xem **`docs/ARCHITECTURE.md`**.
+
 > Tài liệu NGẮN (1 trang). Nguồn sự thật: **scene/`.tres` cho bố cục & giá trị tĩnh, script cho hành vi**.
 
 ## 1. Cây thư mục

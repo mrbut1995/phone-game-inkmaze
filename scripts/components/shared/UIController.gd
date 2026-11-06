@@ -43,7 +43,7 @@ var run_info: Dictionary = {}
 
 var _teleport_highlight_on := false
 var _replay_shown := false
-var _teleport_highlight_tween: Tween = null
+var _teleport_highlight_tween: Tween = null  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 func set_run_info(info: Dictionary) -> void:

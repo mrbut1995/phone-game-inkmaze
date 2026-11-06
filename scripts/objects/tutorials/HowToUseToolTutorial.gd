@@ -27,7 +27,7 @@ extends BaseInteractivePathTutorial
 
 var _teleport_left: int = TOOL_USES
 var _hint_left: int = TOOL_USES
-var _demo_tween: Tween = null
+var _demo_tween: Tween = null  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 func _init_tutorial() -> void:
@@ -133,7 +133,8 @@ func _flash_tool_button(btn: BaseButton) -> void:
 		return
 	tb.texture_normal = pressed_tex
 	UIAnim.play_pop_in(tb, 0.0, 0.92, 0.14)
-	get_tree().create_timer(0.18).timeout.connect(func() -> void:
+	# EXCEPTION(R3-lambda): closure bắt biến cục bộ — tách _on_ method phải truyền thêm tham số
+	get_tree().create_timer(0.18).timeout.connect(func() -> void:  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		if is_instance_valid(tb):
 			tb.texture_normal = normal_tex
 	)
@@ -185,7 +186,7 @@ func _run_teleport_demo_cycle() -> void:
 	var glow := _teleport_range_cells(START_POS)
 	var target := Vector2i(1, 1)
 
-	_demo_tween = create_tween()
+	_demo_tween = create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	# Nhấn DỊCH CHUYỂN -> các ô trong tầm sáng lên
 	_demo_tween.tween_interval(0.5)
 	_demo_tween.tween_callback(func() -> void:
@@ -236,7 +237,7 @@ func _run_hint_demo_cycle() -> void:
 	_hint_left = TOOL_USES
 	_update_tools(false)
 
-	_demo_tween = create_tween()
+	_demo_tween = create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	# Nhấn GỢI Ý (huy hiệu 3 → 2)
 	_demo_tween.tween_interval(0.5)
 	_demo_tween.tween_callback(func() -> void:

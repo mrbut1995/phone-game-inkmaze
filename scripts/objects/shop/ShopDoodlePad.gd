@@ -159,7 +159,7 @@ func _draw_sample() -> void:
 
 
 func _new_stroke() -> InkStroke:
-	var stroke := InkStroke.new()
+	var stroke := InkStroke.new()  # EXCEPTION(R2-runtime-node): node dựng từ dữ liệu runtime
 	stroke.apply_pen(_pen_id)
 	stroke.set_base_width(STROKE_WIDTH)
 	strokes_layer.add_child(stroke)

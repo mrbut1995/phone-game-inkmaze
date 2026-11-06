@@ -88,7 +88,7 @@ func play_loop(sfx_name: String, volume_db := -5.0) -> void:
 	var loop_stream := _make_looped(_get_stream(sfx_name))
 	if loop_stream == null:
 		return
-	var player := AudioStreamPlayer.new()
+	var player := AudioStreamPlayer.new()  # EXCEPTION(R2-runtime-service): node dịch vụ của autoload — không có scene để khai
 	player.name = "Loop_%s" % sfx_name
 	player.stream = loop_stream
 	player.volume_db = _gain_to_db() + volume_db
@@ -119,7 +119,7 @@ func stop_all() -> void:
 # ---------------------------------------------------------------------------
 func _build_pool() -> void:
 	for i in POOL_SIZE:
-		var player := AudioStreamPlayer.new()
+		var player := AudioStreamPlayer.new()  # EXCEPTION(R2-runtime-service): node dịch vụ của autoload — không có scene để khai
 		player.name = "SfxPlayer%d" % i
 		add_child(player)
 		_players.append(player)

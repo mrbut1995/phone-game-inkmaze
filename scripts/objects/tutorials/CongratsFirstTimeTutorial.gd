@@ -85,16 +85,16 @@ func _on_step_entered(_index: int, _data: Dictionary) -> void:
 		return
 	# Fallback khi scene thiếu CongratsAnim: chạy bằng tween như trước
 	if stamp != null:
-		var tw := stamp.create_tween()
+		var tw := stamp.create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		# Phase 1: con dấu rơi nhanh + squash nhẹ khi chạm
 		tw.set_parallel(true)
-		tw.tween_property(stamp, "scale", Vector2(0.88, 0.88), 0.22).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+		tw.tween_property(stamp, "scale", Vector2(0.88, 0.88), 0.22).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		tw.tween_property(stamp, "modulate:a", 1.0, 0.14)
-		tw.tween_property(stamp, "rotation", 0.0, 0.22).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+		tw.tween_property(stamp, "rotation", 0.0, 0.22).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		# Phase 2: nảy lại về kích thước thật
 		tw.set_parallel(false)
 		tw.tween_callback(func() -> void: Sfx.play(Sfx.STAMP_IMPACT))
-		tw.tween_property(stamp, "scale", Vector2.ONE, 0.34).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		tw.tween_property(stamp, "scale", Vector2.ONE, 0.34).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		# Phase 3: nhạc chiến thắng + nút xuất hiện
 		tw.tween_callback(func() -> void: Sfx.play(Sfx.LEVEL_WIN))
 		tw.tween_callback(_reveal_extras)
@@ -119,7 +119,7 @@ func _level_win() -> void:
 ## Confetti rơi vào + 2 thẻ thống kê nảy ra (so le)
 func _reveal_extras() -> void:
 	if confetti != null:
-		confetti.create_tween().tween_property(confetti, "modulate:a", 1.0, 0.4)
+		confetti.create_tween().tween_property(confetti, "modulate:a", 1.0, 0.4)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	for i in stat_cards.size():
 		var c := stat_cards[i]
 		if c != null:

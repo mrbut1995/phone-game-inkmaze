@@ -82,7 +82,7 @@ func _apply_theme(t: EventTheme) -> void:
 	_paint_title(title_2, t)
 	_paint_panel(stars_panel, t)
 	if stars_label != null:
-		stars_label.add_theme_color_override("font_color", t.label_color)
+		stars_label.add_theme_color_override("font_color", t.label_color)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 	_paint_cta(cta_button, cta_label, t)
 
 

@@ -167,7 +167,7 @@ func _run() -> void:
 	for i in FIRST_FRAME_DELAY:
 		await tree.process_frame
 	# Nhường thời gian cho hoạt ảnh mở màn (logo/title) chạy mượt trước khi chặn main thread
-	await tree.create_timer(VISUAL_GRACE_SEC).timeout
+	await tree.create_timer(VISUAL_GRACE_SEC).timeout  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	for entry in _steps:
 		if entry.has("path"):
 			await _load_scene_threaded(str(entry["path"]))

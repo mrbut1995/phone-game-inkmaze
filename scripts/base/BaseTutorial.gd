@@ -67,9 +67,9 @@ var _has_spotlight: bool = false
 @export var TOAST_IN_SECONDS := 0.22
 @export var SPOTLIGHT_IN_SECONDS := 0.22
 @export var SPOTLIGHT_OUT_SECONDS := 0.18
-var _fx_spotlight: Tween = null
-var _fx_toast: Tween = null
-var _fx_message: Tween = null
+var _fx_spotlight: Tween = null  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+var _fx_toast: Tween = null  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+var _fx_message: Tween = null  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 var _entrance_played := false
 ## Số thứ tự lần toast gần nhất — timer mờ toast cũ không được tắt toast mới
 var _toast_seq := 0
@@ -165,7 +165,7 @@ func _update_step_labels() -> void:
 		lbl_step_of.text = fmt.format([current_step_index + 1, steps_data.size()])
 	if wave != null:
 		wave.max_value = maxf(1.0, float(steps_data.size()))
-		wave.create_tween().tween_property(wave, "value", float(current_step_index + 1), 0.3).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		wave.create_tween().tween_property(wave, "value", float(current_step_index + 1), 0.3).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 ## Gắn hiệu ứng nhấn nảy cho 3 nút điều hướng (giống mọi nút khác trong game)
@@ -184,7 +184,7 @@ func play_entrance() -> void:
 	else:
 		if backdrop != null:
 			backdrop.modulate.a = 0.0
-			backdrop.create_tween().tween_property(backdrop, "modulate:a", 1.0, 0.24)
+			backdrop.create_tween().tween_property(backdrop, "modulate:a", 1.0, 0.24)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		var bubble := dialog_bubble as Control
 		if bubble != null and not (bubble.get_parent() is Container):
 			UIAnim.play_slide_in(bubble, Vector2(0, 42), 0.06, 0.32)
@@ -198,7 +198,7 @@ func play_entrance() -> void:
 	# Các ô nở ra bằng SCALE so le ⇒ trong lúc này `get_global_rect()` của ô vẫn là cỡ
 	# TRUNG GIAN → vòng sáng bị tính HỤT (hở khỏi ô). Áp lại sau khi các ô đã vào chỗ.
 	if _has_spotlight:
-		var settle := get_tree().create_timer(ENTRANCE_SETTLE_SECONDS)
+		var settle := get_tree().create_timer(ENTRANCE_SETTLE_SECONDS)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		settle.timeout.connect(_reapply_spotlight_after_entrance)
 
 
@@ -269,7 +269,7 @@ func flash_fail(target: Control) -> void:
 		return
 	var old := target.modulate
 	target.modulate = Color(1.0, 0.45, 0.42, old.a)
-	target.create_tween().tween_property(target, "modulate", old, 0.4)
+	target.create_tween().tween_property(target, "modulate", old, 0.4)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 ## Đổi nội dung thẻ thoại kèm nhịp fade nhẹ (cha là Control nên dời vị trí được)
@@ -287,11 +287,11 @@ func _animate_step_text(new_msg: String, new_title: String) -> void:
 			text_out_timer.start()
 		else:
 			# Fallback khi scene thiếu TextOutTimer
-			get_tree().create_timer(TEXT_OUT_SECONDS).timeout.connect(_apply_step_text_and_slide.bind(new_msg, new_title))
+			get_tree().create_timer(TEXT_OUT_SECONDS).timeout.connect(_apply_step_text_and_slide.bind(new_msg, new_title))  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		return
 	if was_visible:
 		# Fallback khi scene thiếu DialogAnim
-		_fx_message = lbl_message.create_tween()
+		_fx_message = lbl_message.create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		_fx_message.tween_property(lbl_message, "modulate:a", 0.0, 0.1)
 		_fx_message.tween_callback(func() -> void:
 			lbl_message.text = new_msg
@@ -339,7 +339,7 @@ func _fit_message_font() -> void:
 		if lines * line_h + (lines - 1.0) * line_gap <= max_h:
 			chosen = sz
 			break
-	lbl_message.add_theme_font_size_override("font_size", chosen)
+	lbl_message.add_theme_font_size_override("font_size", chosen)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 
 
 ## TextOutTimer kêu (chữ cũ đã mờ xong) → đổi sang nội dung bước mới.
@@ -454,7 +454,8 @@ func show_step(index: int) -> void:
 	# Auto advance if requested
 	if data.has("auto_delay") and advance_mode == "AUTO":
 		var delay: float = float(data["auto_delay"])
-		_auto_timer = get_tree().create_timer(delay)
+		_auto_timer = get_tree().create_timer(delay)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+		# EXCEPTION(R3-lambda): closure bắt biến cục bộ — tách _on_ method phải truyền thêm tham số
 		_auto_timer.timeout.connect(func() -> void:
 			if is_active and current_step_index == index and is_inside_tree():
 				next_step()
@@ -509,7 +510,7 @@ func show_fail_feedback(key: String, fallback_text: String = "") -> void:
 		shake_node(dialog_bubble, 0.25, 8.0)
 		if backdrop != null:
 			backdrop.color = Color(0.98, 0.88, 0.88, 1.0)
-			backdrop.create_tween().tween_property(backdrop, "color", Color(0.969, 0.957, 0.937, 1.0), 0.45)
+			backdrop.create_tween().tween_property(backdrop, "color", Color(0.969, 0.957, 0.937, 1.0), 0.45)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 func show_success_feedback(key: String = "", fallback_text: String = "") -> void:
@@ -526,7 +527,7 @@ func _show_toast(key: String, fallback_text: String, color: Color, hold: float) 
 	if text == key:
 		text = fallback_text if not fallback_text.is_empty() else "✓"
 	toast_label.text = text
-	toast_label.add_theme_color_override("font_color", color)
+	toast_label.add_theme_color_override("font_color", color)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 	if _fx_toast != null and _fx_toast.is_valid():
 		_fx_toast.kill()
 	toast_label.pivot_offset = toast_label.size * 0.5
@@ -542,12 +543,12 @@ func _show_toast(key: String, fallback_text: String, color: Color, hold: float) 
 			toast_timer.start()
 		else:
 			# Fallback khi scene thiếu ToastTimer
-			get_tree().create_timer(TOAST_IN_SECONDS + hold).timeout.connect(_fade_toast_after.bind(seq))
+			get_tree().create_timer(TOAST_IN_SECONDS + hold).timeout.connect(_fade_toast_after.bind(seq))  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		return
 	# Fallback khi scene thiếu ToastAnim: một tween duy nhất như trước
-	_fx_toast = toast_label.create_tween()
+	_fx_toast = toast_label.create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	_fx_toast.tween_property(toast_label, "modulate:a", 1.0, 0.16)
-	_fx_toast.parallel().tween_property(toast_label, "scale", Vector2.ONE, 0.22).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	_fx_toast.parallel().tween_property(toast_label, "scale", Vector2.ONE, 0.22).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	_fx_toast.tween_interval(hold)
 	_fx_toast.tween_property(toast_label, "modulate:a", 0.0, 0.3)
 
@@ -557,7 +558,7 @@ func _fade_toast_after(seq: int) -> void:
 	if seq != _toast_seq or toast_label == null or not is_instance_valid(toast_label):
 		return
 	if not _play_anim_on(anim_toast, &"toast_out"):
-		var tw := toast_label.create_tween()
+		var tw := toast_label.create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		tw.tween_property(toast_label, "modulate:a", 0.0, 0.3)
 
 
@@ -572,7 +573,7 @@ func shake_node(target: Node, duration: float = 0.25, amplitude: float = 8.0) ->
 		return
 	var ctrl: Control = target as Control
 	var original_pos := ctrl.position
-	var tween := create_tween()
+	var tween := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	var steps := 4
 	var step_time := duration / float(steps)
 	for i in range(steps):
@@ -643,10 +644,10 @@ func _apply_spotlight() -> void:
 			_fx_spotlight.kill()
 			_fx_spotlight = null
 		# (GIỮ tween) Vòng sáng TRƯỢT sang rect mục tiêu tính từ ô/bàn lúc chạy (position+size động)
-		var tw := spotlight.create_tween()
+		var tw := spotlight.create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		tw.set_parallel(true)
-		tw.tween_property(spotlight, "position", target.position, 0.26).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-		tw.tween_property(spotlight, "size", target.size, 0.26).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		tw.tween_property(spotlight, "position", target.position, 0.26).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+		tw.tween_property(spotlight, "size", target.size, 0.26).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		tw.set_parallel(false)
 		tw.tween_callback(func() -> void: _start_spotlight_pulse())
 	else:
@@ -658,10 +659,10 @@ func _apply_spotlight() -> void:
 				spot_in_timer.start()
 			else:
 				# Fallback khi scene thiếu SpotlightInTimer
-				get_tree().create_timer(SPOTLIGHT_IN_SECONDS).timeout.connect(_start_spotlight_pulse)
+				get_tree().create_timer(SPOTLIGHT_IN_SECONDS).timeout.connect(_start_spotlight_pulse)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		else:
 			# Fallback khi scene thiếu SpotlightAnim
-			spotlight.create_tween().tween_property(spotlight, "modulate:a", 1.0, 0.22)
+			spotlight.create_tween().tween_property(spotlight, "modulate:a", 1.0, 0.22)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 			_start_spotlight_pulse()
 
 
@@ -674,10 +675,10 @@ func _hide_spotlight() -> void:
 			spot_out_timer.start()
 		else:
 			# Fallback khi scene thiếu SpotlightOutTimer
-			get_tree().create_timer(SPOTLIGHT_OUT_SECONDS).timeout.connect(_hide_spotlight_if_unused)
+			get_tree().create_timer(SPOTLIGHT_OUT_SECONDS).timeout.connect(_hide_spotlight_if_unused)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		return
 	# Fallback khi scene thiếu SpotlightAnim
-	var tw := spotlight.create_tween()
+	var tw := spotlight.create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	tw.tween_property(spotlight, "modulate:a", 0.0, 0.18)
 	tw.tween_callback(_hide_spotlight_if_unused)
 
@@ -697,9 +698,9 @@ func _start_spotlight_pulse() -> void:
 	if _play_anim_on(anim_spotlight, &"spotlight_pulse"):
 		return
 	# Fallback khi scene thiếu SpotlightAnim
-	_fx_spotlight = spotlight.create_tween().set_loops()
-	_fx_spotlight.tween_property(spotlight, "scale", Vector2(1.06, 1.06), 0.85).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	_fx_spotlight.tween_property(spotlight, "scale", Vector2.ONE, 0.85).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_fx_spotlight = spotlight.create_tween().set_loops()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	_fx_spotlight.tween_property(spotlight, "scale", Vector2(1.06, 1.06), 0.85).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	_fx_spotlight.tween_property(spotlight, "scale", Vector2.ONE, 0.85).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 func _on_spotlight_resized() -> void:

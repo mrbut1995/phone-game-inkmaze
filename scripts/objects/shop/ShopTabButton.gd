@@ -132,14 +132,14 @@ func set_active(on: bool) -> void:
 	# Pop nhẹ khi tab được KÍCH HOẠT để tạo cảm giác responsive
 	if on and changed and not Engine.is_editor_hint() and is_inside_tree():
 		UIAnim._update_pivot(self)
-		var tw := create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+		var tw := create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		tw.tween_property(self, "scale", Vector2(1.06, 1.06), 0.10)
 		tw.tween_property(self, "scale", Vector2.ONE, 0.13)
 
 
 func _apply_colors() -> void:
 	if label != null:
-		label.add_theme_color_override("font_color", LABEL_COLOR)
+		label.add_theme_color_override("font_color", LABEL_COLOR)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 		label.visible = true
 	if icon != null:
 		icon.visible = false   # icon đã nằm trong art
@@ -209,7 +209,7 @@ func _fit_label(max_w: float, min_size := 10) -> void:
 	var fs := _label_base
 	while fs > min_size and font.get_string_size(label.text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x > max_w:
 		fs -= 1
-	label.add_theme_font_size_override("font_size", fs)
+	label.add_theme_font_size_override("font_size", fs)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 
 
 ## Nhãn nhiều dòng: chỉ co chữ khi TỪ DÀI NHẤT vẫn rộng hơn `max_w` (không bao giờ nhỏ hơn 10)
@@ -228,7 +228,7 @@ func _fit_label_words(max_w: float, min_size := 10) -> void:
 		longest = 0.0
 		for word in label.text.split(" ", false):
 			longest = maxf(longest, font.get_string_size(word, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x)
-	label.add_theme_font_size_override("font_size", fs)
+	label.add_theme_font_size_override("font_size", fs)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 
 
 ## Cỡ logic của art tab: PNG 1× (bằng SVG) hay 2× đều cho cùng kết quả

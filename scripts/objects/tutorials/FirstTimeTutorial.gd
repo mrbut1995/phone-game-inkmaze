@@ -44,7 +44,7 @@ func _on_step_entered(index: int, _data: Dictionary) -> void:
 			var p2 := Vector2(285, 95)
 			preview_line.add_point(p0)
 			# (GIỮ tween) Vẽ nét S→F bằng cách nội suy ĐIỂM của Line2D (dữ liệu hình học)
-			var tw := create_tween()
+			var tw := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 			tw.tween_method(func(p: Vector2) -> void:
 				if preview_line.get_point_count() == 1:
 					preview_line.add_point(p)
@@ -74,4 +74,4 @@ func _on_step_entered(index: int, _data: Dictionary) -> void:
 				if i == 0:
 					preview_cells[0].play_step()
 				else:
-					get_tree().create_timer(i * 0.1).timeout.connect(preview_cells[i].play_step)
+					get_tree().create_timer(i * 0.1).timeout.connect(preview_cells[i].play_step)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)

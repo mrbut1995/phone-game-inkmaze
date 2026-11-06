@@ -56,7 +56,7 @@ func play_lost_effect(delay: float = 0.0) -> void:
 	pencil.texture = tex_full
 	badge.pivot_offset = badge.size * 0.5
 	badge.modulate.a = 0.0
-	var tw := create_tween()
+	var tw := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	tw.tween_interval(delay)
 	for a in [-0.35, 0.35, -0.3, 0.3, -0.2, 0.0]:
 		tw.tween_property(pencil, "rotation", float(a), 0.06)
@@ -69,7 +69,7 @@ func play_lost_effect(delay: float = 0.0) -> void:
 		badge.scale = Vector2.ONE * 0.4  # EXCEPTION(R1-keep): hoạt cảnh/trạng thái runtime (tween)
 		badge.modulate.a = 1.0)
 	tw.tween_property(badge, "scale", Vector2(1.35, 1.35), 0.14) \
-		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	tw.tween_property(badge, "scale", Vector2.ONE, 0.1)
 
 

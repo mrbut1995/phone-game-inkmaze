@@ -55,7 +55,7 @@ var _entries: Array = []
 var _page := 0
 var _page_count := 1
 var _page_width := 0.0
-var _scroll_tween: Tween = null
+var _scroll_tween: Tween = null  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 var _click_lock_until := 0.0
 var _drag_active := false
 var _drag_moved := false
@@ -392,11 +392,11 @@ func _fly_coins(from: Vector2) -> void:
 		coin.global_position = from - half
 		coin.scale = Vector2.ZERO
 		var burst := from + Vector2(randf_range(-70.0, 70.0), randf_range(-80.0, -20.0)) - half
-		var tw := create_tween()
+		var tw := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		tw.tween_interval(0.04 * i)
 		tw.tween_property(coin, "scale", Vector2.ONE, 0.1)
-		tw.parallel().tween_property(coin, "global_position", burst, 0.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-		tw.tween_property(coin, "global_position", to - half, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+		tw.parallel().tween_property(coin, "global_position", burst, 0.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+		tw.tween_property(coin, "global_position", to - half, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		tw.parallel().tween_property(coin, "scale", Vector2.ONE * 0.55, 0.5)
 		tw.tween_callback(_on_coin_arrived.bind(coin, i == FX_COIN_COUNT - 1, target))
 
@@ -408,7 +408,7 @@ func _on_coin_arrived(coin: Control, is_last: bool, target: Control) -> void:
 	# Ví nảy nhẹ mỗi lần xu chạm; xu cuối nảy mạnh hơn
 	target.pivot_offset = target.size * 0.5
 	var punch := 1.2 if is_last else 1.08
-	var tw := create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	var tw := create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	tw.tween_property(target, "scale", Vector2.ONE * punch, 0.07)
 	tw.tween_property(target, "scale", Vector2.ONE, 0.12)
 
@@ -578,8 +578,8 @@ func _go_to_page(index: int, animate := true) -> void:
 		return
 	# (GIỮ tween) Đích cuộn = số trang × BỀ RỘNG TRANG đo lúc chạy (đổi theo cỡ khung)
 	# nên không thể bake thành track tĩnh trong .tscn.
-	_scroll_tween = create_tween()
-	_scroll_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	_scroll_tween = create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	_scroll_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	_scroll_tween.tween_property(layout.scroll, "scroll_horizontal", target, SNAP_TIME)
 
 

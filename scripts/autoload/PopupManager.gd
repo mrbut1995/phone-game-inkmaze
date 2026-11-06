@@ -85,6 +85,7 @@ func open_path(path: String, data: Dictionary = {}, id: String = "") -> BasePopu
 	host.add_child(popup)
 	_stack.append(popup)
 	popup.closed.connect(_on_popup_closed.bind(popup))
+	# EXCEPTION(R3-lambda): closure bắt biến cục bộ — tách _on_ method phải truyền thêm tham số
 	popup.opened.connect(func() -> void: popup_opened.emit(id))
 	popup.open(data)
 	return popup

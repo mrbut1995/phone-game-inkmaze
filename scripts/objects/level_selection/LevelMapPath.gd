@@ -163,14 +163,14 @@ func show_range(from_point: int, to_point: int) -> void:
 
 
 ## Tô dần các đoạn [from_point, to_point) lần lượt từ đầu tới cuối; trả về Tween để `await`
-func play_reveal_range(from_point: int, to_point: int, duration: float = 0.7) -> Tween:
+func play_reveal_range(from_point: int, to_point: int, duration: float = 0.7) -> Tween:  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	var first := maxi(from_point, 0)
 	var last := mini(to_point, _progress.size())
 	var count := last - first
 	if count <= 0 or not is_inside_tree():
 		return null
-	var tween := create_tween()
-	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	var tween := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	tween.tween_method(_set_reveal.bind(first, count), 0.0, float(count), duration)
 	return tween
 

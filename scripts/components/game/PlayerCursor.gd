@@ -42,8 +42,8 @@ signal celebration_finished()
 var _writing := false
 var _lean := 0.0
 
-var _move_tween: Tween = null
-var _demo_tween: Tween = null
+var _move_tween: Tween = null  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+var _demo_tween: Tween = null  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 var _is_running: bool = false
 var _is_celebrating: bool = false
 var _is_demoing: bool = false
@@ -154,14 +154,14 @@ func play_demo_drag(from_pos: Vector2, to_pos: Vector2, duration: float = 0.6) -
 		tilt_angle = deg_to_rad(-14.0)
 
 	# Giai đoạn 1: Nhảy lên trước khi di chuyển (sequential)
-	_demo_tween = create_tween().set_loops()
+	_demo_tween = create_tween().set_loops()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	_demo_tween.tween_property(self, "position", from_pos, 0.05)
 	_demo_tween.tween_property(self, "modulate:a", 1.0, 0.1)
 	_demo_tween.tween_property(self, "scale", Vector2(1.15, 0.85), 0.12)
 
 	# Giai đoạn 2: Di chuyển song song (vị trí + scale + xoay cùng lúc)
 	# Dùng .parallel() trên từng tweener — KHÔNG dùng set_parallel(true) toàn cục
-	_demo_tween.tween_property(self, "position", to_pos, duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_demo_tween.tween_property(self, "position", to_pos, duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	_demo_tween.parallel().tween_property(self, "scale", Vector2.ONE, duration * 0.5)
 	_demo_tween.parallel().tween_property(self, "rotation", tilt_angle, duration * 0.4)
 
@@ -203,7 +203,7 @@ func play_demo_path(positions: Array[Vector2], dur_per_step: float = 0.5) -> voi
 	_is_demoing = true
 	visible = true
 
-	_demo_tween = create_tween().set_loops()
+	_demo_tween = create_tween().set_loops()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	# Hiện tại vị trí đầu
 	_demo_tween.tween_property(self, "position", positions[0], 0.0)
 	_demo_tween.tween_property(self, "modulate:a", 0.0, 0.0)
@@ -223,13 +223,13 @@ func play_demo_path(positions: Array[Vector2], dur_per_step: float = 0.5) -> voi
 		# Pre-hop squash
 		_demo_tween.tween_property(self, "scale", Vector2(1.14, 0.86), 0.07)
 		# Di chuyển sang ô tiếp theo (song song: vị trí + scale + nghiêng)
-		_demo_tween.tween_property(self, "position", to_p, dur_per_step).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		_demo_tween.tween_property(self, "position", to_p, dur_per_step).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		_demo_tween.parallel().tween_property(self, "scale", Vector2.ONE, dur_per_step)
 		_demo_tween.parallel().tween_property(self, "rotation", tilt, dur_per_step * 0.45)
 		# Đổ xuống khi chạm đích
 		_demo_tween.tween_property(self, "scale", Vector2(1.18, 0.82), 0.08)
 		_demo_tween.parallel().tween_property(self, "rotation", 0.0, 0.1)
-		_demo_tween.tween_property(self, "scale", Vector2.ONE, 0.1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		_demo_tween.tween_property(self, "scale", Vector2.ONE, 0.1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 	# Dừng ở đích rồi fade out, vòng lặp lại từ đầu
 	_demo_tween.tween_interval(0.5)
@@ -254,18 +254,18 @@ func play_demo_fail_attempt(from_pos: Vector2, midway_pos: Vector2, recoil_dir: 
 
 	var push := recoil_dir.normalized() * 12.0
 
-	_demo_tween = create_tween()
+	_demo_tween = create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	# Squash chuẩn bị bước
 	_demo_tween.tween_property(self, "scale", Vector2(1.12, 0.88), 0.08)
 	# Di chuyển nửa đường về phía ô bị cấm
-	_demo_tween.tween_property(self, "position", midway_pos, 0.18).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_demo_tween.tween_property(self, "position", midway_pos, 0.18).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	_demo_tween.parallel().tween_property(self, "scale", Vector2.ONE, 0.18)
 	# Va chạm: squash mạnh + bị đẩy ngược
 	_demo_tween.tween_property(self, "scale", Vector2(1.38, 0.68), 0.07)
 	_demo_tween.parallel().tween_property(self, "position", midway_pos + push, 0.07)
 	# Nảy đàn hồi về vị trí ban đầu
-	_demo_tween.tween_property(self, "position", from_pos, 0.22).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
-	_demo_tween.parallel().tween_property(self, "scale", Vector2.ONE, 0.22).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	_demo_tween.tween_property(self, "position", from_pos, 0.22).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	_demo_tween.parallel().tween_property(self, "scale", Vector2.ONE, 0.22).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	# Nghỉ rồi fade out (tutorial script tự lặp lại chu kỳ tiếp)
 	_demo_tween.tween_interval(0.55)
 	_demo_tween.tween_property(self, "modulate:a", 0.0, 0.2)
@@ -291,12 +291,12 @@ func play_demo_slide(from_pos: Vector2, to_pos: Vector2, duration := 0.55) -> vo
 	scale = Vector2.ONE
 	position = from_pos
 
-	_demo_tween = create_tween()
-	_demo_tween.tween_property(self, "position", to_pos, duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_demo_tween = create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	_demo_tween.tween_property(self, "position", to_pos, duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	_demo_tween.parallel().tween_property(self, "scale", Vector2(0.92, 1.08), duration * 0.5)
 	# Chạm đích: nén nhẹ rồi phục hồi
 	_demo_tween.tween_property(self, "scale", Vector2(1.12, 0.88), 0.08)
-	_demo_tween.tween_property(self, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	_demo_tween.tween_property(self, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	_demo_tween.tween_callback(func() -> void:
 		_is_demoing = false
 		start_idle()
@@ -346,9 +346,9 @@ func begin_writing() -> void:
 	modulate.a = 1.0
 	rotation = 0.0
 	pivot_offset = size * tip_uv
-	_move_tween = create_tween()
+	_move_tween = create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	_move_tween.tween_property(self, "scale", Vector2.ONE * pen_down_scale, 0.06) \
-		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 ## Đặt ĐẦU BÚT đúng tại `tip_pos` (toạ độ board). `lean_target` = góc nghiêng mong muốn (rad),
@@ -367,9 +367,9 @@ func end_writing() -> void:
 	_writing = false
 	_lean = 0.0
 	_kill_move_tween()
-	_move_tween = create_tween().set_parallel(true)
+	_move_tween = create_tween().set_parallel(true)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	_move_tween.tween_property(self, "scale", Vector2.ONE, 0.12) \
-		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	_move_tween.tween_property(self, "rotation", 0.0, 0.12)
 	_move_tween.chain().tween_callback(_on_end_writing_done)
 
@@ -405,9 +405,9 @@ func run_to(target_pos: Vector2, move_dir: Vector2 = Vector2.ZERO, duration: flo
 	var t1 := duration * 0.38
 	var half_way := start_pos.lerp(target_pos, 0.5) - Vector2(0, hop_height)
 
-	_move_tween = create_tween().set_parallel(false)
-	_move_tween.tween_property(self, "position", half_way, t1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	_move_tween.tween_property(self, "position", target_pos, duration * 0.44).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	_move_tween = create_tween().set_parallel(false)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	_move_tween.tween_property(self, "position", half_way, t1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	_move_tween.tween_property(self, "position", target_pos, duration * 0.44).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	# Giai đoạn phục hồi cân bằng (0.18) — chờ animation kết thúc rồi mới báo xong
 	_move_tween.tween_interval(duration * 0.18)
 	_move_tween.tween_callback(Callable(self, "_on_run_completed"))
@@ -466,9 +466,9 @@ func play_bonk_recoil(recoil_dir: Vector2 = Vector2.ZERO) -> void:
 	if push_back.is_zero_approx():
 		push_back = Vector2(0, -14.0)
 
-	_move_tween = create_tween()
-	_move_tween.tween_property(self, "position", base_pos + push_back, 0.08).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	_move_tween.tween_property(self, "position", base_pos, 0.14).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+	_move_tween = create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	_move_tween.tween_property(self, "position", base_pos + push_back, 0.08).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	_move_tween.tween_property(self, "position", base_pos, 0.14).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 	if not _play_anim(&"bonk_left" if push_back.x >= 0.0 else &"bonk_right"):
 		_is_running = false

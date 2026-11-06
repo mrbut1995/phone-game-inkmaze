@@ -147,12 +147,12 @@ func _build_tool_balances() -> void:
 		[ToolIds.HINT, "Hint"],
 	]:
 		var tool_id := str(tool_data[0])
-		var row := HBoxContainer.new()
+		var row := HBoxContainer.new()  # EXCEPTION(R2-runtime-node): node dựng từ dữ liệu runtime
 		row.custom_minimum_size = Vector2(0, 58)
-		row.add_theme_constant_override("separation", 16)
+		row.add_theme_constant_override("separation", 16)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 		layout.rows_box.add_child(row)
 
-		var label := Label.new()
+		var label := Label.new()  # EXCEPTION(R2-runtime-node): node dựng từ dữ liệu runtime
 		label.theme_type_variation = &"PopupRowLabel"
 		label.text = str(tool_data[1])
 		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -165,6 +165,7 @@ func _build_tool_balances() -> void:
 		amount.step = 1
 		amount.value = int(gm.call("tool_uses_left", tool_id))
 		amount.custom_minimum_size = Vector2(180, 48)
+		# EXCEPTION(R3-lambda): closure bắt biến cục bộ — tách _on_ method phải truyền thêm tham số
 		amount.value_changed.connect(func(value: float) -> void:
 			gm.call("debug_set_tool_uses", tool_id, int(value))
 		)
@@ -183,12 +184,12 @@ func _build_life_balances() -> void:
 	_add_value("Next life", "đầy lượt" if Life.seconds_to_next() <= 0
 		else Life.clock_text(Life.seconds_to_next()))
 
-	var row := HBoxContainer.new()
+	var row := HBoxContainer.new()  # EXCEPTION(R2-runtime-node): node dựng từ dữ liệu runtime
 	row.custom_minimum_size = Vector2(0, 58)
-	row.add_theme_constant_override("separation", 16)
+	row.add_theme_constant_override("separation", 16)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 	layout.rows_box.add_child(row)
 
-	var label := Label.new()
+	var label := Label.new()  # EXCEPTION(R2-runtime-node): node dựng từ dữ liệu runtime
 	label.theme_type_variation = &"PopupRowLabel"
 	label.text = "Lives"
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -201,6 +202,7 @@ func _build_life_balances() -> void:
 	amount.step = 1
 	amount.value = Life.count()
 	amount.custom_minimum_size = Vector2(180, 48)
+	# EXCEPTION(R3-lambda): closure bắt biến cục bộ — tách _on_ method phải truyền thêm tham số
 	amount.value_changed.connect(func(value: float) -> void:
 		gm.call("debug_set_lives", int(value))
 		_build()
@@ -401,7 +403,7 @@ func _build_special_modes() -> void:
 	if ids.is_empty():
 		_add_label("Không lấy được danh sách chế độ từ GameManager", &"PopupSubtitle")
 		return
-	var controller := GameModeController.new()
+	var controller := GameModeController.new()  # EXCEPTION(R2-runtime-node): node dựng từ dữ liệu runtime
 	for index in ids.size():
 		var mode_id: String = ids[index]
 		var mode: BaseGameMode = controller.set_mode_by_name(mode_id, _difficulty)
@@ -757,17 +759,17 @@ func _pause_data() -> Dictionary:
 # Tiện ích dựng UI
 # ---------------------------------------------------------------------------
 func _add_section(title: String) -> void:
-	var row := HBoxContainer.new()
+	var row := HBoxContainer.new()  # EXCEPTION(R2-runtime-node): node dựng từ dữ liệu runtime
 	row.custom_minimum_size = Vector2(0, 58)
 	layout.rows_box.add_child(row)
 
-	var chip := TextureRect.new()
+	var chip := TextureRect.new()  # EXCEPTION(R2-runtime-node): node dựng từ dữ liệu runtime
 	chip.texture = CHIP
 	chip.custom_minimum_size = Vector2(212, 40)
 	chip.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	row.add_child(chip)
 
-	var label := Label.new()
+	var label := Label.new()  # EXCEPTION(R2-runtime-node): node dựng từ dữ liệu runtime
 	label.theme_type_variation = &"PopupSectionLabel"
 	label.text = title
 	label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)  # keep-code: node sinh lúc chạy — đặt anchor khi dựng
@@ -779,7 +781,7 @@ func _add_section(title: String) -> void:
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	chip.add_child(label)
 
-	var divider := TextureRect.new()
+	var divider := TextureRect.new()  # EXCEPTION(R2-runtime-node): node dựng từ dữ liệu runtime
 	divider.texture = DIVIDER
 	divider.custom_minimum_size = Vector2(0, 6)
 	divider.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -787,7 +789,7 @@ func _add_section(title: String) -> void:
 	layout.rows_box.add_child(divider)
 
 func _add_label(text: String, variation: StringName) -> void:
-	var label := Label.new()
+	var label := Label.new()  # EXCEPTION(R2-runtime-node): node dựng từ dữ liệu runtime
 	label.theme_type_variation = variation
 	label.text = text
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -795,18 +797,18 @@ func _add_label(text: String, variation: StringName) -> void:
 
 ## Hàng chỉ để xem thông tin: tên bên trái, giá trị bên phải
 func _add_value(name: String, value: String) -> void:
-	var row := HBoxContainer.new()
+	var row := HBoxContainer.new()  # EXCEPTION(R2-runtime-node): node dựng từ dữ liệu runtime
 	row.custom_minimum_size = Vector2(0, 42)
 	layout.rows_box.add_child(row)
 
-	var key := Label.new()
+	var key := Label.new()  # EXCEPTION(R2-runtime-node): node dựng từ dữ liệu runtime
 	key.theme_type_variation = &"PopupRowLabel"
 	key.text = name
 	key.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	key.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	row.add_child(key)
 
-	var val := Label.new()
+	var val := Label.new()  # EXCEPTION(R2-runtime-node): node dựng từ dữ liệu runtime
 	val.theme_type_variation = &"PopupStatValueSm"
 	val.text = value
 	val.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -832,7 +834,7 @@ func _add_action(text: String, desc: String, handler: Callable, danger := false)
 	button.pressed.connect(handler)
 	layout.rows_box.add_child(button)
 
-	var title := Label.new()
+	var title := Label.new()  # EXCEPTION(R2-runtime-node): node dựng từ dữ liệu runtime
 	title.theme_type_variation = &"PopupBtnTextMuted" if danger else &"PopupBtnText"
 	title.text = text
 	title.position = Vector2(30, 8)
@@ -840,7 +842,7 @@ func _add_action(text: String, desc: String, handler: Callable, danger := false)
 	title.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	button.add_child(title)
 
-	var sub := Label.new()
+	var sub := Label.new()  # EXCEPTION(R2-runtime-node): node dựng từ dữ liệu runtime
 	sub.theme_type_variation = &"LangSub"
 	sub.text = desc
 	sub.position = Vector2(30, 44)
@@ -853,22 +855,22 @@ func _add_action(text: String, desc: String, handler: Callable, danger := false)
 
 ## Hàng có checkbox bật/tắt
 func _add_toggle(text: String, desc: String, value: bool, handler: Callable) -> void:
-	var row := HBoxContainer.new()
+	var row := HBoxContainer.new()  # EXCEPTION(R2-runtime-node): node dựng từ dữ liệu runtime
 	row.custom_minimum_size = Vector2(0, 74)
-	row.add_theme_constant_override("separation", 16)
+	row.add_theme_constant_override("separation", 16)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 	layout.rows_box.add_child(row)
 
-	var text_box := VBoxContainer.new()
+	var text_box := VBoxContainer.new()  # EXCEPTION(R2-runtime-node): node dựng từ dữ liệu runtime
 	text_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	text_box.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	row.add_child(text_box)
 
-	var title := Label.new()
+	var title := Label.new()  # EXCEPTION(R2-runtime-node): node dựng từ dữ liệu runtime
 	title.theme_type_variation = &"PopupRowLabel"
 	title.text = text
 	text_box.add_child(title)
 
-	var sub := Label.new()
+	var sub := Label.new()  # EXCEPTION(R2-runtime-node): node dựng từ dữ liệu runtime
 	sub.theme_type_variation = &"LangSub"
 	sub.text = desc
 	text_box.add_child(sub)
@@ -884,6 +886,7 @@ func _add_toggle(text: String, desc: String, value: bool, handler: Callable) -> 
 	check.texture_hover = CHECK_PRESS
 	check.texture_focused = CHECK_FOCUS
 	check.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	# EXCEPTION(R3-lambda): closure bắt biến cục bộ — tách _on_ method phải truyền thêm tham số
 	check.toggled.connect(func(on: bool) -> void:
 		Sfx.play(Sfx.CHECKBOX)
 		handler.call(on)
@@ -918,10 +921,10 @@ func _level_mode(level_id: int) -> String:
 ## Lưới nút nhảy nhanh tới từng màn (màn chạy chế độ Special có thêm dấu ◆)
 func _add_level_grid() -> void:
 	var ids := _level_ids()
-	var grid := GridContainer.new()
+	var grid := GridContainer.new()  # EXCEPTION(R2-runtime-node): node dựng từ dữ liệu runtime
 	grid.columns = mini(maxi(ids.size(), 1), 10)
-	grid.add_theme_constant_override("h_separation", 10)
-	grid.add_theme_constant_override("v_separation", 10)
+	grid.add_theme_constant_override("h_separation", 10)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
+	grid.add_theme_constant_override("v_separation", 10)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 	layout.rows_box.add_child(grid)
 
 	for level_id in ids:
@@ -936,13 +939,14 @@ func _add_level_grid() -> void:
 		btn.texture_pressed = ROW_PRESSED
 		btn.texture_hover = ROW_PRESSED
 		btn.texture_focused = ROW_FOCUS
+		# EXCEPTION(R3-lambda): closure bắt biến cục bộ — tách _on_ method phải truyền thêm tham số
 		btn.pressed.connect(func() -> void:
 			Sfx.play(Sfx.BTN_CLICK)
 			_gm_call("start_level", level_id)
 		)
 		grid.add_child(btn)
 
-		var num := Label.new()
+		var num := Label.new()  # EXCEPTION(R2-runtime-node): node dựng từ dữ liệu runtime
 		num.theme_type_variation = &"PopupTotalLabelSm"
 		num.text = str(level_id) if not is_special else "%d\n◆" % level_id
 		num.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)  # keep-code: node sinh lúc chạy — đặt anchor khi dựng
@@ -958,7 +962,7 @@ func _add_blob_dump() -> void:
 	if sm != null:
 		var blob: Dictionary = sm.call("collect")
 		dump = JSON.stringify(blob, "  ")
-	var label := Label.new()
+	var label := Label.new()  # EXCEPTION(R2-runtime-node): node dựng từ dữ liệu runtime
 	label.theme_type_variation = &"LangSub"
 	label.text = dump
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART

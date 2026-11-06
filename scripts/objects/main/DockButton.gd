@@ -37,7 +37,7 @@ func _ready() -> void:
 	if icon_texture != null and icon_rect != null:
 		icon_rect.texture = icon_texture
 	if label != null:
-		label.add_theme_color_override("font_outline_color", outline_color)
+		label.add_theme_color_override("font_outline_color", outline_color)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 		if label_key != &"":
 			label.text = tr(String(label_key))
 	if badge != null:

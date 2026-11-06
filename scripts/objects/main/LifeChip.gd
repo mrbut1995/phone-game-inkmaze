@@ -54,10 +54,10 @@ func _apply_large() -> void:
 	if icon != null:
 		icon.custom_minimum_size.x = large_icon_width
 	if value_label != null:
-		value_label.add_theme_font_size_override("font_size", large_value_font)
+		value_label.add_theme_font_size_override("font_size", large_value_font)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 	if plus_button != null:
 		plus_button.custom_minimum_size = Vector2(large_plus_size, large_plus_size)
-		plus_button.add_theme_font_size_override("font_size", large_plus_font)
+		plus_button.add_theme_font_size_override("font_size", large_plus_font)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 
 
 ## Đọc lại số lượt từ GameManager

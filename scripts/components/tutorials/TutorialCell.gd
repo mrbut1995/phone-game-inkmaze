@@ -81,9 +81,9 @@ func _apply_cell_text(text: String) -> void:
 			label.text    = text
 			label.visible = not text.is_empty()
 			# Áp màu chữ và cỡ chữ tùy chỉnh nếu có
-			label.add_theme_color_override("font_color", text_color)
+			label.add_theme_color_override("font_color", text_color)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 			if text_size > 0:
-				label.add_theme_font_size_override("font_size", text_size)
+				label.add_theme_font_size_override("font_size", text_size)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 
 
 func set_text(text: String) -> void:
@@ -98,13 +98,13 @@ func text() -> String:
 func set_text_color(color: Color) -> void:
 	text_color = color
 	if label != null:
-		label.add_theme_color_override("font_color", color)
+		label.add_theme_color_override("font_color", color)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 
 
 func set_text_size(px: int) -> void:
 	text_size = px
 	if label != null:
-		label.add_theme_font_size_override("font_size", px)
+		label.add_theme_font_size_override("font_size", px)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 
 
 ## Nhún nhẹ khi thao tác đúng ("pháo giấy nhỏ" của tutorial) — animation "pulse" trong scene
@@ -113,8 +113,8 @@ func pulse() -> void:
 	if _play_anim(&"pulse"):
 		return
 	scale = Vector2(0.85, 0.85)
-	var tw := create_tween()
-	tw.tween_property(self, "scale", Vector2.ONE, 0.22).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	var tw := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	tw.tween_property(self, "scale", Vector2.ONE, 0.22).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 ## Ô bay vào khi mở bài (so le theo `delay` — gọi từ `BaseTutorial.play_entrance()`)
@@ -129,7 +129,7 @@ func play_entrance(delay: float = 0.0) -> void:
 				entrance_timer.start()
 			else:
 				# Fallback khi scene thiếu EntranceTimer (dây thật khai trong tutorial_cell.tscn)
-				get_tree().create_timer(delay).timeout.connect(_play_entrance_now)
+				get_tree().create_timer(delay).timeout.connect(_play_entrance_now)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		else:
 			_play_entrance_now()
 		return
@@ -148,7 +148,7 @@ func play_step() -> void:
 		return
 	pulse()
 	modulate = Color(1.18, 1.18, 1.12, 1.0)
-	var flash := create_tween()
+	var flash := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	flash.tween_property(self, "modulate", Color.WHITE, 0.3)
 
 
@@ -157,9 +157,9 @@ func play_fail() -> void:
 	if _play_anim(&"fail"):
 		return
 	modulate = Color(1.0, 0.45, 0.42, 1.0)
-	create_tween().tween_property(self, "modulate", Color.WHITE, 0.45)
+	create_tween().tween_property(self, "modulate", Color.WHITE, 0.45)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	var home := position
-	var tw := create_tween()
+	var tw := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	for i in 3:
 		tw.tween_property(self, "position", home + Vector2(6, 0), 0.045)
 		tw.tween_property(self, "position", home - Vector2(6, 0), 0.045)
@@ -178,16 +178,16 @@ func play_win(delay: float = 0.0) -> void:
 				win_timer.start()
 			else:
 				# Fallback khi scene thiếu WinTimer (dây thật khai trong tutorial_cell.tscn)
-				get_tree().create_timer(delay).timeout.connect(_play_win_now)
+				get_tree().create_timer(delay).timeout.connect(_play_win_now)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		else:
 			_play_win_now()
 		return
 	# Fallback khi scene thiếu AnimationPlayer
-	var tw := create_tween()
+	var tw := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	if delay > 0.0:
 		tw.tween_interval(delay)
 	tw.set_parallel(true)
-	tw.tween_property(self, "scale", Vector2.ONE, 0.28).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.tween_property(self, "scale", Vector2.ONE, 0.28).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	tw.tween_property(self, "modulate", Color.WHITE, 0.4)
 
 

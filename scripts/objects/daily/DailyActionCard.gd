@@ -116,10 +116,10 @@ func setup(title_key: String, sub_text: String, cta_key: String, is_challenge: b
 		lbl_title.text = tr(title_key)
 	if lbl_sub != null:
 		lbl_sub.text = sub_text
-		lbl_sub.add_theme_color_override("font_color", SUB_COLORS[is_challenge])
+		lbl_sub.add_theme_color_override("font_color", SUB_COLORS[is_challenge])  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 	if lbl_cta != null:
 		lbl_cta.text = tr(cta_key)
-		lbl_cta.add_theme_color_override("font_color", CTA_LABEL_COLORS[is_challenge])
+		lbl_cta.add_theme_color_override("font_color", CTA_LABEL_COLORS[is_challenge])  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 	if paper != null:
 		paper.texture = _tex(str(PAPER_TEXTURES[is_challenge]))
 	if icon_box != null:

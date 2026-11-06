@@ -28,7 +28,7 @@ const MIN_DISPLAY_SEC := 1.2
 ## ⇒ code đọc qua `layout.<tên>`, KHÔNG tra đường dẫn; thêm/đổi node chỉ cần sửa scene + export.
 var layout: SplashLayout = null
 
-var _pencil_tween: Tween = null
+var _pencil_tween: Tween = null  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 var _transitioning: bool = false
 ## Nạp nền đã xong chưa (chờ LoadingManager) — chưa xong thì KHÔNG sang màn kế tiếp
 var _loading_done := false
@@ -55,7 +55,7 @@ const GUIDES := [
 const NOTE_SWAP_SEC := 3.6
 var _tip_index := 0
 var _guide_index := 0
-var _note_tween: Tween = null
+var _note_tween: Tween = null  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 ## Ngòi bút chì phác họa quanh logo — animation "pencil_idle" (loop) khai trong layout
@@ -105,9 +105,9 @@ func _start_notes() -> void:
 		if n == null:
 			continue
 		n.modulate.a = 0.0
-		var tw := create_tween()
-		tw.tween_property(n, "modulate:a", 1.0, 0.4).set_delay(float(delays[i])).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	_note_tween = create_tween().set_loops()
+		var tw := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+		tw.tween_property(n, "modulate:a", 1.0, 0.4).set_delay(float(delays[i])).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	_note_tween = create_tween().set_loops()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	_note_tween.tween_interval(NOTE_SWAP_SEC)
 	_note_tween.tween_callback(_swap_notes)
 
@@ -130,7 +130,7 @@ func _swap_notes() -> void:
 	_tip_index += 1
 	_guide_index += 1
 	var bodies: Array = [layout.note_a_body, layout.note_b_body]
-	var tw := create_tween()
+	var tw := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	for b in bodies:
 		if b != null:
 			tw.parallel().tween_property(b, "modulate:a", 0.0, 0.18)
@@ -208,7 +208,7 @@ func _wait_min_display() -> void:
 	var remaining := MIN_DISPLAY_SEC - elapsed
 	if remaining <= 0.0:
 		return
-	await get_tree().create_timer(remaining).timeout
+	await get_tree().create_timer(remaining).timeout  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 func _refresh_stamp() -> void:
@@ -248,9 +248,9 @@ func _setup_animations() -> void:
 			layout.pencil.pivot_offset = Vector2(0, layout.pencil.size.y)
 			if not _play_pencil_idle():
 				# Fallback khi layout thiếu PencilAnim
-				_pencil_tween = create_tween().set_loops()
-				_pencil_tween.tween_property(layout.pencil, "rotation_degrees", 16.0, 0.38).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-				_pencil_tween.tween_property(layout.pencil, "rotation_degrees", -12.0, 0.38).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+				_pencil_tween = create_tween().set_loops()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+				_pencil_tween.tween_property(layout.pencil, "rotation_degrees", 16.0, 0.38).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+				_pencil_tween.tween_property(layout.pencil, "rotation_degrees", -12.0, 0.38).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	else:
 		# Fallback khi layout thiếu animation "play_entrance"
 		# Khởi tạo trạng thái ẩn ban đầu (Fallback)
@@ -270,23 +270,23 @@ func _setup_animations() -> void:
 
 		# 1. Studio label hiện nhẹ
 		if layout.studio_label != null:
-			var tw_studio := create_tween()
-			tw_studio.tween_property(layout.studio_label, "modulate:a", 1.0, 0.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+			var tw_studio := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+			tw_studio.tween_property(layout.studio_label, "modulate:a", 1.0, 0.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 		# 2. Logo bung nở với hiệu ứng nét mực & đàn hồi
 		if layout.logo_container != null:
-			var tw_logo := create_tween().set_parallel(true)
-			tw_logo.tween_property(layout.logo_container, "scale", Vector2.ONE, 0.55).set_delay(0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-			tw_logo.tween_property(layout.logo_container, "modulate:a", 1.0, 0.4).set_delay(0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+			var tw_logo := create_tween().set_parallel(true)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+			tw_logo.tween_property(layout.logo_container, "scale", Vector2.ONE, 0.55).set_delay(0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+			tw_logo.tween_property(layout.logo_container, "modulate:a", 1.0, 0.4).set_delay(0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 		# 3. Ngòi bút chì vẽ phác thảo quanh logo
 		if layout.pencil != null:
 			layout.pencil.pivot_offset = Vector2(0, layout.pencil.size.y)
 			if not _play_pencil_idle():
 				# Fallback khi layout thiếu PencilAnim
-				_pencil_tween = create_tween().set_loops()
-				_pencil_tween.tween_property(layout.pencil, "rotation_degrees", 16.0, 0.38).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-				_pencil_tween.tween_property(layout.pencil, "rotation_degrees", -12.0, 0.38).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+				_pencil_tween = create_tween().set_loops()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+				_pencil_tween.tween_property(layout.pencil, "rotation_degrees", 16.0, 0.38).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+				_pencil_tween.tween_property(layout.pencil, "rotation_degrees", -12.0, 0.38).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 		# 4. Tiêu đề và khẩu hiệu xuất hiện
 		if layout.title_label != null:
@@ -340,8 +340,8 @@ func _advance_to_title() -> void:
 		if layout.fade_overlay != null:
 			layout.fade_overlay.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 			layout.fade_overlay.modulate.a = 0.0
-			var tw_out := create_tween()
-			tw_out.tween_property(layout.fade_overlay, "modulate:a", 1.0, 0.28).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+			var tw_out := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+			tw_out.tween_property(layout.fade_overlay, "modulate:a", 1.0, 0.28).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 			tw_out.tween_callback(Callable(self, "_goto_title"))
 		else:
 			_goto_title()

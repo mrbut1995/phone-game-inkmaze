@@ -127,7 +127,7 @@ func _apply() -> void:
 		number_big.visible = state == State.TODAY
 		if number_big.visible:
 			number_big.text = "%02d" % day_number
-			number_big.add_theme_color_override("font_color",
+			number_big.add_theme_color_override("font_color",  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 				COLOR_NUM_SUN if weekend else Color("#A15F1B"))
 	if not number_label.visible and state != State.TODAY:
 		_hide_extras()
@@ -141,7 +141,7 @@ func _apply() -> void:
 		color = COLOR_NUM_SUN
 		if state == State.EMPTY:
 			color = COLOR_NUM_FADED
-	number_label.add_theme_color_override("font_color", color)
+	number_label.add_theme_color_override("font_color", color)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 
 	# ✓ đỏ (đã chơi) / ✗ đỏ (bỏ lỡ)
 	if state_icon != null:

@@ -427,18 +427,20 @@ func play_wall_demo_drag(is_h: bool, lattice: Vector2i, duration := 0.55) -> voi
 	_drag_guide_line.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 	_drag_guide_line.points = PackedVector2Array([a_center, a_center])
 
-	get_tree().create_timer(0.15).timeout.connect(func() -> void:
+	# EXCEPTION(R3-lambda): closure bắt biến cục bộ — tách _on_ method phải truyền thêm tham số
+	get_tree().create_timer(0.15).timeout.connect(func() -> void:  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		if _wall_demo_token != token or not is_inside_tree():
 			return
 		_cursor.play_demo_slide(a_center, b_center, duration)
 		# (GIỮ tween) Vẽ dần đường chỉ dẫn bằng NỘI SUY ĐIỂM (dữ liệu hình học a→b tính lúc chạy)
-		var line_tw := create_tween()
+		var line_tw := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		line_tw.tween_method(func(prog: float) -> void:
 			_drag_guide_line.points = PackedVector2Array([a_center, a_center.lerp(b_center, prog)])
-		, 0.0, 1.0, duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		, 0.0, 1.0, duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	)
 
-	get_tree().create_timer(0.15 + duration + 0.06).timeout.connect(func() -> void:
+	# EXCEPTION(R3-lambda): closure bắt biến cục bộ — tách _on_ method phải truyền thêm tham số
+	get_tree().create_timer(0.15 + duration + 0.06).timeout.connect(func() -> void:  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		if _wall_demo_token != token or not is_inside_tree():
 			return
 		_pulse_demo_anchor(corner_b)

@@ -102,7 +102,7 @@ func _celebrate_daily_win() -> void:
 	var gained := int(info.get("gained", 0))
 	var is_challenge := bool(info.get("challenge", false))
 	# Chờ EnterAnim của layout chạy xong rồi mới chạy hiệu ứng (tránh chồng hiệu ứng)
-	await get_tree().create_timer(0.55).timeout
+	await get_tree().create_timer(0.55).timeout  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	if not is_inside_tree() or layout == null:
 		return
 	var card := layout.challenge_card if is_challenge else layout.play_card

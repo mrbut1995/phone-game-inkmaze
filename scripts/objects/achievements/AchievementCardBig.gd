@@ -83,16 +83,16 @@ func play_claimed_fx() -> void:
 	stamp.rotation = rest_rot - 0.55
 	stamp.modulate.a = 0.0
 
-	var slam := create_tween().set_parallel(true)
+	var slam := create_tween().set_parallel(true)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	slam.tween_property(stamp, "modulate:a", 1.0, 0.08)
-	slam.tween_property(stamp, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-	slam.tween_property(stamp, "rotation", rest_rot, 0.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	slam.tween_property(stamp, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	slam.tween_property(stamp, "rotation", rest_rot, 0.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	slam.chain().tween_callback(_on_stamp_impact.bind(rest_rot))
 
 
 func _on_stamp_impact(rest_rot: float) -> void:
 	# Rung dấu mộc
-	var shake := create_tween()
+	var shake := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	shake.tween_property(stamp, "rotation", rest_rot + 0.06, 0.04)
 	shake.tween_property(stamp, "rotation", rest_rot - 0.04, 0.05)
 	shake.tween_property(stamp, "rotation", rest_rot, 0.07)
@@ -100,12 +100,12 @@ func _on_stamp_impact(rest_rot: float) -> void:
 	var medal := icon_ring.get_parent() as Control
 	if medal != null:
 		medal.pivot_offset = medal.size * 0.5
-		var pop := create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		var pop := create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		pop.tween_property(medal, "scale", Vector2.ONE * 1.22, 0.12)
 		pop.tween_property(medal, "scale", Vector2.ONE, 0.22)
 	# Nền loé sáng rồi dịu lại
 	bg.modulate = Color(1.6, 1.6, 1.35, 1.0)  # EXCEPTION(R1-keep): hoạt cảnh/trạng thái runtime (tween)
-	create_tween().tween_property(bg, "modulate", Color.WHITE, 0.45).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	create_tween().tween_property(bg, "modulate", Color.WHITE, 0.45).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	# Xu bắn tung toé quanh dấu mộc
 	_burst(stamp.get_global_rect().get_center())
 

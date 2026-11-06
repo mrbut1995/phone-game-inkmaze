@@ -33,7 +33,7 @@ var _booted := false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	_timer = Timer.new()
+	_timer = Timer.new()  # EXCEPTION(R2-runtime-service): node dịch vụ của autoload — không có scene để khai
 	_timer.one_shot = true
 	_timer.wait_time = AUTOSAVE_DELAY
 	_timer.timeout.connect(flush)

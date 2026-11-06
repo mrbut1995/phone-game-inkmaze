@@ -97,7 +97,7 @@ func _refresh_list_state() -> void:
 			seen = bool(gm.call("is_tutorial_completed", tid))
 		btn.disabled = not seen
 		# Giữ NGUYÊN art giấy cho nút khoá (theme mặc định không có style "disabled") rồi LÀM MỜ
-		btn.add_theme_stylebox_override("disabled", btn.get_theme_stylebox("normal"))
+		btn.add_theme_stylebox_override("disabled", btn.get_theme_stylebox("normal"))  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 		btn.modulate = Color(1, 1, 1, 1) if seen else Color(1, 1, 1, 0.45)
 
 

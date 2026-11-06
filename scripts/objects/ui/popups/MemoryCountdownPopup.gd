@@ -27,7 +27,7 @@ signal finished
 @export var fx_anim: AnimationPlayer = null
 
 var _seconds := 3
-var _tw: Tween = null
+var _tw: Tween = null  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 func _on_open() -> void:
@@ -49,7 +49,7 @@ func _start_countdown() -> void:
 	# Nhịp đếm (chờ theo giây rồi đổi số) là LỊCH TRÌNH, không phải hiệu ứng hình — giữ tween
 	if _tw != null and _tw.is_valid():
 		_tw.kill()
-	_tw = create_tween()
+	_tw = create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	for s in range(_seconds, 0, -1):
 		_tw.tween_callback(_show_step.bind(str(s)))
 		_tw.tween_interval(step_seconds)
@@ -68,8 +68,8 @@ func _show_step(text: String) -> void:
 	number_label.scale = Vector2(1.35, 1.35)  # EXCEPTION(R1-keep): hoạt cảnh/trạng thái runtime (tween)
 	if fx_anim == null or not fx_anim.has_animation(&"number_pop"):
 		# Fallback khi scene thiếu FxAnim
-		var tw := create_tween()
-		tw.tween_property(number_label, "scale", Vector2.ONE, 0.22).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		var tw := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+		tw.tween_property(number_label, "scale", Vector2.ONE, 0.22).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	else:
 		fx_anim.play(&"number_pop")
 	if text == "GO!":

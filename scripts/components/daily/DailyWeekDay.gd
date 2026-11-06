@@ -45,7 +45,7 @@ func setup(p_day: int, dow_text: String, p_state: DailyDayCell.State, p_weekend:
 	var future := state == DailyDayCell.State.FUTURE or state == DailyDayCell.State.LATER
 	if lbl_dow != null:
 		lbl_dow.text = dow_text
-		lbl_dow.add_theme_color_override("font_color", COLOR_DOW_TODAY if is_today else COLOR_DOW)
+		lbl_dow.add_theme_color_override("font_color", COLOR_DOW_TODAY if is_today else COLOR_DOW)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 	if lbl_num != null:
 		lbl_num.text = str(p_day)
 		var color := COLOR_NUM
@@ -55,7 +55,7 @@ func setup(p_day: int, dow_text: String, p_state: DailyDayCell.State, p_weekend:
 			color = COLOR_NUM_FADED
 		elif p_weekend:
 			color = COLOR_NUM_SUN
-		lbl_num.add_theme_color_override("font_color", color)
+		lbl_num.add_theme_color_override("font_color", color)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 	if today_bg != null:
 		today_bg.visible = is_today
 	if mark != null:

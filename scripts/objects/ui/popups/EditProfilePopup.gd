@@ -386,9 +386,9 @@ func _animate_grid_in() -> void:
 func _pulse_preview() -> void:
 	if preview_disc.size.length_squared() > 0.0:
 		preview_disc.pivot_offset = preview_disc.size * 0.5
-	var tw := preview_disc.create_tween()
-	tw.tween_property(preview_disc, "scale", Vector2(1.07, 1.07), 0.09).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	tw.tween_property(preview_disc, "scale", Vector2.ONE, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	var tw := preview_disc.create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	tw.tween_property(preview_disc, "scale", Vector2(1.07, 1.07), 0.09).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	tw.tween_property(preview_disc, "scale", Vector2.ONE, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 ## Entry (kèm trạng thái) của 1 món trong tab đang mở
@@ -407,7 +407,7 @@ func _flash_hint(text: String, color: Color) -> void:
 	var token := _hint_token
 	name_hint.text = text
 	_tint(name_hint, color)
-	await get_tree().create_timer(1.6).timeout
+	await get_tree().create_timer(1.6).timeout  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	if token == _hint_token and is_instance_valid(name_hint):
 		_refresh_hint_default()
 
@@ -430,7 +430,7 @@ func _flash_lock_text(entry: Dictionary) -> String:
 
 func _tint(label: Label, color: Color) -> void:
 	if label.label_settings == null:
-		label.add_theme_color_override("font_color", color)
+		label.add_theme_color_override("font_color", color)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 		return
 	var settings := label.label_settings.duplicate() as LabelSettings
 	settings.font_color = color

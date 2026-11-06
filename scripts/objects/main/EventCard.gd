@@ -84,14 +84,14 @@ func _apply_theme(t: EventTheme) -> void:
 	_paint_title(title_1, t)
 	_paint_title(title_2, t)
 	if sub_1 != null:
-		sub_1.add_theme_color_override("font_color", t.sub_color)
+		sub_1.add_theme_color_override("font_color", t.sub_color)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 	if sub_2 != null:
-		sub_2.add_theme_color_override("font_color", t.sub_color)
+		sub_2.add_theme_color_override("font_color", t.sub_color)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 	_paint_panel(progress_panel, t)
 	if reward_1_label != null:
-		reward_1_label.add_theme_color_override("font_color", t.label_color)
+		reward_1_label.add_theme_color_override("font_color", t.label_color)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 	if reward_2_label != null:
-		reward_2_label.add_theme_color_override("font_color", t.label_color)
+		reward_2_label.add_theme_color_override("font_color", t.label_color)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 	_paint_cta(cta_button, cta_label, t)
 
 

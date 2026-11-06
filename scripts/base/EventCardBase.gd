@@ -133,7 +133,7 @@ func _paint_chip(chip: PanelContainer, dot: ColorRect, label: Label, t: EventThe
 	if dot != null:
 		dot.color = t.accent
 	if label != null:
-		label.add_theme_color_override("font_color", t.chip_text)
+		label.add_theme_color_override("font_color", t.chip_text)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 	if chip != null:
 		var style := StyleBoxFlat.new()  # EXCEPTION(R2-keep): stylebox của hiệu ứng vẽ runtime
 		style.bg_color = t.chip_fill
@@ -141,15 +141,15 @@ func _paint_chip(chip: PanelContainer, dot: ColorRect, label: Label, t: EventThe
 		style.corner_radius_top_right = 8
 		style.corner_radius_bottom_right = 8
 		style.corner_radius_bottom_left = 8
-		chip.add_theme_stylebox_override("panel", style)
+		chip.add_theme_stylebox_override("panel", style)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 
 
 ## Tiêu đề (màu chữ + màu viền)
 func _paint_title(label: Label, t: EventTheme) -> void:
 	if label == null or t == null:
 		return
-	label.add_theme_color_override("font_color", t.title_color)
-	label.add_theme_color_override("font_outline_color", t.title_outline)
+	label.add_theme_color_override("font_color", t.title_color)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
+	label.add_theme_color_override("font_outline_color", t.title_outline)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 
 
 ## Panel bo góc (khung tiến độ / khung Sao)
@@ -167,7 +167,7 @@ func _paint_panel(panel: Panel, t: EventTheme) -> void:
 	ps.corner_radius_top_right = 10
 	ps.corner_radius_bottom_right = 10
 	ps.corner_radius_bottom_left = 10
-	panel.add_theme_stylebox_override("panel", ps)
+	panel.add_theme_stylebox_override("panel", ps)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 
 
 ## Nút CTA kiểu 3D: nền + gờ đáy + bóng đổ, nhấn thì lún xuống (chữ dịch theo)
@@ -177,16 +177,16 @@ func _paint_cta(button: Button, label: Label, t: EventTheme) -> void:
 	if button != null:
 		var fill: Color = t.cta_fill
 		var lip: Color = (t.cta_stroke as Color).darkened(0.2)
-		button.add_theme_stylebox_override("normal", _make_cta_style(fill, lip, false))
-		button.add_theme_stylebox_override("hover", _make_cta_style(fill.lightened(0.08), lip, false))
-		button.add_theme_stylebox_override("pressed",
+		button.add_theme_stylebox_override("normal", _make_cta_style(fill, lip, false))  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
+		button.add_theme_stylebox_override("hover", _make_cta_style(fill.lightened(0.08), lip, false))  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
+		button.add_theme_stylebox_override("pressed",  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 			_make_cta_style(fill.darkened(0.12), lip.darkened(0.1), true))
 		var dis := _make_cta_style(Color(0.62, 0.5, 0.5, 1.0), Color(0.43, 0.34, 0.34, 1.0), false)
 		dis.shadow_size = 0
-		button.add_theme_stylebox_override("disabled", dis)
-		button.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+		button.add_theme_stylebox_override("disabled", dis)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
+		button.add_theme_stylebox_override("focus", StyleBoxEmpty.new())  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 	if label != null:
-		label.add_theme_color_override("font_color", t.cta_text)
+		label.add_theme_color_override("font_color", t.cta_text)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 	_bind_cta_press(button, label)
 
 
@@ -220,7 +220,7 @@ func _bind_cta_press(button: Button, label: Label) -> void:
 func _shift_cta_label(label: Label, top: float, bottom: float, amount: float) -> void:
 	if not is_instance_valid(label):
 		return
-	var tw := label.create_tween().set_parallel(true)
+	var tw := label.create_tween().set_parallel(true)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	tw.tween_property(label, "offset_top", top + amount, CTA_PRESS_TIME)
 	tw.tween_property(label, "offset_bottom", bottom + amount, CTA_PRESS_TIME)
 
@@ -236,14 +236,14 @@ func _paint_card_edges(lip: Panel, frame: Panel, t: EventTheme) -> void:
 		if ls != null:
 			ls = ls.duplicate() as StyleBoxFlat  # EXCEPTION(R1-keep): StyleBox nhân bản để tô màu theo dữ liệu (runtime)
 			ls.bg_color = (t.cta_stroke as Color).darkened(0.3)
-			lip.add_theme_stylebox_override("panel", ls)
+			lip.add_theme_stylebox_override("panel", ls)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 	if frame != null:
 		var fs := frame.get_theme_stylebox("panel") as StyleBoxFlat
 		if fs != null:
 			fs = fs.duplicate() as StyleBoxFlat  # keep-code: StyleBox nhân bản để tô màu theo dữ liệu (runtime)
 			var c: Color = t.accent
 			fs.border_color = Color(c.r, c.g, c.b, 0.9)
-			frame.add_theme_stylebox_override("panel", fs)
+			frame.add_theme_stylebox_override("panel", fs)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 
 
 # --- Helper dữ liệu ----------------------------------------------------------

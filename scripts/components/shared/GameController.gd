@@ -949,7 +949,7 @@ func _play_sfx_delayed(timer: Timer, sfx_name: String, delay: float) -> void:
 		timer.start()   # wait_time khai trong scenes/game.tscn
 		return
 	# Fallback khi scene thiếu Timer (dây + thời gian thật khai trong scenes/game.tscn)
-	get_tree().create_timer(delay).timeout.connect(_play_sfx_now.bind(sfx_name))
+	get_tree().create_timer(delay).timeout.connect(_play_sfx_now.bind(sfx_name))  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 func _play_sfx_now(sfx_name: String) -> void:

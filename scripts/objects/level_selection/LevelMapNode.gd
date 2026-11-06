@@ -145,7 +145,7 @@ func _set_star_textures(filled: int) -> void:
 func play_complete(stars: int, prev_stars: int = 0, speed: float = 1.0) -> void:
 	if anim != null and anim.has_animation(&"stamp"):
 		anim.play(&"stamp")
-	await get_tree().create_timer(0.2 / speed).timeout
+	await get_tree().create_timer(0.2 / speed).timeout  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	var list: Array[TextureRect] = [star1, star2, star3]
 	for index in range(clampi(prev_stars, 0, list.size()), mini(stars, list.size())):
 		var star := list[index]
@@ -155,13 +155,13 @@ func play_complete(stars: int, prev_stars: int = 0, speed: float = 1.0) -> void:
 		star.pivot_offset = star.size * 0.5
 		star.scale = Vector2.ZERO
 		star.rotation = -0.6
-		var tween := create_tween().set_parallel(true)
-		tween.tween_property(star, "scale", Vector2.ONE, 0.32).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-		tween.tween_property(star, "rotation", 0.0, 0.32).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		var tween := create_tween().set_parallel(true)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+		tween.tween_property(star, "scale", Vector2.ONE, 0.32).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+		tween.tween_property(star, "rotation", 0.0, 0.32).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		_burst(star.global_position + star.size * 0.5 * star.get_global_transform().get_scale())
 		star_stamped.emit(index)
-		await get_tree().create_timer(star_stamp_interval / speed).timeout
-	await get_tree().create_timer(0.25 / speed).timeout
+		await get_tree().create_timer(star_stamp_interval / speed).timeout  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	await get_tree().create_timer(0.25 / speed).timeout  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	complete_finished.emit()
 
 
@@ -171,7 +171,7 @@ func _burst(global_pos: Vector2) -> void:
 		return
 	var texture_w := maxf(float(star_highlight.get_width()), 1.0)
 	for index in burst_count:
-		var spark := Sprite2D.new()
+		var spark := Sprite2D.new()  # EXCEPTION(R2-runtime-node): node dựng từ dữ liệu runtime
 		spark.texture = star_highlight
 		spark.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 		spark.z_index = 20
@@ -181,8 +181,8 @@ func _burst(global_pos: Vector2) -> void:
 		spark.scale = Vector2.ONE * base_scale
 		var angle := TAU * float(index) / float(burst_count) + 0.4
 		var target := spark.position + Vector2.from_angle(angle) * (26.0 + 6.0 * float(index % 2))
-		var tween := create_tween().set_parallel(true)
-		tween.tween_property(spark, "position", target, 0.45).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		var tween := create_tween().set_parallel(true)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+		tween.tween_property(spark, "position", target, 0.45).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		tween.tween_property(spark, "modulate:a", 0.0, 0.45)
 		tween.tween_property(spark, "scale", Vector2.ONE * base_scale * 0.3, 0.45)
 		tween.chain().tween_callback(spark.queue_free)
@@ -216,11 +216,11 @@ func show_locked_preview() -> void:
 ## `reset_stars` = true khi chính màn này sắp được đóng dấu sao ngay sau đó (chuỗi nhiều màn)
 func play_unlock(reset_stars: bool = false) -> void:
 	if lock_icon != null and lock_icon.visible:
-		var shake := create_tween()
+		var shake := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		for angle in [0.28, -0.28, 0.2, -0.2, 0.0]:
 			shake.tween_property(lock_icon, "rotation", angle, 0.07)
 		await shake.finished
-		var out := create_tween().set_parallel(true)
+		var out := create_tween().set_parallel(true)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		out.tween_property(lock_icon, "scale", _lock_base_scale * 1.5, 0.16)
 		out.tween_property(lock_icon, "modulate:a", 0.0, 0.16)
 		await out.finished
@@ -295,9 +295,9 @@ func _apply_number() -> void:
 	# Ghi đè màu chữ trực tiếp (không dùng modulate: màu font của theme có thể không phải trắng)
 	label.modulate = Color.WHITE  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 	var is_current := state == State.CURRENT
-	label.add_theme_color_override("font_color", color_number_current if is_current else color_number_normal)
-	label.add_theme_color_override("font_outline_color", color_number_outline)
-	label.add_theme_constant_override("outline_size", 0 if is_current else number_outline_size)
+	label.add_theme_color_override("font_color", color_number_current if is_current else color_number_normal)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
+	label.add_theme_color_override("font_outline_color", color_number_outline)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
+	label.add_theme_constant_override("outline_size", 0 if is_current else number_outline_size)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 
 
 ## 3 sao của màn (màn khoá ẩn cả viên thuốc sao)
@@ -357,7 +357,7 @@ func _on_anim_finished(anim_name: StringName) -> void:
 var _button_down := false
 var _button_hovered := false
 var _content_base: Dictionary = {}
-var _content_tween: Tween = null
+var _content_tween: Tween = null  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 ## `Body/Button` phát khi trạng thái nhấn giữ đổi (dây nối khai trong .tscn)
@@ -386,8 +386,8 @@ func _follow_button_art() -> void:
 		_content_tween.kill()
 	if not is_inside_tree():
 		return
-	_content_tween = create_tween().set_parallel(true)
-	_content_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	_content_tween = create_tween().set_parallel(true)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	_content_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	for node in _content_nodes():
 		var base: Vector2 = _content_base[node]
 		_content_tween.tween_property(node, "position", base + Vector2(0.0, target), content_follow_sec)

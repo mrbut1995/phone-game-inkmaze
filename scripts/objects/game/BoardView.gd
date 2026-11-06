@@ -124,7 +124,7 @@ var _hover_target_anchor_id := -1
 var _drag_guide_last_local := Vector2.ZERO
 
 # Shake tracking
-var _shake_tween: Tween = null
+var _shake_tween: Tween = null  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 var _original_position := Vector2.ZERO
 var _is_shaking := false
 
@@ -920,8 +920,8 @@ func reset_to_start() -> void:
 	var target_pos := cursor_pos_at(_cell_center(maze.get_start()))
 
 	# (GIỮ tween) Vị trí đích = TÂM Ô theo lưới tính lúc chạy (phụ thuộc kích thước lưới/cỡ ô)
-	var tw := create_tween()
-	tw.tween_property(_cursor, "position", target_pos, 0.22).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+	var tw := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	tw.tween_property(_cursor, "position", target_pos, 0.22).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	set_moving_path([maze.get_start()])
 	_snap_tip_to_center()
 
@@ -1130,7 +1130,7 @@ func _play_grid_shake() -> void:
 
 	# (GIỮ tween) Gốc rung = vị trí bàn do layout tính LÚC CHẠY (không phải số cố định
 	# trong scene) nên không thể bake thành track tĩnh — hiệu ứng động duy nhất của bàn.
-	_shake_tween = create_tween()
+	_shake_tween = create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	_shake_tween.tween_property(self, "position", _original_position + Vector2(-6, 4), 0.035)
 	_shake_tween.tween_property(self, "position", _original_position + Vector2(6, -4), 0.035)
 	_shake_tween.tween_property(self, "position", _original_position + Vector2(-3, 3), 0.035)
@@ -1889,14 +1889,14 @@ func _show_anchor_candidates(corner: Vector2i) -> void:
 			continue
 		var node := info.node as MazeAnchor
 		_candidate_nodes.append(node)
-		var tw := node.create_tween()
+		var tw := node.create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		tw.tween_property(node, "scale", Vector2.ONE * 1.5, 0.14) \
-			.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+			.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 func _clear_anchor_candidates() -> void:
 	for node in _candidate_nodes:
 		if is_instance_valid(node):
-			var tw := (node as Node).create_tween()
+			var tw := (node as Node).create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 			tw.tween_property(node, "scale", Vector2.ONE, 0.10)
 	_candidate_nodes.clear()
 

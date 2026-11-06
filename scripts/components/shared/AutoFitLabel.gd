@@ -48,4 +48,4 @@ func _apply() -> void:
 		if font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, chosen).x <= avail:
 			break
 		chosen -= 1
-	add_theme_font_size_override("font_size", chosen)
+	add_theme_font_size_override("font_size", chosen)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime

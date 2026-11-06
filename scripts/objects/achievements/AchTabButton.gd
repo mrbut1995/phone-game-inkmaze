@@ -220,7 +220,7 @@ func _fit_label(max_w: float, min_size := 8) -> void:
 	var fs := _label_base
 	while fs > min_size and font.get_string_size(label.text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x > max_w:
 		fs -= 1
-	label.add_theme_font_size_override("font_size", fs)
+	label.add_theme_font_size_override("font_size", fs)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 
 
 ## Đổi trạng thái chọn: đổi art + màu nhãn có hiệu ứng transition mượt
@@ -234,7 +234,7 @@ func set_active(on: bool) -> void:
 	if j_style:
 		if label != null:
 			label.modulate = Color.WHITE
-			label.add_theme_color_override("font_color", J_LABEL_ACTIVE_COLOR if (on and j_side) else J_LABEL_COLOR)
+			label.add_theme_color_override("font_color", J_LABEL_ACTIVE_COLOR if (on and j_side) else J_LABEL_COLOR)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 		if tab_icon != null:
 			tab_icon.modulate = Color.WHITE if on else J_ICON_IDLE.get(category, J_LABEL_COLOR)
 		_layout_j(on)
@@ -253,7 +253,7 @@ func set_active(on: bool) -> void:
 	# Pop nhẹ khi tab được KÍCH HOẠT (chỉ hiệu ứng scale — không ảnh hưởng giá trị đọc được)
 	if on and not Engine.is_editor_hint():
 		UIAnim._update_pivot(self)
-		var tw := create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+		var tw := create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		tw.tween_property(self, "scale", Vector2(1.06, 1.06), 0.10)
 		tw.tween_property(self, "scale", Vector2.ONE, 0.12)
 

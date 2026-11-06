@@ -11,7 +11,7 @@ extends TextureButton
 
 var _base_top := 0.0
 var _base_bottom := 0.0
-var _tween: Tween = null
+var _tween: Tween = null  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 func _ready() -> void:
@@ -35,6 +35,6 @@ func _move(sink: float) -> void:
 		return
 	if _tween != null and _tween.is_valid():
 		_tween.kill()
-	_tween = create_tween().set_parallel(true)
+	_tween = create_tween().set_parallel(true)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	_tween.tween_property(content, "offset_top", _base_top + sink, follow_sec)
 	_tween.tween_property(content, "offset_bottom", _base_bottom + sink, follow_sec)

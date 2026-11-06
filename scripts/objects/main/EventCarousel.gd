@@ -44,7 +44,7 @@ var _drag_active: bool = false
 var _drag_moved: bool = false
 var _drag_start_position := Vector2.ZERO
 var _drag_start_scroll: float = 0.0
-var _snap_tween: Tween
+var _snap_tween: Tween  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 func _ready() -> void:
@@ -255,9 +255,9 @@ func snap_to_nearest() -> void:
 	# Tween mượt
 	if _snap_tween != null and _snap_tween.is_running():
 		_snap_tween.kill()
-	_snap_tween = create_tween()
-	_snap_tween.set_ease(Tween.EASE_OUT)
-	_snap_tween.set_trans(Tween.TRANS_CUBIC)
+	_snap_tween = create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	_snap_tween.set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	_snap_tween.set_trans(Tween.TRANS_CUBIC)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	_snap_tween.tween_property(scroll, "scroll_horizontal", int(target), 0.25)
 
 

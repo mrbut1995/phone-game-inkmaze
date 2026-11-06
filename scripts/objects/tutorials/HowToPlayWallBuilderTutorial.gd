@@ -21,7 +21,7 @@ extends BaseTutorial
 @export var TARGET_COUNT := 2
 
 var _built_count: int = 0
-var _demo_tween: Tween = null
+var _demo_tween: Tween = null  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 func _init_tutorial() -> void:
@@ -125,7 +125,7 @@ func _run_wall_demo_cycle() -> void:
 	# Nhịp 1: vòng "1 → 2" tại cặp neo rồi con trỏ rê dựng đoạn thứ nhất (0,1)→(1,1)
 	board_tutorial.show_anchor_callouts(Vector2i(0, 1), Vector2i(1, 1))
 
-	_demo_tween = create_tween()
+	_demo_tween = create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	_demo_tween.tween_interval(0.8)
 	_demo_tween.tween_callback(func() -> void:
 		if current_step_index != 2 or board_tutorial == null: return
@@ -200,7 +200,7 @@ func _run_counter_demo_cycle() -> void:
 	# Đoạn 1 → khung đếm nhảy 1/2; đoạn 2 → 2/2
 	board_tutorial.play_wall_demo_drag(true, Vector2i(0, 1), 0.55)
 
-	_demo_tween = create_tween()
+	_demo_tween = create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	_demo_tween.tween_interval(0.9)
 	_demo_tween.tween_callback(func() -> void:
 		if current_step_index != 3: return
@@ -319,7 +319,7 @@ func _update_wall_counter() -> void:
 		fmt = "Đã vẽ: {0} / {1} đoạn"
 	lbl_hud_counter.text = fmt.format([_built_count, TARGET_COUNT])
 	var full := _built_count >= TARGET_COUNT
-	lbl_hud_counter.add_theme_color_override("font_color",
+	lbl_hud_counter.add_theme_color_override("font_color",  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 		Color(0.18, 0.49, 0.2) if full else Color(0.18, 0.22, 0.26))
 	UIAnim.play_pop_in(lbl_hud_counter, 0.0, 0.66 if full else 0.9, 0.3 if full else 0.22)
 

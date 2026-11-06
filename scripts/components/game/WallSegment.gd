@@ -17,7 +17,7 @@ var _state := "invisible"
 var _base_width := 11.0
 var _p1 := Vector2.ZERO
 var _p2 := Vector2.ZERO
-var _preview_pulse: Tween = null
+var _preview_pulse: Tween = null  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 ## AnimationPlayer của `wall_segment.tscn` — hiệu ứng nhấp nháy lớp preview khai trong scene
 ## Node binding: khai `node_paths` + NodePath trong `wall_segment.tscn`
 @export var anim: AnimationPlayer = null
@@ -125,7 +125,7 @@ func animate_appear() -> void:
 func animate_stroke_draw(duration := 0.12) -> void:
 	if points.size() < 2:
 		modulate.a = 0.0
-		var tw_fade := create_tween()
+		var tw_fade := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		tw_fade.tween_property(self, "modulate:a", 1.0, duration)
 		return
 
@@ -135,11 +135,11 @@ func animate_stroke_draw(duration := 0.12) -> void:
 	visible = true
 	modulate.a = 1.0
 
-	var tw := create_tween()
+	var tw := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	tw.tween_method(func(prog: float) -> void:
 		points = PackedVector2Array([start_pt, start_pt.lerp(end_pt, prog)])
 		_sync_halo()
-	, 0.0, 1.0, duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	, 0.0, 1.0, duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 ## Bật/tắt kiểu NÉT ĐỨT (Wall Builder tutorial: preview "tường đứt đoạn").
@@ -166,7 +166,7 @@ func set_preview_pulse(on: bool) -> void:
 		if _play_anim(&"preview_pulse"):
 			return
 		# Fallback khi scene thiếu AnimationPlayer
-		_preview_pulse = create_tween().set_loops()
+		_preview_pulse = create_tween().set_loops()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		_preview_pulse.tween_property(self, "modulate:a", 0.45, 0.7)
 		_preview_pulse.tween_property(self, "modulate:a", 1.0, 0.7)
 	else:
@@ -181,10 +181,10 @@ func set_preview_pulse(on: bool) -> void:
 func flash_hit_then_stay_visible() -> void:
 	set_state("hit")
 	var target_width := _base_width * 1.75
-	var tw := create_tween()
+	var tw := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	# Nở to nét tường giật mình
-	tw.tween_property(self, "width", target_width, 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tw.tween_property(self, "width", _base_width, 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tw.tween_property(self, "width", target_width, 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	tw.tween_property(self, "width", _base_width, 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	tw.tween_interval(0.28)
 	tw.tween_callback(func() -> void:
 		set_state("visible")

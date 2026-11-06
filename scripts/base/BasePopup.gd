@@ -33,7 +33,7 @@ var _closing := false
 ## Tween hiệu ứng đang chạy (mở HOẶC đóng) — phải HUỶ khi bắt đầu hiệu ứng mới,
 ## nếu không tween đóng cũ vẫn chạy tiếp và `_finish_close()` sẽ xoá popup ngay
 ## sau khi vừa mở lại (bug: popup Game Over "nháy hiện rồi biến mất").
-var _tween: Tween = null
+var _tween: Tween = null  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 ## Node binding: khai `node_paths` + `NodePath` ngay trong scene (.tscn) — mã KHÔNG tự tìm
 ## node bằng đường dẫn chuỗi nữa (xem `scripts/ui/layouts/chapters_layout.gd`).
@@ -142,14 +142,14 @@ func open(p_data: Dictionary = {}) -> void:
 			panel.scale = Vector2.ONE * scale_from
 			panel.modulate = Color(1, 1, 1, 0)  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 
-		var tw := create_tween()
+		var tw := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		_tween = tw
 		tw.set_parallel(true)
 		if dim != null:
 			tw.tween_property(dim, "modulate:a", 1.0, dur_in)
 		if panel != null:
 			tw.tween_property(panel, "modulate:a", 1.0, dur_in)
-			tw.tween_property(panel, "scale", Vector2.ONE, dur_in).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+			tw.tween_property(panel, "scale", Vector2.ONE, dur_in).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		tw.chain().tween_callback(_on_opened_anim_done)
 
 	opened.emit()
@@ -169,7 +169,7 @@ func close() -> void:
 		anim_player.play("close")
 	else:
 		# Fallback khi scene thiếu animation "close"
-		var tw := create_tween()
+		var tw := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		_tween = tw
 		tw.set_parallel(true)
 		if dim != null:

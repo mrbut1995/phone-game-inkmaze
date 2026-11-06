@@ -68,4 +68,4 @@ func set_pages(count: int, current: int) -> void:
 		if base_sb is StyleBoxFlat:
 			var sb := (base_sb as StyleBoxFlat).duplicate() as StyleBoxFlat  # keep-code: StyleBox nhân bản để tô màu theo dữ liệu (runtime)
 			sb.bg_color = active_color if is_active else inactive_color
-			dot.add_theme_stylebox_override("panel", sb)
+			dot.add_theme_stylebox_override("panel", sb)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime

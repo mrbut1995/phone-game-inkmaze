@@ -57,7 +57,7 @@ func popup_at(chip: Control, def: Dictionary, stars_now: int, claimed: bool, sta
 			lbl_status.text = "%d/%d ★" % [stars_now, threshold]
 		var tint := Color(0.13, 0.5, 0.27) if (claimed or stars_now >= threshold) \
 			else Color(0.55, 0.36, 0.05)
-		lbl_status.add_theme_color_override("font_color", tint)
+		lbl_status.add_theme_color_override("font_color", tint)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 
 	# Đo kích thước theo nội dung
 	var need := (content.get_combined_minimum_size() if content != null else Vector2(80, 40)) + pad * 2.0

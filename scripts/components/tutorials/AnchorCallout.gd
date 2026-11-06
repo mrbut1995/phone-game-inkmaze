@@ -12,8 +12,8 @@ extends Control
 @export var num: Label = null
 @export var anim_player: AnimationPlayer = null
 
-var _fx: Tween = null
-var _pulse: Tween = null
+var _fx: Tween = null  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+var _pulse: Tween = null  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 func set_number(n: int) -> void:
@@ -34,9 +34,9 @@ func show_at(center: Vector2) -> void:
 		# Fallback khi scene thiếu AnimationPlayer (hiệu ứng "show" khai trong anchor_callout.tscn)
 		scale = Vector2(0.55, 0.55)
 		modulate.a = 0.0
-		_fx = create_tween()
+		_fx = create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		_fx.tween_property(self, "modulate:a", 1.0, 0.18)
-		_fx.parallel().tween_property(self, "scale", Vector2.ONE, 0.26).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		_fx.parallel().tween_property(self, "scale", Vector2.ONE, 0.26).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		_fx.tween_callback(_start_pulse)
 
 
@@ -77,9 +77,9 @@ func _start_pulse() -> void:
 		return
 	if _pulse != null and _pulse.is_valid():
 		_pulse.kill()
-	_pulse = create_tween().set_loops()
-	_pulse.tween_property(self, "scale", Vector2(1.12, 1.12), 0.7).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	_pulse.tween_property(self, "scale", Vector2.ONE, 0.7).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_pulse = create_tween().set_loops()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	_pulse.tween_property(self, "scale", Vector2(1.12, 1.12), 0.7).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	_pulse.tween_property(self, "scale", Vector2.ONE, 0.7).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 func _kill_tweens() -> void:

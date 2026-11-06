@@ -157,12 +157,12 @@ func _refresh() -> void:
 			lbl_status.text = "%s · %s" % [  # keep-code: chữ theo dữ liệu (runtime)
 				TranslationServer.translate("STR_CHAPTER_STARS_FORMAT").format([have_stars, cost]),
 				TranslationServer.translate("STR_CHAPTER_NEED_FORMAT").format([maxi(cost - have_stars, 0)])]
-		lbl_status.add_theme_color_override("font_color",
+		lbl_status.add_theme_color_override("font_color",  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 			color_status_ready if enough else color_status_locked)
 	if lbl_unlock != null:
 		lbl_unlock.text = TranslationServer.translate("STR_CHAPTER_UNLOCK") if enough \
 			else TranslationServer.translate("STR_CHAPTER_NOT_ENOUGH")
-		lbl_unlock.add_theme_color_override("font_color",
+		lbl_unlock.add_theme_color_override("font_color",  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 			color_unlock_ready if enough else color_unlock_locked)
 	if btn_unlock != null:
 		btn_unlock.disabled = not enough

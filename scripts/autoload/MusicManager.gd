@@ -129,7 +129,7 @@ func _bind_scene_manager() -> void:
 func _ensure_player() -> void:
 	if _player != null and is_instance_valid(_player):
 		return
-	_player = AudioStreamPlayer.new()
+	_player = AudioStreamPlayer.new()  # EXCEPTION(R2-runtime-service): node dịch vụ của autoload — không có scene để khai
 	_player.name = "BgmPlayer"
 	_player.bus = "Master"
 	_player.process_mode = Node.PROCESS_MODE_ALWAYS

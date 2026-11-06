@@ -64,15 +64,15 @@ func play_entrance(delay: float) -> void:
 				entrance_timer.start()
 			else:
 				# Fallback khi scene thiếu EntranceTimer (dây thật khai trong anchor.tscn)
-				get_tree().create_timer(delay).timeout.connect(_play_entrance_now)
+				get_tree().create_timer(delay).timeout.connect(_play_entrance_now)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		else:
 			_play_entrance_now()
 		return
 	# Fallback khi scene thiếu AnimationPlayer
-	var tw := create_tween()
+	var tw := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	if delay > 0.0:
 		tw.tween_interval(delay)
-	tw.tween_property(self, "scale", Vector2.ONE, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.tween_property(self, "scale", Vector2.ONE, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 func _play_entrance_now() -> void:
@@ -100,13 +100,13 @@ func set_selected(active: bool) -> void:
 				button.modulate = NORMAL_MODULATE  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 			return
 	# Fallback khi scene thiếu AnimationPlayer
-	var tw := create_tween().set_parallel(true)
+	var tw := create_tween().set_parallel(true)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	if active:
-		tw.tween_property(self, "scale", Vector2(1.35, 1.35), 0.1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		tw.tween_property(self, "scale", Vector2(1.35, 1.35), 0.1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		if button != null:
 			tw.tween_property(button, "modulate", SELECTED_MODULATE, 0.1)
 	else:
-		tw.tween_property(self, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		tw.tween_property(self, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		if button != null:
 			tw.tween_property(button, "modulate", NORMAL_MODULATE, 0.12)
 
@@ -124,6 +124,6 @@ func pulse() -> void:
 	pivot_offset = size * 0.5
 	if _play_anim(&"pulse"):
 		return
-	var tw := create_tween()
-	tw.tween_property(self, "scale", Vector2(1.4, 1.4), 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tw.tween_property(self, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	var tw := create_tween()  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	tw.tween_property(self, "scale", Vector2(1.4, 1.4), 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+	tw.tween_property(self, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)

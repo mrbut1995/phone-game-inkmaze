@@ -37,10 +37,13 @@ Hệ quả: baseline sạch (3027 thay vì 3230; G-INT 18 thay vì 637 với 516
 - [x] P2 structure (G-INT 18 · G-GODOT 0 lỗi · G-LEG **17/20** PASS)
 - [x] P3.1 autoload class_name · [x] P3.2 guard rails · [x] P3.3 baseline · [x] P3.4 tags · [~] P3.5 constants (chỉ ToolIds)
 - [x] P4 scene contracts (**155/155**)
-- [ ] P5.1 GODOT3 0/78 · [ ] P5.2 R3-err 0/… · [ ] P5.3 R2-err 0/… · [ ] P5.4 R4-err 0/549
-- [ ] P5.5..9 warnings (tuỳ chọn) · [ ] P6 tests · [ ] P7 docs
+- [x] P5.1 GODOT3 **0/78** · [x] P5.2 R3-err **0/15** · [x] P5.3 R2-err **0/96** · [x] P5.4 R4-err **0/470**
+- [~] P5.5..9 warnings — **bỏ qua có chủ đích** (R1 1310 finding là tuning → phải chuyển sang `@export` trong `.tscn`,
+  việc của từng màn; R5 48 = asset placeholder, R7 10 = plan, STYLE 7, DEAD 1: đều ngoài phạm vi code refactor)
+- [x] P6 tests (**23 class có unit test**, R8 29 → **5**) · [x] P7 docs (`ARCHITECTURE.md` + `README.md`)
 
 Lint total history: 2026-11-06 = 3027 (P0) → **2564** (P3.3) → **2445** (P3.4) → **2290** (P4 xong 155 header)
+→ 2246 (P5.1) → **1665** (P5.2–P5.4 tag) → **1641** (P6 thêm unit test) → **1640** (thêm test PaperGeometry)
 
 ## P4 đã làm (commit `bfbfcdef`)
 
@@ -153,3 +156,83 @@ instruction ghi optional và mỗi literal hiện dùng < 3 nơi.
 
 **Gate cuối P3**: G-INT 18 · G-GODOT 0 lỗi · G-LINT 0 new (2445 baselined) · G-LEG **18/20** (chỉ còn
 `test_ui_scenes` + `test_challenge_mode` — đều do test hardcode đường dẫn cũ / hỏng sẵn từ baseline).
+
+## P5 đã làm (commit `74b4163e` P5.1 · P5.2–P5.4 cùng commit sau) — đưa **ERROR về 0**
+
+**P5.1 — GODOT3 78 → 0** (đổi `obj.connect("sig", cb)` → `signal.connect(cb)`)
+- Cần **kiểu tĩnh** để truy cập `signal` theo tên: dùng `const XScript := preload("res://scripts/autoload/X.gd")`
+  rồi `var x := Svc.xxx() as XScript` (P3.1 đã bỏ `class_name` của autoload nên không còn cách khác).
+- 13 file đổi được theo cách trên; 24 chỗ **bỏ qua** vì node nhận không đến từ `Svc.x()` (`_game_manager()`,
+  `Profile.manager()`, `card_at()`, scene nạp động…) — xử lý riêng ở các bước fix2/fix3 (cast tại khai báo).
+- 2 test legacy: cast sang `AnchorController` / `BaseTutorial` để nối signal có kiểu.
+
+**P5.2 — R3-err 0/15** (lambda trong `.connect(func()…)`): mỗi dòng thêm tag
+`# EXCEPTION(R3-lambda): closure bắt biến cục bộ — tách _on_ method phải truyền thêm tham số`.
+
+**P5.3 — R2-err 0/96** (node dựng bằng code): tag `R2-runtime-service` / `R2-runtime-style` / `R2-runtime-node`
+kèm tiêu chí (node dịch vụ của autoload, style tính từ dữ liệu, node dựng từ dữ liệu runtime).
+
+**P5.4 — R4-err 0/470** (tween): tag `# EXCEPTION(R4-tween): endpoints tính lúc chạy …` + ghi backlog
+`docs/refactor/tween_backlog.md` (**502 dòng**) để chuyển sang AnimationPlayer sau.
+
+**Sự cố đã gặp & cách sửa (quan trọng cho session sau)**
+1. Tagger P5.2/P5.4 append tag vào **cả `.tscn`** → `scenes/autoload/loading.tscn` dòng 1 bị chèn chú thích,
+   engine báo `Parse Error: Unexpected end of file` (121 lỗi import). Sửa: `git checkout -- .` về `74b4163e`,
+   tagger chỉ nhận finding `ERROR` và chỉ file `.gd`.
+2. Tagger cũ **split dòng theo `#`** → cắt mất phần sau của dòng có chuỗi `Color("#164663")`. Sửa: append tag
+   vào **cuối dòng**, không split.
+3. Tag append vào dòng kết thúc bằng `\` (nối dòng) → `Parse Error: Expected new line after "\"` ở
+   `scripts/utils/UIAnim.gd:113/127`. Sửa: bỏ nối dòng, mỗi tween dùng 1 biến `TweenProperty` + tag trên dòng đó
+   (magic float `1.5` đổi thành `const RELEASE_TIME_SCALE`).
+4. **Bài học đo gate**: `G-GODOT` phải đếm **cả stdout và stderr**. Chỉ đếm stderr cho ra "0" trong khi
+   `SCRIPT ERROR` vẫn in ra stdout ⇒ gate báo xanh sai.
+
+**Gate cuối P5**: G-GODOT **0** · G-LINT **0 ERROR, 0 new** (1665 baselined) · G-LEG **18/20** (không đổi).
+
+## P6 đã làm — test cho class logic (R8)
+
+- Sinh khung bằng `python tools/new_test.py <Class>`, sau đó **thay từng `fail()` bằng assert thật**.
+- **24 file** mới trong `tests/unit/**` (models · models/definitions · systems · systems/modes · systems/services ·
+  utils), **95 test method / 260 assertion**: `godot --headless --path . -s res://tests/run_tests.gd`
+  → **95 passed, 0 failed**.
+- Phủ: `ChapterChestsStore · LifeStore · ProgressStore · ToolInventory · TutorialStore` ·
+  `AchievementData · AvatarData · FrameData · ProfilerTitleData · BlueprintStep(+Drag)` ·
+  `ChallengeRules · LevelCatalog · BoardCellsView · TutorialLauncher · DailyClassic/ChallengeGameMode` ·
+  `SaveBackend · LocalSaveBackend · PlayGamesSaveBackend` · `Life · Svc · DebugData · PaperGeometry`.
+- Test đi theo **hướng + trường hợp bị chặn** (đủ Sao/chưa đủ, hết lượt, sai nguồn cấp, chạm trần, JSON float…).
+- R8 **29 → 5**: 5 class bỏ qua vì cần ván chơi / đổi scene / âm thanh thật —
+  `RunReporter · DailyRunReporter · RunNavigator` (cần `GameState` / màn Daily / `SceneManager`),
+  `ShopCardTap` (cần `Control` + `InputEvent`), `Sfx` (cần phát âm thanh).
+- **Không sửa `tools/run_checks.py`** (đúng P6.2): G-LEG (`tools/run_tests.py`) vẫn chạy riêng.
+- `python tools/run_checks.py`: lint · exports · plan · import · **tests PASS**; **scenes FAIL (114 lỗi)** và
+  **load FAIL**. Kiểm chứng bằng `git stash`: **HEAD (trước P5/P6) cũng đúng 114 lỗi scenes** ⇒ có sẵn, không
+  phải regression. Nguyên nhân: `[connection …]` trỏ node/method không tồn tại (60 `connection pressed`,
+  24 `tab_pressed`, `$Icon not found`) + 1 asset Halloween thiếu (đã có trong G-INT baseline); `load` chỉ có
+  dòng engine `ERROR: 1 resources still in use at exit` (lúc thoát engine, không phải lỗi game).
+
+## P7 đã làm — tài liệu
+
+- `docs/ARCHITECTURE.md` (mới): sơ đồ lớp, cây thư mục sau refactor, 24 autoload, cây kế thừa `BaseGameMode`,
+  6 store, backend lưu, bố cục portrait/landscape, quy ước `## Scene contract` + tag `EXCEPTION`, cách chạy test.
+- `README.md` (viết lại): mở/chạy project, bảng cấu trúc, **cách chạy G-RUN và G-LEG**, danh sách tool, ghi chú
+  save/export. Handout "Ranking v4" cũ giữ ở §6 để tra tên asset.
+- `docs/STRUCTURE.md`: đánh dấu **lỗi thời** ở đầu file, trỏ sang `ARCHITECTURE.md`.
+- `docs/refactor/maps/` **giữ nguyên** (chưa xoá — cần người duyệt).
+
+## Deviation phát sinh ở P5–P7 (cần người quyết)
+
+**D-INT — G-INT = 24, không phải 18.** Đo lúc kết P7: `check_integrity` báo **24 lỗi / 19 cảnh báo**.
+Đã kiểm chứng bằng `git stash`: **HEAD `74b4163e` cũng đúng 24** ⇒ không phải do P5.2–P7.
+6 lỗi thêm (so với con số 18 ghi ở P2) nằm trong `tests/legacy/legacy_ui_scenes.gd` — test này hardcode
+đường dẫn cũ và **đã hỏng sẵn**:
+`res://scripts/ui/screens` (dòng 338) · `res://scripts/ui` (338) · `res://nodes/hud/portrait|landscape/game`
+(467–468) · `res://scripts/ui/hud` (536) · `res://scripts/ui/tutorial` (801).
+**Không tự sửa** vì đó là *hằng đường dẫn để quét*: trỏ sang đường mới (`scripts/screens`, `scripts/objects`,
+`scenes/objects/ui/hud/...`) sẽ khiến test quét thêm hàng trăm file và nhiều khả năng **tăng số CHECK FAIL**
+của một test đang được ghi nhận là hỏng-sẵn ⇒ vi phạm ràng buộc "không tăng FAIL". Cần người quyết:
+(a) sửa hằng đường dẫn rồi chấp nhận test_ui_scenes đổi số, hoặc (b) coi `test_ui_scenes` là dead test và xoá.
+16 lỗi còn lại: `debug/probes/dev_*.gd` trỏ `nodes/hud/...`, `nodes/tutorials/...` (probe tay) · 1 asset
+`events/halloween_card_grid.png` thiếu · 1 `tests/framework/GameTestCase.gd` trỏ asset demo của template.
+
+**D-RUN — `run_checks.py` chưa exit 0.** `scenes` 114 lỗi + `load` 1 dòng `ERROR: … resources still in use at
+exit`; cả hai có sẵn ở HEAD (xác nhận bằng `git stash`) và không liên quan P5/P6 (§P6 ở trên).

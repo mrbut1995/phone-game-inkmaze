@@ -39,7 +39,7 @@ signal tab_pressed(board_id: String)
 var active := false
 
 var _applied := false
-var _width_tween: Tween = null
+var _width_tween: Tween = null  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 
 
 func _ready() -> void:
@@ -71,12 +71,12 @@ func set_active(on: bool) -> void:
 	texture_focus = art
 	texture_disabled = art
 	if label != null:
-		label.add_theme_color_override("font_color", LABEL_ACTIVE_COLOR if on else LABEL_IDLE_COLOR)
+		label.add_theme_color_override("font_color", LABEL_ACTIVE_COLOR if on else LABEL_IDLE_COLOR)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
 	var target := WIDTH_ACTIVE if on else WIDTH_NORMAL
 	if _width_tween != null and _width_tween.is_valid():
 		_width_tween.kill()
 	if first or Engine.is_editor_hint() or not is_inside_tree():
 		custom_minimum_size.x = target
 		return
-	_width_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	_width_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 	_width_tween.tween_property(self, "custom_minimum_size:x", target, SLIDE_TIME)

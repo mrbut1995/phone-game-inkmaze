@@ -88,8 +88,8 @@ static func _set_focus(button: Control, focused: bool, animate: bool) -> void:
 		focus.visible = true
 	var bottom := FOCUS_BOTTOM if focused else FOCUS_BOTTOM_REST
 	if animate and button.is_inside_tree():
-		var tween := button.create_tween().set_parallel(true)
-		tween.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		var tween := button.create_tween().set_parallel(true)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
+		tween.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): endpoints tính lúc chạy (tween dựng bằng code — docs/refactor/tween_backlog.md)
 		if focus != null:
 			tween.tween_property(focus, "offset_top", bottom - FOCUS_SIZE.y, ANIM_SEC)
 			tween.tween_property(focus, "offset_bottom", bottom, ANIM_SEC)
