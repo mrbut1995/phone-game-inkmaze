@@ -34,6 +34,11 @@ Lint total history: 2026-11-06 = 3230
 - `tools/godot_path.txt` (đường dẫn engine) — `run_checks.py` đọc file này.
 - `python tools/start.py` chạy được: `PROJECT InkMaze (4.8, Mobile) — scenes 194, scripts 325`.
 - `godot --headless --path . --import`: **không lỗi** (kit nằm trong `helpers/` bị bỏ qua vì là project lồng nhau, không có `class_name` collision).
+- `python tools/run_checks.py --fast`: **FAIL (đúng như dự kiến ở P0)**, 2 nguyên nhân:
+  1. bước `scenes` quét cả `android/build/**` và `helpers/**` (`tools/_common.py` `IGNORE_DIRS` không có 2 thư mục này) ⇒
+     báo thiếu resource của file build/kit;
+  2. bước `exports` đòi `scenes/base/base_popup.tscn`, `scenes/base/base_scene.tscn`… — chỉ tồn tại **sau P2**.
+  ⇒ G-RUN chỉ có thể đạt từ P2 trở đi; gate P0 là `tools/start.py` (đạt).
 
 ## Cần quyết định (dừng lại hỏi người)
 
