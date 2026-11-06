@@ -34,9 +34,9 @@ extends BaseLayout
 ## Bàn nháp thử bút KHAI SẴN trong scene (bản DỌC: `Content/List/Pad` · bản NGANG: `Body/LeftCol/PadSlot/Pad`);
 ## màn chỉ BẬT/TẮT theo tab (tab BÚT & MỰC mới hiện).
 @export var doodle_pad: Control = null
-## Hàng VIP "Xoá quảng cáo" KHAI SẴN trong scene (`Content/List/NoAds` — nodes/shop/noads_row.tscn);
+## Hàng VIP "Xoá quảng cáo" KHAI SẴN trong scene (`Content/List/NoAds` — scenes/objects/shop/noads_row.tscn);
 ## màn chỉ hiện ở tab NẠP XU rồi nạp dữ liệu vào.
-@export var noads_row: Control = null
+@export var noads_row: ShopNoadsRow = null
 ## NavBar nền dưới (NinePatchRect — bối cảnh cho hàng tab)
 @export var nav_bar: Control = null
 ## Khung nội dung chính (VBoxContainer 'Body') — cần điều chỉnh offset_bottom theo safe area

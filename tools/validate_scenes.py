@@ -91,9 +91,14 @@ def validate(path: str, classes: dict) -> list:
 
     for c in data["conns"]:
         frm, to = norm_rel(c["from"]), norm_rel(c["to"])
-        if frm not in nodes:
+        # Dây nối vào node BÊN TRONG một scene instance (VD `Portrait/TopBar/Back` khi `Portrait` là
+        # instance của layout) là hợp lệ lúc chạy nhưng KHÔNG đọc được offline ⇒ chấp nhận khi tiền tố
+        # của đường dẫn là một node instance (cùng luật với `$Node` trong `_check_path`).
+        if frm not in nodes and not _enters_instance(nodes, frm):
             errors.append(f"connection {c['signal']}: unknown 'from' node '{c['from']}' (line {c['line']})")
         if to not in nodes:
+            if _enters_instance(nodes, to):
+                continue
             errors.append(f"connection {c['signal']}: unknown 'to' node '{c['to']}' (line {c['line']})")
             continue
         script = nodes[to].get("script")
@@ -117,16 +122,23 @@ def validate(path: str, classes: dict) -> list:
     return errors
 
 
+def _enters_instance(nodes: dict, rel: str) -> bool:
+    """`rel` có đi vào bên trong một scene INSTANCE không (offline không đọc được scene con)."""
+    parts = rel.split("/")
+    for i in range(1, len(parts)):
+        prefix = "/".join(parts[:i])
+        if prefix in nodes and nodes[prefix].get("instance_path"):
+            return True
+    return False
+
+
 def _check_path(errors, nodes, rel, target, script):
     full = norm_rel(f"{rel}/{target}") if rel else norm_rel(target)
     if full in nodes:
         return
     # path may enter an instanced (opaque) sub-scene: accept if any prefix is an instance
-    parts = full.split("/")
-    for i in range(1, len(parts)):
-        prefix = "/".join(parts[:i])
-        if prefix in nodes and nodes[prefix].get("instance_path"):
-            return
+    if _enters_instance(nodes, full):
+        return
     errors.append(f"{script}: ${target} not found from node '{rel or '(root)'}'")
 
 

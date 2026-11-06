@@ -247,8 +247,12 @@ func set_active(on: bool) -> void:
 		var offset = 0
 		if on:
 			offset = 6
-		$Label.position.y = 38 - offset
-		$Icon.position.y = 12 - offset
+		if label != null:
+			label.position.y = 38 - offset
+		# Icon phân loại là node TUỲ CHỌN (art dock đã vẽ sẵn icon) ⇒ phải guard, không dùng `$Icon`
+		var icon := get_node_or_null("Icon") as Control
+		if icon != null:
+			icon.position.y = 12 - offset
 	
 	# Pop nhẹ khi tab được KÍCH HOẠT (chỉ hiệu ứng scale — không ảnh hưởng giá trị đọc được)
 	if on and not Engine.is_editor_hint():

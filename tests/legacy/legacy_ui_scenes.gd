@@ -13,18 +13,26 @@ const UI_CLASSES := ["Control", "Label", "TextureRect", "TextureButton", "Button
 	"NinePatchRect", "ColorRect", "VBoxContainer", "HBoxContainer", "GridContainer",
 	"MarginContainer", "PanelContainer", "ScrollContainer", "TextureProgressBar"]
 ## Script ngoại lệ (dev-only, không phải UI người chơi — xem TODO vòng 17)
-const SKIP_SOURCES := ["debug.gd"]
+const SKIP_SOURCES := ["DebugScene.gd"]
+## Thư mục chứa script UI sau refactor (trước là `scripts/ui/**`)
+const UI_SOURCE_FOLDERS := [
+	"res://scripts/screens",
+	"res://scripts/objects",
+	"res://scripts/components",
+	"res://scripts/utils",
+]
 ## Những scene đã KHAI SẴN trong scene cha (node MẪU hoặc node cố định) ⇒ script này KHÔNG được
 ## nhắc tới đường dẫn của chúng nữa (không preload, không instantiate) — xem GDD §10.2g.
 const FIXED_SCENES := {
 	"res://scripts/objects/game/BoardView.gd": [
-		"nodes/game/cell.tscn", "nodes/game/anchor.tscn", "nodes/game/wall_segment.tscn",
-		"nodes/game/history_line.tscn", "nodes/game/moving_line.tscn",
-		"nodes/game/player_cursor.tscn", "nodes/game/board_layers.tscn",
+		"scenes/components/game/cell.tscn", "scenes/components/game/anchor.tscn",
+		"scenes/components/game/wall_segment.tscn", "scenes/components/game/history_line.tscn",
+		"scenes/components/game/moving_line.tscn", "scenes/components/game/player_cursor.tscn",
+		"scenes/components/game/board_layers.tscn",
 	],
-	"res://scripts/screens/ShopScene.gd": ["nodes/shop/tab_button.tscn", "nodes/shop/item_grid.tscn"],
-	"res://scripts/screens/RankingScene.gd": ["nodes/ranking/tab_button.tscn"],
-	"res://scripts/screens/AchievementScene.gd": ["nodes/achievements/tab_button.tscn"],
+	"res://scripts/screens/ShopScene.gd": ["scenes/objects/shop/tab_button.tscn", "scenes/objects/shop/item_grid.tscn"],
+	"res://scripts/screens/RankingScene.gd": ["scenes/objects/ranking/tab_button.tscn"],
+	"res://scripts/screens/AchievementScene.gd": ["scenes/objects/achievements/tab_button.tscn"],
 }
 
 var _failed := 0
@@ -335,7 +343,7 @@ func _section_6_sources() -> void:
 	comments.compile("#[^\\n]*")
 
 	var sources: Array[String] = []
-	for folder in ["res://scripts/ui/screens", "res://scripts/ui", "res://scripts/utils"]:
+	for folder in UI_SOURCE_FOLDERS:
 		_collect_sources(folder, sources)
 
 	var offenders: Array[String] = []
@@ -353,8 +361,9 @@ func _section_6_sources() -> void:
 			var line_no := cleaned.substr(0, m.get_start()).count("\n") + 1
 			var source_lines := source.split("\n")
 			var line := source_lines[line_no - 1] if line_no - 1 < source_lines.size() else ""
-			# Ngoại lệ có lý do: node do DỮ LIỆU quyết định lúc chạy, đã ghi `# keep-code:`
-			if line.contains("keep-code"):
+			# Ngoại lệ có lý do: node do DỮ LIỆU quyết định lúc chạy, đã ghi `# keep-code:` (tag cũ)
+			# hoặc `# EXCEPTION(R2-keep…)` (tag sau P3.4)
+			if line.contains("keep-code") or line.contains("EXCEPTION(R2-keep"):
 				continue
 			offenders.append("%s:%d" % [name, line_no])
 
@@ -464,8 +473,7 @@ func _section_7_board_hud_popup() -> void:
 #    ("Content/ModeInformation/...") nữa; xem GDD §10.2g.
 # ---------------------------------------------------------------------------
 const HUD_FOLDERS := [
-	"res://nodes/hud/portrait/game",
-	"res://nodes/hud/landscape/game",
+	"res://scenes/objects/ui/hud/game",
 ]
 ## Bản NGANG: ActionBar nằm TRONG LAYOUT (cùng cột dọc với bàn cờ), không nằm trong HUD —
 ## `game.gd` gán `hud.action_bar_node = layout.landscape_action_bar` lúc chạy nên scene để trống là ĐÚNG.
@@ -493,29 +501,25 @@ func _section_9_hud_bindings() -> void:
 
 	var scenes: Array[String] = []
 	for folder in HUD_FOLDERS:
-		var dir := DirAccess.open(folder)
-		if dir == null:
-			continue
-		for name in dir.get_files():
-			if name.ends_with(".tscn"):
-				scenes.append("%s/%s" % [folder, name])
+		_collect_scene_files(folder, scenes)
 
 	var missing: Array[String] = []
 	var exports := 0
 	for path in scenes:
+		var mode_key := _hud_mode_key(path)
 		var packed := load(path) as PackedScene
 		if packed == null:
 			missing.append("%s: khong load duoc" % path.get_file())
 			continue
 		var node := packed.instantiate()
 		var script: Script = node.get_script()
-		if script != null and not HUD_ABSTRACT_SCENES.has(path.get_file()):
+		if script != null and not HUD_ABSTRACT_SCENES.has(mode_key):
 			for prop in script.get_script_property_list():
 				if prop.hint != PROPERTY_HINT_NODE_TYPE:
 					continue
-				if HUD_LANDSCAPE_OPTIONAL.has(prop.name) and path.contains("/landscape/"):
+				if HUD_LANDSCAPE_OPTIONAL.has(prop.name) and path.get_file().begins_with("landscape"):
 					continue
-				if (HUD_EXPORT_OPTIONAL.get(path.get_file(), []) as Array).has(prop.name):
+				if (HUD_EXPORT_OPTIONAL.get(mode_key, []) as Array).has(prop.name):
 					continue
 				exports += 1
 				if node.get(prop.name) == null:
@@ -533,7 +537,7 @@ func _section_9_hud_bindings() -> void:
 	comments.compile("#[^\\n]*")
 	var offenders: Array[String] = []
 	var sources: Array[String] = []
-	_collect_sources("res://scripts/ui/hud", sources)
+	_collect_sources("res://scripts/objects/ui/hud", sources)
 	for path in sources:
 		if not FileAccess.file_exists(path):
 			continue
@@ -571,64 +575,64 @@ func _section_10_hud_minimal() -> void:
 
 	var bad: Array[String] = []
 	var checked := 0
+	var hud_paths: Array[String] = []
 	for folder in HUD_FOLDERS:
-		var dir := DirAccess.open(folder)
-		if dir == null:
+		_collect_scene_files(folder, hud_paths)
+	for path in hud_paths:
+		var file_name := path.get_file()
+		var mode_key := _hud_mode_key(path)
+		if not HUD_VISIBLE_CARDS.has(mode_key):
 			continue
-		for name in dir.get_files():
-			var file_name := name.get_file()
-			if not name.ends_with(".tscn") or not HUD_VISIBLE_CARDS.has(file_name):
-				continue
-			var node := (load("%s/%s" % [folder, name]) as PackedScene).instantiate()
-			var info := node.get_node_or_null("Content/ModeInformation")
-			var shown: Array[String] = []
-			var shown_inner: Array[String] = []
-			if info != null:
-				for child in info.get_children():
-					var c := child as Control
-					if c != null and c.visible:
-						shown.append(String(c.name))
-				# Bản NGANG gom nhiều thẻ vào 1 `Control` bao (HBox không neo được như `Control` bản DỌC):
-				# thấy đúng 1 Control hiện thì mở 1 lớp, so các node CON của nó với danh sách chờ.
-				if shown.size() == 1:
-					var wrap := info.get_node_or_null(NodePath(shown[0])) as Control
-					if wrap != null:
-						for child in wrap.get_children():
-							var c2 := child as Control
-							if c2 != null and c2.visible:
-								shown_inner.append(String(c2.name))
-			var want: Array = HUD_VISIBLE_CARDS[file_name]
-			shown.sort()
-			shown_inner.sort()
-			var want_sorted := want.duplicate()
-			want_sorted.sort()
+		var node := (load(path) as PackedScene).instantiate()
+		var info := node.get_node_or_null("Content/ModeInformation")
+		var shown: Array[String] = []
+		var shown_inner: Array[String] = []
+		if info != null:
+			for child in info.get_children():
+				var c := child as Control
+				if c != null and c.visible:
+					shown.append(String(c.name))
+			# Bản NGANG gom nhiều thẻ vào 1 `Control` bao (HBox không neo được như `Control` bản DỌC):
+			# thấy đúng 1 Control hiện thì mở 1 lớp, so các node CON của nó với danh sách chờ.
+			if shown.size() == 1:
+				var wrap := info.get_node_or_null(NodePath(shown[0])) as Control
+				if wrap != null:
+					for child in wrap.get_children():
+						var c2 := child as Control
+						if c2 != null and c2.visible:
+							shown_inner.append(String(c2.name))
+		var want: Array = HUD_VISIBLE_CARDS[mode_key]
+		shown.sort()
+		shown_inner.sort()
+		var want_sorted := want.duplicate()
+		want_sorted.sort()
+		checked += 1
+		var huong := "NGANG" if file_name.begins_with("landscape") else "DỌC"
+		if shown != want_sorted and shown_inner != want_sorted:
+			bad.append("%s (%s): hien [%s] — can [%s]" % [huong,
+				file_name, ", ".join(shown), ", ".join(want_sorted)])
+		# bên trong Sheet
+		if HUD_SHEET_ROWS.has(mode_key):
+			var sheet := node.get_node_or_null("Content/ModeInformation/Sheet")
+			var rows: Array[String] = []
+			var wrapped: Array[String] = []
+			if sheet != null:
+				for child in sheet.get_children():
+					rows.append(String(child.name))
+				# Bản DỌC có thể gom các khối vào 1 BoxContainer — chấp nhận cả 2 dạng
+				if sheet.get_child_count() == 1 and sheet.get_child(0) is BoxContainer:
+					for child in sheet.get_child(0).get_children():
+						wrapped.append(String(child.name))
+			rows.sort()
+			wrapped.sort()
+			var want_rows: Array = (HUD_SHEET_ROWS[mode_key] as Array).duplicate()
+			want_rows.sort()
+			var shape_ok := sheet != null and (rows == want_rows or wrapped == want_rows)
 			checked += 1
-			var huong := "NGANG" if folder.contains("landscape") else "DỌC"
-			if shown != want_sorted and shown_inner != want_sorted:
-				bad.append("%s (%s): hien [%s] — can [%s]" % [huong,
-					file_name, ", ".join(shown), ", ".join(want_sorted)])
-			# bên trong Sheet
-			if HUD_SHEET_ROWS.has(file_name):
-				var sheet := node.get_node_or_null("Content/ModeInformation/Sheet")
-				var rows: Array[String] = []
-				var wrapped: Array[String] = []
-				if sheet != null:
-					for child in sheet.get_children():
-						rows.append(String(child.name))
-					# Bản DỌC có thể gom các khối vào 1 BoxContainer — chấp nhận cả 2 dạng
-					if sheet.get_child_count() == 1 and sheet.get_child(0) is BoxContainer:
-						for child in sheet.get_child(0).get_children():
-							wrapped.append(String(child.name))
-				rows.sort()
-				wrapped.sort()
-				var want_rows: Array = (HUD_SHEET_ROWS[file_name] as Array).duplicate()
-				want_rows.sort()
-				var shape_ok := sheet != null and (rows == want_rows or wrapped == want_rows)
-				checked += 1
-				if not shape_ok:
-					bad.append("%s %s Sheet: con [%s] — can [%s]" % [
-						huong, file_name, ", ".join(rows), ", ".join(want_rows)])
-			node.free()
+			if not shape_ok:
+				bad.append("%s %s Sheet: con [%s] — can [%s]" % [
+					huong, file_name, ", ".join(rows), ", ".join(want_rows)])
+		node.free()
 
 	_entry(checked >= 8, "kiem %d luot (scene HUD x 2 huong + the Sheet)" % checked)
 	_entry(bad.is_empty(),
@@ -798,7 +802,8 @@ func _section_11_tutorials() -> void:
 	comments.compile("#[^\\n]*")
 	var offenders: Array[String] = []
 	var sources: Array[String] = []
-	_collect_sources("res://scripts/ui/tutorial", sources)
+	_collect_sources("res://scripts/objects/tutorials", sources)
+	_collect_sources("res://scripts/components/tutorials", sources)
 	for path in sources:
 		if not FileAccess.file_exists(path):
 			continue
@@ -814,11 +819,13 @@ func _section_11_tutorials() -> void:
 	# Bảng scene của TutorialController phải trỏ tới scene CÓ THẬT
 	var controller := FileAccess.get_file_as_string("res://scripts/components/shared/TutorialController.gd")
 	var route_re := RegEx.new()
-	route_re.compile("\"res://nodes/%s/([a-z_]+\\.tscn)\"" % "tutorials")
+	# Cố ý tách chuỗi `res:` + `//` trong pattern: G-INT quét mọi chuỗi mở đầu bằng `res:` rồi coi
+	# phần regex là đường dẫn thật (báo lỗi giả).
+	route_re.compile("\"res:" + "//scenes/objects/tutorials/([a-z_]+\\.tscn)\"")
 	var routes := route_re.search_all(controller)
 	var bad_paths: Array[String] = []
 	for m in routes:
-		if not FileAccess.file_exists("res://nodes/tutorials/%s" % m.get_string(1)):
+		if not FileAccess.file_exists("res://scenes/objects/tutorials/%s" % m.get_string(1)):
 			bad_paths.append(m.get_string(1))
 	_entry(routes.size() >= 7, "TutorialController tro toi %d bai hoc" % routes.size())
 	_entry(bad_paths.is_empty(),
@@ -868,6 +875,24 @@ func _check_tutorial_connections(scene_path: String, node: Node, out: Array[Stri
 # ---------------------------------------------------------------------------
 # Harness
 # ---------------------------------------------------------------------------
+func _collect_scene_files(folder: String, out: Array[String]) -> void:
+	var dir := DirAccess.open(folder)
+	if dir == null:
+		return
+	for name in dir.get_files():
+		if name.ends_with(".tscn"):
+			out.append("%s/%s" % [folder, name])
+	for sub in dir.get_directories():
+		_collect_scene_files("%s/%s" % [folder, sub], out)
+
+
+## Khoá cấu hình của một scene HUD. Từ P3 cấu trúc là `<mode>/portrait.tscn` /
+## `<mode>/landscape.tscn`, còn các bảng dưới đây đặt tên theo file HUD cũ (`level_mode.tscn`…)
+## ⇒ lấy tên THƯ MỤC chứa nó.
+func _hud_mode_key(path: String) -> String:
+	return "%s.tscn" % path.get_base_dir().get_file()
+
+
 func _collect_sources(folder: String, out: Array[String]) -> void:
 	var dir := DirAccess.open(folder)
 	if dir == null:
@@ -946,8 +971,8 @@ func _collect_star_rects(node: Node, out: Array[Node]) -> void:
 ## Layout Sổ tay phải instance ĐÚNG scene tab của hướng mình (và KHÔNG dùng của hướng kia)
 func _check_layout_tab(layout_path: String, expect_file: String, forbid_file: String) -> void:
 	var text := FileAccess.get_file_as_string(layout_path)
-	var expect := "res://nodes/achievements/%s" % expect_file
-	var forbid := "res://nodes/achievements/%s" % forbid_file
+	var expect := "res://scenes/objects/achievements/%s" % expect_file
+	var forbid := "res://scenes/objects/achievements/%s" % forbid_file
 	_entry(text.contains(expect), "%s dung %s" % [layout_path.get_file(), expect_file])
 	_entry(not text.contains(forbid), "%s khong dung %s" % [layout_path.get_file(), forbid_file])
 

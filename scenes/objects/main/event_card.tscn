@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://bjmxaiw28fnlx" path="res://scripts/objects/main/EventCard.gd" id="1_card"]
 [ext_resource type="Texture2D" uid="uid://cwum1n04j1scb" path="res://assets/images-png/icons/icon_tool_time.png" id="2_clock"]
-[ext_resource type="Texture2D" uid="uid://ca6le4lmtwuww" path="res://assets/images-png/events/halloween_card_grid.png" id="5_grid"]
 
 [sub_resource type="StyleBoxFlat" id="sb_card_lip"]
 bg_color = Color(0.541, 0.196, 0.012, 1)
@@ -143,17 +142,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0.1, 0.07, 0.2, 1)
-
-[node name="BgGrid" type="TextureRect" parent="Content/Background/ContentMask/BgGradient" unique_id=1122985191]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("5_grid")
-expand_mode = 1
 
 [node name="BackArt" type="TextureRect" parent="Content/Background/ContentMask" unique_id=1815859565]
 layout_mode = 1

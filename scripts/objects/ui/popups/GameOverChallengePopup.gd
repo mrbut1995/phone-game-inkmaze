@@ -13,7 +13,7 @@ extends GameOverLevelPopup
 ## Scene contract
 ## Exports:  btn_revive, label_subtitle, revive_desc
 ## Emits:    (none)
-## Handlers wired in scene: _on_menu_pressed, _on_retry_pressed, _on_revive_pressed
+## Handlers wired in scene: _on_menu_pressed, _on_retry_pressed
 ## Subscribes in code (EventBus/Model): (none)
 
 @export var btn_revive: BaseButton = null

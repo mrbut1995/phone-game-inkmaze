@@ -646,13 +646,14 @@ func _rebuild_coin(items: Array[Dictionary]) -> void:
 		else:
 			packs.append(item)
 	if not no_ads.is_empty():
-		# Hàng VIP khai sẵn trong scene (`Content/List/NoAds`) — chỉ hiện ở tab NẠP XU
-		var row := layout.noads_row as ShopItemRowScript
+		# Hàng VIP khai sẵn trong scene (`Content/List/NoAds`) — chỉ hiện ở tab NẠP XU.
+		# Node này do LAYOUT khai (không phải scene của màn) nên dây signal nối ở đây, 1 lần.
+		var row := layout.noads_row
 		if row != null:
 			row.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
-			row.call("setup", no_ads)
-		if row.has_signal("action_pressed") and not row.action_pressed.is_connected(_on_item_action):  # keep-code: hàng sinh lúc chạy — chỉ nối khi có signal
-			row.action_pressed.connect(_on_item_action)  # EXCEPTION(R3-keep): node sinh lúc chạy
+			row.setup(no_ads)
+			if not row.action_pressed.is_connected(_on_item_action):
+				row.action_pressed.connect(_on_item_action)  # EXCEPTION(R3-keep): node khai trong layout, không khai dây trong .tscn của màn
 			_cards.append(row)
 			UIAnim.play_pop_in(row, 0.0, 0.94, 0.18)
 	var grid := _item_grid()

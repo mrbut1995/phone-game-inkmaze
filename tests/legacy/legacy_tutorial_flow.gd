@@ -28,6 +28,7 @@ var _failed := 0
 var _checks := 0
 var _gm: Node = null
 var _tm: Node = null
+var _life = null
 var _save_backup := ""
 var _backup: Dictionary = {}
 
@@ -44,6 +45,7 @@ func _init() -> void:
 	_tm = root.get_node_or_null("TutorialManager")
 	assert(_gm != null, "Autoload GameManager phai ton tai")
 	assert(_tm != null, "Autoload TutorialManager phai ton tai")
+	_life = _gm.get("_life")
 
 	if FileAccess.file_exists("user://inkmaze_data.json"):
 		var rf := FileAccess.open("user://inkmaze_data.json", FileAccess.READ)
@@ -58,7 +60,14 @@ func _init() -> void:
 		"difficulty": str(_gm.get("current_difficulty")),
 		"level_run": bool(_gm.get("level_run")),
 		"debug_run": bool(_gm.get("debug_run")),
+		"lives": int(_life.call("lives_left")) if _life != null else -1,
+		"next_life_at": float(_life.get("next_life_at")) if _life != null else 0.0,
 	}
+
+	# Luồng onboarding CHỈ vào được màn khi CÒN LƯỢT; save thật đang hết lượt (hoặc test chạy
+	# trực tiếp trước đó đã trừ sạch) sẽ in đúng ở popup "Hết lượt" ⇒ nạp đầy rồi trả lại sau.
+	if _life != null:
+		_life.call("load_state", int(_life.call("max_lives")), 0)
 
 	_section_1_manager()
 	await _section_2_walkthrough()
@@ -702,6 +711,9 @@ func _restore_state() -> void:
 	_gm.set("debug_run", bool(_backup.get("debug_run", false)))
 	_gm.set("pending_tutorial", "")
 	_gm.set("pending_return_to_game", false)
+	# Trả lại số lượt chơi như lúc bắt đầu (test đã nạp đầy để đi được luồng)
+	if _life != null and int(_backup.get("lives", -1)) >= 0:
+		_life.call("load_state", int(_backup.get("lives", 0)), float(_backup.get("next_life_at", 0.0)))
 	_tm.set("flow_active", false)
 	_tm.set("_flow_index", 0)
 	if not _save_backup.is_empty():

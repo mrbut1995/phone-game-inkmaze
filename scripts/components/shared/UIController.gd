@@ -252,11 +252,18 @@ func _charge_life_cost(result: Dictionary) -> void:
 
 func _is_running_headless_test() -> bool:
 	var ml := Engine.get_main_loop()
-	if ml != null:
-		var scr = ml.get_script()
-		if scr != null and str(scr.resource_path).contains("test_case") and not str(scr.resource_path).contains("retry"):
-			return true
-	return false
+	if ml == null:
+		return false
+	var scr = ml.get_script()
+	if scr == null:
+		return false
+	var path := str(scr.resource_path)
+	if path.contains("retry"):
+		return false
+	# Harness cũ (`test_case_*`) và harness legacy (`res://tests/legacy/legacy_*.gd` — đổi tên ở P5):
+	# cả hai đều chạy tự động nên KHÔNG được dừng ở popup Thử lại; test nào cần popup đó
+	# thì tự gắn cờ `force_retry_popup` (xem `legacy_retry_popup.gd`).
+	return path.contains("test_case") or path.contains("res://tests/")
 
 
 # ---------------------------------------------------------------------------

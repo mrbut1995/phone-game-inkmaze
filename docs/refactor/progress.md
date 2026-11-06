@@ -219,20 +219,50 @@ kèm tiêu chí (node dịch vụ của autoload, style tính từ dữ liệu, 
 - `docs/STRUCTURE.md`: đánh dấu **lỗi thời** ở đầu file, trỏ sang `ARCHITECTURE.md`.
 - `docs/refactor/maps/` **giữ nguyên** (chưa xoá — cần người duyệt).
 
-## Deviation phát sinh ở P5–P7 (cần người quyết)
+## Deviation ở P5–P7 — đã xử lý ở P8 (2026-11-06)
 
-**D-INT — G-INT = 24, không phải 18.** Đo lúc kết P7: `check_integrity` báo **24 lỗi / 19 cảnh báo**.
-Đã kiểm chứng bằng `git stash`: **HEAD `74b4163e` cũng đúng 24** ⇒ không phải do P5.2–P7.
-6 lỗi thêm (so với con số 18 ghi ở P2) nằm trong `tests/legacy/legacy_ui_scenes.gd` — test này hardcode
-đường dẫn cũ và **đã hỏng sẵn**:
-`res://scripts/ui/screens` (dòng 338) · `res://scripts/ui` (338) · `res://nodes/hud/portrait|landscape/game`
-(467–468) · `res://scripts/ui/hud` (536) · `res://scripts/ui/tutorial` (801).
-**Không tự sửa** vì đó là *hằng đường dẫn để quét*: trỏ sang đường mới (`scripts/screens`, `scripts/objects`,
-`scenes/objects/ui/hud/...`) sẽ khiến test quét thêm hàng trăm file và nhiều khả năng **tăng số CHECK FAIL**
-của một test đang được ghi nhận là hỏng-sẵn ⇒ vi phạm ràng buộc "không tăng FAIL". Cần người quyết:
-(a) sửa hằng đường dẫn rồi chấp nhận test_ui_scenes đổi số, hoặc (b) coi `test_ui_scenes` là dead test và xoá.
-16 lỗi còn lại: `debug/probes/dev_*.gd` trỏ `nodes/hud/...`, `nodes/tutorials/...` (probe tay) · 1 asset
-`events/halloween_card_grid.png` thiếu · 1 `tests/framework/GameTestCase.gd` trỏ asset demo của template.
+**D-INT — G-INT 24 → 17 (đã xử lý).** Hướng chọn: **(a) trỏ hằng quét của `legacy_ui_scenes` sang đường
+mới** (giữ test, không xoá) thay vì coi là dead test. Đã làm:
+- `UI_SOURCE_FOLDERS` → `scripts/screens · scripts/objects · scripts/components · scripts/utils`; `FIXED_SCENES`,
+  `HUD_FOLDERS`, mục 11 (tutorial) trỏ `scenes/objects/...`; thêm helper `_collect_scene_files()` quét đệ quy.
+- Bảng cấu hình HUD vốn đặt tên theo file HUD cũ ⇒ thêm `_hud_mode_key()` (`<mode>/portrait.tscn` → `level_mode.tscn`).
+- Bỏ qua `DebugScene.gd` (đã đổi tên từ `debug.gd`) và nhận diện tag mới `# EXCEPTION(R2-keep…)` bên cạnh `# keep-code`.
+- Kết quả: `test_ui_scenes` **9/126 FAIL → 126/126 PASS** (không tăng FAIL, ngược lại tốt hơn).
+- 17 lỗi còn lại (ghi nhận, **không sửa**): 16 dòng trong `debug/probes/dev_*.gd` trỏ `nodes/hud/...`,
+  `nodes/tutorials/...` (probe tay, một lần — các scene đó đã gộp vào `game_hud`/`challenge_hud` nên probe
+  không còn mục tiêu thật) + 1 `tests/framework/GameTestCase.gd` trỏ asset demo của template.
 
-**D-RUN — `run_checks.py` chưa exit 0.** `scenes` 114 lỗi + `load` 1 dòng `ERROR: … resources still in use at
-exit`; cả hai có sẵn ở HEAD (xác nhận bằng `git stash`) và không liên quan P5/P6 (§P6 ở trên).
+**D-RUN — `run_checks.py`: `scenes` 114 → 0 lỗi (xử lý xong).**
+- ~102/114 là **dương tính giả**: bộ kiểm `[connection]` của `tools/validate_scenes.py` không biết node nằm
+  trong scene INSTANCE (offline không đọc được scene con), trong khi phép kiểm `$Node` đã có luật đó. Thêm
+  helper `_enters_instance()` và dùng cho cả 3 chỗ ⇒ còn 12 lỗi thật.
+- 12 lỗi thật đã sửa: 8 `[connection]` chết trong `scenes/objects/layouts/daily/{portrait,landscape}.tscn`
+  (handler nằm ở `DailyScene.gd`, dây đã có ở `scenes/screens/daily.tscn`) · 1 `ReviveBtn._on_revive_pressed`
+  trong `gameover_challenge.tscn` (handler không tồn tại, nút vốn ẩn) · 1 `$Icon`/`$Label` trong
+  `AchTabButton.gd` (node tuỳ chọn — dùng `get_node_or_null` + guard) · 1 `BgGrid` + `ext_resource`
+  `events/halloween_card_grid.png` đã mất trong `event_card.tscn`.
+- Sửa thêm: `daily.tscn` còn `uid://` cũ của `DailyScene.gd` (engine báo `invalid UID` khi nạp).
+- **`load` vẫn FAIL** — 1 dòng engine `ERROR: 1 resources still in use at exit` (`sfx_page_turn.wav` +
+  1 MP3). Có sẵn ở HEAD (đã kiểm bằng `git stash` trước đó), là hiện tượng của engine lúc thoát chứ không
+  phải lỗi game: đã thử thêm `_exit_tree()` dừng/nhả stream ở `SfxManager` + `MusicManager` — **không hết**
+  (audio server còn giữ `AudioStreamPlayback` ở frame thoát) nên đã revert, xem D-ENV.
+
+## P8 đã làm — sửa lỗi thật + dọn deviation (2026-11-06)
+
+- **Fix crash thật (người chơi báo):** tab **NẠP XU** ở Shop crash `Cannot call method 'has_signal' on a null
+  value`. Nguyên nhân: `ShopNoadsRow` không phải `ShopItemRow` ⇒ `as ShopItemRowScript` trả `null`; phép kiểm
+  `has_signal()` lại nằm NGOÀI null-guard và `_cards.append(row)` bị lồng trong nhánh connect. Sửa: `ShopLayout`
+  export đúng kiểu `ShopNoadsRow`, guard `row != null`, connect có `is_connected()` + tag `EXCEPTION(R3-keep)`.
+  Kiểm chứng: `test_shop` 229/229 + probe headless (`layout.noads_row = NoAds:<Control>`, `cards = 6`).
+- **Fix lỗi test do đổi tên harness:** `UIController._is_running_headless_test()` chỉ nhận `test_case*`, trong
+  khi harness mới tên `tests/legacy/legacy_*.gd` ⇒ ván thua mở popup **Thử lại** thay vì popup thua của Thử
+  thách ⇒ `test_challenge_mode` FAIL 8/82. Nhận thêm `res://tests/` (vẫn bỏ qua file có chữ `retry` để
+  `legacy_retry_popup/floor` kiểm đúng luồng) ⇒ **85/85 PASS**.
+- **`test_tutorial_flow` phụ thuộc save thật:** khi `lives = 0` (bị chính các lần chạy test trực tiếp trừ sạch)
+  luồng onboarding in popup "Hết lượt" nên đứng ở bài đầu ⇒ FAIL 16/88. Test nay tự `load_state(max, 0)` lúc
+  đầu và trả lại `lives/next_life_at` trong `_restore_state()` ⇒ **88/88 PASS** (đã nạp lại 5 lượt cho save
+  người chơi bị trừ sạch trong phiên này).
+- Số đo sau P8: lint `0 errors` (1634 baselined) · `validate_scenes` **0 lỗi / 418 file** · `run_checks`:
+  lint/scenes/exports/plan/import/tests **PASS**, chỉ `load` FAIL (D-RUN ở trên) · G-LEG **19/20** (chỉ còn
+  `test_profiler` — phần Profiler đang làm dở của người dùng, chưa commit) · unit test **95/95** ·
+  G-INT **17 lỗi / 23 cảnh báo**.
