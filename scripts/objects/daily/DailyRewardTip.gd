@@ -26,6 +26,14 @@ const EDGE := 6.0
 @export var lbl_title: Label = null
 @export var lbl_reward: Label = null
 @export var lbl_status: Label = null
+## Hàng ICON phần thưởng (dựng sẵn trong scene): Xu / Gợi ý / Dịch chuyển
+@export var icons: HBoxContainer = null
+@export var row_coins: Control = null
+@export var lbl_coins: Label = null
+@export var row_hint: Control = null
+@export var lbl_hint: Label = null
+@export var row_teleport: Control = null
+@export var lbl_teleport: Label = null
 @export var anim: AnimationPlayer = null
 
 ## Lề giữa viền bóng và nội dung
@@ -43,24 +51,14 @@ func popup_at(chip: Control, def: Dictionary, stars_now: int, claimed: bool, sta
 	# `anchor` = phần nhìn thấy của chip (vòng huy hiệu) để bóng bám sát; mặc định cả chip
 	if anchor == null:
 		anchor = chip
-	var threshold := int(def.get("stars", 0))
-	if lbl_title != null:
-		lbl_title.text = tr("STR_DAILY_MILESTONE_STARS").format([threshold])
-	if lbl_reward != null:
-		lbl_reward.text = _reward_text(def)
-	if lbl_status != null:
-		if claimed:
-			lbl_status.text = "✓"  # keep-code: chữ theo dữ liệu (runtime)
-		elif stars_now >= threshold:
-			lbl_status.text = tr("STR_DAILY_MILESTONE_CLAIM")  # keep-code: chữ theo dữ liệu (runtime)
-		else:
-			lbl_status.text = "%d/%d ★" % [stars_now, threshold]
-		var tint := Color(0.13, 0.5, 0.27) if (claimed or stars_now >= threshold) \
-			else Color(0.55, 0.36, 0.05)
-		lbl_status.add_theme_color_override("font_color", tint)  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
+	_show_reward(row_coins, lbl_coins, int(def.get("coins", 0)), "+%d")
+	_show_reward(row_hint, lbl_hint, int(def.get("hint", 0)), "×%d")
+	_show_reward(row_teleport, lbl_teleport, int(def.get("teleport", 0)), "×%d")
 
 	# Đo kích thước theo nội dung
-	var need := (content.get_combined_minimum_size() if content != null else Vector2(80, 40)) + pad * 2.0
+	# Đo theo hàng icon (container chỉ cập nhật cỡ tối thiểu ở khung sau)
+	var inner := icons.get_combined_minimum_size() if icons != null else Vector2(80, 40)
+	var need := inner + pad * 2.0  # EXCEPTION(R1-keep): hệ số 2 = lề 2 phía
 	need.x = maxf(need.x, 84.0)
 	size = need
 	if bg != null:
@@ -122,3 +120,12 @@ func _reward_text(def: Dictionary) -> String:
 	if dm != null and dm.has_method("reward_text"):
 		return str(dm.call("reward_text", def))
 	return ""
+
+
+## Hiện / ẩn một dòng icon thưởng theo số lượng (>0 mới hiện)
+func _show_reward(row: Control, lbl: Label, amount: int, fmt: String) -> void:
+	if row == null:
+		return
+	row.visible = amount > 0
+	if lbl != null and amount > 0:
+		lbl.text = fmt % amount

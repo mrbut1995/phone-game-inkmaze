@@ -21,6 +21,8 @@
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://data/config/theme_default.tres" id="60_theme"]
 [ext_resource type="Texture2D" uid="uid://c01iwhf75vw5v" path="res://assets/images-png/icons/icon_pen_name.png" id="70_pen_name"]
 [ext_resource type="Script" path="res://scripts/objects/layouts/profiler_popup/ProfilerScroll.gd" id="9_info_scroll"]
+[ext_resource type="Texture2D" path="res://assets/images-png/profiler/polaroid_panel.png" id="82_pol_panel"]
+[ext_resource type="Texture2D" path="res://assets/images-png/profiler/badge_level.png" id="81_badge"]
 
 [sub_resource type="StyleBoxFlat" id="Sb_list_panel"]
 bg_color = Color(0.984314, 0.968627, 0.92549, 1)
@@ -34,7 +36,7 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[node name="Landscape" unique_id=587724805 node_paths=PackedStringArray("btn_close", "lbl_title", "level_chip", "hero", "info_scroll", "info_list", "hero_exp_remain", "hero_join", "hero_btn_avatar", "hero_avatar", "hero_frame", "hero_name", "hero_tier_text", "hero_exp_value", "hero_uid", "hero_track", "hero_fill", "header_anchor") instance=ExtResource("1_parent")]
+[node name="Landscape" unique_id=587724805 node_paths=PackedStringArray("btn_close", "lbl_title", "level_chip", "hero", "info_scroll", "info_list", "hero_exp_remain", "hero_join", "hero_btn_avatar", "hero_avatar", "hero_frame", "hero_name", "hero_tier_text", "hero_exp_value", "hero_uid", "hero_track", "hero_fill", "hero_level_text", "header_anchor") instance=ExtResource("1_parent")]
 theme = ExtResource("60_theme")
 script = ExtResource("2_layout")
 header_anchor = NodePath("Sheet/TopBarAnchor")
@@ -55,6 +57,7 @@ hero_exp_value = NodePath("Sheet/LeftCol/Hero/Bg/Content/Exp/ExpValue")
 hero_uid = NodePath("Sheet/LeftCol/Hero/Bg/Content/UidBlock/Uid")
 hero_track = NodePath("Sheet/LeftCol/Hero/Bg/Content/Bar")
 hero_fill = NodePath("Sheet/LeftCol/Hero/Bg/Content/Bar/BarFill")
+hero_level_text = NodePath("Sheet/LeftCol/Hero/LevelBadge/Text")
 
 [node name="Sheet" type="NinePatchRect" parent="." index="0" unique_id=1129321426]
 layout_mode = 1
@@ -197,6 +200,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+rotation = -0.0349066
+pivot_offset_ratio = Vector2(0.5, 0.5)
 
 [node name="Bg" type="NinePatchRect" parent="Sheet/LeftCol/Hero" index="0" unique_id=450486954]
 layout_mode = 1
@@ -205,13 +210,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("10_card_blue")
-patch_margin_left = 22
-patch_margin_top = 22
-patch_margin_right = 22
-patch_margin_bottom = 22
+texture = ExtResource("82_pol_panel")
+patch_margin_left = 40
+patch_margin_top = 40
+patch_margin_right = 40
+patch_margin_bottom = 40
 
 [node name="Margin" type="ColorRect" parent="Sheet/LeftCol/Hero/Bg" index="0" unique_id=482310985]
+visible = false
 layout_mode = 1
 anchor_bottom = 1.0
 offset_left = 22.0
@@ -429,6 +435,54 @@ layout_mode = 2
 text = "00/0000"
 theme_type_variation = &"ProfilerValue"
 theme_override_font_sizes/font_size = 12
+
+[node name="Tape" type="TextureRect" parent="Sheet/LeftCol/Hero"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -38.0
+offset_top = -14.0
+offset_right = 38.0
+offset_bottom = 12.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("6_tape")
+expand_mode = 1
+
+[node name="LevelBadge" type="TextureRect" parent="Sheet/LeftCol/Hero"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -46.0
+offset_top = -14.0
+offset_right = 18.0
+offset_bottom = 50.0
+grow_horizontal = 0
+rotation = 0.139626
+pivot_offset = Vector2(32, 32)
+mouse_filter = 2
+texture = ExtResource("81_badge")
+expand_mode = 1
+
+[node name="Text" type="Label" parent="Sheet/LeftCol/Hero/LevelBadge"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 6.0
+offset_right = -8.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "Lv 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+resize_font_to_fit = true
 
 [node name="RightCol" type="Control" parent="Sheet" index="4" unique_id=297693424]
 layout_mode = 1

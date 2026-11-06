@@ -1,6 +1,9 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/objects/daily/DailyRewardTip.gd" id="1_tip"]
+[ext_resource type="Texture2D" uid="uid://bsenhucno4lsr" path="res://assets/images-png/icons/icon_coin.png" id="9_coin"]
+[ext_resource type="Texture2D" uid="uid://dsckcid1adyrr" path="res://assets/images-png/icons/icon_tool_hint.png" id="10_hint"]
+[ext_resource type="Texture2D" uid="uid://dfi4qe8nr548i" path="res://assets/images-png/icons/icon_tool_teleport.png" id="11_tele"]
 [ext_resource uid="uid://tkqy065xjteb" type="Texture2D" path="res://assets/images-png/daily/reward_tip_bg.png" id="2_bg"]
 [ext_resource uid="uid://8nohg6xin0ey" type="Texture2D" path="res://assets/images-png/daily/reward_tip_tail.png" id="3_tail"]
 
@@ -94,7 +97,7 @@ _data = {
 &"hide": SubResource("Animation_hide")
 }
 
-[node name="RewardTip" type="Control" unique_id=1900900001 node_paths=PackedStringArray("bg", "tail", "content", "lbl_title", "lbl_reward", "lbl_status", "anim")]
+[node name="RewardTip" type="Control" unique_id=1900900001 node_paths=PackedStringArray("bg", "tail", "content", "lbl_title", "lbl_reward", "lbl_status", "icons", "row_coins", "lbl_coins", "row_hint", "lbl_hint", "row_teleport", "lbl_teleport", "anim")]
 visible = false
 layout_mode = 3
 anchors_preset = 0
@@ -108,6 +111,13 @@ content = NodePath("Content")
 lbl_title = NodePath("Content/Title")
 lbl_reward = NodePath("Content/Reward")
 lbl_status = NodePath("Content/Status")
+icons = NodePath("Content/Icons")
+row_coins = NodePath("Content/Icons/Coins")
+lbl_coins = NodePath("Content/Icons/Coins/Amount")
+row_hint = NodePath("Content/Icons/Hint")
+lbl_hint = NodePath("Content/Icons/Hint/Amount")
+row_teleport = NodePath("Content/Icons/Teleport")
+lbl_teleport = NodePath("Content/Icons/Teleport/Amount")
 anim = NodePath("Anim")
 
 [node name="Bg" type="NinePatchRect" parent="." unique_id=1900900002]
@@ -139,6 +149,7 @@ mouse_filter = 2
 theme_override_constants/separation = 1
 
 [node name="Title" type="Label" parent="Content" unique_id=1900900005]
+visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0.72, 0.45, 0.04, 1)
 theme_override_font_sizes/font_size = 14
@@ -146,6 +157,7 @@ text = "15★"
 horizontal_alignment = 1
 
 [node name="Reward" type="Label" parent="Content" unique_id=1900900006]
+visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0.0941176, 0.239216, 0.352941, 1)
 theme_override_font_sizes/font_size = 12
@@ -153,11 +165,87 @@ text = "100"
 horizontal_alignment = 1
 
 [node name="Status" type="Label" parent="Content" unique_id=1900900007]
+visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0.0941176, 0.239216, 0.352941, 1)
 theme_override_font_sizes/font_size = 11
 text = "0/15"
 horizontal_alignment = 1
+
+[node name="Icons" type="HBoxContainer" parent="Content"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="Coins" type="HBoxContainer" parent="Content/Icons"]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Icon" type="TextureRect" parent="Content/Icons/Coins"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("9_coin")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Amount" type="Label" parent="Content/Icons/Coins"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.0941176, 0.239216, 0.352941, 1)
+theme_override_font_sizes/font_size = 18
+text = "+100"
+vertical_alignment = 1
+
+[node name="Hint" type="HBoxContainer" parent="Content/Icons"]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Icon" type="TextureRect" parent="Content/Icons/Hint"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("10_hint")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Amount" type="Label" parent="Content/Icons/Hint"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.0941176, 0.239216, 0.352941, 1)
+theme_override_font_sizes/font_size = 18
+text = "×2"
+vertical_alignment = 1
+
+[node name="Teleport" type="HBoxContainer" parent="Content/Icons"]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Icon" type="TextureRect" parent="Content/Icons/Teleport"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("11_tele")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Amount" type="Label" parent="Content/Icons/Teleport"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.0941176, 0.239216, 0.352941, 1)
+theme_override_font_sizes/font_size = 18
+text = "×2"
+vertical_alignment = 1
 
 [node name="Anim" type="AnimationPlayer" parent="." unique_id=1900900008]
 libraries = {

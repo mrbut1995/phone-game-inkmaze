@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d13qh0dkyc7d1"
-path="res://.godot/imported/ufo.svg-974a7f58a26bd7f9a15fe054553b3d5e.ctex"
+uid="uid://di8c6iy4pd3kb"
+path="res://.godot/imported/badge_level.svg-9e4c058557ed77fde5c15746ac456eb8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ufo.svg"
-dest_files=["res://.godot/imported/ufo.svg-974a7f58a26bd7f9a15fe054553b3d5e.ctex"]
+source_file="res://assets/images/profiler/badge_level.svg"
+dest_files=["res://.godot/imported/badge_level.svg-9e4c058557ed77fde5c15746ac456eb8.ctex"]
 
 [params]
 

@@ -1071,6 +1071,7 @@ _data = {
 [node name="Landscape" unique_id=1219837756 node_paths=PackedStringArray("btn_back", "calendar", "lbl_star_total", "milestones_host", "play_card", "challenge_card", "lbl_reset", "coin_chip", "star_big", "vfx_anim", "arrive_anim", "fly_host", "header_anchor", "road", "week_strip", "lbl_road_hint", "month_sheet", "sheet_anim") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
 tag_vertical = true
+tag_below = true
 header_anchor = NodePath("Panel/Stage/TopBarAnchor")
 btn_back = NodePath("TopBar/HeaderRow/Back")
 calendar = NodePath("Panel/Stage/MonthSheet/Calendar")
@@ -1145,30 +1146,22 @@ stretch_mode = 5
 
 [node name="Banner" type="TextureRect" parent="Panel/Stage"]
 layout_mode = 0
-offset_left = 92.0
+offset_left = 52.0
 offset_top = 62.0
-offset_right = 442.0
+offset_right = 402.0
 offset_bottom = 128.0
-rotation = -0.0349066
-pivot_offset = Vector2(175, 33)
 mouse_filter = 2
-texture = ExtResource("40_banner")
-expand_mode = 1
 
 [node name="Title" type="Label" parent="Panel/Stage/Banner"]
 layout_mode = 0
-offset_left = 14.0
 offset_top = 8.0
-offset_right = 336.0
+offset_right = 350.0
 offset_bottom = 60.0
 mouse_filter = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_shadow_color = Color(0.478431, 0.176471, 0.047059, 0.4)
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 2
-theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(0.0862745, 0.27451, 0.388235, 1)
+theme_override_font_sizes/font_size = 30
 text = "STR_DAILY_SCREEN_TITLE"
-horizontal_alignment = 1
+horizontal_alignment = 0
 vertical_alignment = 1
 resize_font_to_fit = true
 
@@ -1200,14 +1193,15 @@ expand_mode = 1
 
 [node name="Title" type="Label" parent="Panel/Stage/Road"]
 layout_mode = 0
+offset_left = 20.0
 offset_top = 14.0
-offset_right = 486
+offset_right = 188.0
 offset_bottom = 34.0
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.788235, 0.541176, 0.0431373, 1)
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 13
 text = "STR_DAILY_ROAD_TITLE"
-horizontal_alignment = 1
+horizontal_alignment = 0
 vertical_alignment = 1
 
 [node name="Slots" type="Control" parent="Panel/Stage/Road"]
@@ -1220,31 +1214,31 @@ mouse_filter = 2
 
 [node name="Slot1" type="Control" parent="Panel/Stage/Road/Slots"]
 layout_mode = 0
-offset_left = 143
-offset_top = 222
-offset_right = 143
-offset_bottom = 222
+offset_left = 101
+offset_top = 195
+offset_right = 101
+offset_bottom = 195
 
 [node name="Slot2" type="Control" parent="Panel/Stage/Road/Slots"]
 layout_mode = 0
-offset_left = 240
-offset_top = 96
-offset_right = 240
-offset_bottom = 96
+offset_left = 273
+offset_top = 168
+offset_right = 273
+offset_bottom = 168
 
 [node name="Slot3" type="Control" parent="Panel/Stage/Road/Slots"]
 layout_mode = 0
-offset_left = 336
-offset_top = 222
-offset_right = 336
-offset_bottom = 222
+offset_left = 201
+offset_top = 97
+offset_right = 201
+offset_bottom = 97
 
 [node name="Slot4" type="Control" parent="Panel/Stage/Road/Slots"]
 layout_mode = 0
-offset_left = 432
-offset_top = 96
-offset_right = 432
-offset_bottom = 96
+offset_left = 417
+offset_top = 60
+offset_right = 417
+offset_bottom = 60
 
 [node name="Dots" type="Control" parent="Panel/Stage/Road" node_paths=PackedStringArray("start", "slots_host", "pencil")]
 layout_mode = 1
@@ -1283,10 +1277,10 @@ mouse_filter = 2
 
 [node name="Star" type="TextureRect" parent="Panel/Stage/Road" unique_id=2031939451]
 layout_mode = 0
-offset_left = 12.0
-offset_top = 184.5
-offset_right = 90.0
-offset_bottom = 259.5
+offset_left = 33.0
+offset_top = 224.5
+offset_right = 111.0
+offset_bottom = 299.5
 pivot_offset = Vector2(39, 37.5)
 mouse_filter = 2
 texture = ExtResource("9_star")
@@ -1606,8 +1600,4 @@ libraries = {
 autoplay = &"idle"
 
 [connection signal="animation_finished" from="VfxAnim" to="." method="_on_vfx_anim_finished"]
-[connection signal="pressed" from="TopBar/HeaderRow/Back" to="." method="_on_back_pressed"]
-[connection signal="day_selected" from="Panel/Stage/MonthSheet/Calendar" to="." method="_on_day_selected"]
-[connection signal="pressed" from="Panel/Stage/Actions/PlayCard" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="Panel/Stage/Actions/ChallengeCard" to="." method="_on_challenge_pressed"]
 [connection signal="pressed" from="Panel/Stage/MonthSheet/Dim" to="." method="_on_sheet_close_pressed"]

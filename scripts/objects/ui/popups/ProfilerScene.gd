@@ -175,6 +175,8 @@ func _refresh_hero() -> void:
 	_set_texture(layout.hero_avatar, Profile.avatar_icon(Profile.avatar_id()))
 	_set_texture(layout.hero_frame, Profile.frame_icon(Profile.frame_id()))
 	# Các nhãn thẻ hero: bind thẳng trong .tscn (2 hướng khai cùng tên)
+	if layout.hero_level_text != null:
+		layout.hero_level_text.text = tr("STR_PROFILE_LEVEL_FORMAT").format([Profile.level()])
 	if layout.hero_name != null:
 		layout.hero_name.text = Profile.display_name()
 	if layout.hero_tier_text != null:
@@ -220,39 +222,15 @@ func _refresh_info() -> void:
 		child.queue_free()
 	var data := Profile.deep_stats()
 
-	# 1. PLAY STATS — 6 thẻ (3 cột × 2 hàng)
-	_add_info_group("play", tr("STR_PROFILE_GROUP_PLAY"), 3, [
+	# Rút gọn: 1 nhóm duy nhất, 6 thẻ (3 cột × 2 hàng), không đầu nhóm
+	_add_info_group("play", "", 3, [
 		_card("play", "STR_PROFILE_STAT_LEVEL_PLAY", str(int(data.get("level_plays", 0)))),
 		_card("trophy", "STR_PROFILE_STAT_LEVEL_WIN", str(int(data.get("level_wins", 0)))),
 		_card("pie", "STR_PROFILE_STAT_WINRATE",
 			tr("STR_PROFILE_STAT_WINRATE_VALUE").format(["%.1f" % float(data.get("level_winrate", 0.0))])),
-		_card("target", "STR_PROFILE_STAT_FIRST_TRY", str(int(data.get("first_try_wins", 0)))),
 		_card("flame", "STR_PROFILE_STAT_STREAK_NOW", str(int(data.get("win_streak", 0)))),
-		_card("calendar", "STR_PROFILE_STAT_DAILY_DAYS", str(int(data.get("daily_days", 0)))),
-	])
-
-	# 2. DUNGEON STATS — 2 thẻ rộng (2 cột)
-	_add_info_group("dungeon", tr("STR_PROFILE_GROUP_DUNGEON"), 2, [
 		_card("castle", "STR_PROFILE_STAT_HIGHEST_FLOOR", str(int(data.get("highest_floor", 0)))),
-		_card("wall", "STR_PROFILE_STAT_WALL_COLLISIONS", str(int(data.get("dungeon_wall_hits", 0)))),
-	])
-
-	# 3. TIME STATS — 3 thẻ (3 cột)
-	_add_info_group("time", tr("STR_PROFILE_GROUP_TIME"), 3, [
-		_card("stopwatch", "STR_PROFILE_STAT_AVG_LEVEL_TIME", _fmt_time(float(data.get("avg_level_time", 0.0)))),
-		_card("hourglass", "STR_PROFILE_STAT_TOTAL_LEVEL_TIME", _fmt_time(float(data.get("total_level_time", 0.0)))),
-		_card("bolt", "STR_PROFILE_STAT_AVG_TIME_MOVE",
-			tr("STR_PROFILE_TIME_SEC").format(["%.1f" % float(data.get("avg_time_move", 0.0))])),
-	])
-
-	# 4. IN GAME STATS — 6 thẻ (3 cột × 2 hàng)
-	_add_info_group("ingame", tr("STR_PROFILE_GROUP_INGAME"), 3, [
-		_card("route", "STR_PROFILE_STAT_AVG_MOVE", "%.1f" % float(data.get("avg_move", 0.0))),
-		_card("feet", "STR_PROFILE_STAT_TOTAL_MOVE", str(int(data.get("moves_total", 0)))),
-		_card("pencil", "STR_PROFILE_STAT_WALL_DRAW", str(int(data.get("wall_draws", 0)))),
-		_card("revert", "STR_PROFILE_STAT_REVERT_USED", str(int(data.get("wall_erases", 0)))),
-		_card("teleport", "STR_PROFILE_STAT_TELEPORT_USED", str(int(data.get("teleports_total", 0)))),
-		_card("skip", "STR_PROFILE_STAT_SKIP_USED", str(int(data.get("skips_total", 0)))),
+		_card("calendar", "STR_PROFILE_STAT_DAILY_DAYS", str(int(data.get("daily_days", 0)))),
 	])
 
 
@@ -266,7 +244,7 @@ func _add_info_group(tape_key: String, title: String, columns: int, entries: Arr
 	var wide := layout.is_side_layout()
 	var cols := columns
 	if wide:
-		cols = entries.size() if entries.size() <= 4 else 4
+		cols = entries.size() if entries.size() <= 3 else 3
 	group.setup(title, TAPES[tape_key], SQUIGGLES[tape_key], entries, cols, wide)
 
 

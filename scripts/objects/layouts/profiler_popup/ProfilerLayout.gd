@@ -44,6 +44,8 @@ extends BaseLayout
 @export var hero_uid : Label = null 
 @export var hero_track : Control = null 
 @export var hero_fill: Control = null
+## Huy hiệu cấp độ trên polaroid (bản dọc) — null ở bản không có
+@export var hero_level_text: Label = null
 
 # --- Truy cập node con theo tên (2 hướng khai cùng tên) ---------------------
 ## Nhãn trong chip cấp độ — `level_chip` có thể bind vào chính Label hoặc vào Control chứa Label "Text"

@@ -1102,6 +1102,12 @@ func _input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		_abort_anim()
 		return
+	# Popup đang mở (Hồ sơ, Cài đặt…) ⇒ chạm/kéo thuộc về popup, KHÔNG được chọn màn / cuộn bản đồ phía dưới
+	if Popups.has_open():
+		_tap_active = false
+		if _drag_active:
+			_end_drag()
+		return
 	_track_tap(event)
 	if event is InputEventScreenTouch and event.index == 0:
 		if event.pressed:

@@ -183,6 +183,11 @@ func _on_scroll_ended() -> void:
 func _input(event: InputEvent) -> void:
 	if not is_visible_in_tree():
 		return
+	# Popup đang mở ⇒ không nhận kéo / chạm xuyên xuống băng sự kiện
+	if Popups.has_open():
+		if _drag_active:
+			_end_drag()
+		return
 	if event is InputEventScreenTouch and event.index == 0:
 		if event.pressed:
 			_begin_drag(event.position)

@@ -41,6 +41,8 @@ func setup(title_text: String, tape_texture: Texture2D, squiggle_texture: Textur
 		tape_bg.texture = tape_texture
 	if tape_label != null:
 		tape_label.text = title_text
+	if header_row != null:
+		header_row.visible = not title_text.is_empty()
 	if header_dash != null:
 		header_dash.visible = wide
 	if header_row != null:
