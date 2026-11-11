@@ -1,31 +1,29 @@
 class_name DungeonPill
 extends Button
 ## ============================================================================
-## Node: DungeonPill — nút DUNGEON nổi góc dưới-trái bản đồ Main (kiểu M: vé giấy đục lỗ).
+## Node: DungeonPill — nút DUNGEON nổi góc dưới-trái bản đồ Main (kiểu tem bưu chính).
 ## Bố cục + art khai trong `.tscn` (`nodes/main/dungeon_pill.tscn`); ở đây chỉ xử lý runtime:
 ## đổi art khi nhấn, đẩy nội dung xuống theo độ lún của vé, và điền chữ theo dữ liệu.
 ##
-## ART (đổi theme = thay file cùng tên + cùng cỡ logic, xem `tools/gen_dungeon_m.py`):
-##   `assets/images-png/dungeon/dungeon_ticket.png` (488×172 = 244×86) · `dungeon_ticket_pressed.png`
-##   · `dungeon_icon.png` (100×100 = 50×50)
+## ART (đổi theme = thay file cùng tên + cùng cỡ logic): SVG nguồn trong `assets/images/dungeon/`
+##   `dungeon_stamp.png` (312×312 = 156×156) · `dungeon_stamp_pressed.png` (tem lún, đổ bóng trong)
 ## Bấm ⇒ tín hiệu `pressed` (Main lo vào chế độ). Chữ: STR_MODE_DUNGEON_TITLE · STR_MODECARD_FLOOR_VAL.
 ## ============================================================================
 
-## Độ lún của nội dung khi nhấn — khớp phần vé bị ấn xuống trong `dungeon_ticket_pressed.png`
+## Độ lún của nội dung khi nhấn — khớp phần tem bị ấn xuống trong `dungeon_stamp_pressed.png`
 ## Scene contract
-## Exports:  icon_tex, lbl_title, lbl_floor, art, content, art_pressed
+## Exports:  lbl_title, lbl_floor, art, content, art_pressed
 ## Emits:    (none)
 ## Handlers wired in scene: _on_button_down, _on_button_up, _on_pointer_exited
 ## Subscribes in code (EventBus/Model): (none)
 
-const PRESS_SHIFT := Vector2(2, 3)
+const PRESS_SHIFT := Vector2(1, 2)
 
-@export var icon_tex: TextureRect = null
 @export var lbl_title: Label = null
 @export var lbl_floor: Label = null
 @export var art: TextureRect = null
 @export var content: Control = null
-## Art lúc NHẤN (surface của vé lún xuống) — khai trong scene
+## Art lúc NHẤN (tem lún xuống) — khai trong scene
 @export var art_pressed: Texture2D = null
 
 var _tex_up: Texture2D = null

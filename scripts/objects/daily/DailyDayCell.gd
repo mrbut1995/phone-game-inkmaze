@@ -50,6 +50,7 @@ const TEXTURES := {
 
 const COLOR_NUM := Color("#163A58")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 const COLOR_NUM_FADED := Color("#B8C4CC")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const COLOR_NUM_MISSED := Color("#A9605A")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 const COLOR_NUM_SUN := Color("#D84444")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 
 @export var day_number: int = 1
@@ -128,7 +129,7 @@ func _apply() -> void:
 		if number_big.visible:
 			number_big.text = "%02d" % day_number
 			number_big.add_theme_color_override("font_color",  # EXCEPTION(R2-runtime-style): style tính từ dữ liệu runtime
-				COLOR_NUM_SUN if weekend else Color("#A15F1B"))
+				COLOR_NUM_SUN if weekend else COLOR_NUM)
 	if not number_label.visible and state != State.TODAY:
 		_hide_extras()
 		return
@@ -137,6 +138,8 @@ func _apply() -> void:
 	var color := COLOR_NUM
 	if state == State.EMPTY:
 		color = COLOR_NUM_FADED
+	elif state == State.MISSED:
+		color = COLOR_NUM_MISSED
 	elif weekend:
 		color = COLOR_NUM_SUN
 		if state == State.EMPTY:

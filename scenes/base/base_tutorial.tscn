@@ -2,28 +2,152 @@
 
 [ext_resource type="Script" uid="uid://due7yap3gb5o" path="res://scripts/base/BaseTutorial.gd" id="1_7x6e2"]
 [ext_resource type="Texture2D" uid="uid://bq1g3a72wtikh" path="res://assets/images-png/tutorial/tutorial_spotlight.png" id="3_spotlight"]
-[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_step_badge.png" id="t_badge"]
-[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_skip_tag.png" id="t_skip"]
-[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_skip_tag_pressed.png" id="t_skip_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_msg_strip.png" id="t_strip"]
-[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_next_normal.png" id="t_next"]
-[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_next_pressed.png" id="t_next_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_star_on.png" id="t_star_on"]
-[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_star_off.png" id="t_star_off"]
-[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_scissors.png" id="t_scis"]
-[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_page_grid.png" id="t_grid"]
-[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_page_margin.png" id="t_margin"]
-[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_page_holes.png" id="t_holes"]
-[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_ribbon.png" id="a_rib"]
-[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_ribbon_pressed.png" id="a_rib_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_chevron.png" id="a_chev"]
-[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_play.png" id="a_play"]
-[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_bubble.png" id="a_bub"]
-[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_mascot.png" id="a_mas"]
-[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_wave_bg.png" id="a_wbg"]
-[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_wave_fill.png" id="a_wfi"]
-[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_next_blue.png" id="a_nxb"]
-[ext_resource type="Texture2D" path="res://assets/images-png/tutorial/tut_next_blue_pressed.png" id="a_nxbp"]
+[ext_resource type="Texture2D" uid="uid://bh77kswilfdlq" path="res://assets/images/tutorial/tut_skip_tag.svg" id="9_w232o"]
+[ext_resource type="Texture2D" uid="uid://dmnweqkx4k4sy" path="res://assets/images/tutorial/tut_skip_tag_pressed.svg" id="10_ftnfe"]
+[ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/editor/NinePatchButton.gd" id="12_tfx7x"]
+[ext_resource type="Texture2D" uid="uid://oa7xb8quqxt7" path="res://assets/images-png/tutorial/tut_play.png" id="a_play"]
+[ext_resource type="Texture2D" uid="uid://d0gq6drdfn21d" path="res://assets/images-png/tutorial/tut_wave_bg.png" id="a_wbg"]
+[ext_resource type="Texture2D" uid="uid://ckis5dj5x733n" path="res://assets/images-png/tutorial/tut_wave_fill.png" id="a_wfi"]
+[ext_resource type="Texture2D" uid="uid://b6gh0vgsk1f08" path="res://assets/images-png/tutorial/tut_step_badge.png" id="t_badge"]
+[ext_resource type="Texture2D" uid="uid://cn17q5ampusir" path="res://assets/images-png/tutorial/tut_page_grid.png" id="t_grid"]
+[ext_resource type="Texture2D" uid="uid://bhfhw0cxju17h" path="res://assets/images-png/tutorial/tut_page_holes.png" id="t_holes"]
+[ext_resource type="Texture2D" uid="uid://bugk2l6ix76o6" path="res://assets/images-png/tutorial/tut_page_margin.png" id="t_margin"]
+[ext_resource type="Texture2D" uid="uid://c18l1wrpxge0n" path="res://assets/images-png/tutorial/tut_next_normal.png" id="t_next"]
+[ext_resource type="Texture2D" uid="uid://dgiyedbvhnb2y" path="res://assets/images-png/tutorial/tut_next_pressed.png" id="t_next_p"]
+[ext_resource type="Texture2D" uid="uid://duik2f1pendu3" path="res://assets/images-png/tutorial/tut_scissors.png" id="t_scis"]
+[ext_resource type="Texture2D" uid="uid://btlgxl5rkynap" path="res://assets/images-png/tutorial/tut_star_off.png" id="t_star_off"]
+[ext_resource type="Texture2D" uid="uid://c6ma8odyxxu36" path="res://assets/images-png/tutorial/tut_star_on.png" id="t_star_on"]
+[ext_resource type="Texture2D" uid="uid://bqcdgdvmm8mgx" path="res://assets/images-png/tutorial/tut_msg_strip.png" id="t_strip"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mkmf4"]
+content_margin_left = 16.0
+content_margin_top = 19.0
+content_margin_right = 22.0
+content_margin_bottom = 29.0
+texture = ExtResource("9_w232o")
+texture_margin_left = 16.0
+texture_margin_top = 19.0
+texture_margin_right = 22.0
+texture_margin_bottom = 29.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_03wq8"]
+content_margin_left = 16.0
+content_margin_top = 19.0
+content_margin_right = 22.0
+content_margin_bottom = 29.0
+texture = ExtResource("10_ftnfe")
+texture_margin_left = 16.0
+texture_margin_top = 19.0
+texture_margin_right = 22.0
+texture_margin_bottom = 29.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_23prh"]
+content_margin_left = 16.0
+content_margin_top = 19.0
+content_margin_right = 22.0
+content_margin_bottom = 29.0
+texture = ExtResource("9_w232o")
+texture_margin_left = 16.0
+texture_margin_top = 19.0
+texture_margin_right = 22.0
+texture_margin_bottom = 29.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2v45r"]
+content_margin_left = 16.0
+content_margin_top = 19.0
+content_margin_right = 22.0
+content_margin_bottom = 29.0
+texture = ExtResource("9_w232o")
+texture_margin_left = 16.0
+texture_margin_top = 19.0
+texture_margin_right = 22.0
+texture_margin_bottom = 29.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7qdbs"]
+content_margin_left = 16.0
+content_margin_top = 19.0
+content_margin_right = 22.0
+content_margin_bottom = 29.0
+texture = ExtResource("9_w232o")
+texture_margin_left = 16.0
+texture_margin_top = 19.0
+texture_margin_right = 22.0
+texture_margin_bottom = 29.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wdgtm"]
+content_margin_left = 14.0
+content_margin_top = 20.0
+content_margin_right = 22.0
+content_margin_bottom = 28.0
+texture = ExtResource("9_w232o")
+texture_margin_left = 14.0
+texture_margin_top = 20.0
+texture_margin_right = 22.0
+texture_margin_bottom = 28.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jj4ca"]
+content_margin_left = 14.0
+content_margin_top = 20.0
+content_margin_right = 22.0
+content_margin_bottom = 28.0
+texture = ExtResource("10_ftnfe")
+texture_margin_left = 14.0
+texture_margin_top = 20.0
+texture_margin_right = 22.0
+texture_margin_bottom = 28.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w232o"]
+content_margin_left = 14.0
+content_margin_top = 20.0
+content_margin_right = 22.0
+content_margin_bottom = 28.0
+texture = ExtResource("9_w232o")
+texture_margin_left = 14.0
+texture_margin_top = 20.0
+texture_margin_right = 22.0
+texture_margin_bottom = 28.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ftnfe"]
+content_margin_left = 14.0
+content_margin_top = 20.0
+content_margin_right = 22.0
+content_margin_bottom = 28.0
+texture = ExtResource("9_w232o")
+texture_margin_left = 14.0
+texture_margin_top = 20.0
+texture_margin_right = 22.0
+texture_margin_bottom = 28.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tfx7x"]
+content_margin_left = 14.0
+content_margin_top = 20.0
+content_margin_right = 22.0
+content_margin_bottom = 28.0
+texture = ExtResource("9_w232o")
+texture_margin_left = 14.0
+texture_margin_top = 20.0
+texture_margin_right = 22.0
+texture_margin_bottom = 28.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
 
 [sub_resource type="StyleBoxTexture" id="btn_primary"]
 content_margin_left = 24.0
@@ -31,10 +155,10 @@ content_margin_top = 8.0
 content_margin_right = 24.0
 content_margin_bottom = 14.0
 texture = ExtResource("t_next")
-texture_margin_left = 46.0
-texture_margin_top = 40.0
-texture_margin_right = 46.0
-texture_margin_bottom = 40.0
+texture_margin_left = 44.0
+texture_margin_right = 43.746056
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
 
 [sub_resource type="StyleBoxTexture" id="btn_primary_hover"]
 content_margin_left = 24.0
@@ -42,32 +166,10 @@ content_margin_top = 8.0
 content_margin_right = 24.0
 content_margin_bottom = 14.0
 texture = ExtResource("t_next_p")
-texture_margin_left = 46.0
-texture_margin_top = 40.0
-texture_margin_right = 46.0
-texture_margin_bottom = 40.0
-
-[sub_resource type="StyleBoxTexture" id="sb_skip"]
-content_margin_left = 16.0
-content_margin_top = 6.0
-content_margin_right = 20.0
-content_margin_bottom = 8.0
-texture = ExtResource("t_skip")
-texture_margin_left = 24.0
-texture_margin_top = 24.0
-texture_margin_right = 24.0
-texture_margin_bottom = 24.0
-
-[sub_resource type="StyleBoxTexture" id="sb_skip_p"]
-content_margin_left = 16.0
-content_margin_top = 6.0
-content_margin_right = 20.0
-content_margin_bottom = 8.0
-texture = ExtResource("t_skip_p")
-texture_margin_left = 24.0
-texture_margin_top = 24.0
-texture_margin_right = 24.0
-texture_margin_bottom = 24.0
+texture_margin_left = 44.0
+texture_margin_right = 44.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
 
 [sub_resource type="StyleBoxEmpty" id="sb_empty"]
 
@@ -511,7 +613,7 @@ _data = {
 &"spotlight_pulse": SubResource("Animation_tt_spotlight_pulse")
 }
 
-[node name="BaseTutorial" type="Control" unique_id=1525698188 node_paths=PackedStringArray("backdrop", "spotlight", "board_host", "dialog_bubble", "lbl_title", "dots_container", "lbl_message", "nav_bar", "btn_skip_all", "lbl_step_num", "lbl_step_of", "wave", "btn_skip", "btn_next", "toast_label", "anim_player", "anim_dialog", "anim_title", "text_out_timer", "toast_timer", "spot_in_timer", "spot_out_timer", "anim_toast", "anim_spotlight")]
+[node name="BaseTutorial" type="Control" unique_id=1525698188 node_paths=PackedStringArray("backdrop", "spotlight", "board_host", "dialog_bubble", "lbl_title", "dots_container", "lbl_step_num", "lbl_step_of", "wave", "lbl_message", "nav_bar", "btn_skip_all", "btn_skip", "btn_next", "toast_label", "anim_player", "anim_dialog", "anim_title", "text_out_timer", "toast_timer", "spot_in_timer", "spot_out_timer", "anim_toast", "anim_spotlight")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -525,14 +627,14 @@ board_host = NodePath("BoardHost")
 dialog_bubble = NodePath("DialogBubble")
 lbl_title = NodePath("Header/Title")
 dots_container = NodePath("Dots")
-lbl_message = NodePath("DialogBubble/Message")
-nav_bar = NodePath("NavBar")
-btn_skip_all = NodePath("Header/BtnSkipAll")
 lbl_step_num = NodePath("Header/StepBadge/Num")
 lbl_step_of = NodePath("Header/StepOf")
 wave = NodePath("Header/Wave")
 tex_star_on = ExtResource("t_star_on")
 tex_star_off = ExtResource("t_star_off")
+lbl_message = NodePath("DialogBubble/Message")
+nav_bar = NodePath("NavBar")
+btn_skip_all = NodePath("Header/BtnSkipAll")
 btn_skip = NodePath("Header/BtnSkip")
 btn_next = NodePath("NavBar/BtnNext")
 toast_label = NodePath("ToastLabel")
@@ -556,7 +658,7 @@ grow_vertical = 2
 mouse_filter = 1
 color = Color(0.969, 0.957, 0.937, 1)
 
-[node name="PageDeco" type="Control" parent="."]
+[node name="PageDeco" type="Control" parent="." unique_id=948881729]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -565,7 +667,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Grid" type="TextureRect" parent="PageDeco"]
+[node name="Grid" type="TextureRect" parent="PageDeco" unique_id=645544571]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -576,28 +678,26 @@ mouse_filter = 2
 texture = ExtResource("t_grid")
 stretch_mode = 1
 
-[node name="Margin" type="TextureRect" parent="PageDeco"]
+[node name="Margin" type="TextureRect" parent="PageDeco" unique_id=1039162509]
 layout_mode = 1
-anchors_preset = 11
-anchor_left = 0.0
-anchor_right = 0.0
+anchors_preset = 9
 anchor_bottom = 1.0
 offset_left = 50.0
 offset_right = 54.0
+grow_horizontal = 0
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("t_margin")
 stretch_mode = 1
 
-[node name="Holes" type="TextureRect" parent="PageDeco"]
+[node name="Holes" type="TextureRect" parent="PageDeco" unique_id=500746615]
 layout_mode = 1
-anchors_preset = 11
-anchor_left = 0.0
-anchor_right = 0.0
+anchors_preset = 9
 anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 30.0
 offset_right = 32.0
+grow_horizontal = 0
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("t_holes")
@@ -639,19 +739,19 @@ offset_bottom = 200.0
 grow_horizontal = 2
 mouse_filter = 2
 
-[node name="StepBadge" type="TextureRect" parent="Header"]
+[node name="StepBadge" type="TextureRect" parent="Header" unique_id=1029811894]
 visible = false
 layout_mode = 0
 offset_left = 62.0
 offset_top = 36.0
 offset_right = 172.0
 offset_bottom = 146.0
-pivot_offset = Vector2(55, 55)
 rotation = -0.1047
+pivot_offset = Vector2(55, 55)
 mouse_filter = 2
 texture = ExtResource("t_badge")
 
-[node name="Num" type="Label" parent="Header/StepBadge"]
+[node name="Num" type="Label" parent="Header/StepBadge" unique_id=1216173808]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -680,7 +780,7 @@ text = "STR_TUT_COMMON_TITLE"
 vertical_alignment = 1
 clip_text = true
 
-[node name="StepOf" type="Label" parent="Header"]
+[node name="StepOf" type="Label" parent="Header" unique_id=887676001]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -693,62 +793,91 @@ theme_override_font_sizes/font_size = 24
 text = "Bước 1 trong 4"
 vertical_alignment = 1
 
-[node name="BtnSkip" type="Button" parent="Header" unique_id=1671343425]
+[node name="BtnSkip" type="Button" parent="Header" unique_id=2027995829]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -200.0
-offset_top = 138.0
-offset_right = -18.0
-offset_bottom = 204.0
+offset_left = -374.0406
+offset_top = 143.5362
+offset_right = -18.193848
+offset_bottom = 233.5362
 grow_horizontal = 0
-pivot_offset = Vector2(90, 33)
 rotation = 0.07
-mouse_default_cursor_shape = 2
+pivot_offset = Vector2(90, 33)
 focus_mode = 0
+mouse_default_cursor_shape = 2
 theme_override_colors/font_color = Color(0.85, 0.27, 0.25, 1)
-theme_override_colors/font_hover_color = Color(0.72, 0.2, 0.18, 1)
 theme_override_colors/font_pressed_color = Color(0.72, 0.2, 0.18, 1)
+theme_override_colors/font_hover_color = Color(0.72, 0.2, 0.18, 1)
 theme_override_constants/h_separation = 8
 theme_override_font_sizes/font_size = 30
-theme_override_styles/normal = SubResource("sb_skip")
-theme_override_styles/hover = SubResource("sb_skip")
-theme_override_styles/pressed = SubResource("sb_skip_p")
-theme_override_styles/focus = SubResource("sb_empty")
+theme_override_styles/normal = SubResource("StyleBoxTexture_mkmf4")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_03wq8")
+theme_override_styles/hover = SubResource("StyleBoxTexture_23prh")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_2v45r")
+theme_override_styles/focus = SubResource("StyleBoxTexture_7qdbs")
 text = "STR_TUT_COMMON_SKIP"
 icon = ExtResource("t_scis")
+text_overrun_behavior = 4
+script = ExtResource("12_tfx7x")
+texture_normal = ExtResource("9_w232o")
+texture_hover = ExtResource("9_w232o")
+texture_pressed = ExtResource("10_ftnfe")
+texture_disabled = ExtResource("9_w232o")
+texture_focus = ExtResource("9_w232o")
+patch_margin_left = 16.0
+patch_margin_top = 19.0
+patch_margin_right = 22.0
+patch_margin_bottom = 29.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 
-[node name="BtnSkipAll" type="Button" parent="Header" unique_id=220332689]
+[node name="BtnSkipAll" type="Button" parent="Header" unique_id=1008313446]
 visible = false
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -300.0
-offset_top = 138.0
-offset_right = -18.0
-offset_bottom = 204.0
+offset_left = -423.26614
+offset_top = 136.64223
+offset_right = -45.358246
+offset_bottom = 226.64223
 grow_horizontal = 0
-pivot_offset = Vector2(140, 33)
 rotation = 0.07
-mouse_default_cursor_shape = 2
+pivot_offset = Vector2(140, 33)
 focus_mode = 0
+mouse_default_cursor_shape = 2
 theme_override_colors/font_color = Color(0.85, 0.27, 0.25, 1)
-theme_override_colors/font_hover_color = Color(0.72, 0.2, 0.18, 1)
 theme_override_colors/font_pressed_color = Color(0.72, 0.2, 0.18, 1)
+theme_override_colors/font_hover_color = Color(0.72, 0.2, 0.18, 1)
 theme_override_constants/h_separation = 8
 theme_override_font_sizes/font_size = 30
-theme_override_styles/normal = SubResource("sb_skip")
-theme_override_styles/hover = SubResource("sb_skip")
-theme_override_styles/pressed = SubResource("sb_skip_p")
-theme_override_styles/focus = SubResource("sb_empty")
+theme_override_styles/normal = SubResource("StyleBoxTexture_wdgtm")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_jj4ca")
+theme_override_styles/hover = SubResource("StyleBoxTexture_w232o")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_ftnfe")
+theme_override_styles/focus = SubResource("StyleBoxTexture_tfx7x")
 text = "STR_TUT_COMMON_SKIP_ALL"
 icon = ExtResource("t_scis")
+text_overrun_behavior = 5
+script = ExtResource("12_tfx7x")
+texture_normal = ExtResource("9_w232o")
+texture_hover = ExtResource("9_w232o")
+texture_pressed = ExtResource("10_ftnfe")
+texture_disabled = ExtResource("9_w232o")
+texture_focus = ExtResource("9_w232o")
+patch_margin_left = 14.0
+patch_margin_top = 20.0
+patch_margin_right = 22.0
+patch_margin_bottom = 28.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 
-[node name="Wave" type="TextureProgressBar" parent="Header"]
+[node name="Wave" type="TextureProgressBar" parent="Header" unique_id=2131051918]
 layout_mode = 0
-offset_left = 0.0
 offset_top = 98.0
 offset_right = 540.0
 offset_bottom = 128.0
@@ -756,9 +885,9 @@ mouse_filter = 2
 max_value = 4.0
 step = 0.01
 value = 1.0
+nine_patch_stretch = true
 texture_under = ExtResource("a_wbg")
 texture_progress = ExtResource("a_wfi")
-nine_patch_stretch = true
 
 [node name="DialogBubble" type="Control" parent="." unique_id=2017602598]
 layout_mode = 1
@@ -772,14 +901,13 @@ offset_bottom = 368.0
 grow_horizontal = 2
 mouse_filter = 2
 
-[node name="Strip" type="NinePatchRect" parent="DialogBubble"]
+[node name="Strip" type="NinePatchRect" parent="DialogBubble" unique_id=1100966881]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("t_strip")
 patch_margin_left = 24
 patch_margin_top = 22
@@ -844,19 +972,19 @@ offset_right = 236.0
 offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 0
-mouse_default_cursor_shape = 2
 focus_mode = 0
+mouse_default_cursor_shape = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0.6, 0.38, 0.05, 1)
 theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
-theme_override_constants/h_separation = 12
 theme_override_constants/outline_size = 7
+theme_override_constants/h_separation = 12
 theme_override_font_sizes/font_size = 36
 theme_override_styles/normal = SubResource("btn_primary")
-theme_override_styles/hover = SubResource("btn_primary")
 theme_override_styles/pressed = SubResource("btn_primary_hover")
+theme_override_styles/hover = SubResource("btn_primary")
 theme_override_styles/focus = SubResource("sb_empty")
 text = "STR_TUT_COMMON_NEXT"
 icon = ExtResource("a_play")
@@ -884,7 +1012,6 @@ alignment = 1
 visible = false
 custom_minimum_size = Vector2(44, 44)
 layout_mode = 2
-pivot_offset = Vector2(22, 22)
 texture = ExtResource("t_star_off")
 expand_mode = 1
 stretch_mode = 5
@@ -893,7 +1020,6 @@ stretch_mode = 5
 visible = false
 custom_minimum_size = Vector2(44, 44)
 layout_mode = 2
-pivot_offset = Vector2(22, 22)
 texture = ExtResource("t_star_off")
 expand_mode = 1
 stretch_mode = 5
@@ -902,7 +1028,6 @@ stretch_mode = 5
 visible = false
 custom_minimum_size = Vector2(44, 44)
 layout_mode = 2
-pivot_offset = Vector2(22, 22)
 texture = ExtResource("t_star_off")
 expand_mode = 1
 stretch_mode = 5
@@ -911,7 +1036,6 @@ stretch_mode = 5
 visible = false
 custom_minimum_size = Vector2(44, 44)
 layout_mode = 2
-pivot_offset = Vector2(22, 22)
 texture = ExtResource("t_star_off")
 expand_mode = 1
 stretch_mode = 5
@@ -920,7 +1044,6 @@ stretch_mode = 5
 visible = false
 custom_minimum_size = Vector2(44, 44)
 layout_mode = 2
-pivot_offset = Vector2(22, 22)
 texture = ExtResource("t_star_off")
 expand_mode = 1
 stretch_mode = 5
@@ -929,35 +1052,24 @@ stretch_mode = 5
 visible = false
 custom_minimum_size = Vector2(44, 44)
 layout_mode = 2
-pivot_offset = Vector2(22, 22)
 texture = ExtResource("t_star_off")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1871871168]
-libraries = {
-"": SubResource("AnimationLibrary_tutorial")
-}
+libraries/ = SubResource("AnimationLibrary_tutorial")
 
 [node name="DialogAnim" type="AnimationPlayer" parent="." unique_id=1994858890]
-libraries = {
-"": SubResource("AnimationLibrary_tt_dialog")
-}
+libraries/ = SubResource("AnimationLibrary_tt_dialog")
 
 [node name="TitleAnim" type="AnimationPlayer" parent="." unique_id=1491080733]
-libraries = {
-"": SubResource("AnimationLibrary_tt_title")
-}
+libraries/ = SubResource("AnimationLibrary_tt_title")
 
 [node name="ToastAnim" type="AnimationPlayer" parent="." unique_id=1913227351]
-libraries = {
-"": SubResource("AnimationLibrary_tt_toast")
-}
+libraries/ = SubResource("AnimationLibrary_tt_toast")
 
 [node name="SpotlightAnim" type="AnimationPlayer" parent="." unique_id=1628482365]
-libraries = {
-"": SubResource("AnimationLibrary_tt_spotlight")
-}
+libraries/ = SubResource("AnimationLibrary_tt_spotlight")
 
 [node name="TextOutTimer" type="Timer" parent="." unique_id=2011139773]
 wait_time = 0.1
@@ -977,8 +1089,8 @@ one_shot = true
 
 [connection signal="resized" from="Spotlight" to="." method="_on_spotlight_resized"]
 [connection signal="pressed" from="Header/BtnSkip" to="." method="skip_tutorial"]
-[connection signal="pressed" from="NavBar/BtnNext" to="." method="next_step"]
 [connection signal="pressed" from="Header/BtnSkipAll" to="." method="skip_all_tutorials"]
+[connection signal="pressed" from="NavBar/BtnNext" to="." method="next_step"]
 [connection signal="timeout" from="TextOutTimer" to="." method="_on_text_out_done"]
 [connection signal="timeout" from="ToastTimer" to="." method="_on_toast_hold_done"]
 [connection signal="timeout" from="SpotlightInTimer" to="." method="_start_spotlight_pulse"]

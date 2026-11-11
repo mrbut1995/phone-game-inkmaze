@@ -1600,4 +1600,8 @@ libraries = {
 autoplay = &"idle"
 
 [connection signal="animation_finished" from="VfxAnim" to="." method="_on_vfx_anim_finished"]
+[connection signal="pressed" from="TopBar/HeaderRow/Back" to="." method="_on_back_pressed"]
+[connection signal="day_selected" from="Panel/Stage/MonthSheet/Calendar" to="." method="_on_day_selected"]
+[connection signal="pressed" from="Panel/Stage/Actions/PlayCard" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Panel/Stage/Actions/ChallengeCard" to="." method="_on_challenge_pressed"]
 [connection signal="pressed" from="Panel/Stage/MonthSheet/Dim" to="." method="_on_sheet_close_pressed"]
