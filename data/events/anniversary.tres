@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="EventData" format=3]
 
 [ext_resource type="Script" path="res://scripts/models/definitions/LevelData.gd" id="1_level"]
-[ext_resource type="Resource" path="res://data/levels/events/winter/level_1400.tres" id="2_level"]
-[ext_resource type="Resource" path="res://data/levels/events/winter/level_1401.tres" id="3_level"]
-[ext_resource type="Resource" path="res://data/levels/events/winter/level_1402.tres" id="4_level"]
+[ext_resource type="Resource" path="res://data/levels/events/anniversary/level_1500.tres" id="2_level"]
+[ext_resource type="Resource" path="res://data/levels/events/anniversary/level_1501.tres" id="3_level"]
+[ext_resource type="Resource" path="res://data/levels/events/anniversary/level_1502.tres" id="4_level"]
 [ext_resource type="Script" path="res://scripts/models/definitions/EventReward.gd" id="5_reward"]
 [ext_resource type="Script" path="res://scripts/models/definitions/EventData.gd" id="6_event"]
 [ext_resource type="Resource" path="res://data/events/themes/anniversary.tres" id="7_theme"]

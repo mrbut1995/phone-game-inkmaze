@@ -327,6 +327,83 @@ func setup_maze(p_maze: MazeData, p_mode: BaseGameMode = null) -> void:
 ##   · con trỏ người chơi -> icon player_cursor_*.svg tương ứng
 ##   · moving_line -> màu mực + chất liệu (bề rộng/đầu nét/nét đứt/quầng sáng)
 ##   · vệt bước chân mực -> đúng icon + màu mực của bút
+## EVENT: đổi art + màu bàn chơi theo `EventBoardSkin` (GameScene gọi 1 lần, TRƯỚC khi dựng tầng đầu).
+## Cell/Anchor/Wall là node MẪU nên sửa mẫu ⇒ mọi bản nhân bản sau đó ăn skin ngay.
+## Ô nào trong skin để trống thì giữ art mặc định.
+func apply_event_skin(skin: EventBoardSkin) -> void:
+	_init_layers()
+	if skin == null:
+		return
+	var panel := get_node_or_null("Panel") as NinePatchRect
+	if panel != null and skin.card_board != null:
+		panel.texture = skin.card_board
+		_read_panel_insets()
+	if skin.paper_inset != Vector4.ZERO:
+		PAPER_INSET = skin.paper_inset
+	_skin_cell_template(skin)
+	_skin_anchor_template(skin)
+	if _wall_template != null:
+		_wall_template.COLOR_VISIBLE = skin.wall_color
+		_wall_template.HALO_COLOR = skin.wall_halo_color
+	PenSkin.set_ink_override(skin.ink_color)
+	apply_pen_skin()
+	if maze != null:
+		_update_layout_positions()
+
+
+func _skin_cell_template(skin: EventBoardSkin) -> void:
+	var cell := _cell_template
+	if cell == null:
+		return
+	if skin.cell_normal != null:
+		cell.texture_normal = skin.cell_normal
+	if skin.cell_start != null:
+		cell.texture_start = skin.cell_start
+	if skin.cell_finish != null:
+		cell.texture_finish = skin.cell_finish
+	cell.texture_locked = skin.cell_locked
+	cell.texture_finish_closed = skin.cell_finish_closed
+	var sprite := cell.button
+	if sprite != null:
+		if skin.cell_normal != null:
+			sprite.texture_normal = skin.cell_normal
+			sprite.texture_hover = skin.cell_normal
+			sprite.texture_focused = skin.cell_normal
+		if skin.cell_pressed != null:
+			sprite.texture_pressed = skin.cell_pressed
+		if skin.cell_disabled != null:
+			sprite.texture_disabled = skin.cell_disabled
+	if cell.lock != null and skin.icon_lock != null:
+		cell.lock.texture = skin.icon_lock
+	if cell.key_icon != null and skin.icon_key != null:
+		cell.key_icon.texture = skin.icon_key
+	# Số trên ô: nền ô tối ⇒ chữ sáng. LabelSettings dùng chung nên nhân bản trước khi đổi màu.
+	if cell.label != null and cell.label.label_settings != null:
+		var settings := cell.label.label_settings.duplicate() as LabelSettings
+		settings.font_color = skin.cell_text_color
+		if settings.outline_size > 0:
+			settings.outline_color = skin.cell_text_outline
+		cell.label.label_settings = settings
+
+
+func _skin_anchor_template(skin: EventBoardSkin) -> void:
+	var anchor := _anchor_template
+	if anchor == null:
+		return
+	var sprite := anchor.button
+	if sprite != null:
+		if skin.anchor_normal != null:
+			sprite.texture_normal = skin.anchor_normal
+			sprite.texture_hover = skin.anchor_normal
+		if skin.anchor_focus != null:
+			sprite.texture_focused = skin.anchor_focus
+			sprite.texture_pressed = skin.anchor_pressed if skin.anchor_pressed != null else skin.anchor_focus
+		if skin.anchor_disabled != null:
+			sprite.texture_disabled = skin.anchor_disabled
+	if skin.anchor_selected != null:
+		anchor.texture_selected = skin.anchor_selected
+
+
 func apply_pen_skin() -> void:
 	_pen_id = PenSkin.equipped_id()
 	_feel = PenSkin.feel_of(_pen_id)

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Đáy gạch màu hồng sẫm lót khối -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#E896C7"/>
+  <!-- Mặt gạch Light Pink #FDC1E3 -->
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#FDC1E3"/>
+  <!-- Gờ sáng bóng trên đỉnh Pale Pink #FEC8EA -->
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#FEC8EA"/>
+  <!-- Panel lòng lún nhẹ màu hồng đậm hơn một tông -->
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#F4A9D3"/>
+  <!-- Confetti dot (Violet) và ngôi sao vàng nhỏ ở 2 góc -->
+  <circle cx="32" cy="32" r="3.5" fill="#7A43F6" opacity="0.6"/>
+  <polygon points="144,136 146,141 151,141 147,144 149,149 144,146 139,149 141,144 137,141 142,141" fill="#FBEC77" opacity="0.75"/>
+</svg>

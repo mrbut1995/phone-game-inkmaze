@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Đáy gạch màu nâu cam ấm lót khối -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#DCA36E"/>
+  <!-- Mặt gạch Peach Cream #FFE3BD -->
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#FFE3BD"/>
+  <!-- Gờ sáng trên đỉnh -->
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#FFF2DF"/>
+  <!-- Lòng gạch lún nhẹ màu Peach #FFCD98 -->
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#FFCD98"/>
+  <!-- Đốm sparkle hình lá mờ nhạt ở 2 góc -->
+  <path d="M30 25 Q35 30 30 35 Q25 30 30 25 Z" fill="#F4AC3D" opacity="0.6"/>
+  <path d="M146 135 Q151 140 146 145 Q141 140 146 135 Z" fill="#E27017" opacity="0.6"/>
+</svg>

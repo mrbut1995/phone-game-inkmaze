@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <!-- Lồng đèn màu đỏ sẫm #8E1410, bị nén dẹp nhẹ (squashed), không glow -->
+  <g transform="translate(27 29) scale(1.15, 0.88) translate(-27 -27)">
+    <path d="M27 9 L27 13" stroke="#FEB415" stroke-width="1.6" stroke-linecap="round"/>
+    <rect x="21" y="13" width="12" height="3" rx="1" fill="#C98A0C"/>
+
+    <ellipse cx="27" cy="27" rx="16" ry="13" fill="#8E1410"/>
+    <ellipse cx="27" cy="27" rx="10" ry="13" fill="#750E0C"/>
+    <ellipse cx="27" cy="27" rx="4" ry="13" fill="#540809"/>
+
+    <rect x="22" y="38" width="10" height="3" rx="1" fill="#C98A0C"/>
+
+    <circle cx="22.5" cy="26.5" r="1.5" fill="#2E0408"/>
+    <circle cx="31.5" cy="26.5" r="1.5" fill="#2E0408"/>
+
+    <path d="M25.5 30 Q27 31.5 28.5 30" fill="none" stroke="#2E0408" stroke-width="1.1" stroke-linecap="round"/>
+
+    <ellipse cx="19" cy="29" rx="1.8" ry="1.1" fill="#FFE9B0" opacity="0.5"/>
+    <ellipse cx="35" cy="29" rx="1.8" ry="1.1" fill="#FFE9B0" opacity="0.5"/>
+  </g>
+
+  <!-- Tua rua -->
+  <circle cx="27" cy="42" r="1.8" fill="#630811"/>
+  <rect x="26" y="43.5" width="2" height="6.5" fill="#8E1410"/>
+  <rect x="25" y="48.5" width="4" height="1.8" fill="#C98A0C"/>
+</svg>

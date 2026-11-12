@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="cabin-window-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Gạch nền -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#B3D3EF"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#EAF3FC"/>
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#FFFFFF"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#D4E7F9"/>
+
+  <!-- Đĩa tròn trung tâm Deep Navy #132B50 -->
+  <rect x="36" y="36" width="104" height="104" rx="20" fill="#0A182E"/>
+  <rect x="36" y="33" width="104" height="104" rx="20" fill="#132B50"/>
+
+  <!-- Vầng sáng vàng ấm tỏa ra từ ngôi nhà gỗ mùa đông -->
+  <circle cx="88" cy="88" r="32" fill="#FED136" opacity="0.3" filter="url(#cabin-window-glow)"/>
+
+  <!-- NGÔI NHÀ GỖ MÙA ĐÔNG ẤM CÚNG (COZY WINTER CABIN) -->
+  <g>
+    <!-- Gò tuyết dưới chân nhà -->
+    <ellipse cx="88" cy="126" rx="38" ry="8" fill="#FFFFFF"/>
+
+    <!-- Thân nhà bằng gỗ màu Deep Navy -->
+    <rect x="64" y="88" width="48" height="34" rx="2" fill="#0E203C"/>
+
+    <!-- Cửa ra vào -->
+    <rect x="70" y="100" width="10" height="22" rx="1" fill="#060E1A"/>
+
+    <!-- Cửa sổ phát sáng màu vàng ấm rực rỡ #FED136 -->
+    <rect x="88" y="96" width="14" height="14" rx="2" fill="#FED136"/>
+    <!-- Chấn song cửa sổ gỗ -->
+    <line x1="95" y1="96" x2="95" y2="110" stroke="#0E203C" stroke-width="1.5"/>
+    <line x1="88" y1="103" x2="102" y2="103" stroke="#0E203C" stroke-width="1.5"/>
+
+    <!-- Ống khói và làn khói trắng bay lên -->
+    <rect x="98" y="68" width="8" height="16" rx="1" fill="#0A182E"/>
+    <path d="M102 66 Q98 56 104 50 Q110 44 104 38" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/>
+
+    <!-- Mái nhà dốc phủ tuyết trắng tinh dày cộm -->
+    <polygon points="56,90 88,66 120,90" fill="#FFFFFF"/>
+
+    <!-- Cây thông phủ tuyết bên cạnh nhà -->
+    <polygon points="116,124 122,106 128,124" fill="#4A7FB5"/>
+    <polygon points="118,114 122,104 126,114" fill="#FFFFFF"/>
+  </g>
+
+  <!-- Bông tuyết rơi lấp lánh xung quanh -->
+  <circle cx="62" cy="68" r="1.8" fill="#FFFFFF"/>
+  <circle cx="118" cy="62" r="1.5" fill="#FFFFFF"/>
+  <polygon points="68,50 69.5,53 72.5,53 70,55 71,58 68,56 65,58 66,55 63.5,53 66.5,53" fill="#FED136"/>
+</svg>

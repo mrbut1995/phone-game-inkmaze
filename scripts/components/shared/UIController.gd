@@ -161,6 +161,10 @@ func show_floor_complete(result: Dictionary) -> void:
 		else (Popups.WIN_DAILY if is_daily else Popups.WIN)	# Challenge: màn thử thách dùng popup "hoàn thành thử thách" riêng
 	if not str(result.get("challenge_id", "")).is_empty():
 		id = Popups.WIN_CHALLENGE	# SFX: con dấu "cộp" lên giấy
+	# SỰ KIỆN (chuỗi màn tạo sẵn): popup riêng — còn tầng → "tiếp tục", hết tầng → "chiến thắng"
+	if bool(result.get("event", false)):
+		id = Popups.EVENT_WIN if bool((result.get("event_info", {}) as Dictionary).get("last", false)) \
+			else Popups.EVENT_CONTINUE
 	Sfx.play(Sfx.STAMP_IMPACT)
 
 	var popup := Popups.open(id, result)

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <defs>
+    <filter id="snowman-soft-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.5" flood-color="#8ABFEF" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- Chú người tuyết phát sáng xanh băng êm dịu -->
+  <g filter="url(#snowman-soft-glow)">
+    <!-- Quả cầu tuyết thân dưới -->
+    <circle cx="27" cy="36" r="11" fill="#FFFFFF"/>
+    <!-- Bóng chìm nhẹ tiếp giáp giữa 2 quả cầu -->
+    <ellipse cx="27" cy="27" rx="6" ry="1.5" fill="#D4E7F9"/>
+
+    <!-- Quả cầu tuyết đầu trên -->
+    <circle cx="27" cy="21" r="8" fill="#FFFFFF"/>
+
+    <!-- Chiếc mũ phớt đen (Black top hat) -->
+    <ellipse cx="27" cy="14" rx="8" ry="2" fill="#1B2433"/>
+    <rect x="22" y="7" width="10" height="7" rx="1" fill="#1B2433"/>
+    <rect x="22" y="12" width="10" height="1.8" fill="#4A7FB5"/>
+
+    <!-- 2 mắt than tròn màu đen có đốm sáng trắng -->
+    <circle cx="24" cy="20" r="1.3" fill="#1B2433"/>
+    <circle cx="23.6" cy="19.6" r="0.4" fill="#FFFFFF"/>
+    <circle cx="30" cy="20" r="1.3" fill="#1B2433"/>
+    <circle cx="29.6" cy="19.6" r="0.4" fill="#FFFFFF"/>
+
+    <!-- Mũi cà rốt cam quay sang phải -->
+    <polygon points="27,21 34,23 27,24" fill="#FF7A2F"/>
+
+    <!-- Miệng cười chấm than nhỏ xíu -->
+    <circle cx="24" cy="25" r="0.6" fill="#1B2433"/>
+    <circle cx="26" cy="26" r="0.6" fill="#1B2433"/>
+    <circle cx="28" cy="26" r="0.6" fill="#1B2433"/>
+    <circle cx="30" cy="25" r="0.6" fill="#1B2433"/>
+
+    <!-- Má hồng phớt mềm mại -->
+    <ellipse cx="20.5" cy="22.5" rx="1.6" ry="1" fill="#FFB0B0" opacity="0.65"/>
+    <ellipse cx="33.5" cy="22.5" rx="1.6" ry="1" fill="#FFB0B0" opacity="0.65"/>
+
+    <!-- 2 cúc than đen trên bụng -->
+    <circle cx="27" cy="33" r="1.2" fill="#1B2433"/>
+    <circle cx="27" cy="38" r="1.2" fill="#1B2433"/>
+  </g>
+</svg>

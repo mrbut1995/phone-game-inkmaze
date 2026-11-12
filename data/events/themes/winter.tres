@@ -4,6 +4,7 @@
 [ext_resource uid="uid://clb7vccmibiuu" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_winter_normal.png" id="btn_normal"]
 [ext_resource uid="uid://vrimr27bi8se" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_winter_pressed.png" id="btn_pressed"]
 [ext_resource uid="uid://8kjydcw85upd" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_winter_disabled.png" id="btn_disabled"]
+[ext_resource type="Resource" path="res://data/events/skins/winter_board.tres" id="board_skin"]
 
 [resource]
 script = ExtResource("2_im8b3")
@@ -24,3 +25,4 @@ chip_text = Color(0.8901961, 0.95686275, 1, 1)
 button_normal = ExtResource("btn_normal")
 button_pressed = ExtResource("btn_pressed")
 button_disabled = ExtResource("btn_disabled")
+board_skin = ExtResource("board_skin")

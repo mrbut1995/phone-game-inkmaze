@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <!-- Dây bóng -->
+  <path d="M27 42 Q23 46 27 48 Q30 50 26 53" fill="none" stroke="#F5B7DD" stroke-width="1.6" stroke-linecap="round"/>
+  <polygon points="25,40 29,40 27,43" fill="#B0355B"/>
+  <!-- Bóng màu hồng sẫm #D94F79, bị ép dẹp nhẹ (squashed), không glow -->
+  <g transform="translate(27 27) scale(1.12, 0.88) translate(-27 -24)">
+    <circle cx="27" cy="24" r="15" fill="#D94F79"/>
+    <ellipse cx="21" cy="16" rx="3.5" ry="1.8" fill="#FFFFFF" opacity="0.5" transform="rotate(-35 21 16)"/>
+    <circle cx="22" cy="24.5" r="1.5" fill="#32174E"/>
+    <circle cx="32" cy="24.5" r="1.5" fill="#32174E"/>
+    <path d="M25.5 28.5 Q27 30 28.5 28.5" fill="none" stroke="#32174E" stroke-width="1.2" stroke-linecap="round"/>
+    <circle cx="18.5" cy="26" r="2.2" fill="#F5B7DD" opacity="0.6"/>
+    <circle cx="35.5" cy="26" r="2.2" fill="#F5B7DD" opacity="0.6"/>
+  </g>
+</svg>

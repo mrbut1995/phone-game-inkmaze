@@ -1,19 +1,29 @@
-[gd_resource type="Resource" script_class="LevelData" format=3]
+[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://scripts/models/definitions/LevelData.gd" id="1_c55q2"]
+[ext_resource type="Script" path="res://scripts/models/definitions/LevelData.gd" id="1_level"]
 
 [resource]
-script = ExtResource("1_c55q2")
+script = ExtResource("1_level")
 level_id = 1203
 level_title = "Tomb · 4"
 chapter = 0
-mode_id = "challenge"
-challenge = "move_limit"
-par_time = 40.0
-v_walls = PackedByteArray(1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1)
-v_walls_visible = PackedByteArray(1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1)
-h_walls = PackedByteArray(1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1)
-h_walls_visible = PackedByteArray(1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1)
+mode_id = "play"
+difficulty = "hard"
+challenge = ""
+challenge_param = 0
+width = 5
+height = 4
+start_pos = Vector2i(4, 0)
+end_pos = Vector2i(1, 1)
+max_steps = 24
+par_time = 78.0
+v_walls = PackedByteArray(1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1)
+v_walls_visible = PackedByteArray(1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1)
+h_walls = PackedByteArray(1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1)
+h_walls_visible = PackedByteArray(1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1)
 cell_mask = PackedByteArray()
+lock_cells = PackedInt32Array(1, 0, 1, 0, 3, 2)
+key_cells = PackedInt32Array(4, 2, 1, 4, 3, 2)
 mission_types = PackedStringArray()
 mission_params = PackedInt32Array()
+custom_cell_values = {}

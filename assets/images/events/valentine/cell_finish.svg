@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="choc-box-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Gạch nền -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#E8BCC8"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#FDEDF0"/>
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#FFFFFF"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#F7CAD8"/>
+
+  <!-- Đĩa tròn trung tâm Rose-Wine #7A1233 -->
+  <rect x="36" y="36" width="104" height="104" rx="20" fill="#41071D"/>
+  <rect x="36" y="33" width="104" height="104" rx="20" fill="#7A1233"/>
+
+  <!-- Vầng sáng hồng nhẹ và trái tim/sparkle bay lên từ hộp socola -->
+  <g transform="translate(88 80)" filter="url(#choc-box-glow)">
+    <circle cx="0" cy="0" r="32" fill="#FEC8D6" opacity="0.45"/>
+  </g>
+
+  <!-- Các tia sáng và trái tim nhỏ bay lên -->
+  <g transform="translate(70 54) scale(0.55)">
+    <path d="M0 8 C-4 5 -8 2 -8 -2 C-8 -5 -5 -7 -2 -7 C0 -7 0 -5 0 -4 C0 -5 0 -7 2 -7 C5 -7 8 -5 8 -2 C8 2 4 5 0 8 Z" fill="#FF578B"/>
+  </g>
+  <g transform="translate(106 50) scale(0.65)">
+    <path d="M0 8 C-4 5 -8 2 -8 -2 C-8 -5 -5 -7 -2 -7 C0 -7 0 -5 0 -4 C0 -5 0 -7 2 -7 C5 -7 8 -5 8 -2 C8 2 4 5 0 8 Z" fill="#FEC8D6"/>
+  </g>
+  <polygon points="88,40 89.5,43 92.5,43 90,45 91,48 88,46 85,48 86,45 83.5,43 86.5,43" fill="#FDEDF0"/>
+
+  <!-- HỘP SOCOLA HÌNH TRÁI TIM ĐỎ CRIMSON (HEART-SHAPED CHOCOLATE BOX) -->
+  <g transform="translate(88 88)">
+    <!-- Đáy hộp tạo khối đổ bóng -->
+    <path d="M0 32 C-14 22 -32 8 -32 -8 C-32 -20 -20 -26 -10 -26 C-4 -26 0 -22 0 -20 C0 -22 4 -26 10 -26 C20 -26 32 -20 32 -8 C32 8 14 22 0 32 Z" fill="#5E0B20"/>
+    <!-- Nắp hộp màu Crimson #C01742 -->
+    <path d="M0 29 C-14 19 -32 5 -32 -11 C-32 -23 -20 -29 -10 -29 C-4 -29 0 -25 0 -23 C0 -25 4 -29 10 -29 C20 -29 32 -23 32 -11 C32 5 14 19 0 29 Z" fill="#C01742"/>
+
+    <!-- Các chấm bi nhỏ dọc theo viền nắp hộp (Small dots along rim) -->
+    <circle cx="-24" cy="-11" r="1.3" fill="#FEC8D6"/>
+    <circle cx="-18" cy="-22" r="1.3" fill="#FEC8D6"/>
+    <circle cx="-8" cy="-24" r="1.3" fill="#FEC8D6"/>
+    <circle cx="8" cy="-24" r="1.3" fill="#FEC8D6"/>
+    <circle cx="18" cy="-22" r="1.3" fill="#FEC8D6"/>
+    <circle cx="24" cy="-11" r="1.3" fill="#FEC8D6"/>
+    <circle cx="20" cy="5" r="1.3" fill="#FEC8D6"/>
+    <circle cx="10" cy="18" r="1.3" fill="#FEC8D6"/>
+    <circle cx="-10" cy="18" r="1.3" fill="#FEC8D6"/>
+    <circle cx="-20" cy="5" r="1.3" fill="#FEC8D6"/>
+
+    <!-- Dải ruy băng hồng Light Pink thắt ngang nắp hộp -->
+    <path d="M-28 -4 L28 -4 L28 4 L-28 4 Z" fill="#FEC8D6"/>
+
+    <!-- Nơ bướm xinh xắn ở tâm hộp (Ribbon bow) -->
+    <ellipse cx="-6" cy="0" rx="6" ry="4" fill="#FEC8D6" transform="rotate(-20 -6 0)"/>
+    <ellipse cx="6" cy="0" rx="6" ry="4" fill="#FEC8D6" transform="rotate(20 6 0)"/>
+    <circle cx="0" cy="0" r="3.2" fill="#FF578B"/>
+  </g>
+</svg>

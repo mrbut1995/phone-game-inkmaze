@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Gạch nền Lavender -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#A88FE0"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#D2BCFD"/>
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#EAE0FE"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#E2D4FE"/>
+
+  <!-- Đĩa tròn trung tâm màu Teal #48CDE0 -->
+  <rect x="36" y="36" width="104" height="104" rx="20" fill="#2A9AB0"/>
+  <rect x="36" y="33" width="104" height="104" rx="20" fill="#48CDE0"/>
+  <path d="M54 33 Q36 33 36 51 L36 54 Q36 36 54 36 L122 36 Q140 36 140 54 L140 51 Q140 33 122 33 Z" fill="#8CE5F2"/>
+
+  <!-- Mũ tiệc sinh nhật (Cone party hat sọc hồng & tím) -->
+  <g>
+    <!-- Thân nón chóp nhọn -->
+    <path d="M88 56 L62 116 Q88 123 114 116 Z" fill="#FF6E97"/>
+    <!-- Sọc màu Lavender xen kẽ -->
+    <path d="M78 80 L98 80 L103 92 L73 92 Z" fill="#D2BCFD"/>
+    <path d="M67 104 L109 104 Q88 123 67 104 Z" fill="#D2BCFD"/>
+    <!-- Quả bông tròn màu vàng trên đỉnh nón (Gold pompom) -->
+    <circle cx="88" cy="53" r="7" fill="#FDD158"/>
+    <circle cx="88" cy="52" r="4.5" fill="#FFE596"/>
+    <!-- Ngôi sao vàng nhỏ trang trí bên cạnh -->
+    <polygon points="120,62 122,66 126,66 123,69 124,73 120,71 116,73 117,69 114,66 118,66" fill="#FDD158"/>
+  </g>
+</svg>

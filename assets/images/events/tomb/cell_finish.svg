@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="pyramid-sun-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Gạch nền -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#CCA056"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#F8D98E"/>
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#FFF0C8"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#E8A959"/>
+
+  <!-- Đĩa tròn trung tâm màu cát ấm Warm-Sand #E8A959 -->
+  <rect x="36" y="36" width="104" height="104" rx="20" fill="#8C5316"/>
+  <rect x="36" y="33" width="104" height="104" rx="20" fill="#E8A959"/>
+
+  <!-- ĐĨA MẶT TRỜI VÀNG SAU KIM TỰ THÁP VỚI HÀO QUANG ẤM -->
+  <circle cx="88" cy="62" r="28" fill="#FEC84C" opacity="0.45" filter="url(#pyramid-sun-glow)"/>
+  <circle cx="88" cy="62" r="16" fill="#FEC84C"/>
+
+  <!-- KIM TỰ THÁP SA THẠCH 2 TÔNG MÀU (SANDSTONE PYRAMID) -->
+  <g>
+    <!-- Mặt sáng bên phải (Light Sand #FDDFA1) -->
+    <polygon points="88,48 126,118 88,118" fill="#FDDFA1"/>
+    <!-- Mặt tối bên trái (Sand #E8A959 / bóng đổ) -->
+    <polygon points="88,48 50,118 88,118" fill="#CCA056"/>
+
+    <!-- Cửa tam giác phát sáng rực rỡ dưới đáy kim tự tháp (Triangular doorway) -->
+    <polygon points="88,96 79,118 97,118" fill="#FEC84C"/>
+    <polygon points="88,100 81,118 95,118" fill="#FFF0C8"/>
+  </g>
+
+  <!-- 2 CÂY CỌ NGỌC LAM MINI Ở 2 BÊN CHÂN KIM TỰ THÁP (TURQUOISE PALM TREES) -->
+  <!-- Cây cọ bên trái -->
+  <g transform="translate(48 102)">
+    <path d="M4 16 Q3 8 0 0" stroke="#3B200B" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M0 0 Q-8 -6 -10 2" stroke="#38938E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M0 0 Q0 -10 -4 -10" stroke="#38938E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M0 0 Q8 -6 10 0" stroke="#38938E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  </g>
+  <!-- Cây cọ bên phải -->
+  <g transform="translate(128 102)">
+    <path d="M-4 16 Q-3 8 0 0" stroke="#3B200B" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M0 0 Q8 -6 10 2" stroke="#38938E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M0 0 Q0 -10 4 -10" stroke="#38938E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M0 0 Q-8 -6 -10 0" stroke="#38938E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  </g>
+</svg>

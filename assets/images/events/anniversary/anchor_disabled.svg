@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <!-- Dây bóng buông thõng -->
+  <path d="M27 41 L27 52" fill="none" stroke="#8E80A2" stroke-width="1.5" stroke-linecap="round"/>
+  <polygon points="25,39 29,39 27,42" fill="#7B6D90"/>
+  <!-- Bóng xám tím xẹp dáng (#A99BBE), mắt nhắm buồn ngủ, không glow -->
+  <g transform="translate(27 25) scale(0.95, 1.05) translate(-27 -24)">
+    <ellipse cx="27" cy="24" rx="14" ry="15" fill="#A99BBE"/>
+    <ellipse cx="21" cy="16" rx="2.5" ry="1.5" fill="#FFFFFF" opacity="0.3" transform="rotate(-35 21 16)"/>
+    <!-- Mắt nhắm lười biếng -->
+    <path d="M20.5 24.5 Q22 26 23.5 24.5" fill="none" stroke="#32174E" stroke-width="1.2" stroke-linecap="round"/>
+    <path d="M30.5 24.5 Q32 26 33.5 24.5" fill="none" stroke="#32174E" stroke-width="1.2" stroke-linecap="round"/>
+    <!-- Miệng nhỏ buông xuôi -->
+    <circle cx="27" cy="28.5" r="1" fill="#32174E"/>
+  </g>
+</svg>

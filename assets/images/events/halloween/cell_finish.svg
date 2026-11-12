@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="cauldron-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Gạch nền -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#29124A"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#3E1D69"/>
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#582C91"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#4C2E74"/>
+
+  <!-- Đĩa tròn trung tâm Deep Purple #2F1350 -->
+  <rect x="36" y="36" width="104" height="104" rx="20" fill="#170B31"/>
+  <rect x="36" y="33" width="104" height="104" rx="20" fill="#2F1350"/>
+
+  <!-- Vầng sáng ấm Moon Cream & Pumpkin Orange sau vạc thuốc -->
+  <circle cx="88" cy="74" r="32" fill="#FF8722" opacity="0.35" filter="url(#cauldron-glow)"/>
+
+  <!-- BONG BÓNG VÀ TIA SÁNG BỐC LÊN -->
+  <circle cx="82" cy="56" r="4.5" fill="#FBE5A9"/>
+  <circle cx="96" cy="50" r="3.5" fill="#FF8722"/>
+  <circle cx="74" cy="66" r="3" fill="#FF8722"/>
+  <circle cx="102" cy="62" r="2.5" fill="#FBE5A9"/>
+  <!-- Sparkles -->
+  <polygon points="88,38 89.5,42 93.5,42 90.5,44 91.5,48 88,46 84.5,48 85.5,44 82.5,42 86.5,42" fill="#FBE5A9"/>
+
+  <!-- VẠC PHÙ THỦY (WITCH CAULDRON IN DARK PURPLE) -->
+  <g>
+    <!-- 2 chân vạc -->
+    <path d="M68 120 L64 127 L72 127 Z" fill="#170B31"/>
+    <path d="M108 120 L112 127 L104 127 Z" fill="#170B31"/>
+
+    <!-- Bụng vạc tròn bầu tròn -->
+    <circle cx="88" cy="98" r="26" fill="#170B31"/>
+    <circle cx="88" cy="98" r="24" fill="#231046"/>
+
+    <!-- Miệng vành vạc dày dặn -->
+    <ellipse cx="88" cy="80" rx="27" ry="7" fill="#170B31"/>
+
+    <!-- Thuốc phép sôi sùng sục tràn trề (Bubbling potion) -->
+    <ellipse cx="88" cy="79" rx="23" ry="5.5" fill="#FF8722"/>
+    <!-- Bong bóng thuốc trào ra mép vạc -->
+    <circle cx="76" cy="78" r="6" fill="#FBE5A9"/>
+    <circle cx="88" cy="76" r="7" fill="#FF8722"/>
+    <circle cx="98" cy="77" r="5.5" fill="#FBE5A9"/>
+    <!-- Vết thuốc kem chảy tràn xuống thân vạc -->
+    <path d="M74 82 Q74 92 78 92 Q82 92 82 82 Z" fill="#FBE5A9"/>
+  </g>
+</svg>

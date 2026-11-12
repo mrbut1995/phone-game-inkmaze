@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <defs>
+    <filter id="gold-glow-sel" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="0" stdDeviation="4.5" flood-color="#FDD158" flood-opacity="0.85"/>
+    </filter>
+  </defs>
+  <!-- Vòng vuông bo góc nét đứt màu vàng gold -->
+  <rect x="4.5" y="4.5" width="45" height="45" rx="10" fill="none" stroke="#FDD158" stroke-width="2.5" stroke-dasharray="5 3.5"/>
+  <!-- Ngôi sao vàng nhỏ kế bên -->
+  <polygon points="43,9 44.5,13 49,13 45.5,15.5 47,19.5 43,17 39,19.5 40.5,15.5 37,13 41.5,13" fill="#FDD158"/>
+  <!-- Dây bóng -->
+  <path d="M27 41 Q24 46 28 48 Q31 50 27 53" fill="none" stroke="#F5B7DD" stroke-width="1.6" stroke-linecap="round"/>
+  <polygon points="25,39 29,39 27,42" fill="#E0527B"/>
+  <!-- Bóng phóng to nhẹ (scale 1.08), phát sáng rực rỡ -->
+  <g transform="translate(27 24) scale(1.08) translate(-27 -24)" filter="url(#gold-glow-sel)">
+    <circle cx="27" cy="24" r="15" fill="#FF6E97"/>
+    <ellipse cx="21" cy="16" rx="3.5" ry="2" fill="#FFFFFF" opacity="0.75" transform="rotate(-35 21 16)"/>
+    <circle cx="22" cy="24" r="1.5" fill="#32174E"/>
+    <circle cx="32" cy="24" r="1.5" fill="#32174E"/>
+    <path d="M25.5 28 Q27 30.5 28.5 28" fill="none" stroke="#32174E" stroke-width="1.3" stroke-linecap="round"/>
+    <circle cx="18.5" cy="26" r="2.2" fill="#F5B7DD"/>
+    <circle cx="35.5" cy="26" r="2.2" fill="#F5B7DD"/>
+  </g>
+</svg>

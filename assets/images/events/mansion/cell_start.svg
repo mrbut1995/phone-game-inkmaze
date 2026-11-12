@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="lantern-glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+  <!-- Normal tile base -->
+  <rect x="2" y="2" width="172" height="172" rx="16" fill="#11292D"/>
+  <rect x="2" y="2" width="172" height="168" rx="16" fill="#1E3D42"/>
+  <rect x="12" y="12" width="152" height="152" rx="10" fill="#163237"/>
+
+  <!-- Green rounded center plate -->
+  <rect x="30" y="30" width="116" height="116" rx="18" fill="#378E6C"/>
+  <rect x="30" y="30" width="116" height="112" rx="18" fill="#49B287"/>
+
+  <!-- Black wrought-iron gate silhouette -->
+  <g fill="#0D1C1F">
+    <!-- Base & arch posts -->
+    <rect x="46" y="112" width="84" height="7" rx="2"/>
+    <rect x="52" y="58" width="6" height="56" rx="2"/>
+    <rect x="118" y="58" width="6" height="56" rx="2"/>
+    <rect x="52" y="70" width="72" height="4"/>
+    <rect x="52" y="98" width="72" height="4"/>
+    <!-- Bars with spikes -->
+    <path d="M 68 112 L 68 62 L 70 54 L 72 62 L 72 112 Z"/>
+    <path d="M 87 112 L 87 58 L 88.5 50 L 90 58 L 90 112 Z"/>
+    <path d="M 104 112 L 104 62 L 106 54 L 108 62 L 108 112 Z"/>
+  </g>
+
+  <!-- Glowing Hanging Lantern -->
+  <path d="M 88.5 52 L 88.5 64" stroke="#0D1C1F" stroke-width="2"/>
+  <circle cx="88.5" cy="72" r="9" fill="#FFD567" opacity="0.35" filter="url(#lantern-glow)"/>
+  <polygon points="85,64 92,64 94,76 83,76" fill="#FFD567"/>
+  <polygon points="86,64 91,64 92,67 85,67" fill="#0D1C1F"/>
+  <rect x="84" y="76" width="9" height="2" fill="#0D1C1F"/>
+</svg>

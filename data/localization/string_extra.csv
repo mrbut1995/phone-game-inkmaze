@@ -1526,3 +1526,12 @@ STR_NF_STEPS,STEPS,BƯỚC
 STR_WC_TITLE,VICTORY!,CHIẾN THẮNG!
 STR_CHAPTER_5_NAME,MASTER,BẬC THẦY
 STR_CHAPTER_5_SUB,Huge mazes — the final challenge,Mê cung khổng lồ — thử thách cuối cùng
+STR_EVENT_FLOOR_FORMAT,FLOOR {0}/{1},TẦNG {0}/{1}
+STR_EVENT_FINISH,COMPLETE,HOÀN THÀNH
+STR_EVENT_CONT_TITLE,FLOOR CLEARED!,QUA TẦNG!
+STR_EVENT_CONT_REMAIN,{0} more floors to finish the event,Còn {0} tầng nữa là kết thúc sự kiện
+STR_EVENT_CONT_LAST,Only 1 floor left!,Còn 1 tầng cuối cùng!
+STR_EVENT_WIN_TITLE,EVENT COMPLETE!,CHINH PHỤC SỰ KIỆN!
+STR_EVENT_WIN_DONE,You cleared all {0} floors,Bạn đã vượt qua cả {0} tầng
+STR_EVENT_WIN_REWARD,REWARDS,PHẦN THƯỞNG
+STR_EVENT_WIN_HOME,BACK TO MENU,VỀ MENU

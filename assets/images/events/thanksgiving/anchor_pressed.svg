@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <!-- 2 chân nhỏ -->
+  <line x1="24" y1="43" x2="24" y2="48" stroke="#C95A08" stroke-width="2" stroke-linecap="round"/>
+  <line x1="30" y1="43" x2="30" y2="48" stroke="#C95A08" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Đuôi gập gọn xuống (Tail feathers folded) -->
+  <path d="M27 34 L18 24 Q27 20 36 24 Z" fill="#8E2A18"/>
+
+  <!-- Gà tây ép dẹp nhẹ (squashed), màu đỏ sẫm #8E2A18, không glow -->
+  <g transform="translate(27 33) scale(1.15, 0.88) translate(-27 -30)">
+    <ellipse cx="27" cy="32" rx="13" ry="11" fill="#8E2A18"/>
+    <ellipse cx="27" cy="35" rx="8" ry="6.5" fill="#E5C794"/>
+    <circle cx="27" cy="23" r="7.5" fill="#8E2A18"/>
+
+    <polygon points="25,24 29,24 27,28" fill="#FBBB5A"/>
+    <path d="M28 25 C30 25 31 28 29 30 C28 31 27 29 27 27 Z" fill="#6B1D0E"/>
+
+    <circle cx="23.5" cy="22.5" r="1.5" fill="#2B0A01"/>
+    <circle cx="23" cy="22" r="0.5" fill="#FFFFFF"/>
+    <circle cx="30.5" cy="22.5" r="1.5" fill="#2B0A01"/>
+    <circle cx="30" cy="22" r="0.5" fill="#FFFFFF"/>
+  </g>
+</svg>

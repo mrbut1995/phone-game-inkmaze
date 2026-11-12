@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <defs>
+    <filter id="ghost-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+  <!-- Mint Glow -->
+  <path d="M 25 10 C 17 10 13 16 13 24 C 13 32 17 37 23 37 C 28 37 32 34 35 37 C 38 40 37 43 33 43 C 40 44 43 38 40 33 C 38 30 37 26 37 23 C 37 15 32 10 25 10 Z" fill="#BAF7D5" opacity="0.4" filter="url(#ghost-glow)"/>
+  <!-- Body -->
+  <path d="M 25 10 C 17 10 13 16 13 24 C 13 32 17 37 23 37 C 28 37 32 34 35 37 C 38 40 37 43 33 43 C 40 44 43 38 40 33 C 38 30 37 26 37 23 C 37 15 32 10 25 10 Z" fill="#BAF7D5"/>
+  <!-- Cheeks -->
+  <circle cx="18" cy="26" r="2" fill="#8FD9B8" opacity="0.5"/>
+  <circle cx="31" cy="26" r="2" fill="#8FD9B8" opacity="0.5"/>
+  <!-- Eyes -->
+  <ellipse cx="20.5" cy="22" rx="1.6" ry="2.4" fill="#0D1C1F"/>
+  <ellipse cx="28.5" cy="22" rx="1.6" ry="2.4" fill="#0D1C1F"/>
+  <!-- Mouth -->
+  <circle cx="24.5" cy="27" r="1.3" fill="#0D1C1F"/>
+</svg>

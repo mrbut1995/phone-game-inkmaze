@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 505 508" width="505" height="508">
+  <defs>
+    <!-- Đổ bóng tím đậm mềm dưới khung -->
+    <filter id="hallow-board-shadow" x="-8%" y="-8%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#0B0418" flood-opacity="0.7"/>
+    </filter>
+    <filter id="cream-star-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="glow"/>
+      <feComposite in="SourceGraphic" in2="glow" operator="over"/>
+    </filter>
+    <filter id="jack-lamp-glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="5" result="glow"/>
+      <feComposite in="SourceGraphic" in2="glow" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Bóng đổ toàn khung -->
+  <g filter="url(#hallow-board-shadow)">
+    <!-- Viền mỏng Moon Cream #FBE5A9 -->
+    <rect x="15" y="14" width="475" height="478" rx="26" fill="#FBE5A9"/>
+    <!-- Thân khung màu Purple #52287C -->
+    <rect x="17.5" y="16.5" width="470" height="473" rx="24" fill="#52287C"/>
+    <!-- Gờ sáng trên đỉnh tạo độ dày khối giấy -->
+    <path d="M42 16.5 Q17.5 16.5 17.5 41 L17.5 46 Q17.5 22 42 22 L463 22 Q487.5 22 487.5 46 L487.5 41 Q487.5 16.5 463 16.5 Z" fill="#6B35A1"/>
+  </g>
+
+  <!-- LÒNG BÀN CỜ 5x5: Night Purple #170B31 (440x440 chuẩn vuông, ~87% chiều rộng) -->
+  <rect x="32.5" y="38" width="440" height="440" rx="14" fill="#0C041C"/>
+  <rect x="32.5" y="38" width="440" height="440" rx="14" fill="#170B31"/>
+  <!-- Vát bóng chìm mép trong -->
+  <rect x="32.5" y="38" width="440" height="5" fill="#090214" opacity="0.65"/>
+
+  <!-- MẠNG NHỆN NHỎ GÓC TRÊN TRÁI (#FBE5A9 mờ nhẹ) -->
+  <g fill="#FBE5A9" opacity="0.35">
+    <path d="M22 22 L62 22 C52 32 32 52 22 62 Z"/>
+    <path d="M22 22 L45 22 C39 27 27 39 22 45 Z"/>
+    <path d="M22 22 L30 22 C26 25 25 26 22 30 Z"/>
+  </g>
+
+  <!-- 2 CHÚ DƠI NHỎ GÓC TRÊN (DEEP PURPLE #2F1350) -->
+  <!-- Dơi góc trái -->
+  <g transform="translate(68 28) rotate(-12)" fill="#2F1350">
+    <path d="M0 0 C4 -6 12 -6 14 -2 C11 2 9 4 5 3 C4 6 2 7 0 7 C-2 7 -4 6 -5 3 C-9 4 -11 2 -14 -2 C-12 -6 -4 -6 0 0 Z"/>
+  </g>
+  <!-- Dơi góc phải -->
+  <g transform="translate(435 28) rotate(15)" fill="#2F1350">
+    <path d="M0 0 C4 -6 12 -6 14 -2 C11 2 9 4 5 3 C4 6 2 7 0 7 C-2 7 -4 6 -5 3 C-9 4 -11 2 -14 -2 C-12 -6 -4 -6 0 0 Z"/>
+  </g>
+
+  <!-- NGÔI SAO KEM Ở ĐỈNH GIỮA (MOON CREAM #FBE5A9) -->
+  <g filter="url(#cream-star-glow)">
+    <polygon points="252.5,10 256,20 266,20 258,26 261,36 252.5,30 244,36 247,26 239,20 249,20" fill="#FBE5A9"/>
+  </g>
+
+  <!-- BỤI CỎ ĐÊM VÀ THÁNH GIÁ DỌC CẠNH ĐÁY -->
+  <g fill="#2F1350">
+    <!-- Cụm cỏ trái -->
+    <polygon points="85,490 89,480 93,490 98,477 103,490"/>
+    <polygon points="175,490 179,481 183,490 188,478 193,490"/>
+    <!-- Thánh giá nhỏ trái -->
+    <rect x="135" y="476" width="3" height="14" rx="1"/>
+    <rect x="131" y="480" width="11" height="3" rx="1"/>
+
+    <!-- Cụm cỏ giữa -->
+    <polygon points="245,490 250,478 255,490 260,476 265,490"/>
+
+    <!-- Thánh giá nhỏ phải -->
+    <rect x="365" y="476" width="3" height="14" rx="1"/>
+    <rect x="361" y="480" width="11" height="3" rx="1"/>
+    <!-- Cụm cỏ phải -->
+    <polygon points="310,490 314,481 318,490 323,478 328,490"/>
+    <polygon points="405,490 409,480 413,490 418,477 423,490"/>
+  </g>
+
+  <!-- 2 ĐÈN BÍ NGÔ MINI PHÁT SÁNG Ở 2 GÓC ĐÁY -->
+  <!-- Góc đáy trái -->
+  <g transform="translate(42 464)" filter="url(#jack-lamp-glow)">
+    <!-- Cuống xanh tím -->
+    <path d="M0 -7 Q3 -10 2 -12" stroke="#4C2E74" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- Quả bí ngô -->
+    <ellipse cx="0" cy="0" rx="12" ry="9" fill="#FF8722"/>
+    <ellipse cx="0" cy="0" rx="6" ry="9" fill="#E06C0E"/>
+    <!-- Mặt cười phát sáng Moon Cream -->
+    <polygon points="-5,-2 -3,-5 -1,-2" fill="#FBE5A9"/>
+    <polygon points="1,-2 3,-5 5,-2" fill="#FBE5A9"/>
+    <path d="M-6 2 Q0 8 6 2 Q4 5 0 5 Q-4 5 -6 2 Z" fill="#FBE5A9"/>
+  </g>
+
+  <!-- Góc đáy phải -->
+  <g transform="translate(463 464)" filter="url(#jack-lamp-glow)">
+    <path d="M0 -7 Q-3 -10 -2 -12" stroke="#4C2E74" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <ellipse cx="0" cy="0" rx="12" ry="9" fill="#FF8722"/>
+    <ellipse cx="0" cy="0" rx="6" ry="9" fill="#E06C0E"/>
+    <polygon points="-5,-2 -3,-5 -1,-2" fill="#FBE5A9"/>
+    <polygon points="1,-2 3,-5 5,-2" fill="#FBE5A9"/>
+    <path d="M-6 2 Q0 8 6 2 Q4 5 0 5 Q-4 5 -6 2 Z" fill="#FBE5A9"/>
+  </g>
+</svg>

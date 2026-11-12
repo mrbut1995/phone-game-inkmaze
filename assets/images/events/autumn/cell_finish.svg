@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="stump-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Gạch nền -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#DCA36E"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#FFE3BD"/>
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#FFF2DF"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#FFCD98"/>
+
+  <!-- Đĩa tròn trung tâm màu Warm Brown #5A2A0C -->
+  <rect x="36" y="36" width="104" height="104" rx="20" fill="#280E01"/>
+  <rect x="36" y="33" width="104" height="104" rx="20" fill="#5A2A0C"/>
+
+  <!-- Vầng sáng vàng ấm sau ngôi nhà gốc cây -->
+  <circle cx="88" cy="80" r="32" fill="#F4AC3D" opacity="0.35" filter="url(#stump-glow)"/>
+
+  <!-- Ngôi nhà gốc cây rỗng (Hollow tree stump house) -->
+  <g fill="#280E01">
+    <!-- Thân gốc cây với các rễ tỏa ra -->
+    <path d="M64 120 L68 76 Q76 72 88 72 Q100 72 108 76 L112 120 Q122 124 126 126 L50 126 Q54 124 64 120 Z"/>
+    <!-- Nhánh cành nhỏ trên đỉnh -->
+    <path d="M72 74 Q70 66 64 64 L68 64 Q74 68 76 73 Z"/>
+  </g>
+
+  <!-- Cửa vòm và cửa sổ phát sáng vàng Golden Yellow -->
+  <g fill="#F4AC3D">
+    <!-- Cửa chính hình vòm sáng ấm -->
+    <path d="M82 100 Q88 94 94 100 L94 122 L82 122 Z"/>
+    <!-- Cửa sổ tròn nhỏ phát sáng -->
+    <circle cx="88" cy="84" r="5"/>
+    <circle cx="88" cy="84" r="2" fill="#FFE3BD"/>
+  </g>
+
+  <!-- Cây nấm đốm đỏ và lá rụng dưới gốc -->
+  <g>
+    <!-- Nấm đốm đỏ bên phải gốc cây -->
+    <path d="M110 114 L110 124 L107 124 L107 114 Z" fill="#FFE3BD"/>
+    <path d="M103 114 C103 107 114 107 114 114 Z" fill="#B83020"/>
+    <circle cx="106" cy="111" r="1" fill="#FFE3BD"/>
+    <circle cx="111" cy="111" r="0.8" fill="#FFE3BD"/>
+    <!-- Vài chiếc lá phong đỏ bay lơ lửng -->
+    <path d="M58 84 L60 86 L63 84 L62 87 L66 87 L63 89 L64 92 L61 90 L60 93 L59 89 L56 91 L58 88 L55 86 L59 86 Z" fill="#B83020"/>
+    <path d="M116 76 L118 78 L121 76 L120 79 L124 79 L121 81 L122 84 L119 82 L118 85 L117 81 L114 83 L116 80 L113 78 L117 78 Z" fill="#E27017"/>
+  </g>
+</svg>

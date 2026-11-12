@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="egg-finish-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Gạch nền -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#E5D9AE"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#FFF4D1"/>
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#FEF7E4"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#FDEBA8"/>
+
+  <!-- Đĩa tròn trung tâm Leaf Green #2F7A4A -->
+  <rect x="36" y="36" width="104" height="104" rx="20" fill="#144B2E"/>
+  <rect x="36" y="33" width="104" height="104" rx="20" fill="#2F7A4A"/>
+
+  <!-- Vầng sáng vàng Butter Yellow và tia sao bừng nở quanh quả trứng -->
+  <circle cx="88" cy="82" r="34" fill="#FDE07A" opacity="0.4" filter="url(#egg-finish-glow)"/>
+  <polygon points="88,52 92,68 108,68 95,78 100,94 88,84 76,94 81,78 68,68 84,68" fill="#FDE07A"/>
+
+  <!-- Quả trứng Phục Sinh lớn đứng thẳng (Decorated Easter Egg) -->
+  <g>
+    <!-- Thân trứng hồng Pastel #F5B1C8 -->
+    <path d="M88 56 C68 56 64 88 64 104 C64 120 74 126 88 126 C102 126 112 120 112 104 C112 88 108 56 88 56 Z" fill="#F5B1C8"/>
+    <!-- Họa tiết Zigzag màu Lavender #C6B3EB -->
+    <path d="M64 92 L72 86 L80 92 L88 86 L96 92 L104 86 L112 92 L112 99 L104 93 L96 99 L88 93 L80 99 L72 93 L64 99 Z" fill="#C6B3EB"/>
+    <!-- Chấm bi vàng Butter Yellow #FDE07A -->
+    <circle cx="76" cy="74" r="3" fill="#FDE07A"/>
+    <circle cx="88" cy="70" r="3.2" fill="#FDE07A"/>
+    <circle cx="100" cy="74" r="3" fill="#FDE07A"/>
+    <circle cx="76" cy="112" r="2.8" fill="#FDE07A"/>
+    <circle cx="88" cy="115" r="3" fill="#FDE07A"/>
+    <circle cx="100" cy="112" r="2.8" fill="#FDE07A"/>
+  </g>
+
+  <!-- Vài bông hoa cúc nhỏ dưới chân trứng -->
+  <g transform="translate(62 120)">
+    <circle cx="0" cy="0" r="2" fill="#FDE07A"/>
+    <circle cx="0" cy="-3" r="1.3" fill="#FEF7E4"/>
+    <circle cx="0" cy="3" r="1.3" fill="#FEF7E4"/>
+    <circle cx="-3" cy="0" r="1.3" fill="#FEF7E4"/>
+    <circle cx="3" cy="0" r="1.3" fill="#FEF7E4"/>
+  </g>
+  <g transform="translate(114 120)">
+    <circle cx="0" cy="0" r="2" fill="#FDE07A"/>
+    <circle cx="0" cy="-3" r="1.3" fill="#FEF7E4"/>
+    <circle cx="0" cy="3" r="1.3" fill="#FEF7E4"/>
+    <circle cx="-3" cy="0" r="1.3" fill="#FEF7E4"/>
+    <circle cx="3" cy="0" r="1.3" fill="#FEF7E4"/>
+  </g>
+</svg>

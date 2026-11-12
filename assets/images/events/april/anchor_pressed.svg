@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <!-- Chân đứng -->
+  <path d="M30 40 L30 51 L26 51" fill="none" stroke="#D94FA8" stroke-width="1.8" stroke-linecap="round"/>
+  <!-- Thân màu hồng đậm #D94FA8, ép dẹp nhẹ (squashed), không glow -->
+  <g transform="translate(27 30) scale(1.12, 0.88) translate(-27 -28)">
+    <ellipse cx="31" cy="30" rx="12" ry="10" fill="#D94FA8"/>
+    <path d="M25 32 C23 25 18 24 18 18 C18 13 23 11 25 14 C27 17 23 22 29 28 Z" fill="#D94FA8"/>
+    <circle cx="21" cy="15" r="5.5" fill="#D94FA8"/>
+    <path d="M16 16 L11 19 Q11 21 14 20 L16 18 Z" fill="#3A0648"/>
+    <path d="M26 27 C29 25 38 25 41 29 C41 34 34 36 28 35 Z" fill="#FDC1E3" opacity="0.8"/>
+    <circle cx="19.5" cy="14" r="1.5" fill="#000000"/>
+    <circle cx="19" cy="13.5" r="0.6" fill="#FFFFFF"/>
+  </g>
+</svg>

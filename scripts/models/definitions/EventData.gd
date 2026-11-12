@@ -101,6 +101,16 @@ func total_progress() -> int:
 			return 1
 
 
+## Event chạy THEO CHUỖI MÀN TẠO SẴN (chơi liên tục, hết màn này sang màn kế — không chọn màn)
+func is_level_series() -> bool:
+	return type in [Type.SPECIAL_SERIES, Type.STANDARD_SERIES] and not levels.is_empty()
+
+
+## Skin bàn chơi của event (null = dùng art mặc định)
+func board_skin() -> EventBoardSkin:
+	return theme.board_skin if theme != null else null
+
+
 ## Trả true nếu event đang trong thời hạn hoạt động (dùng giờ UTC hiện tại)
 ## DAILY luôn trả true
 func is_active_now(now_unix: int) -> bool:

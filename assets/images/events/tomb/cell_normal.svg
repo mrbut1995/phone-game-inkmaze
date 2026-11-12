@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Đáy gạch màu cát sẫm lót khối -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#CCA056"/>
+  <!-- Mặt gạch Light Cream-Sand #F8D98E -->
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#F8D98E"/>
+  <!-- Gờ sáng bóng trên đỉnh -->
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#FFF0C8"/>
+  <!-- Lòng gạch lún màu cát ấm hơn một tông -->
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#E8A959"/>
+
+  <!-- Sparkle kim cương nhỏ ở 2 góc -->
+  <polygon points="32,26 34,30 38,30 35,32.5 36,36.5 32,34 28,36.5 29,32.5 26,30 30,30" fill="#FEC84C" opacity="0.6"/>
+  <polygon points="144,138 145.5,142 149.5,142 146.5,144.5 147.5,148.5 144,146 140.5,148.5 141.5,144.5 138.5,142 142.5,142" fill="#FEC84C" opacity="0.6"/>
+</svg>

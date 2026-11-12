@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Pressed base -->
+  <rect x="2" y="2" width="172" height="172" rx="16" fill="#378E6C"/>
+  <!-- Glowing bright green tile -->
+  <rect x="2" y="2" width="172" height="168" rx="16" fill="#49B287"/>
+  <!-- Mint lighter top edge highlight -->
+  <path d="M 18 6 L 158 6 C 166 6 170 10 170 16 L 170 20 L 6 20 L 6 16 C 6 10 10 6 18 6 Z" fill="#BAF7D5" opacity="0.6"/>
+  <!-- Inner pressed plate -->
+  <rect x="12" y="14" width="152" height="150" rx="10" fill="#52C294" opacity="0.85"/>
+</svg>

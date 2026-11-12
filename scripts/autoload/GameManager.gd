@@ -310,6 +310,68 @@ func start_level_from_event(level: LevelData, event_id: StringName) -> void:
 	_enter_game_scene()
 
 
+## Vào CHUỖI MÀN của sự kiện: chơi liên tục từ màn chưa xong đầu tiên (không chọn màn).
+## Trả false nếu event không phải chuỗi màn tạo sẵn.
+func start_event_series(event_id: StringName) -> bool:
+	var em := Svc.event()
+	if em == null:
+		return false
+	var ev: EventData = em.call("get_event", event_id)
+	if ev == null or not ev.is_level_series():
+		return false
+	var idx := int(em.call("first_unfinished_index", event_id))
+	start_level_from_event(ev.levels[clampi(idx, 0, ev.levels.size() - 1)], event_id)
+	return true
+
+
+## Ván hiện tại là 1 tầng trong CHUỖI MÀN của sự kiện?
+func is_event_series_run() -> bool:
+	return event_series_info().get("total", 0) > 0
+
+
+## { event_id, index (0-based), floor (1-based), total, remaining (số tầng CÒN LẠI sau tầng này),
+##   last (bool) } — rỗng nếu không phải ván chuỗi sự kiện
+func event_series_info() -> Dictionary:
+	if current_event_id.is_empty() or event_level == null:
+		return {}
+	var em := Svc.event()
+	if em == null:
+		return {}
+	var ev: EventData = em.call("get_event", current_event_id)
+	if ev == null or not ev.is_level_series():
+		return {}
+	var idx := -1
+	for i in ev.levels.size():
+		if ev.levels[i].level_id == event_level.level_id:
+			idx = i
+			break
+	if idx < 0:
+		return {}
+	var total := ev.levels.size()
+	return {"event_id": current_event_id, "index": idx, "floor": idx + 1, "total": total,
+		"remaining": total - idx - 1, "last": idx == total - 1}
+
+
+## Sang tầng kế của chuỗi sự kiện. Trả false nếu đã hết tầng.
+func start_next_event_level() -> bool:
+	var info := event_series_info()
+	if info.is_empty() or bool(info.get("last", true)):
+		return false
+	var em := Svc.event()
+	var ev: EventData = em.call("get_event", current_event_id)
+	start_level_from_event(ev.levels[int(info["index"]) + 1], current_event_id)
+	return true
+
+
+## Skin bàn chơi của event đang chơi (null = không phải ván event / event không có skin)
+func event_board_skin() -> EventBoardSkin:
+	if current_event_id.is_empty():
+		return null
+	var em := Svc.event()
+	var ev: EventData = em.call("get_event", current_event_id) if em != null else null
+	return ev.board_skin() if ev != null else null
+
+
 ## Xoá trạng thái ván sự kiện (gọi khi bắt đầu ván KHÔNG phải event)
 func clear_event_run() -> void:
 	current_event_id = &""

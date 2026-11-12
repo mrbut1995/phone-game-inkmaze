@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Gạch màu tím tối sẫm Dark Purple #231046 -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#130829"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#231046"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#1C0C38"/>
+
+  <!-- Mạng nhện góc trên phải -->
+  <g fill="#FBE5A9" opacity="0.25">
+    <path d="M160 16 L120 16 C128 24 152 48 160 56 Z"/>
+    <path d="M160 16 L138 16 C143 21 155 33 160 38 Z"/>
+  </g>
+
+  <!-- Xích bắt chéo nét đứt màu Soft Purple #4C2E74 -->
+  <line x1="24" y1="24" x2="152" y2="152" stroke="#4C2E74" stroke-width="10" stroke-dasharray="14 7" stroke-linecap="round"/>
+  <line x1="152" y1="24" x2="24" y2="152" stroke="#371E57" stroke-width="10" stroke-dasharray="14 7" stroke-linecap="round"/>
+
+  <!-- Bóng tròn sau ổ khóa -->
+  <circle cx="88" cy="94" r="32" fill="#170B31" opacity="0.6"/>
+
+  <!-- Ổ khóa xám tím Purple-Gray ở trung tâm với lỗ khóa cam -->
+  <g transform="translate(88 88)">
+    <!-- Quai khóa sáng màu #B79ADB -->
+    <path d="M-18 -8 V-24 A18 18 0 0 1 18 -24 V-8" fill="none" stroke="#B79ADB" stroke-width="9" stroke-linecap="round"/>
+    <!-- Thân khóa #7A6A8A -->
+    <rect x="-28" y="-8" width="56" height="46" rx="9" fill="#7A6A8A"/>
+    <!-- Băng đáy tối màu -->
+    <path d="M-28 17 Q-28 38 -9 38 L9 38 Q28 38 28 17 L28 12 L-28 12 Z" fill="#524460"/>
+    <!-- Lỗ khóa màu cam Pumpkin Orange #FF8722 -->
+    <circle cx="0" cy="11" r="5" fill="#FF8722"/>
+    <polygon points="-3,12 3,12 2,24 -2,24" fill="#FF8722"/>
+  </g>
+</svg>

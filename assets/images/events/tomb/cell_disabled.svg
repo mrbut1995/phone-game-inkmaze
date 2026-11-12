@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Gạch màu dusty tan #C9A06A mờ phẳng -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#997445"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#C9A06A"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#B38B57"/>
+  <!-- Đường nứt nhỏ mờ trên đá sa thạch góc trên (Crack line) -->
+  <path d="M24 24 L34 32 L30 40 L40 46" fill="none" stroke="#856338" stroke-width="1.8" stroke-linecap="round" opacity="0.6"/>
+</svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <!-- Nhím màu xám nâu #8A6A55, mắt nhắm buồn ngủ, không phát sáng -->
+  <g>
+    <rect x="22" y="38" width="4" height="4" rx="1.5" fill="#5A4334"/>
+    <rect x="34" y="38" width="4" height="4" rx="1.5" fill="#5A4334"/>
+    <path d="M14 36 L12 30 L16 32 L13 24 L18 27 L16 19 L22 23 L22 16 L28 21 L30 15 L35 22 L40 18 L39 25 L45 23 L41 31 L46 32 L40 37 Z" fill="#8A6A55"/>
+    <path d="M22 37 C18 37 18 30 24 28 C28 26 34 26 39 28 L44 32 C45 33 44 35 42 35 L40 36 C36 37 28 37 22 37 Z" fill="#D9B993"/>
+    <circle cx="44.5" cy="32.5" r="1.4" fill="#5A4334"/>
+    <!-- Mắt nhắm ngủ lười biếng -->
+    <path d="M34.5 30 Q36 32 37.5 30" fill="none" stroke="#5A4334" stroke-width="1.3" stroke-linecap="round"/>
+  </g>
+</svg>

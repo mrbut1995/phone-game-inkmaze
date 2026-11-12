@@ -29,6 +29,10 @@ extends Control
 @export var texture_normal: Texture2D = null
 @export var texture_start: Texture2D = null
 @export var texture_finish: Texture2D = null
+## EVENT skin: art ô KHOÁ có ổ khoá VẼ SẴN (ô thường · ô đích). Để trống (mặc định) thì ô khoá vẫn
+## là art thường + lớp `lock` phủ giữa ô + làm tối như cũ.
+@export var texture_locked: Texture2D = null
+@export var texture_finish_closed: Texture2D = null
 
 ## Mực phai (Fading Ink): tỉ lệ cỡ chữ phụ so với cỡ số trên ô (số gốc 56 -> 11 / 22)
 @export var WARN_TEXT_RATIO := 11.0 / 56.0
@@ -71,6 +75,8 @@ func _play_anim(anim_name: StringName) -> bool:
 
 
 var _locked := false
+## Nội dung ô hiện tại: "S" xuất phát · "F" đích · "N" ô thường (để chọn đúng art khi khoá/mở khoá)
+var _content := "N"
 
 
 func set_text(text: String) -> void:
@@ -81,6 +87,7 @@ func set_text(text: String) -> void:
 
 
 func _set_text_raw(text: String) -> void:
+	_content = text if text == "S" or text == "F" else "N"
 	if text == "S":
 		if button != null:
 			button.texture_normal = texture_start
@@ -99,6 +106,27 @@ func _set_text_raw(text: String) -> void:
 		if label != null:
 			label.text = text
 			label.visible = not text.is_empty()
+	# Có art ô khoá riêng (skin event): giữ đúng art khi chữ ô đổi lúc đang khoá
+	if texture_locked != null:
+		_apply_base_texture()
+
+
+## Chọn art nền ô theo NỘI DUNG + trạng thái KHOÁ (chỉ dùng khi có `texture_locked` của skin event)
+func _apply_base_texture() -> void:
+	if button == null:
+		return
+	var tex: Texture2D = texture_normal
+	if _content == "S":
+		tex = texture_start
+	elif _content == "F":
+		tex = texture_finish
+	if _locked:
+		if _content == "F":
+			if texture_finish_closed != null:
+				tex = texture_finish_closed
+		elif _content == "N" and texture_locked != null:
+			tex = texture_locked
+	button.texture_normal = tex
 
 
 ## Cỡ chữ SỐ đang dùng trên ô (0 = scene chưa khai LabelSettings) — Board đọc giá trị này
@@ -241,12 +269,15 @@ func set_focused(active: bool) -> void:
 ## Bật/tắt trạng thái KHOÁ: hiện ổ khoá, ẩn số, làm tối nền ô.
 func set_locked(on: bool) -> void:
 	_locked = on
+	var baked := texture_locked != null   # skin event: ổ khoá đã vẽ sẵn trong art ô
 	if lock != null:
-		lock.visible = on
+		lock.visible = on and not baked
 	if label != null:
 		label.visible = (not on) and not label.text.is_empty()
+	if baked:
+		_apply_base_texture()
 	if button != null:
-		button.self_modulate = Color(0.62, 0.64, 0.72, 1.0) if on else Color.WHITE
+		button.self_modulate = Color(0.62, 0.64, 0.72, 1.0) if on and not baked else Color.WHITE
 
 
 func is_locked_visual() -> bool:

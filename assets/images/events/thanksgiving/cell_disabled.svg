@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Gạch màu dusty tan-brown #C9A57E mờ phẳng -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#9C7752"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#C9A57E"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#B5916A"/>
+  <!-- Chiếc lá khô mờ góc trên (Faded dry leaf) -->
+  <path d="M26 26 Q36 28 38 38 Q28 36 26 26 Z" fill="#DDC19E" opacity="0.45"/>
+</svg>

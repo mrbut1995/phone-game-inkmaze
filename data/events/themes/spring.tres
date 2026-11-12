@@ -4,6 +4,7 @@
 [ext_resource uid="uid://dvlkx5arodqi5" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_spring_normal.png" id="btn_normal"]
 [ext_resource uid="uid://bvgumxs37km8" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_spring_pressed.png" id="btn_pressed"]
 [ext_resource uid="uid://dj8rpxwofgkmv" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_spring_disabled.png" id="btn_disabled"]
+[ext_resource type="Resource" path="res://data/events/skins/spring_board.tres" id="board_skin"]
 
 [resource]
 script = ExtResource("1_script")
@@ -25,3 +26,4 @@ chip_text = Color(0.16470589, 0.31764707, 0.21960784, 1)
 button_normal = ExtResource("btn_normal")
 button_pressed = ExtResource("btn_pressed")
 button_disabled = ExtResource("btn_disabled")
+board_skin = ExtResource("board_skin")

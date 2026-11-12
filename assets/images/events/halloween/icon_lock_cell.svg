@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="keyhole-orange-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Bóng tròn màu Night Purple mềm bên dưới -->
+  <ellipse cx="88" cy="148" rx="46" ry="14" fill="#170B31" opacity="0.5"/>
+
+  <!-- Quai khóa thép màu Light-Purple #B79ADB -->
+  <path d="M64 80 V52 A24 24 0 0 1 112 52 V80" fill="none" stroke="#B79ADB" stroke-width="14" stroke-linecap="round"/>
+  <!-- Điểm nhấn vát sáng trên đỉnh quai -->
+  <path d="M72 43 A20 20 0 0 1 104 43" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+
+  <!-- Thân khóa chunky Purple #52287C -->
+  <rect x="48" y="78" width="80" height="62" rx="14" fill="#3A175B"/>
+  <rect x="48" y="74" width="80" height="62" rx="14" fill="#52287C"/>
+
+  <!-- Gờ sáng trên thân khóa -->
+  <path d="M62 74 Q48 74 48 88 L48 91 Q48 77 62 77 L114 77 Q128 77 128 91 L128 88 Q128 74 114 74 Z" fill="#713AA8"/>
+
+  <!-- Mạng nhện nhỏ phủ lên một bên quai và góc thân khóa (Cobweb draped) -->
+  <g fill="#FBE5A9" opacity="0.4">
+    <path d="M48 74 L78 74 C70 82 56 96 48 104 Z"/>
+    <path d="M48 74 L66 74 C62 78 52 88 48 94 Z"/>
+  </g>
+
+  <!-- Băng đáy tối màu -->
+  <path d="M48 112 Q48 136 72 136 L104 136 Q128 136 128 112 L128 106 L48 106 Z" fill="#291244"/>
+
+  <!-- Lỗ khóa màu cam bí ngô Pumpkin Orange #FF8722 phát sáng -->
+  <g filter="url(#keyhole-orange-glow)">
+    <circle cx="88" cy="101" r="6.5" fill="#FF8722"/>
+    <polygon points="84.5,102 91.5,102 89.5,120 86.5,120" fill="#FF8722"/>
+    <circle cx="88" cy="101" r="2.5" fill="#FBE5A9"/>
+  </g>
+</svg>

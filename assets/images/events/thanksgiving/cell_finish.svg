@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="pie-harvest-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Gạch nền -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#DDBB7D"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#FFE3B0"/>
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#FFF2D6"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#FAD28B"/>
+
+  <!-- Đĩa tròn trung tâm Wood-Brown #864618 -->
+  <rect x="36" y="36" width="104" height="104" rx="20" fill="#4A1E02"/>
+  <rect x="36" y="33" width="104" height="104" rx="20" fill="#864618"/>
+
+  <!-- Vầng sáng vàng ấm và tia sao tỏa ra từ bánh bí ngô -->
+  <g transform="translate(88 80)" filter="url(#pie-harvest-glow)">
+    <circle cx="0" cy="0" r="32" fill="#FBBB5A" opacity="0.38"/>
+    <polygon points="0,-22 4,-6 20,-6 7,3 12,18 0,9 -12,18 -7,3 -20,-6 -4,-6" fill="#FBBB5A"/>
+  </g>
+
+  <!-- BÁNH BÍ NGÔ NƯỚNG VÀNG RỰC (PUMPKIN PIE WITH GOLDEN CRUST) -->
+  <g>
+    <!-- Đĩa đựng bánh -->
+    <ellipse cx="88" cy="106" rx="36" ry="14" fill="#5A2A0C"/>
+
+    <!-- Viền vỏ bánh nướng vàng giòn hình sóng lượn (Golden fluted crust) -->
+    <ellipse cx="88" cy="102" rx="34" ry="12" fill="#B06023"/>
+    <ellipse cx="88" cy="100" rx="32" ry="10" fill="#FBBB5A"/>
+
+    <!-- Nhân bánh bí ngô thơm ngọt màu Pumpkin Orange #E37015 -->
+    <ellipse cx="88" cy="100" rx="28" ry="8" fill="#E37015"/>
+
+    <!-- Miếng bánh đã cắt ra (A slice cut out) -->
+    <polygon points="88,100 114,94 112,106" fill="#5A2A0C"/>
+    <polygon points="88,100 112,96 110,104" fill="#C95A08"/>
+
+    <!-- Làn khói thơm bốc lên hình lượn sóng (Steam curls) -->
+    <path d="M80 84 Q76 76 80 70 Q84 64 80 58" fill="none" stroke="#FFE3B0" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/>
+    <path d="M96 84 Q92 76 96 70 Q100 64 96 58" fill="none" stroke="#FFE3B0" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/>
+
+    <!-- Vài chiếc lá phong nhỏ rơi cạnh đĩa bánh -->
+    <path d="M52 110 L54 112 L57 110 L56 113 L60 113 L57 115 L58 118 L55 116 L54 119 L53 115 L50 116 L52 114 L49 112 L53 112 Z" fill="#E37015"/>
+    <path d="M120 114 L122 116 L125 114 L124 117 L128 117 L125 119 L126 122 L123 120 L122 123 L121 119 L118 120 L120 118 L117 116 L121 116 Z" fill="#BA3A21"/>
+  </g>
+</svg>

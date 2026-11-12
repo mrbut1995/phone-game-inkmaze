@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="keyhole-glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Soft Dark Circular Shadow -->
+  <ellipse cx="88" cy="140" rx="42" ry="12" fill="#0D1C1F" opacity="0.45"/>
+
+  <!-- Shackle -->
+  <path d="M 66 84 V 58 A 22 22 0 0 1 110 58 V 84" fill="none" stroke="#BFD9D1" stroke-width="11" stroke-linecap="round"/>
+
+  <!-- Chunky Padlock Body -->
+  <rect x="50" y="78" width="76" height="58" rx="12" fill="#7FA89E"/>
+  <!-- Darker bottom band -->
+  <path d="M 50 114 L 126 114 L 126 124 C 126 130 120 136 114 136 L 62 136 C 56 136 50 130 50 124 Z" fill="#4F7B72"/>
+
+  <!-- Glowing Yellow Keyhole -->
+  <g filter="url(#keyhole-glow)">
+    <circle cx="88" cy="100" r="7" fill="#FFD567"/>
+    <polygon points="84.5,102 91.5,102 93,114 83,114" fill="#FFD567"/>
+  </g>
+  <circle cx="88" cy="100" r="7" fill="#FFD567"/>
+  <polygon points="84.5,102 91.5,102 93,114 83,114" fill="#FFD567"/>
+</svg>

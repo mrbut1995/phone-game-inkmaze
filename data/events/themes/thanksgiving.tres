@@ -4,6 +4,7 @@
 [ext_resource uid="uid://ct2divjgjuxwf" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_thanksgiving_normal.png" id="btn_normal"]
 [ext_resource uid="uid://b1ivkxa4rlxet" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_thanksgiving_pressed.png" id="btn_pressed"]
 [ext_resource uid="uid://becp1aub0r24c" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_thanksgiving_disabled.png" id="btn_disabled"]
+[ext_resource type="Resource" path="res://data/events/skins/thanksgiving_board.tres" id="board_skin"]
 
 [resource]
 script = ExtResource("1_script")
@@ -26,3 +27,4 @@ chip_text = Color(1, 0.8784314, 0.50980395, 1)
 button_normal = ExtResource("btn_normal")
 button_pressed = ExtResource("btn_pressed")
 button_disabled = ExtResource("btn_disabled")
+board_skin = ExtResource("board_skin")

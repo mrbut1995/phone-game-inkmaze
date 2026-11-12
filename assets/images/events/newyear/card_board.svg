@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 505 508" width="505" height="508">
+  <defs>
+    <!-- Đổ bóng đỏ sẫm mềm dưới khung -->
+    <filter id="tet-board-shadow" x="-8%" y="-8%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#240205" flood-opacity="0.75"/>
+    </filter>
+    <filter id="coin-gold-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="glow"/>
+      <feComposite in="SourceGraphic" in2="glow" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Bóng đổ toàn khung -->
+  <g filter="url(#tet-board-shadow)">
+    <!-- Viền mỏng Gold #FEB415 -->
+    <rect x="15" y="14" width="475" height="478" rx="26" fill="#FEB415"/>
+    <!-- Thân khung màu Deep Maroon #630811 -->
+    <rect x="17.5" y="16.5" width="470" height="473" rx="24" fill="#630811"/>
+    <!-- Gờ sáng trên đỉnh tạo độ dày khối sơn mài -->
+    <path d="M42 16.5 Q17.5 16.5 17.5 41 L17.5 46 Q17.5 22 42 22 L463 22 Q487.5 22 487.5 46 L487.5 41 Q487.5 16.5 463 16.5 Z" fill="#8E1410"/>
+  </g>
+
+  <!-- LÒNG BÀN CỜ 5x5: Very-deep-maroon #4A0A10 (440x440 chuẩn vuông, ~87% chiều rộng) -->
+  <rect x="32.5" y="38" width="440" height="440" rx="14" fill="#2E0408"/>
+  <rect x="32.5" y="38" width="440" height="440" rx="14" fill="#4A0A10"/>
+  <!-- Vát bóng chìm mép trong -->
+  <rect x="32.5" y="38" width="440" height="5" fill="#1A0204" opacity="0.7"/>
+
+  <!-- ĐỒNG XU VÀNG Ở TÂM ĐỈNH GIỮA (GOLD COIN WITH SQUARE HOLE) -->
+  <g transform="translate(252.5 24)" filter="url(#coin-gold-glow)">
+    <circle cx="0" cy="0" r="10" fill="#FCD667"/>
+    <circle cx="0" cy="0" r="9" fill="#FEB415"/>
+    <!-- Lỗ vuông tròn cạnh bên trong đồng xu -->
+    <rect x="-3.5" y="-3.5" width="7" height="7" rx="0.8" fill="#630811"/>
+  </g>
+
+  <!-- LỒNG ĐÈN ĐỎ GÓC TRÊN TRÁI -->
+  <g transform="translate(68 16)">
+    <!-- Dây treo -->
+    <line x1="0" y1="0" x2="0" y2="10" stroke="#FEB415" stroke-width="1.6"/>
+    <!-- Chóp nẹp vàng trên -->
+    <rect x="-6" y="10" width="12" height="3" rx="1" fill="#FEB415"/>
+    <!-- Thân lồng đèn tròn -->
+    <ellipse cx="0" cy="22" rx="13" ry="11" fill="#C02B25"/>
+    <ellipse cx="0" cy="22" rx="7.5" ry="11" fill="#AE1A16"/>
+    <ellipse cx="0" cy="22" rx="2.5" ry="11" fill="#8E1410"/>
+    <!-- Chóp nẹp vàng dưới -->
+    <rect x="-5" y="31" width="10" height="2.5" rx="1" fill="#FEB415"/>
+    <!-- Tua rua đỏ & vàng thả xuống -->
+    <circle cx="0" cy="35" r="1.8" fill="#630811"/>
+    <rect x="-1" y="36" width="2" height="12" fill="#AE1A16"/>
+    <rect x="-2" y="44" width="4" height="2" fill="#FEB415"/>
+  </g>
+
+  <!-- LỒNG ĐÈN ĐỎ GÓC TRÊN PHẢI -->
+  <g transform="translate(437 16)">
+    <line x1="0" y1="0" x2="0" y2="10" stroke="#FEB415" stroke-width="1.6"/>
+    <rect x="-6" y="10" width="12" height="3" rx="1" fill="#FEB415"/>
+    <ellipse cx="0" cy="22" rx="13" ry="11" fill="#C02B25"/>
+    <ellipse cx="0" cy="22" rx="7.5" ry="11" fill="#AE1A16"/>
+    <ellipse cx="0" cy="22" rx="2.5" ry="11" fill="#8E1410"/>
+    <rect x="-5" y="31" width="10" height="2.5" rx="1" fill="#FEB415"/>
+    <circle cx="0" cy="35" r="1.8" fill="#630811"/>
+    <rect x="-1" y="36" width="2" height="12" fill="#AE1A16"/>
+    <rect x="-2" y="44" width="4" height="2" fill="#FEB415"/>
+  </g>
+
+  <!-- TIA SÁNG SPARKLE 4 CÁNH RẢI RÁC QUANH VIỀN -->
+  <path d="M25 180 Q25 186 21 186 Q25 186 25 192 Q25 186 29 186 Q25 186 25 180 Z" fill="#FEB415"/>
+  <path d="M23 320 Q23 325 19 325 Q23 325 23 330 Q23 325 27 325 Q23 325 23 320 Z" fill="#FCD667"/>
+  <path d="M480 180 Q480 186 476 186 Q480 186 480 192 Q480 186 484 186 Q480 186 480 180 Z" fill="#FEB415"/>
+  <path d="M482 320 Q482 325 478 325 Q482 325 482 330 Q482 325 486 325 Q482 325 482 320 Z" fill="#FCD667"/>
+  <circle cx="160" cy="24" r="1.8" fill="#FCD667"/>
+  <circle cx="345" cy="24" r="1.8" fill="#FCD667"/>
+
+  <!-- CÀNH HOA MAI GÓC DƯỚI TRÁI (PLUM BLOSSOMS ON DARK BRANCH) -->
+  <g transform="translate(20 440)">
+    <!-- Cành cây uốn lượn màu maroon tối #2E0408 -->
+    <path d="M6 56 Q14 36 28 30 Q40 24 50 12" fill="none" stroke="#2E0408" stroke-width="3" stroke-linecap="round"/>
+    <path d="M28 30 Q32 38 42 42" fill="none" stroke="#2E0408" stroke-width="2" stroke-linecap="round"/>
+    <!-- Bông hoa mai vàng & kem 5 cánh -->
+    <!-- Bông 1: Vàng -->
+    <g transform="translate(50 12)">
+      <circle cx="-3" cy="-2" r="2.8" fill="#FEB415"/><circle cx="3" cy="-2" r="2.8" fill="#FEB415"/>
+      <circle cx="-4" cy="3" r="2.8" fill="#FEB415"/><circle cx="4" cy="3" r="2.8" fill="#FEB415"/>
+      <circle cx="0" cy="5" r="2.8" fill="#FEB415"/>
+      <circle cx="0" cy="1.5" r="1.6" fill="#8E1410"/>
+    </g>
+    <!-- Bông 2: Kem #FFE9B0 -->
+    <g transform="translate(28 26)">
+      <circle cx="-3" cy="-2" r="2.8" fill="#FFE9B0"/><circle cx="3" cy="-2" r="2.8" fill="#FFE9B0"/>
+      <circle cx="-4" cy="3" r="2.8" fill="#FFE9B0"/><circle cx="4" cy="3" r="2.8" fill="#FFE9B0"/>
+      <circle cx="0" cy="5" r="2.8" fill="#FFE9B0"/>
+      <circle cx="0" cy="1.5" r="1.6" fill="#8E1410"/>
+    </g>
+    <!-- Bông 3: Nụ hoa nhỏ -->
+    <g transform="translate(42 42)">
+      <circle cx="0" cy="0" r="3.2" fill="#FEB415"/>
+      <circle cx="0" cy="0" r="1.2" fill="#FCD667"/>
+    </g>
+  </g>
+
+  <!-- CÀNH HOA MAI GÓC DƯỚI PHẢI -->
+  <g transform="translate(485 440) scale(-1 1)">
+    <path d="M6 56 Q14 36 28 30 Q40 24 50 12" fill="none" stroke="#2E0408" stroke-width="3" stroke-linecap="round"/>
+    <path d="M28 30 Q32 38 42 42" fill="none" stroke="#2E0408" stroke-width="2" stroke-linecap="round"/>
+    <g transform="translate(50 12)">
+      <circle cx="-3" cy="-2" r="2.8" fill="#FEB415"/><circle cx="3" cy="-2" r="2.8" fill="#FEB415"/>
+      <circle cx="-4" cy="3" r="2.8" fill="#FEB415"/><circle cx="4" cy="3" r="2.8" fill="#FEB415"/>
+      <circle cx="0" cy="5" r="2.8" fill="#FEB415"/>
+      <circle cx="0" cy="1.5" r="1.6" fill="#8E1410"/>
+    </g>
+    <g transform="translate(28 26)">
+      <circle cx="-3" cy="-2" r="2.8" fill="#FFE9B0"/><circle cx="3" cy="-2" r="2.8" fill="#FFE9B0"/>
+      <circle cx="-4" cy="3" r="2.8" fill="#FFE9B0"/><circle cx="4" cy="3" r="2.8" fill="#FFE9B0"/>
+      <circle cx="0" cy="5" r="2.8" fill="#FFE9B0"/>
+      <circle cx="0" cy="1.5" r="1.6" fill="#8E1410"/>
+    </g>
+    <g transform="translate(42 42)">
+      <circle cx="0" cy="0" r="3.2" fill="#FEB415"/>
+      <circle cx="0" cy="0" r="1.2" fill="#FCD667"/>
+    </g>
+  </g>
+</svg>

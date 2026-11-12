@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <!-- Cuống tím ép nghiêng -->
+  <path d="M27 19 Q31 16 34 17" fill="none" stroke="#371E57" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Bí ngô ép dẹp (squashed), màu cam đậm #D96A12, không glow -->
+  <g transform="translate(27 33) scale(1.15, 0.85) translate(-27 -30)">
+    <ellipse cx="27" cy="30" rx="17" ry="14" fill="#D96A12"/>
+    <ellipse cx="27" cy="30" rx="11" ry="14" fill="#BD5506"/>
+    <ellipse cx="27" cy="30" rx="5.5" ry="14" fill="#D96A12"/>
+
+    <polygon points="20,26 23,22 24.5,26" fill="#FBE5A9"/>
+    <polygon points="34,26 31,22 29.5,26" fill="#FBE5A9"/>
+
+    <path d="M19 30 Q27 40 35 30 C33 34 31 32 30 35 C28 32 26 32 24 35 C23 32 21 34 19 30 Z" fill="#FBE5A9"/>
+  </g>
+</svg>

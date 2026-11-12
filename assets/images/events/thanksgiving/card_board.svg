@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 505 508" width="505" height="508">
+  <defs>
+    <!-- Đổ bóng màu nâu đậm mềm dưới khung -->
+    <filter id="harvest-board-shadow" x="-8%" y="-8%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#140400" flood-opacity="0.8"/>
+    </filter>
+    <filter id="gold-harvest-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="glow"/>
+      <feComposite in="SourceGraphic" in2="glow" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Bóng đổ toàn khung -->
+  <g filter="url(#harvest-board-shadow)">
+    <!-- Viền mỏng Golden Yellow #FBBB5A -->
+    <rect x="15" y="14" width="475" height="478" rx="26" fill="#FBBB5A"/>
+    <!-- Thân khung biển gỗ Wood-Brown #864618 ghép thanh dọc -->
+    <rect x="17.5" y="16.5" width="470" height="473" rx="24" fill="#864618"/>
+
+    <!-- Các rãnh vân ghép thanh gỗ dọc (Vertical wooden planks) -->
+    <line x1="110" y1="16.5" x2="110" y2="489.5" stroke="#5A2A0C" stroke-width="2"/>
+    <line x1="205" y1="16.5" x2="205" y2="489.5" stroke="#5A2A0C" stroke-width="2"/>
+    <line x1="300" y1="16.5" x2="300" y2="489.5" stroke="#5A2A0C" stroke-width="2"/>
+    <line x1="395" y1="16.5" x2="395" y2="489.5" stroke="#5A2A0C" stroke-width="2"/>
+
+    <!-- Gờ sáng trên đỉnh tạo độ dày khối gỗ -->
+    <path d="M42 16.5 Q17.5 16.5 17.5 41 L17.5 46 Q17.5 22 42 22 L463 22 Q487.5 22 487.5 46 L487.5 41 Q487.5 16.5 463 16.5 Z" fill="#A85720"/>
+  </g>
+
+  <!-- LÒNG BÀN CỜ 5x5: Very-deep-chocolate #1E0701 (440x440 chuẩn vuông, ~87% chiều rộng) -->
+  <rect x="32.5" y="38" width="440" height="440" rx="14" fill="#120400"/>
+  <rect x="32.5" y="38" width="440" height="440" rx="14" fill="#1E0701"/>
+  <!-- Vát bóng chìm mép trong -->
+  <rect x="32.5" y="38" width="440" height="5" fill="#0A0200" opacity="0.75"/>
+
+  <!-- SPARKLE VÀNG Ở TÂM ĐỈNH GIỮA (GOLDEN YELLOW #FBBB5A) -->
+  <g filter="url(#gold-harvest-glow)">
+    <polygon points="252.5,9 256,19 266,19 258,25 261,35 252.5,29 244,35 247,25 239,19 249,19" fill="#FBBB5A"/>
+    <circle cx="252.5" cy="22" r="1.6" fill="#FFE3B0"/>
+  </g>
+
+  <!-- DÂY CỜ ĐUÔI NHEO TAM GIÁC DỌC CẠNH TRÊN (BUNTING FLAGS: Cam, Vàng, Đỏ, Nâu) -->
+  <path d="M40 22 Q145 34 252.5 26 Q360 34 465 22" fill="none" stroke="#2B0A01" stroke-width="2" stroke-linecap="round"/>
+  <!-- Các lá cờ tam giác -->
+  <g>
+    <!-- Nhóm cờ bên trái -->
+    <polygon points="58,24 74,25 66,41" fill="#E37015"/>
+    <polygon points="82,26 98,27 90,43" fill="#FBBB5A"/>
+    <polygon points="106,27 122,28 114,44" fill="#BA3A21"/>
+    <polygon points="130,28 146,29 138,45" fill="#B06023"/>
+    <polygon points="154,29 170,29 162,45" fill="#E37015"/>
+    <polygon points="178,29 194,28 186,44" fill="#FBBB5A"/>
+    <polygon points="202,28 218,27 210,43" fill="#BA3A21"/>
+
+    <!-- Nhóm cờ bên phải -->
+    <polygon points="287,27 303,28 295,43" fill="#BA3A21"/>
+    <polygon points="311,28 327,29 319,44" fill="#FBBB5A"/>
+    <polygon points="335,29 351,29 343,45" fill="#E37015"/>
+    <polygon points="359,29 375,28 367,45" fill="#B06023"/>
+    <polygon points="383,28 399,27 391,44" fill="#BA3A21"/>
+    <polygon points="407,27 423,26 415,43" fill="#FBBB5A"/>
+    <polygon points="431,25 447,24 439,41" fill="#E37015"/>
+  </g>
+
+  <!-- LÁ PHONG VÀ BẮP NGÔ GÓC TRÊN TRÁI -->
+  <g transform="translate(26 16)">
+    <!-- Bắp ngô vàng rực (Corn cob) có vỏ lá xanh/nâu bọc -->
+    <g transform="translate(18 10) rotate(-15)">
+      <!-- Vỏ bắp ngô xòe ra -->
+      <path d="M-2 10 Q-8 20 -10 32 Q-2 26 2 20 Z" fill="#B06023"/>
+      <path d="M12 10 Q18 20 20 32 Q12 26 8 20 Z" fill="#B06023"/>
+      <!-- Hạt ngô vàng -->
+      <ellipse cx="5" cy="18" rx="6" ry="12" fill="#FBBB5A"/>
+      <!-- Hạt ngô chia múi nhẹ -->
+      <ellipse cx="5" cy="18" rx="3" ry="10" fill="#E37015"/>
+    </g>
+    <!-- Lá phong đỏ Maple Red -->
+    <path d="M4 26 L8 29 L11 24 L10 30 L16 30 L12 33 L14 37 L9 35 L7 39 L6 34 L1 36 L3 32 L-1 29 L5 29 Z" fill="#BA3A21"/>
+  </g>
+
+  <!-- LÁ PHONG VÀ BẮP NGÔ GÓC TRÊN PHẢI -->
+  <g transform="translate(479 16) scale(-1 1)">
+    <g transform="translate(18 10) rotate(-15)">
+      <path d="M-2 10 Q-8 20 -10 32 Q-2 26 2 20 Z" fill="#B06023"/>
+      <path d="M12 10 Q18 20 20 32 Q12 26 8 20 Z" fill="#B06023"/>
+      <ellipse cx="5" cy="18" rx="6" ry="12" fill="#FBBB5A"/>
+      <ellipse cx="5" cy="18" rx="3" ry="10" fill="#E37015"/>
+    </g>
+    <path d="M4 26 L8 29 L11 24 L10 30 L16 30 L12 33 L14 37 L9 35 L7 39 L6 34 L1 36 L3 32 L-1 29 L5 29 Z" fill="#BA3A21"/>
+  </g>
+
+  <!-- GÓC DƯỚI TRÁI: QUẢ BÍ NGÔ TRÒN & HẠT DẺ (PUMPKIN & ACORN) -->
+  <g transform="translate(36 462)">
+    <!-- Quả bí ngô tròn màu cam Pumpkin Orange #E37015 -->
+    <g transform="translate(14 10)">
+      <!-- Cuống bí nâu -->
+      <path d="M0 -7 Q3 -10 2 -12" stroke="#5A2A0C" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="0" cy="0" rx="12" ry="9" fill="#E37015"/>
+      <ellipse cx="0" cy="0" rx="6" ry="9" fill="#C95A08"/>
+    </g>
+    <!-- Hạt dẻ (Acorn) nhỏ xinh bên cạnh -->
+    <g transform="translate(36 12) rotate(20)">
+      <path d="M2 4 C2 0 10 0 10 4 Z" fill="#5A2A0C"/>
+      <path d="M2 4 C2 10 10 10 10 4 Z" fill="#B06023"/>
+    </g>
+  </g>
+
+  <!-- GÓC DƯỚI PHẢI: QUẢ BÍ NGÔ & HẠT DẺ ĐỐI XỨNG -->
+  <g transform="translate(434 462)">
+    <g transform="translate(0 12) rotate(-20)">
+      <path d="M2 4 C2 0 10 0 10 4 Z" fill="#5A2A0C"/>
+      <path d="M2 4 C2 10 10 10 10 4 Z" fill="#B06023"/>
+    </g>
+    <g transform="translate(22 10)">
+      <path d="M0 -7 Q-3 -10 -2 -12" stroke="#5A2A0C" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="0" cy="0" rx="12" ry="9" fill="#E37015"/>
+      <ellipse cx="0" cy="0" rx="6" ry="9" fill="#C95A08"/>
+    </g>
+  </g>
+</svg>

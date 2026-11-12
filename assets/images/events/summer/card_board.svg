@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 505 508" width="505" height="508">
+  <defs>
+    <!-- Đổ bóng navy sẫm mềm dưới khung -->
+    <filter id="beach-board-shadow" x="-8%" y="-8%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#02141C" flood-opacity="0.75"/>
+    </filter>
+    <filter id="sun-warm-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="glow"/>
+      <feComposite in="SourceGraphic" in2="glow" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Bóng đổ toàn khung -->
+  <g filter="url(#beach-board-shadow)">
+    <!-- Viền mỏng Ocean Blue #209FC2 -->
+    <rect x="15" y="14" width="475" height="478" rx="26" fill="#209FC2"/>
+    <!-- Thân khung màu Deep Navy #083B4E -->
+    <rect x="17.5" y="16.5" width="470" height="473" rx="24" fill="#083B4E"/>
+    <!-- Gờ sáng trên đỉnh tạo độ dày khối giấy gốm -->
+    <path d="M42 16.5 Q17.5 16.5 17.5 41 L17.5 46 Q17.5 22 42 22 L463 22 Q487.5 22 487.5 46 L487.5 41 Q487.5 16.5 463 16.5 Z" fill="#0F536E"/>
+  </g>
+
+  <!-- LÒNG BÀN CỜ 5x5: Very-deep-navy #052B3A (440x440 chuẩn vuông, ~87% chiều rộng) -->
+  <rect x="32.5" y="38" width="440" height="440" rx="14" fill="#021721"/>
+  <rect x="32.5" y="38" width="440" height="440" rx="14" fill="#052B3A"/>
+  <!-- Vát bóng chìm mép trong -->
+  <rect x="32.5" y="38" width="440" height="5" fill="#010E14" opacity="0.7"/>
+
+  <!-- MẶT TRỜI VÀNG Ở TÂM ĐỈNH GIỮA (SUNNY YELLOW #FEC748) -->
+  <g filter="url(#sun-warm-glow)">
+    <circle cx="252.5" cy="22" r="10" fill="#FEC748"/>
+    <circle cx="252.5" cy="22" r="7.5" fill="#FFE59E"/>
+  </g>
+
+  <!-- LÁ NHIỆT ĐỚI MÀU SAN HÔ (CORAL #FF6A56) GÓC TRÊN TRÁI -->
+  <g transform="translate(24 16)">
+    <path d="M4 4 Q20 18 42 22" fill="none" stroke="#FF6A56" stroke-width="2" stroke-linecap="round"/>
+    <!-- Các phiến lá cọ san hô tỏa ra -->
+    <path d="M12 9 Q8 2 16 4 Q14 11 12 9 Z" fill="#FF6A56"/>
+    <path d="M19 14 Q18 4 25 8 Q21 16 19 14 Z" fill="#FF6A56"/>
+    <path d="M26 17 Q28 8 34 13 Q29 19 26 17 Z" fill="#FF6A56"/>
+    <path d="M34 20 Q39 12 43 18 Q37 22 34 20 Z" fill="#FF6A56"/>
+    <path d="M42 22 Q48 18 50 24 Q44 25 42 22 Z" fill="#FF6A56"/>
+  </g>
+
+  <!-- LÁ NHIỆT ĐỚI MÀU SAN HÔ GÓC TRÊN PHẢI -->
+  <g transform="translate(481 16) scale(-1 1)">
+    <path d="M4 4 Q20 18 42 22" fill="none" stroke="#FF6A56" stroke-width="2" stroke-linecap="round"/>
+    <path d="M12 9 Q8 2 16 4 Q14 11 12 9 Z" fill="#FF6A56"/>
+    <path d="M19 14 Q18 4 25 8 Q21 16 19 14 Z" fill="#FF6A56"/>
+    <path d="M26 17 Q28 8 34 13 Q29 19 26 17 Z" fill="#FF6A56"/>
+    <path d="M34 20 Q39 12 43 18 Q37 22 34 20 Z" fill="#FF6A56"/>
+    <path d="M42 22 Q48 18 50 24 Q44 25 42 22 Z" fill="#FF6A56"/>
+  </g>
+
+  <!-- HOA VĂN DẢI SÓNG BIỂN LƯỢN SÓNG DỌC CẠNH ĐÁY (OCEAN BLUE STRIPES) -->
+  <g>
+    <!-- Lớp sóng biển màu Ocean Blue #209FC2 -->
+    <path d="M35 480 Q55 470 75 480 Q95 490 115 480 Q135 470 155 480 Q175 490 195 480 Q215 470 235 480 Q255 490 275 480 Q295 470 315 480 Q335 490 355 480 Q375 470 395 480 Q415 490 435 480 Q455 470 470 478 L470 490 L35 490 Z" fill="#209FC2"/>
+    <!-- Lớp sóng biển phụ màu Deep Navy tạo chiều sâu gợn sóng -->
+    <path d="M35 485 Q55 478 75 485 Q95 492 115 485 Q135 478 155 485 Q175 492 195 485 Q215 478 235 485 Q255 492 275 485 Q295 478 315 485 Q335 492 355 485 Q375 478 395 485 Q415 492 435 485 L470 488 L470 490 L35 490 Z" fill="#083B4E" opacity="0.5"/>
+  </g>
+
+  <!-- GÓC DƯỚI TRÁI: SAO BIỂN SAN HÔ & VỎ SÒ KEM (SHELL CREAM #FDF3DA) -->
+  <g transform="translate(42 466)">
+    <!-- Vỏ sò màu kem -->
+    <path d="M22 18 C20 10 32 10 30 18 C30 20 22 20 22 18 Z" fill="#FDF3DA"/>
+    <!-- Sao biển san hô mini -->
+    <g transform="translate(10 12) scale(0.65)">
+      <path d="M12 0 C13 0 14 4 16 6 C18 8 22 7 23 9 C23 10 20 13 19 15 C19 17 20 21 19 22 C17 22 14 19 12 19 C10 19 7 22 6 22 C4 21 5 17 5 15 C4 13 1 10 2 9 C2 7 6 8 8 6 C10 4 11 0 12 0 Z" fill="#FF6A56"/>
+    </g>
+  </g>
+
+  <!-- GÓC DƯỚI PHẢI: 2 VỎ SÒ KEM VÀ TIA NẮNG NHẸ -->
+  <g transform="translate(436 466)">
+    <!-- Vỏ sò 1 -->
+    <path d="M8 18 C6 10 18 10 16 18 C16 20 8 20 8 18 Z" fill="#FDF3DA"/>
+    <!-- Vỏ sò 2 nhỏ hơn -->
+    <path d="M24 19 C22 13 32 13 30 19 C30 21 24 21 24 19 Z" fill="#FCF3D6"/>
+  </g>
+</svg>

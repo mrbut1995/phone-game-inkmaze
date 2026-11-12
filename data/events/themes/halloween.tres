@@ -4,6 +4,7 @@
 [ext_resource uid="uid://b3awqytug0lvm" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_halloween_normal.png" id="btn_normal"]
 [ext_resource uid="uid://bujj486taulr4" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_halloween_pressed.png" id="btn_pressed"]
 [ext_resource uid="uid://n7n5tnfbmrar" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_halloween_disabled.png" id="btn_disabled"]
+[ext_resource type="Resource" path="res://data/events/skins/halloween_board.tres" id="board_skin"]
 
 [resource]
 script = ExtResource("2_8lt8r")
@@ -26,3 +27,4 @@ chip_text = Color(1, 0.9137255, 0.7607843, 1)
 button_normal = ExtResource("btn_normal")
 button_pressed = ExtResource("btn_pressed")
 button_disabled = ExtResource("btn_disabled")
+board_skin = ExtResource("board_skin")

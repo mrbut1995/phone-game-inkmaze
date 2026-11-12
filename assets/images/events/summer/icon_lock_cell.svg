@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="keyhole-beach-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Bóng tròn màu Navy mềm bên dưới -->
+  <ellipse cx="88" cy="148" rx="46" ry="14" fill="#083B4E" opacity="0.45"/>
+
+  <!-- Quai khóa thép màu Ocean Blue #209FC2 -->
+  <path d="M64 80 V52 A24 24 0 0 1 112 52 V80" fill="none" stroke="#209FC2" stroke-width="14" stroke-linecap="round"/>
+  <!-- Điểm nhấn vát sáng trên đỉnh quai -->
+  <path d="M72 43 A20 20 0 0 1 104 43" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.65"/>
+
+  <!-- Đoạn dây thừng màu san hô luồn qua quai khóa (Coral rope loop) -->
+  <path d="M56 60 Q48 46 62 44 Q70 42 72 54 Q76 68 58 70" fill="none" stroke="#FF6A56" stroke-width="4.5" stroke-dasharray="6 3" stroke-linecap="round"/>
+
+  <!-- Thân khóa chunky Navy #083B4E -->
+  <rect x="48" y="78" width="80" height="62" rx="14" fill="#052B3A"/>
+  <rect x="48" y="74" width="80" height="62" rx="14" fill="#083B4E"/>
+
+  <!-- Gờ sáng trên thân khóa -->
+  <path d="M62 74 Q48 74 48 88 L48 91 Q48 77 62 77 L114 77 Q128 77 128 91 L128 88 Q128 74 114 74 Z" fill="#145A73"/>
+
+  <!-- Băng đáy tối màu #052B3A -->
+  <path d="M48 112 Q48 136 72 136 L104 136 Q128 136 128 112 L128 106 L48 106 Z" fill="#052B3A"/>
+
+  <!-- Lỗ khóa vàng Sunny Yellow #FEC748 phát sáng -->
+  <g filter="url(#keyhole-beach-glow)">
+    <circle cx="88" cy="101" r="6.5" fill="#FEC748"/>
+    <polygon points="84.5,102 91.5,102 89.5,120 86.5,120" fill="#FEC748"/>
+    <circle cx="88" cy="101" r="2.5" fill="#FFE59E"/>
+  </g>
+</svg>

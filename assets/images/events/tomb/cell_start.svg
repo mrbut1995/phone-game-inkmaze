@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Gạch nền Light Cream-Sand -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#CCA056"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#F8D98E"/>
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#FFF0C8"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#E8A959"/>
+
+  <!-- Đĩa tròn trung tâm Turquoise #38938E -->
+  <rect x="36" y="36" width="104" height="104" rx="20" fill="#1C5451"/>
+  <rect x="36" y="33" width="104" height="104" rx="20" fill="#38938E"/>
+  <path d="M54 33 Q36 33 36 51 L36 54 Q36 36 54 36 L122 36 Q140 36 140 54 L140 51 Q140 33 122 33 Z" fill="#52B5AF"/>
+
+  <!-- CỔNG ĐÁ SA THẠCH AI CẬP CỔ ĐẠI (SANDSTONE GATEWAY) -->
+  <g>
+    <!-- Bậc tam cấp chân cổng -->
+    <rect x="56" y="120" width="64" height="6" rx="1.5" fill="#3B200B"/>
+    <rect x="62" y="116" width="52" height="4" rx="1" fill="#603515"/>
+
+    <!-- 2 cột trụ đá 2 bên (Two sandstone pillars) -->
+    <rect x="66" y="68" width="12" height="48" fill="#3B200B"/>
+    <rect x="64" y="66" width="16" height="4" rx="1" fill="#603515"/>
+    <rect x="98" y="68" width="12" height="48" fill="#3B200B"/>
+    <rect x="96" y="66" width="16" height="4" rx="1" fill="#603515"/>
+
+    <!-- Xà ngang đỉnh cổng vát dốc đặc trưng đền Ai Cập (Lintel) -->
+    <polygon points="60,66 116,66 122,54 54,54" fill="#3B200B"/>
+    <polygon points="62,64 114,64 119,56 57,56" fill="#603515"/>
+  </g>
+
+  <!-- ĐĨA MẶT TRỜI VÀNG PHÁT SÁNG PHÍA TRÊN CỔNG -->
+  <g transform="translate(88 44)">
+    <circle cx="0" cy="0" r="10" fill="#FEC84C"/>
+    <circle cx="0" cy="0" r="7.5" fill="#FFEAA8"/>
+  </g>
+</svg>

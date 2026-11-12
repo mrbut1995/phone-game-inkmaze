@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Gạch màu dusty beige-gray #D9D3BE mờ phẳng -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#B0AA94"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#D9D3BE"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#C7C0AB"/>
+  <!-- Hoa cúc mờ nhạt ở góc -->
+  <g transform="translate(32 32)" opacity="0.35">
+    <circle cx="0" cy="-3" r="1.5" fill="#D9D3BE"/>
+    <circle cx="0" cy="3" r="1.5" fill="#D9D3BE"/>
+    <circle cx="-3" cy="0" r="1.5" fill="#D9D3BE"/>
+    <circle cx="3" cy="0" r="1.5" fill="#D9D3BE"/>
+    <circle cx="0" cy="0" r="1.8" fill="#A39D87"/>
+  </g>
+</svg>

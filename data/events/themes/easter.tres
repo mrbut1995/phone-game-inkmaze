@@ -4,6 +4,7 @@
 [ext_resource uid="uid://cda4w6hvfm02s" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_easter_normal.png" id="btn_normal"]
 [ext_resource uid="uid://1fpci6weuokc" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_easter_pressed.png" id="btn_pressed"]
 [ext_resource uid="uid://hikcsp5xwouc" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_easter_disabled.png" id="btn_disabled"]
+[ext_resource type="Resource" path="res://data/events/skins/easter_board.tres" id="board_skin"]
 
 [resource]
 script = ExtResource("1_script")
@@ -25,3 +26,4 @@ chip_text = Color(0.08627451, 0.2784314, 0.15686275, 1)
 button_normal = ExtResource("btn_normal")
 button_pressed = ExtResource("btn_pressed")
 button_disabled = ExtResource("btn_disabled")
+board_skin = ExtResource("board_skin")

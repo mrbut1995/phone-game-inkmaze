@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <!-- Bọ hung màu xám nâu #8A7A66, chân co rút vào trong (legs tucked in), không glow -->
+  <g>
+    <!-- Chân co sát vào thân -->
+    <g fill="none" stroke="#66594A" stroke-width="1.6" stroke-linecap="round">
+      <path d="M20 22 Q17 21 18 19"/>
+      <path d="M34 22 Q37 21 36 19"/>
+      <path d="M18 29 Q15 29 16 32"/>
+      <path d="M36 29 Q39 29 38 32"/>
+      <path d="M20 35 Q17 38 19 39"/>
+      <path d="M34 35 Q37 38 35 39"/>
+    </g>
+
+    <path d="M24 16 L25 14 L27 15 L29 14 L30 16 Z" fill="#66594A"/>
+    <ellipse cx="27" cy="18" rx="5.5" ry="3.5" fill="#66594A"/>
+
+    <!-- Mắt nhắm ngủ lười biếng -->
+    <path d="M22 18 Q23.5 20 25 18" fill="none" stroke="#3B200B" stroke-width="1.2" stroke-linecap="round"/>
+    <path d="M29 18 Q30.5 20 32 18" fill="none" stroke="#3B200B" stroke-width="1.2" stroke-linecap="round"/>
+
+    <ellipse cx="27" cy="30" rx="12" ry="11" fill="#8A7A66"/>
+    <line x1="27" y1="19" x2="27" y2="41" stroke="#66594A" stroke-width="1.5"/>
+
+    <circle cx="21" cy="26" r="1.1" fill="#A89782"/>
+    <circle cx="33" cy="26" r="1.1" fill="#A89782"/>
+  </g>
+</svg>

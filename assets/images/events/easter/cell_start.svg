@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Gạch nền Light Cream -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#E5D9AE"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#FFF4D1"/>
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#FEF7E4"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#FDEBA8"/>
+
+  <!-- Đĩa tròn trung tâm Lavender #C6B3EB -->
+  <rect x="36" y="36" width="104" height="104" rx="20" fill="#8B76B8"/>
+  <rect x="36" y="33" width="104" height="104" rx="20" fill="#C6B3EB"/>
+  <path d="M54 33 Q36 33 36 51 L36 54 Q36 36 54 36 L122 36 Q140 36 140 54 L140 51 Q140 33 122 33 Z" fill="#DFD2F7"/>
+
+  <!-- Giỏ mây đan đựng trứng (Woven basket in Butter Yellow with lavender lattice) -->
+  <g>
+    <!-- Quai giỏ uốn cong hình vòm -->
+    <path d="M64 96 Q64 54 88 54 Q112 54 112 96" fill="none" stroke="#FDE07A" stroke-width="5" stroke-linecap="round"/>
+    <path d="M64 96 Q64 54 88 54 Q112 54 112 96" fill="none" stroke="#C6B3EB" stroke-width="2" stroke-dasharray="6 4" stroke-linecap="round"/>
+
+    <!-- 3 quả trứng pastel nằm trong giỏ: Hồng, Vàng, Tím -->
+    <ellipse cx="78" cy="88" rx="10" ry="13" fill="#F5B1C8" transform="rotate(-15 78 88)"/>
+    <ellipse cx="98" cy="88" rx="10" ry="13" fill="#C6B3EB" transform="rotate(15 98 88)"/>
+    <ellipse cx="88" cy="84" rx="10" ry="13" fill="#FDE07A"/>
+
+    <!-- Thân giỏ mây hình thang bầu bĩnh -->
+    <path d="M58 92 L118 92 L110 124 Q88 128 66 124 Z" fill="#FDE07A"/>
+    <!-- Vành giỏ màu Lavender -->
+    <rect x="54" y="90" width="68" height="6" rx="3" fill="#C6B3EB"/>
+
+    <!-- Họa tiết nan đan hình thoi màu Lavender (Lattice) -->
+    <path d="M68 96 L108 120 M78 96 L100 123 M88 96 L92 124 M108 96 L68 120 M98 96 L76 123 M88 96 L84 124" stroke="#C6B3EB" stroke-width="1.8" stroke-linecap="round"/>
+  </g>
+</svg>

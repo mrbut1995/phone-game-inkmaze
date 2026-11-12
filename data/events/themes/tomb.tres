@@ -4,6 +4,7 @@
 [ext_resource uid="uid://df87x0s5dkipc" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_tomb_normal.png" id="btn_normal"]
 [ext_resource uid="uid://bwpltr2h1aumu" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_tomb_pressed.png" id="btn_pressed"]
 [ext_resource uid="uid://yi001m5fv6bj" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_tomb_disabled.png" id="btn_disabled"]
+[ext_resource type="Resource" path="res://data/events/skins/tomb_board.tres" id="board_skin"]
 
 [resource]
 script = ExtResource("2_yt6uv")
@@ -25,3 +26,4 @@ chip_text = Color(1, 0.9137255, 0.6901961, 1)
 button_normal = ExtResource("btn_normal")
 button_pressed = ExtResource("btn_pressed")
 button_disabled = ExtResource("btn_disabled")
+board_skin = ExtResource("board_skin")

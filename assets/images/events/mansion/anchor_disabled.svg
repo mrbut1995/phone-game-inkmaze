@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <!-- Gray-teal sleepy ghost, no glow -->
+  <path d="M 25 10 C 17 10 13 16 13 24 C 13 32 17 37 23 37 C 28 37 32 34 35 37 C 38 40 37 43 33 43 C 40 44 43 38 40 33 C 38 30 37 26 37 23 C 37 15 32 10 25 10 Z" fill="#4A6A68"/>
+  <!-- Sleepy closed eye lines -->
+  <path d="M 19 22 Q 21 25 23 22" fill="none" stroke="#0D1C1F" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M 27 22 Q 29 25 31 22" fill="none" stroke="#0D1C1F" stroke-width="1.6" stroke-linecap="round"/>
+  <circle cx="25" cy="28" r="1.2" fill="#0D1C1F"/>
+</svg>

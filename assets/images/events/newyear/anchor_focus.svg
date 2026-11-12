@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <defs>
+    <filter id="cream-glow-foc" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.5" flood-color="#FFE9B0" flood-opacity="0.8"/>
+    </filter>
+  </defs>
+  <!-- Vòng vuông bo góc nét đứt màu Cream #FFE9B0 -->
+  <rect x="5" y="5" width="44" height="44" rx="10" fill="none" stroke="#FFE9B0" stroke-width="2.2" stroke-dasharray="4.5 3"/>
+
+  <!-- Lồng đèn phát sáng mềm ấm áp -->
+  <g filter="url(#cream-glow-foc)">
+    <path d="M27 9 L27 13" stroke="#FCD667" stroke-width="1.6" stroke-linecap="round"/>
+    <rect x="21" y="13" width="12" height="3" rx="1" fill="#FEB415"/>
+
+    <ellipse cx="27" cy="27" rx="16" ry="13" fill="#C02B25"/>
+    <ellipse cx="27" cy="27" rx="10" ry="13" fill="#AE1A16"/>
+    <ellipse cx="27" cy="27" rx="4" ry="13" fill="#8E1410"/>
+
+    <rect x="22" y="38" width="10" height="3" rx="1" fill="#FEB415"/>
+
+    <circle cx="22.5" cy="26" r="1.5" fill="#2E0408"/>
+    <circle cx="31.5" cy="26" r="1.5" fill="#2E0408"/>
+
+    <path d="M25.5 29.5 Q27 31 28.5 29.5" fill="none" stroke="#2E0408" stroke-width="1.1" stroke-linecap="round"/>
+
+    <ellipse cx="19" cy="28.5" rx="1.8" ry="1.1" fill="#FFE9B0" opacity="0.6"/>
+    <ellipse cx="35" cy="28.5" rx="1.8" ry="1.1" fill="#FFE9B0" opacity="0.6"/>
+  </g>
+
+  <circle cx="27" cy="42.5" r="1.8" fill="#630811"/>
+  <rect x="26" y="44" width="2" height="7" fill="#AE1A16"/>
+  <rect x="25" y="49" width="4" height="1.8" fill="#FEB415"/>
+</svg>

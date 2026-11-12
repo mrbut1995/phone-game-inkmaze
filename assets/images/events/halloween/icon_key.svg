@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="key-hallow-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- 2 tia lấp lánh màu trắng (Sparkles) -->
+  <path d="M135 38 Q135 48 125 48 Q135 48 135 58 Q135 48 145 48 Q135 48 135 38 Z" fill="#FFFDFE"/>
+  <path d="M38 125 Q38 133 30 133 Q38 133 38 141 Q38 133 46 133 Q38 133 38 125 Z" fill="#FFFDFE"/>
+
+  <!-- Chìa khóa xoay nghiêng 40 độ từ tâm -->
+  <g transform="translate(88 88) rotate(-40) translate(-88 -88)" filter="url(#key-hallow-glow)">
+    <!-- Chuôi chìa khóa: Con dơi sải cánh (Bat Bow) -->
+    <g>
+      <!-- Cánh dơi Moon Cream #FBE5A9 -->
+      <path d="M88 32 C92 24 98 22 108 24 C118 26 128 18 132 26 C126 36 116 42 118 56 C110 52 102 54 98 62 C94 56 90 54 88 56 C86 54 82 56 78 62 C74 54 66 52 58 56 C60 42 50 36 44 26 C48 18 58 26 68 24 C78 22 84 24 88 32 Z" fill="#FBE5A9"/>
+
+      <!-- Chi tiết lòng cánh màu tím Deep Purple #2F1350 -->
+      <path d="M62 36 C68 30 78 30 84 38 C80 44 72 46 68 44 Z" fill="#2F1350"/>
+      <path d="M114 36 C108 30 98 30 92 38 C96 44 104 46 108 44 Z" fill="#2F1350"/>
+
+      <!-- Lỗ tròn tâm chìa khóa -->
+      <circle cx="88" cy="46" r="7" fill="#170B31"/>
+      <circle cx="88" cy="46" r="3.5" fill="#FBE5A9"/>
+    </g>
+
+    <!-- Thân chìa khóa Moon Cream với vát đổ bóng màu kem sẫm #D4BC7C -->
+    <rect x="83.5" y="66" width="9" height="78" rx="4" fill="#D4BC7C"/>
+    <rect x="83.5" y="66" width="4.5" height="78" rx="2" fill="#FBE5A9"/>
+
+    <!-- Răng chìa khóa (Bit) góc cạnh kiểu paper-cut ma mị -->
+    <path d="M92 112 L110 112 Q113 112 113 115 L113 122 Q113 125 110 125 L92 125 Z" fill="#D4BC7C"/>
+    <path d="M92 112 L110 112 Q113 112 113 115 L113 118 L92 118 Z" fill="#FBE5A9"/>
+
+    <path d="M92 130 L106 130 Q109 130 109 133 L109 140 Q109 143 106 143 L92 143 Z" fill="#D4BC7C"/>
+    <path d="M92 130 L106 130 Q109 130 109 133 L109 136 L92 136 Z" fill="#FBE5A9"/>
+
+    <!-- Chóp đáy chuôi chìa -->
+    <circle cx="88" cy="149" r="5" fill="#D4BC7C"/>
+    <circle cx="88" cy="148" r="3" fill="#FBE5A9"/>
+  </g>
+</svg>

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="keyhole-maroon-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Bóng tròn màu Maroon mềm bên dưới -->
+  <ellipse cx="88" cy="148" rx="46" ry="14" fill="#630811" opacity="0.45"/>
+
+  <!-- Quai khóa thép màu Light Gold #FCD667 -->
+  <path d="M64 80 V52 A24 24 0 0 1 112 52 V80" fill="none" stroke="#FCD667" stroke-width="14" stroke-linecap="round"/>
+  <!-- Điểm nhấn vát sáng trên đỉnh quai -->
+  <path d="M72 43 A20 20 0 0 1 104 43" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.65"/>
+
+  <!-- Tua rua đỏ may mắn treo từ quai khóa (Red tassel) -->
+  <g transform="translate(60 56)">
+    <circle cx="0" cy="0" r="3" fill="#AE1A16"/>
+    <rect x="-1.5" y="3" width="3" height="16" fill="#C02B25"/>
+    <rect x="-2.5" y="15" width="5" height="3" fill="#FEB415"/>
+  </g>
+
+  <!-- Thân khóa chunky Gold #FEB415 -->
+  <rect x="48" y="78" width="80" height="62" rx="14" fill="#B87B00"/>
+  <rect x="48" y="74" width="80" height="62" rx="14" fill="#FEB415"/>
+
+  <!-- Gờ sáng trên thân khóa -->
+  <path d="M62 74 Q48 74 48 88 L48 91 Q48 77 62 77 L114 77 Q128 77 128 91 L128 88 Q128 74 114 74 Z" fill="#FCD667"/>
+
+  <!-- Băng đáy tối màu #C98A0C -->
+  <path d="M48 112 Q48 136 72 136 L104 136 Q128 136 128 112 L128 106 L48 106 Z" fill="#C98A0C"/>
+
+  <!-- Lỗ khóa màu Deep Maroon #630811 phát sáng nhẹ -->
+  <g filter="url(#keyhole-maroon-glow)">
+    <circle cx="88" cy="101" r="6.5" fill="#630811"/>
+    <polygon points="84.5,102 91.5,102 89.5,120 86.5,120" fill="#630811"/>
+    <circle cx="88" cy="101" r="2.5" fill="#8E1410"/>
+  </g>
+</svg>

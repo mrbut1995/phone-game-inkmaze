@@ -58,3 +58,6 @@ extends Resource
 
 ## Màu chữ chip
 @export var chip_text: Color = Color(1.0, 1.0, 1.0, 1.0)
+
+## Bộ art + màu của BÀN CHƠI khi vào event kiểu Dungeon có giới hạn tầng (null = giao diện mặc định)
+@export var board_skin: EventBoardSkin = null

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="LevelData" format=3]
+
+[ext_resource type="Script" path="res://scripts/models/definitions/LevelData.gd" id="1_sjdbo"]
+
+[resource]
+script = ExtResource("1_sjdbo")
+level_id = 1600
+level_title = "Level 1600"
+v_walls = PackedByteArray(1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1)
+v_walls_visible = PackedByteArray(1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1)
+h_walls = PackedByteArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1)
+h_walls_visible = PackedByteArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1)
+cell_mask = PackedByteArray()
+lock_cells = PackedInt32Array()
+key_cells = PackedInt32Array()
+mission_types = PackedStringArray()
+mission_params = PackedInt32Array()

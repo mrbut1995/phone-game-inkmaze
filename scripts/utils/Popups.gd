@@ -23,6 +23,10 @@ const GAME_OVER_CHALLENGE := "game_over_challenge"
 ## Popup thử lại màn trước khi vào game over
 const RETRY := "retry"
 const NEXT_FLOOR := "next_floor"
+## SỰ KIỆN (chuỗi màn tạo sẵn): qua 1 tầng, còn tầng phía sau — nêu rõ còn bao nhiêu tầng nữa
+const EVENT_CONTINUE := "popup_event_continue"
+## SỰ KIỆN: đã đi hết mọi tầng — nhận quà + về Menu
+const EVENT_WIN := "popup_event_win"
 const PAUSE := "pause"
 const LANGUAGE := "language"
 ## Popup đếm ngược pha GHI NHỚ của Blind Memory (không có nền mờ — vẫn thấy tường)

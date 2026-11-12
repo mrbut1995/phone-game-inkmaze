@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Gạch màu dusty green-gray sẫm #B3C4BC -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#889991"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#B3C4BC"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#9FB0A8"/>
+
+  <!-- Cánh hoa rơi nhỏ ở các góc -->
+  <path d="M30 30 C35 26 38 34 32 37 C28 39 25 33 30 30 Z" fill="#F1A5BF" opacity="0.65"/>
+  <path d="M144 32 C149 28 152 36 146 39 C142 41 139 35 144 32 Z" fill="#E9729A" opacity="0.65"/>
+  <path d="M32 144 C37 140 40 148 34 151 C30 153 27 147 32 144 Z" fill="#E9729A" opacity="0.65"/>
+  <path d="M142 142 C147 138 150 146 144 149 C140 151 137 145 142 142 Z" fill="#F1A5BF" opacity="0.65"/>
+
+  <!-- Dây leo xanh bắt chéo đính lá nhỏ (Crossed green vines) -->
+  <line x1="24" y1="24" x2="152" y2="152" stroke="#7DBF81" stroke-width="10" stroke-linecap="round"/>
+  <line x1="152" y1="24" x2="24" y2="152" stroke="#5D9961" stroke-width="10" stroke-linecap="round"/>
+
+  <!-- Các lá nhỏ mọc từ dây leo -->
+  <path d="M52 42 Q60 36 62 46 Q54 48 52 42 Z" fill="#7DBF81"/>
+  <path d="M124 44 Q132 54 122 60 Q116 50 124 44 Z" fill="#7DBF81"/>
+  <path d="M48 122 Q58 124 56 134 Q46 132 48 122 Z" fill="#7DBF81"/>
+  <path d="M126 128 Q136 118 138 128 Q128 136 126 128 Z" fill="#7DBF81"/>
+
+  <!-- Bóng tròn sau ổ khóa -->
+  <circle cx="88" cy="94" r="32" fill="#3E1224" opacity="0.55"/>
+
+  <!-- Ổ khóa Maroon chunky ở trung tâm với lỗ khóa vàng -->
+  <g transform="translate(88 88)">
+    <!-- Quai khóa thép màu Soft Pink #F1A5BF -->
+    <path d="M-18 -8 V-24 A18 18 0 0 1 18 -24 V-8" fill="none" stroke="#F1A5BF" stroke-width="9" stroke-linecap="round"/>
+    <!-- Thân khóa Maroon #711B3E -->
+    <rect x="-28" y="-8" width="56" height="46" rx="9" fill="#711B3E"/>
+    <!-- Băng đáy tối màu #5D1F34 -->
+    <path d="M-28 17 Q-28 38 -9 38 L9 38 Q28 38 28 17 L28 12 L-28 12 Z" fill="#5D1F34"/>
+    <!-- Lỗ khóa vàng Sunny Yellow #FFDC74 -->
+    <circle cx="0" cy="11" r="5" fill="#FFDC74"/>
+    <polygon points="-3,12 3,12 2,24 -2,24" fill="#FFDC74"/>
+  </g>
+</svg>

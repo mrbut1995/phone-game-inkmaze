@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Gạch màu dusty tan #D9B993 mờ phẳng -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#B38E64"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#D9B993"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#C5A47C"/>
+  <!-- Chiếc lá khô héo mờ góc trên -->
+  <path d="M26 26 Q36 28 38 38 Q28 36 26 26 Z" fill="#9E7D56" opacity="0.4"/>
+</svg>

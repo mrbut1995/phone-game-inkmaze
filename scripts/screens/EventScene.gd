@@ -131,22 +131,12 @@ func _on_cta_pressed() -> void:
 			else:
 				Nav.goto_daily()
 		EventData.Type.SPECIAL_SERIES, EventData.Type.STANDARD_SERIES:
-			# Tìm màn chưa xong đầu tiên
-			var done_list: Array = prog.get("done_levels", [])
-			for level in data.levels:
-				var lid := str(level.level_id)
-				if not done_list.has(lid):
-					var gm := Svc.game()
-					if gm != null and gm.has_method("start_level_from_event"):
-						gm.call("start_level_from_event", level, _event_id)
-					else:
-						Nav.goto_game()
-					return
-			# Đã xong hết — mở lại từ đầu (replay)
-			if data.levels.size() > 0:
-				var gm := Svc.game()
-				if gm != null and gm.has_method("start_level_from_event"):
-					gm.call("start_level_from_event", data.levels[0], _event_id)
+			# Chơi liên tục từ tầng chưa xong đầu tiên (đã xong hết = chơi lại từ đầu)
+			var gm := Svc.game()
+			if gm != null and gm.has_method("start_event_series"):
+				gm.call("start_event_series", _event_id)
+			else:
+				Nav.goto_game()
 		EventData.Type.DUNGEON:
 			var gm := Svc.game()
 			if gm != null and gm.has_method("start_dungeon"):

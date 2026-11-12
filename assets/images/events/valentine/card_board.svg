@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 505 508" width="505" height="508">
+  <defs>
+    <!-- Đổ bóng rượu vang sẫm mềm dưới khung -->
+    <filter id="val-board-shadow" x="-8%" y="-8%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#140108" flood-opacity="0.8"/>
+    </filter>
+    <filter id="pink-val-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="glow"/>
+      <feComposite in="SourceGraphic" in2="glow" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Bóng đổ toàn khung -->
+  <g filter="url(#val-board-shadow)">
+    <!-- Viền mỏng Light Pink #FEC8D6 -->
+    <rect x="15" y="14" width="475" height="478" rx="26" fill="#FEC8D6"/>
+    <!-- Thân khung màu Rose-Wine #7A1233 -->
+    <rect x="17.5" y="16.5" width="470" height="473" rx="24" fill="#7A1233"/>
+    <!-- Gờ sáng trên đỉnh tạo độ dày khối giấy kẹo -->
+    <path d="M42 16.5 Q17.5 16.5 17.5 41 L17.5 46 Q17.5 22 42 22 L463 22 Q487.5 22 487.5 46 L487.5 41 Q487.5 16.5 463 16.5 Z" fill="#9C1E45"/>
+  </g>
+
+  <!-- LÒNG BÀN CỜ 5x5: Very-deep-wine #2A0412 (440x440 chuẩn vuông, ~87% chiều rộng) -->
+  <rect x="32.5" y="38" width="440" height="440" rx="14" fill="#18010A"/>
+  <rect x="32.5" y="38" width="440" height="440" rx="14" fill="#2A0412"/>
+  <!-- Vát bóng chìm mép trong -->
+  <rect x="32.5" y="38" width="440" height="5" fill="#100006" opacity="0.75"/>
+
+  <!-- SPARKLE HỒNG SÁNG Ở TÂM ĐỈNH GIỮA (LIGHT PINK #FEC8D6) -->
+  <g filter="url(#pink-val-glow)">
+    <polygon points="252.5,10 256,19 265,19 257.5,25 260.5,34 252.5,28.5 244.5,34 247.5,25 240,19 249,19" fill="#FEC8D6"/>
+    <circle cx="252.5" cy="23" r="1.5" fill="#FDEDF0"/>
+  </g>
+
+  <!-- RUY BĂNG HỒNG XOĂN GÓC TRÊN TRÁI (CURLY PINK RIBBON) -->
+  <g transform="translate(24 16)">
+    <path d="M10 20 Q24 6 42 16 Q60 26 48 38 Q36 48 24 38 Q16 28 32 20 Q48 12 70 20" fill="none" stroke="#FEC8D6" stroke-width="3" stroke-linecap="round"/>
+    <path d="M42 16 Q60 26 48 38 Q36 48 24 38" fill="none" stroke="#FF578B" stroke-width="1.8" stroke-linecap="round"/>
+  </g>
+
+  <!-- TRÁI TIM LƠ LỬNG GÓC TRÊN PHẢI (FLOATING HEARTS) -->
+  <g transform="translate(435 22)">
+    <!-- Trái tim đỏ thắm lớn -->
+    <path d="M18 16 C14 13 8 8 8 3 C8 -1 11 -3 15 -3 C17 -3 18 -1 18 0 C18 -1 19 -3 21 -3 C25 -3 28 -1 28 3 C28 8 22 13 18 16 Z" fill="#C01742"/>
+    <!-- Trái tim hồng nhỏ kế bên -->
+    <g transform="translate(18 12) scale(0.65)">
+      <path d="M18 16 C14 13 8 8 8 3 C8 -1 11 -3 15 -3 C17 -3 18 -1 18 0 C18 -1 19 -3 21 -3 C25 -3 28 -1 28 3 C28 8 22 13 18 16 Z" fill="#FF578B"/>
+    </g>
+    <!-- Trái tim trắng nhỏ -->
+    <g transform="translate(-10 6) scale(0.5)">
+      <path d="M18 16 C14 13 8 8 8 3 C8 -1 11 -3 15 -3 C17 -3 18 -1 18 0 C18 -1 19 -3 21 -3 C25 -3 28 -1 28 3 C28 8 22 13 18 16 Z" fill="#FDEDF0"/>
+    </g>
+  </g>
+
+  <!-- MŨI TÊN CUPID VỚI ĐẦU TRÁI TIM XIÊN QUA MẠNG BÊN PHẢI (CUPID ARROW) -->
+  <g transform="translate(475 220) rotate(-35)">
+    <!-- Thân tên -->
+    <line x1="-30" y1="0" x2="16" y2="0" stroke="#FDEDF0" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Đầu tên hình trái tim -->
+    <g transform="translate(18 0) rotate(90) scale(0.6)">
+      <path d="M0 8 C-4 5 -8 2 -8 -2 C-8 -5 -5 -7 -2 -7 C0 -7 0 -5 0 -4 C0 -5 0 -7 2 -7 C5 -7 8 -5 8 -2 C8 2 4 5 0 8 Z" fill="#FF578B"/>
+    </g>
+    <!-- Lông đuôi mũi tên -->
+    <path d="M-28 -4 L-22 0 L-28 4 M-34 -4 L-28 0 L-34 4" stroke="#FDEDF0" stroke-width="2" fill="none" stroke-linecap="round"/>
+  </g>
+
+  <!-- CỤM HOA HỒNG CUỘN CÁNH GÓC DƯỚI TRÁI (SWIRLED ROSES: Crimson, Pink, White) -->
+  <g transform="translate(36 452)">
+    <!-- Hoa hồng đỏ Crimson #C01742 lớn -->
+    <g transform="translate(18 18)">
+      <circle cx="0" cy="0" r="14" fill="#C01742"/>
+      <path d="M-8 -6 Q0 -12 8 -6 Q12 4 4 10 Q-6 12 -10 4 Q-12 -2 -4 -6 Q4 -8 6 -2 Q6 4 2 6 Q-2 6 -4 2" fill="none" stroke="#7A1233" stroke-width="2.2" stroke-linecap="round"/>
+    </g>
+    <!-- Hoa hồng Hot Pink #FF578B -->
+    <g transform="translate(40 22)">
+      <circle cx="0" cy="0" r="10" fill="#FF578B"/>
+      <path d="M-5 -4 Q0 -8 5 -4 Q8 2 3 6 Q-4 7 -6 2 Q-7 -1 -2 -4 Q2 -5 4 -1 Q4 3 1 4" fill="none" stroke="#C01742" stroke-width="1.8" stroke-linecap="round"/>
+    </g>
+    <!-- Hoa hồng trắng Blush White #FDEDF0 -->
+    <g transform="translate(6 28)">
+      <circle cx="0" cy="0" r="9" fill="#FDEDF0"/>
+      <path d="M-4 -3 Q0 -7 4 -3 Q7 2 2 5 Q-3 6 -5 1 Q-6 -1 -1 -3 Q2 -4 3 -1" fill="none" stroke="#FEC8D6" stroke-width="1.8" stroke-linecap="round"/>
+    </g>
+  </g>
+
+  <!-- CỤM HOA HỒNG CUỘN CÁNH GÓC DƯỚI PHẢI -->
+  <g transform="translate(435 452)">
+    <!-- Hoa hồng đỏ lớn -->
+    <g transform="translate(18 18)">
+      <circle cx="0" cy="0" r="14" fill="#C01742"/>
+      <path d="M-8 -6 Q0 -12 8 -6 Q12 4 4 10 Q-6 12 -10 4 Q-12 -2 -4 -6 Q4 -8 6 -2 Q6 4 2 6 Q-2 6 -4 2" fill="none" stroke="#7A1233" stroke-width="2.2" stroke-linecap="round"/>
+    </g>
+    <!-- Hoa hồng Hot Pink -->
+    <g transform="translate(-4 22)">
+      <circle cx="0" cy="0" r="10" fill="#FF578B"/>
+      <path d="M-5 -4 Q0 -8 5 -4 Q8 2 3 6 Q-4 7 -6 2 Q-7 -1 -2 -4 Q2 -5 4 -1 Q4 3 1 4" fill="none" stroke="#C01742" stroke-width="1.8" stroke-linecap="round"/>
+    </g>
+    <!-- Hoa hồng trắng -->
+    <g transform="translate(30 28)">
+      <circle cx="0" cy="0" r="9" fill="#FDEDF0"/>
+      <path d="M-4 -3 Q0 -7 4 -3 Q7 2 2 5 Q-3 6 -5 1 Q-6 -1 -1 -3 Q2 -4 3 -1" fill="none" stroke="#FEC8D6" stroke-width="1.8" stroke-linecap="round"/>
+    </g>
+  </g>
+</svg>

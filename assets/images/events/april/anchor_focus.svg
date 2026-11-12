@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <defs>
+    <filter id="violet-glow-foc" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.5" flood-color="#7A43F6" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+  <!-- Vòng bo viền nét đứt màu Violet #7A43F6 -->
+  <rect x="5" y="5" width="44" height="44" rx="10" fill="none" stroke="#7A43F6" stroke-width="2.2" stroke-dasharray="4.5 3"/>
+  <!-- Chân đứng -->
+  <path d="M30 38 L30 50 L26 50" fill="none" stroke="#FF73CA" stroke-width="1.8" stroke-linecap="round"/>
+  <!-- Thân hồng hạc phát sáng êm dịu -->
+  <g filter="url(#violet-glow-foc)">
+    <ellipse cx="31" cy="30" rx="12" ry="10" fill="#FF73CA"/>
+    <path d="M25 32 C23 25 18 24 18 18 C18 13 23 11 25 14 C27 17 23 22 29 28 Z" fill="#FF73CA"/>
+    <circle cx="21" cy="15" r="5.5" fill="#FF73CA"/>
+    <path d="M16 16 L11 19 Q11 21 14 20 L16 18 Z" fill="#3A0648"/>
+    <path d="M26 27 C29 25 38 25 41 29 C41 34 34 36 28 35 Z" fill="#FDC1E3"/>
+    <circle cx="19.5" cy="14" r="1.5" fill="#000000"/>
+    <circle cx="19" cy="13.5" r="0.6" fill="#FFFFFF"/>
+  </g>
+</svg>

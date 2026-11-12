@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="keyhole-yellow-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Bóng tròn màu Maroon mềm bên dưới -->
+  <ellipse cx="88" cy="148" rx="46" ry="14" fill="#5D1F34" opacity="0.45"/>
+
+  <!-- Quai khóa thép màu Soft Pink #F1A5BF -->
+  <path d="M64 80 V52 A24 24 0 0 1 112 52 V80" fill="none" stroke="#F1A5BF" stroke-width="14" stroke-linecap="round"/>
+  <!-- Điểm nhấn vát sáng trên đỉnh quai -->
+  <path d="M72 43 A20 20 0 0 1 104 43" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.65"/>
+
+  <!-- Nhánh dây leo xanh quấn quanh quai khóa với 2 lá non (Green vine & 2 leaves) -->
+  <path d="M58 64 Q50 48 66 46 Q74 44 76 56 Q80 70 62 70" fill="none" stroke="#7DBF81" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- 2 lá non màu Leaf Green #7DBF81 -->
+  <path d="M66 44 Q60 38 68 36 Q74 42 66 44 Z" fill="#7DBF81"/>
+  <path d="M78 54 Q86 50 88 58 Q80 62 78 54 Z" fill="#7DBF81"/>
+
+  <!-- Thân khóa chunky Maroon #711B3E -->
+  <rect x="48" y="78" width="80" height="62" rx="14" fill="#4A1027"/>
+  <rect x="48" y="74" width="80" height="62" rx="14" fill="#711B3E"/>
+
+  <!-- Gờ sáng trên thân khóa -->
+  <path d="M62 74 Q48 74 48 88 L48 91 Q48 77 62 77 L114 77 Q128 77 128 91 L128 88 Q128 74 114 74 Z" fill="#912752"/>
+
+  <!-- Băng đáy tối màu #5D1F34 -->
+  <path d="M48 112 Q48 136 72 136 L104 136 Q128 136 128 112 L128 106 L48 106 Z" fill="#5D1F34"/>
+
+  <!-- Lỗ khóa vàng Sunny Yellow #FFDC74 phát sáng -->
+  <g filter="url(#keyhole-yellow-glow)">
+    <circle cx="88" cy="101" r="6.5" fill="#FFDC74"/>
+    <polygon points="84.5,102 91.5,102 89.5,120 86.5,120" fill="#FFDC74"/>
+    <circle cx="88" cy="101" r="2.5" fill="#FFFFFF"/>
+  </g>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <!-- 2 chân đế xám -->
+  <polygon points="19,41 23,41 20,46 16,46" fill="#6B7A91"/>
+  <polygon points="35,41 31,41 34,46 38,46" fill="#6B7A91"/>
+
+  <!-- Đồng hồ màu xám xanh #8394AD, mắt nhắm buồn ngủ, không phát sáng -->
+  <g>
+    <ellipse cx="16" cy="16" rx="4.5" ry="3.5" fill="#8394AD" transform="rotate(-35 16 16)"/>
+    <ellipse cx="38" cy="16" rx="4.5" ry="3.5" fill="#8394AD" transform="rotate(35 38 16)"/>
+    <rect x="25.5" y="11" width="3" height="3" rx="1" fill="#6B7A91"/>
+
+    <circle cx="27" cy="29" r="16" fill="#8394AD"/>
+    <circle cx="27" cy="29" r="12.5" fill="#A5B5CD"/>
+
+    <!-- Mắt nhắm lười biếng -->
+    <path d="M20.5 28 Q22.5 30 24.5 28" fill="none" stroke="#16305E" stroke-width="1.3" stroke-linecap="round"/>
+    <path d="M29.5 28 Q31.5 30 33.5 28" fill="none" stroke="#16305E" stroke-width="1.3" stroke-linecap="round"/>
+
+    <!-- Miệng nhỏ hơi ngơ ngác -->
+    <ellipse cx="27" cy="32.5" rx="1.8" ry="1" fill="#16305E"/>
+  </g>
+</svg>

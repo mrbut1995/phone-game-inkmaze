@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="press-gold-glow-cell" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#FBBB5A" flood-opacity="0.65"/>
+    </filter>
+  </defs>
+  <!-- Đáy gạch màu vàng sẫm -->
+  <rect x="4" y="6" width="168" height="166" rx="14" fill="#B87B14"/>
+  <!-- Mặt gạch Golden Yellow #FBBB5A bừng sáng rực rỡ -->
+  <rect x="4" y="6" width="168" height="164" rx="14" fill="#FBBB5A" filter="url(#press-gold-glow-cell)"/>
+  <!-- Mép trên sáng màu Cream -->
+  <path d="M18 6 Q4 6 4 20 L4 25 Q4 11 18 11 L158 11 Q172 11 172 25 L172 20 Q172 6 158 6 Z" fill="#FFECC2"/>
+  <!-- Lòng gạch lún xuống -->
+  <rect x="16" y="20" width="144" height="138" rx="10" fill="#E8A43C"/>
+  <rect x="22" y="26" width="132" height="126" rx="8" fill="#F2AE46"/>
+</svg>

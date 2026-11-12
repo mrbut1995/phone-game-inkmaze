@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <!-- Chân đứng màu xám tím -->
+  <path d="M30 38 L30 50 L26 50" fill="none" stroke="#A89AB5" stroke-width="1.8" stroke-linecap="round"/>
+  <!-- Toàn thân màu xám lavender #A89AB5, mắt nhắm ngủ ngơ ngác, không glow -->
+  <g>
+    <ellipse cx="31" cy="30" rx="12" ry="10" fill="#A89AB5"/>
+    <path d="M25 32 C23 25 18 24 18 18 C18 13 23 11 25 14 C27 17 23 22 29 28 Z" fill="#A89AB5"/>
+    <circle cx="21" cy="15" r="5.5" fill="#A89AB5"/>
+    <path d="M16 16 L11 19 Q11 21 14 20 L16 18 Z" fill="#520A56"/>
+    <path d="M26 27 C29 25 38 25 41 29 C41 34 34 36 28 35 Z" fill="#C9B3D6"/>
+    <!-- Mắt nhắm lười biếng -->
+    <path d="M18 15 Q19.5 17 21 15" fill="none" stroke="#3A0648" stroke-width="1.3" stroke-linecap="round"/>
+  </g>
+</svg>

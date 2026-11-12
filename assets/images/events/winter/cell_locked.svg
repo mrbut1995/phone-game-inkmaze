@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Gạch màu dusty slate-blue sẫm #6B8EA8 -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#4B6E87"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#6B8EA8"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#5D809A"/>
+
+  <!-- Tinh thể bông tuyết ở các góc -->
+  <circle cx="32" cy="32" r="2.5" fill="#FFFFFF" opacity="0.65"/>
+  <circle cx="144" cy="32" r="2.5" fill="#FFFFFF" opacity="0.65"/>
+  <circle cx="32" cy="144" r="2.5" fill="#FFFFFF" opacity="0.65"/>
+  <circle cx="144" cy="144" r="2.5" fill="#FFFFFF" opacity="0.65"/>
+
+  <!-- Dây xích / thừng băng dày bắt chéo (Crossed frosty ropes) -->
+  <line x1="24" y1="24" x2="152" y2="152" stroke="#B8D9F8" stroke-width="11" stroke-dasharray="14 6" stroke-linecap="round"/>
+  <line x1="152" y1="24" x2="24" y2="152" stroke="#9AC0E6" stroke-width="11" stroke-dasharray="14 6" stroke-linecap="round"/>
+
+  <!-- Bóng tròn sau ổ khóa -->
+  <circle cx="88" cy="94" r="32" fill="#0E203C" opacity="0.65"/>
+
+  <!-- Ổ khóa Navy chunky ở trung tâm với lỗ khóa vàng rực -->
+  <g transform="translate(88 88)">
+    <!-- Quai khóa thép màu Ice Blue #8ABFEF -->
+    <path d="M-18 -8 V-24 A18 18 0 0 1 18 -24 V-8" fill="none" stroke="#8ABFEF" stroke-width="9" stroke-linecap="round"/>
+    <!-- Thân khóa Navy #132B50 -->
+    <rect x="-28" y="-8" width="56" height="46" rx="9" fill="#132B50"/>
+    <!-- Băng đáy tối màu #0E203C -->
+    <path d="M-28 17 Q-28 38 -9 38 L9 38 Q28 38 28 17 L28 12 L-28 12 Z" fill="#0E203C"/>
+    <!-- Lỗ khóa màu vàng ấm phát sáng #FED136 -->
+    <circle cx="0" cy="11" r="5" fill="#FED136"/>
+    <polygon points="-3,12 3,12 2,24 -2,24" fill="#FED136"/>
+  </g>
+</svg>

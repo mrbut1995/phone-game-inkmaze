@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 505 508" width="505" height="508">
+  <defs>
+    <!-- Đổ bóng đêm lạnh sâu dưới khung -->
+    <filter id="winter-board-shadow" x="-8%" y="-8%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#061224" flood-opacity="0.8"/>
+    </filter>
+    <filter id="sun-winter-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="glow"/>
+      <feComposite in="SourceGraphic" in2="glow" operator="over"/>
+    </filter>
+    <filter id="window-warm-glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="3.5" result="glow"/>
+      <feComposite in="SourceGraphic" in2="glow" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Bóng đổ toàn khung -->
+  <g filter="url(#winter-board-shadow)">
+    <!-- Viền mỏng Ice Blue #8ABFEF -->
+    <rect x="15" y="14" width="475" height="478" rx="26" fill="#8ABFEF"/>
+    <!-- Thân khung màu Deep Navy #132B50 -->
+    <rect x="17.5" y="16.5" width="470" height="473" rx="24" fill="#132B50"/>
+    <!-- Gờ sáng trên đỉnh tạo độ dày khối giấy -->
+    <path d="M42 16.5 Q17.5 16.5 17.5 41 L17.5 46 Q17.5 22 42 22 L463 22 Q487.5 22 487.5 46 L487.5 41 Q487.5 16.5 463 16.5 Z" fill="#24477A"/>
+  </g>
+
+  <!-- LÒNG BÀN CỜ 5x5: Deep Navy #0E203C (440x440 chuẩn vuông, ~87% chiều rộng) -->
+  <rect x="32.5" y="38" width="440" height="440" rx="14" fill="#081426"/>
+  <rect x="32.5" y="38" width="440" height="440" rx="14" fill="#0E203C"/>
+  <!-- Vát bóng chìm mép trong -->
+  <rect x="32.5" y="38" width="440" height="5" fill="#040A14" opacity="0.75"/>
+
+  <!-- MẶT TRỜI / MẶT TRĂNG MÙA ĐÔNG TRÒN Ở TÂM ĐỈNH GIỮA -->
+  <g filter="url(#sun-winter-glow)">
+    <circle cx="252.5" cy="24" r="10.5" fill="#FFFFFF"/>
+    <circle cx="252.5" cy="24" r="8" fill="#FFFDF2"/>
+  </g>
+
+  <!-- MÂY BỒNG BỀNH VÀ BÔNG TUYẾT RƠI Ở 2 GÓC TRÊN -->
+  <!-- Mây góc trái -->
+  <g transform="translate(24 16)">
+    <path d="M12 24 Q16 12 30 14 Q38 8 50 14 Q62 10 70 20 Q76 30 64 34 L12 34 Z" fill="#84B7E8" opacity="0.6"/>
+    <path d="M8 26 Q12 16 24 18 Q32 12 42 18 Q50 14 58 22 Q62 30 52 34 L8 34 Z" fill="#FFFFFF" opacity="0.9"/>
+    <!-- Bông tuyết nhỏ rơi -->
+    <circle cx="28" cy="42" r="1.5" fill="#FFFFFF"/>
+    <circle cx="48" cy="48" r="1.2" fill="#B8D9F8"/>
+  </g>
+  <!-- Mây góc phải -->
+  <g transform="translate(415 16)">
+    <path d="M12 24 Q16 12 30 14 Q38 8 50 14 Q62 10 70 20 Q76 30 64 34 L12 34 Z" fill="#84B7E8" opacity="0.6"/>
+    <path d="M8 26 Q12 16 24 18 Q32 12 42 18 Q50 14 58 22 Q62 30 52 34 L8 34 Z" fill="#FFFFFF" opacity="0.9"/>
+    <circle cx="36" cy="44" r="1.5" fill="#FFFFFF"/>
+    <circle cx="18" cy="48" r="1.2" fill="#B8D9F8"/>
+  </g>
+
+  <!-- ĐỒI TUYẾT VÀ CÂY THÔNG DỌC CẠNH ĐÁY -->
+  <g>
+    <!-- Lớp đồi tuyết nền mềm màu Powder Blue #B8D9F8 -->
+    <path d="M35 480 Q140 464 252.5 476 Q365 464 470 480 L470 490 L35 490 Z" fill="#B8D9F8"/>
+    <!-- Lớp tuyết trắng phủ lên trên #FFFFFF -->
+    <path d="M35 484 Q120 472 230 482 Q340 470 470 484 L470 490 L35 490 Z" fill="#FFFFFF"/>
+
+    <!-- Các cây thông nhọn màu Deep Navy và Slate Blue -->
+    <polygon points="120,486 126,468 132,486" fill="#132B50"/>
+    <polygon points="180,488 185,472 190,488" fill="#4A7FB5"/>
+    <polygon points="280,488 285,472 290,488" fill="#4A7FB5"/>
+    <polygon points="340,486 346,468 352,486" fill="#132B50"/>
+  </g>
+
+  <!-- GÓC DƯỚI TRÁI: NGÔI NHÀ GỖ PHỦ TUYẾT VỚI CỬA SỔ VÀNG ẤM -->
+  <g transform="translate(42 454)">
+    <!-- Thân nhà màu xanh thẫm Deep Navy #132B50 -->
+    <rect x="6" y="14" width="30" height="20" fill="#132B50"/>
+    <!-- Cửa ra vào -->
+    <rect x="10" y="22" width="6" height="12" fill="#0A182E"/>
+    <!-- Cửa sổ phát sáng màu vàng ấm #FED136 -->
+    <g filter="url(#window-warm-glow)">
+      <rect x="22" y="19" width="8" height="8" rx="1" fill="#FED136"/>
+      <line x1="26" y1="19" x2="26" y2="27" stroke="#132B50" stroke-width="1"/>
+      <line x1="22" y1="23" x2="30" y2="23" stroke="#132B50" stroke-width="1"/>
+    </g>
+    <!-- Ống khói -->
+    <rect x="24" y="6" width="5" height="10" fill="#132B50"/>
+    <!-- Mái nhà dốc phủ tuyết trắng tinh dày dặn -->
+    <polygon points="3,15 21,3 39,15" fill="#FFFFFF"/>
+    <!-- Cây thông nhỏ cạnh nhà -->
+    <polygon points="40,34 44,22 48,34" fill="#4A7FB5"/>
+  </g>
+
+  <!-- GÓC DƯỚI PHẢI: CHÚ NGƯỜI TUYẾT NHỎ VỚI MŨ PHỚT & MŨI CÀ RỐT -->
+  <g transform="translate(438 454)">
+    <!-- Thân người tuyết tròn mập mạp -->
+    <circle cx="16" cy="26" r="8" fill="#FFFFFF"/>
+    <circle cx="16" cy="14" r="6" fill="#FFFFFF"/>
+    <!-- Mũ phớt đen -->
+    <rect x="10" y="7" width="12" height="2.5" rx="1" fill="#1B2433"/>
+    <rect x="12" y="1" width="8" height="6.5" rx="1" fill="#1B2433"/>
+    <!-- Mũi cà rốt cam -->
+    <polygon points="16,14 22,15 16,16" fill="#FF7A2F"/>
+    <!-- Cúc áo than -->
+    <circle cx="16" cy="23" r="0.9" fill="#1B2433"/>
+    <circle cx="16" cy="27" r="0.9" fill="#1B2433"/>
+    <!-- Cây thông sau lưng người tuyết -->
+    <polygon points="26,34 31,18 36,34" fill="#132B50"/>
+  </g>
+</svg>

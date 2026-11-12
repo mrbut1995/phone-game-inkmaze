@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="key-party-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- 2 tia lấp lánh màu trắng (Sparkles) -->
+  <path d="M135 38 Q135 48 125 48 Q135 48 135 58 Q135 48 145 48 Q135 48 135 38 Z" fill="#FFFFFF"/>
+  <path d="M38 125 Q38 133 30 133 Q38 133 38 141 Q38 133 46 133 Q38 133 38 125 Z" fill="#FFFFFF"/>
+
+  <!-- Chìa khóa vàng xoay 40 độ -->
+  <g transform="translate(88 88) rotate(-40) translate(-88 -88)" filter="url(#key-party-glow)">
+    <!-- Chuôi chìa khóa: Ngôi sao 5 cánh chia 2 nửa màu -->
+    <g>
+      <!-- Nửa tối (Dark gold #E0B13D) -->
+      <polygon points="88,18 97,42 122,42 102,57 110,81 88,66 66,81 74,57 54,42 79,42" fill="#E0B13D"/>
+      <!-- Nửa sáng (Gold #FDD158) -->
+      <polygon points="88,18 97,42 122,42 102,57 110,81 88,66" fill="#FDD158"/>
+      <!-- Lỗ tròn rỗng ở giữa ngôi sao -->
+      <circle cx="88" cy="52" r="10" fill="#32174E"/>
+      <circle cx="88" cy="52" r="5" fill="#FDD158"/>
+    </g>
+
+    <!-- Thân chìa (Shaft) -->
+    <rect x="83.5" y="78" width="9" height="66" rx="4" fill="#E0B13D"/>
+    <rect x="83.5" y="78" width="4.5" height="66" rx="2" fill="#FDD158"/>
+
+    <!-- Răng chìa khóa (Bit) cách điệu hình quà / vương miện -->
+    <path d="M92 110 L110 110 Q113 110 113 113 L113 120 Q113 123 110 123 L92 123 Z" fill="#E0B13D"/>
+    <path d="M92 110 L110 110 Q113 110 113 113 L113 116 L92 116 Z" fill="#FDD158"/>
+
+    <path d="M92 128 L106 128 Q109 128 109 131 L109 138 Q109 141 106 141 L92 141 Z" fill="#E0B13D"/>
+    <path d="M92 128 L106 128 Q109 128 109 131 L109 134 L92 134 Z" fill="#FDD158"/>
+
+    <!-- Chóp đáy chuôi chìa -->
+    <circle cx="88" cy="144" r="5" fill="#E0B13D"/>
+    <circle cx="88" cy="143" r="3" fill="#FDD158"/>
+  </g>
+</svg>

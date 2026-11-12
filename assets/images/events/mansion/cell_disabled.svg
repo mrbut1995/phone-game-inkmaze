@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Very dark dim tile -->
+  <rect x="2" y="2" width="172" height="172" rx="16" fill="#0A1618"/>
+  <rect x="2" y="2" width="172" height="168" rx="16" fill="#112A2E"/>
+  <rect x="12" y="12" width="152" height="152" rx="10" fill="#0D2024"/>
+  <!-- Faint mint cobweb in top-left -->
+  <g fill="none" stroke="#BAF7D5" stroke-width="1.6" opacity="0.25">
+    <path d="M 14 54 C 36 50 50 36 54 14"/>
+    <path d="M 14 36 C 28 34 34 28 36 14"/>
+    <line x1="14" y1="14" x2="52" y2="52"/>
+  </g>
+</svg>

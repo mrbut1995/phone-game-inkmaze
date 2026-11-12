@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="EventBoardSkin" format=3]
+
+[ext_resource type="Script" path="res://scripts/models/definitions/EventBoardSkin.gd" id="script"]
+[ext_resource type="Texture2D" path="res://assets/images-png/events/halloween/bg_game.jpg" id="background"]
+[ext_resource type="Texture2D" path="res://assets/images-png/events/halloween/card_board.png" id="card_board"]
+[ext_resource type="Texture2D" path="res://assets/images-png/events/halloween/cell_normal.png" id="cell_normal"]
+[ext_resource type="Texture2D" path="res://assets/images-png/events/halloween/cell_pressed.png" id="cell_pressed"]
+[ext_resource type="Texture2D" path="res://assets/images-png/events/halloween/cell_disabled.png" id="cell_disabled"]
+[ext_resource type="Texture2D" path="res://assets/images-png/events/halloween/cell_start.png" id="cell_start"]
+[ext_resource type="Texture2D" path="res://assets/images-png/events/halloween/cell_finish.png" id="cell_finish"]
+[ext_resource type="Texture2D" path="res://assets/images-png/events/halloween/cell_finish_closed.png" id="cell_finish_closed"]
+[ext_resource type="Texture2D" path="res://assets/images-png/events/halloween/cell_locked.png" id="cell_locked"]
+[ext_resource type="Texture2D" path="res://assets/images-png/events/halloween/icon_key.png" id="icon_key"]
+[ext_resource type="Texture2D" path="res://assets/images-png/events/halloween/icon_lock_cell.png" id="icon_lock"]
+[ext_resource type="Texture2D" path="res://assets/images-png/events/halloween/anchor_normal.png" id="anchor_normal"]
+[ext_resource type="Texture2D" path="res://assets/images-png/events/halloween/anchor_focus.png" id="anchor_focus"]
+[ext_resource type="Texture2D" path="res://assets/images-png/events/halloween/anchor_pressed.png" id="anchor_pressed"]
+[ext_resource type="Texture2D" path="res://assets/images-png/events/halloween/anchor_selected.png" id="anchor_selected"]
+[ext_resource type="Texture2D" path="res://assets/images-png/events/halloween/anchor_disabled.png" id="anchor_disabled"]
+
+[resource]
+script = ExtResource("script")
+background = ExtResource("background")
+card_board = ExtResource("card_board")
+cell_normal = ExtResource("cell_normal")
+cell_pressed = ExtResource("cell_pressed")
+cell_disabled = ExtResource("cell_disabled")
+cell_start = ExtResource("cell_start")
+cell_finish = ExtResource("cell_finish")
+cell_finish_closed = ExtResource("cell_finish_closed")
+cell_locked = ExtResource("cell_locked")
+icon_key = ExtResource("icon_key")
+icon_lock = ExtResource("icon_lock")
+anchor_normal = ExtResource("anchor_normal")
+anchor_focus = ExtResource("anchor_focus")
+anchor_pressed = ExtResource("anchor_pressed")
+anchor_selected = ExtResource("anchor_selected")
+anchor_disabled = ExtResource("anchor_disabled")
+paper_inset = Vector4(0.055, 0.075, 0.057, 0.06)
+title_color = Color(0.9961, 0.5216, 0.1098, 1.0)
+subtitle_color = Color(0.9412, 0.9725, 0.9608, 1.0)
+cell_text_color = Color(0.9412, 0.9725, 0.9608, 1.0)
+cell_text_outline = Color(0.0196, 0.0392, 0.0588, 1.0)
+ink_color = Color(0.9961, 0.5216, 0.1098, 1.0)
+wall_color = Color(1.0000, 1.0000, 1.0000, 1.0)
+wall_halo_color = Color(0.03, 0.08, 0.1, 0.9)

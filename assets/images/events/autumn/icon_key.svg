@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="key-autumn-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- 2 tia lấp lánh màu kem (Peach Cream sparkles) -->
+  <path d="M135 38 Q135 48 125 48 Q135 48 135 58 Q135 48 145 48 Q135 48 135 38 Z" fill="#FFE3BD"/>
+  <path d="M38 125 Q38 133 30 133 Q38 133 38 141 Q38 133 46 133 Q38 133 38 125 Z" fill="#FFE3BD"/>
+
+  <!-- Chìa khóa vàng xoay 40 độ từ tâm -->
+  <g transform="translate(88 88) rotate(-40) translate(-88 -88)" filter="url(#key-autumn-glow)">
+    <!-- Chuôi chìa khóa hình Lá Phong (Maple leaf bow) -->
+    <g>
+      <!-- Nửa tối màu cam bí ngô #E27017 -->
+      <path d="M88 20 L96 32 L110 24 L108 40 L124 40 L114 52 L120 66 L106 60 L102 72 L88 64 L74 72 L70 60 L56 66 L62 52 L52 40 L68 40 L66 24 L80 32 Z" fill="#E27017"/>
+      <!-- Nửa sáng màu vàng Golden Yellow #F4AC3D -->
+      <path d="M88 20 L96 32 L110 24 L108 40 L124 40 L114 52 L120 66 L106 60 L102 72 L88 64 Z" fill="#F4AC3D"/>
+      <!-- Lỗ tròn tâm lá phong -->
+      <circle cx="88" cy="48" r="9" fill="#280E01"/>
+      <circle cx="88" cy="48" r="4.5" fill="#F4AC3D"/>
+    </g>
+
+    <!-- Thân chìa khóa (Shaft) -->
+    <rect x="83.5" y="70" width="9" height="74" rx="4" fill="#E27017"/>
+    <rect x="83.5" y="70" width="4.5" height="74" rx="2" fill="#F4AC3D"/>
+
+    <!-- Răng chìa khóa (Bit) hình khối cắt giấy lá/gỗ -->
+    <path d="M92 108 L110 108 Q113 108 113 111 L113 118 Q113 121 110 121 L92 121 Z" fill="#E27017"/>
+    <path d="M92 108 L110 108 Q113 108 113 111 L113 114 L92 114 Z" fill="#F4AC3D"/>
+
+    <path d="M92 126 L106 126 Q109 126 109 129 L109 136 Q109 139 106 139 L92 139 Z" fill="#E27017"/>
+    <path d="M92 126 L106 126 Q109 126 109 129 L109 132 L92 132 Z" fill="#F4AC3D"/>
+
+    <!-- Chóp đáy chuôi chìa hình hạt sồi tròn -->
+    <circle cx="88" cy="147" r="5" fill="#E27017"/>
+    <circle cx="88" cy="146" r="3" fill="#F4AC3D"/>
+  </g>
+</svg>

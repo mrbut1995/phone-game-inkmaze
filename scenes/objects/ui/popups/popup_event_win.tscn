@@ -1,0 +1,160 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://scenes/base/base_popup.tscn" id="1_base"]
+[ext_resource type="Script" path="res://scripts/objects/ui/popups/EventWinPopup.gd" id="2_script"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/go_panel_dungeon.png" id="3_panel"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/retry_washi_tape.png" id="4_tape"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/go_btn_home_normal.png" id="5_hn"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/go_btn_home_pressed.png" id="6_hp"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/go_btn_home_focus.png" id="7_hf"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/go_icon_home.png" id="8_ih"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/go_btn_retry_normal.png" id="9_rn"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/go_btn_retry_pressed.png" id="10_rp"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/go_btn_retry_focus.png" id="11_rf"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/go_icon_play.png" id="12_ip"]
+
+[node name="Base" node_paths=PackedStringArray("label_title", "label_event", "label_done", "label_rewards_head", "rewards_box") instance=ExtResource("1_base")]
+script = ExtResource("2_script")
+label_title = NodePath("Panel/Content/Information/Title")
+label_event = NodePath("Panel/Content/Information/EventName")
+label_done = NodePath("Panel/Content/Information/Done")
+label_rewards_head = NodePath("Panel/Content/Information/RewardsHead")
+rewards_box = NodePath("Panel/Content/Information/Rewards")
+close_on_back = false
+close_on_outside = false
+
+[node name="Panel" parent="." index="1"]
+anchor_left = 0.5
+anchor_top = 0.2
+anchor_right = 0.5
+anchor_bottom = 0.2
+offset_left = -239.0
+offset_right = 239.0
+offset_bottom = 562.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Art" parent="Panel" index="0"]
+anchors_preset = 15
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_panel")
+patch_margin_left = 70
+patch_margin_top = 30
+patch_margin_right = 30
+patch_margin_bottom = 30
+
+[node name="Content" parent="Panel" index="1"]
+anchors_preset = -1
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 68.0
+offset_top = 62.0
+offset_right = -28.0
+offset_bottom = -22.0
+
+[node name="Information" type="VBoxContainer" parent="Panel/Content"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Panel/Content/Information"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.18, 0.49, 0.2, 1)
+theme_override_font_sizes/font_size = 38
+text = "STR_EVENT_WIN_TITLE"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="EventName" type="Label" parent="Panel/Content/Information"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.45, 0.5, 1)
+theme_override_font_sizes/font_size = 24
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Done" type="Label" parent="Panel/Content/Information"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.25, 0.3, 1)
+theme_override_font_sizes/font_size = 30
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="RewardsHead" type="Label" parent="Panel/Content/Information"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.45, 0.5, 1)
+theme_override_font_sizes/font_size = 22
+text = "STR_EVENT_WIN_REWARD"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Rewards" type="VBoxContainer" parent="Panel/Content/Information"]
+layout_mode = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="Spacer" type="Control" parent="Panel/Content/Information"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Buttons" type="HBoxContainer" parent="Panel/Content/Information"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="RestBtn" type="TextureButton" parent="Panel/Content/Information/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("5_hn")
+texture_pressed = ExtResource("6_hp")
+texture_hover = ExtResource("5_hn")
+texture_focused = ExtResource("7_hf")
+
+[node name="H" type="HBoxContainer" parent="Panel/Content/Information/Buttons/RestBtn"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Label" type="Label" parent="Panel/Content/Information/Buttons/RestBtn/H"]
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"PopupBtnPrimarySm"
+text = "STR_EVENT_WIN_HOME"
+vertical_alignment = 1
+
+[node name="Icon" type="TextureRect" parent="Panel/Content/Information/Buttons/RestBtn/H"]
+custom_minimum_size = Vector2(26, 26)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("8_ih")
+expand_mode = 1
+stretch_mode = 5
+
+[connection signal="pressed" from="Panel/Content/Information/Buttons/RestBtn" to="." method="_on_rest_pressed"]

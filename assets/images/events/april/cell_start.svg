@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Gạch nền Light Pink -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#E896C7"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#FDC1E3"/>
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#FEC8EA"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#F4A9D3"/>
+
+  <!-- Đĩa tròn trung tâm màu Violet #7A43F6 -->
+  <rect x="36" y="36" width="104" height="104" rx="20" fill="#4B2699"/>
+  <rect x="36" y="33" width="104" height="104" rx="20" fill="#7A43F6"/>
+  <path d="M54 33 Q36 33 36 51 L36 54 Q36 36 54 36 L122 36 Q140 36 140 54 L140 51 Q140 33 122 33 Z" fill="#9D73FB"/>
+
+  <!-- Ống pháo tiệc (Party popper cone sọc mận & hồng) -->
+  <g transform="translate(88 88) rotate(-25) translate(-88 -88)">
+    <!-- Thân ống nón -->
+    <path d="M68 116 L88 70 L108 116 Q88 122 68 116 Z" fill="#3A0648"/>
+    <!-- Sọc màu Hot-Pink #FF73CA -->
+    <path d="M74 102 L102 102 L98 90 L78 90 Z" fill="#FF73CA"/>
+    <path d="M85 76 L91 76 L94 82 L82 82 Z" fill="#FF73CA"/>
+  </g>
+
+  <!-- Mưa pháo hoa bung nở: confetti và sao vàng -->
+  <g>
+    <!-- Ngôi sao vàng bung ra -->
+    <polygon points="98,54 100,58 104,58 101,61 102,65 98,63 94,65 95,61 92,58 96,58" fill="#FBEC77"/>
+    <!-- Confetti đa sắc -->
+    <circle cx="116" cy="62" r="3" fill="#FF73CA"/>
+    <rect x="110" y="44" width="4" height="4" rx="1" fill="#FBEC77" transform="rotate(30 110 44)"/>
+    <circle cx="82" cy="48" r="2.5" fill="#FDC1E3"/>
+    <rect x="70" y="58" width="5" height="3" rx="1" fill="#FF73CA" transform="rotate(-25 70 58)"/>
+  </g>
+</svg>

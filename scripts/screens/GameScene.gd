@@ -12,6 +12,9 @@ extends BaseScene
 
 const UIAnim := preload("res://scripts/utils/UIAnim.gd")
 
+## Ảnh nền của skin sự kiện (null = ván thường)
+var _event_backdrop: TextureRect = null
+
 ## Bố cục đang hiển thị (Portrait / Landscape). Node UI của màn chơi (nút thanh trạng thái ·
 ## nhãn Tên màn/Phụ đề · khung HUD · BoardSlot) đã BIND SẴN bằng `@export` trong
 ## `scenes/layout/<hướng>/game.tscn` ⇒ code đọc `layout.<tên>`, KHÔNG tra đường dẫn.
@@ -268,6 +271,7 @@ func _ready() -> void:
 
 	# Khởi động ván chơi dựa trên GameManager hoặc mặc định
 	var gm: Node = Svc.game()
+	_apply_event_skin(gm)
 	var initial_mode: String = "dungeon"
 	var initial_diff: String = "medium"
 	if gm != null:
@@ -282,6 +286,50 @@ func _ready() -> void:
 	# (timer_controller.pause() gọi trong open_instruction(); tới đây khi Tutorial đổi scene)
 	if timer_controller != null and game_controller != null:
 		call_deferred("_resume_timer_if_paused")
+
+
+## SỰ KIỆN: đổi ảnh nền + art bàn chơi + màu chữ/mực theo skin của event đang chơi.
+## Ván thường: xoá màu mực event còn sót (PenSkin là static) rồi thoát.
+func _apply_event_skin(gm: Node) -> void:
+	PenSkin.clear_ink_override()
+	var skin: EventBoardSkin = gm.call("event_board_skin") if gm != null and gm.has_method("event_board_skin") else null
+	if skin == null:
+		return
+	if not tree_exiting.is_connected(PenSkin.clear_ink_override):
+		tree_exiting.connect(PenSkin.clear_ink_override)
+	if board_view != null and board_view.has_method("apply_event_skin"):
+		board_view.call("apply_event_skin", skin)
+	if skin.background != null:
+		_event_backdrop = TextureRect.new()
+		_event_backdrop.name = "EventBackdrop"
+		_event_backdrop.texture = skin.background
+		_event_backdrop.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		_event_backdrop.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		_event_backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_event_backdrop.top_level = true	# phủ TOÀN màn hình, kể cả 2 dải bên của màn rộng
+		_event_backdrop.z_index = -1	# luôn nằm DƯỚI mọi node khác (bàn chơi, HUD)
+		add_child(_event_backdrop)
+		move_child(_event_backdrop, 0)
+		# Nền giấy mặc định (SceneBackground) đang vẽ ĐÈ lên ảnh nền event → ẩn đi khi chơi event
+		var bg := get_node_or_null("Background") as CanvasItem
+		if bg != null:
+			bg.visible = false
+		_fit_event_backdrop()
+		var vp := get_viewport()
+		if vp != null and not vp.size_changed.is_connected(_fit_event_backdrop):
+			vp.size_changed.connect(_fit_event_backdrop)
+	if layout != null:
+		if layout.level_label != null:
+			layout.level_label.add_theme_color_override("font_color", skin.title_color)
+		if layout.subtitle_label != null:
+			layout.subtitle_label.add_theme_color_override("font_color", skin.subtitle_color)
+
+
+func _fit_event_backdrop() -> void:
+	if _event_backdrop == null or not is_instance_valid(_event_backdrop):
+		return
+	_event_backdrop.position = Vector2.ZERO
+	_event_backdrop.size = get_viewport_rect().size
 
 
 func _on_restart_pressed() -> void:

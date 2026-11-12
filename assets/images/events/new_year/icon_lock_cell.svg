@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="keyhole-gold-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Bóng tròn màu Deep-Navy mềm bên dưới -->
+  <ellipse cx="88" cy="148" rx="46" ry="14" fill="#040F2B" opacity="0.6"/>
+
+  <!-- Quai khóa thép màu Sky-Blue #5CBAED -->
+  <path d="M64 80 V52 A24 24 0 0 1 112 52 V80" fill="none" stroke="#5CBAED" stroke-width="14" stroke-linecap="round"/>
+  <!-- Điểm nhấn vát sáng trên đỉnh quai -->
+  <path d="M72 43 A20 20 0 0 1 104 43" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.65"/>
+
+  <!-- Dải ruy băng hồng confetti xoăn vắt qua quai khóa (Pink confetti streamer) -->
+  <path d="M60 52 Q48 42 56 60 Q62 76 50 86 Q46 90 50 94" fill="none" stroke="#E8507F" stroke-width="4.5" stroke-linecap="round"/>
+  <ellipse cx="60" cy="52" rx="4.5" ry="3" fill="#E8507F" transform="rotate(-20 60 52)"/>
+
+  <!-- Thân khóa chunky Navy #16305E -->
+  <rect x="48" y="78" width="80" height="62" rx="14" fill="#0E2142"/>
+  <rect x="48" y="74" width="80" height="62" rx="14" fill="#16305E"/>
+
+  <!-- Gờ sáng trên thân khóa -->
+  <path d="M62 74 Q48 74 48 88 L48 91 Q48 77 62 77 L114 77 Q128 77 128 91 L128 88 Q128 74 114 74 Z" fill="#2D5294"/>
+
+  <!-- Băng đáy tối màu -->
+  <path d="M48 112 Q48 136 72 136 L104 136 Q128 136 128 112 L128 106 L48 106 Z" fill="#071730"/>
+
+  <!-- Lỗ khóa màu vàng Gold #FBCB5C phát sáng -->
+  <g filter="url(#keyhole-gold-glow)">
+    <circle cx="88" cy="101" r="6.5" fill="#FBCB5C"/>
+    <polygon points="84.5,102 91.5,102 89.5,120 86.5,120" fill="#FBCB5C"/>
+    <circle cx="88" cy="101" r="2.5" fill="#FFF2D1"/>
+  </g>
+</svg>

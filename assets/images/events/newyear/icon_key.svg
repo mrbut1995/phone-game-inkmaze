@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="key-tet-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- 2 tia lấp lánh màu kem (Cream sparkles) -->
+  <path d="M135 38 Q135 48 125 48 Q135 48 135 58 Q135 48 145 48 Q135 48 135 38 Z" fill="#FFE9B0"/>
+  <path d="M38 125 Q38 133 30 133 Q38 133 38 141 Q38 133 46 133 Q38 133 38 125 Z" fill="#FFE9B0"/>
+
+  <!-- Chìa khóa vàng xoay nghiêng 40 độ từ tâm -->
+  <g transform="translate(88 88) rotate(-40) translate(-88 -88)" filter="url(#key-tet-glow)">
+    <!-- Chuôi chìa khóa: Đồng xu vàng cổ có lỗ vuông (Round coin with square hole) -->
+    <g>
+      <!-- Vòng ngoài đồng xu -->
+      <circle cx="88" cy="46" r="26" fill="#C98A0C"/>
+      <circle cx="88" cy="44" r="26" fill="#FEB415"/>
+      <circle cx="88" cy="44" r="22" fill="#FCD667"/>
+      <circle cx="88" cy="44" r="19" fill="#FEB415"/>
+
+      <!-- Lỗ vuông ở tâm đồng xu -->
+      <rect x="79" y="35" width="18" height="18" rx="2" fill="#630811"/>
+    </g>
+
+    <!-- Thân chìa khóa vàng với vát bóng sẫm #C98A0C -->
+    <rect x="83.5" y="68" width="9" height="76" rx="4" fill="#C98A0C"/>
+    <rect x="83.5" y="68" width="4.5" height="76" rx="2" fill="#FEB415"/>
+
+    <!-- Răng chìa khóa (Bit) hình khối cắt giấy vuông vức phong cách truyền thống -->
+    <path d="M92 112 L110 112 Q113 112 113 115 L113 122 Q113 125 110 125 L92 125 Z" fill="#C98A0C"/>
+    <path d="M92 112 L110 112 Q113 112 113 115 L113 118 L92 118 Z" fill="#FEB415"/>
+
+    <path d="M92 130 L106 130 Q109 130 109 133 L109 140 Q109 143 106 143 L92 143 Z" fill="#C98A0C"/>
+    <path d="M92 130 L106 130 Q109 130 109 133 L109 136 L92 136 Z" fill="#FEB415"/>
+
+    <!-- Chóp đáy chuôi chìa -->
+    <circle cx="88" cy="148" r="5" fill="#C98A0C"/>
+    <circle cx="88" cy="147" r="3" fill="#FEB415"/>
+  </g>
+</svg>

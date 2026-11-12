@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="keyhole-egypt-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Bóng tròn màu Warm Brown mềm bên dưới -->
+  <ellipse cx="88" cy="148" rx="46" ry="14" fill="#3B200B" opacity="0.45"/>
+
+  <!-- Quai khóa thép sáng màu #F5D98A -->
+  <path d="M64 80 V52 A24 24 0 0 1 112 52 V80" fill="none" stroke="#F5D98A" stroke-width="14" stroke-linecap="round"/>
+  <!-- Điểm nhấn vát sáng trên đỉnh quai -->
+  <path d="M72 43 A20 20 0 0 1 104 43" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.65"/>
+
+  <!-- Thân khóa vàng chunky #E5A92E -->
+  <rect x="48" y="78" width="80" height="62" rx="14" fill="#B07A1C"/>
+  <rect x="48" y="74" width="80" height="62" rx="14" fill="#E5A92E"/>
+
+  <!-- Gờ sáng trên thân khóa -->
+  <path d="M62 74 Q48 74 48 88 L48 91 Q48 77 62 77 L114 77 Q128 77 128 91 L128 88 Q128 74 114 74 Z" fill="#FCE29D"/>
+
+  <!-- Băng đáy tối màu #B07A1C -->
+  <path d="M48 112 Q48 136 72 136 L104 136 Q128 136 128 112 L128 106 L48 106 Z" fill="#B07A1C"/>
+
+  <!-- Viên ngọc lam hình thoi Ai Cập đính ở trung tâm (Turquoise gem) -->
+  <g transform="translate(88 92)">
+    <polygon points="0,-10 9,0 0,10 -9,0" fill="#276B68"/>
+    <polygon points="0,-8 7,0 0,8 -7,0" fill="#38938E"/>
+    <polygon points="0,-5 4,0 0,5 -4,0" fill="#52B5AF"/>
+  </g>
+
+  <!-- Lỗ khóa hình giọt nước Deep Brown #3B200B phát sáng nhẹ -->
+  <g filter="url(#keyhole-egypt-glow)">
+    <circle cx="88" cy="115" r="5.5" fill="#3B200B"/>
+    <polygon points="85,116 91,116 89.5,128 86.5,128" fill="#3B200B"/>
+  </g>
+</svg>

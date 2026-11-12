@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Gạch nền Cream -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#D9BA7E"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#FFE9B0"/>
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#FFF4D4"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#FAD78E"/>
+
+  <!-- Đĩa tròn trung tâm Festival Red #AE1A16 -->
+  <rect x="36" y="36" width="104" height="104" rx="20" fill="#630811"/>
+  <rect x="36" y="33" width="104" height="104" rx="20" fill="#AE1A16"/>
+  <path d="M54 33 Q36 33 36 51 L36 54 Q36 36 54 36 L122 36 Q140 36 140 54 L140 51 Q140 33 122 33 Z" fill="#C92E29"/>
+
+  <!-- Bao lì xì đỏ (Red envelope / Lì xì) hơi nghiêng nhẹ -->
+  <g transform="translate(88 88) rotate(-10) translate(-88 -88)">
+    <!-- Đồng xu vàng nhô ra từ miệng bao lì xì -->
+    <circle cx="88" cy="58" r="14" fill="#FEB415"/>
+    <rect x="83.5" y="53.5" width="9" height="9" rx="1" fill="#AE1A16"/>
+
+    <!-- Thân bao lì xì hình chữ nhật đỏ thắm -->
+    <rect x="66" y="64" width="44" height="58" rx="6" fill="#8E1410"/>
+    <rect x="66" y="64" width="44" height="58" rx="6" fill="#C02B25"/>
+
+    <!-- Nắp bao lì xì vát hình tam giác gập xuống -->
+    <polygon points="66,64 110,64 88,84" fill="#AE1A16"/>
+
+    <!-- Họa tiết hoa văn kim cương vàng trên nắp lì xì (Gold diamond pattern) -->
+    <polygon points="88,68 94,74 88,80 82,74" fill="none" stroke="#FEB415" stroke-width="2"/>
+    <polygon points="88,71 91,74 88,77 85,74" fill="#FEB415"/>
+  </g>
+</svg>

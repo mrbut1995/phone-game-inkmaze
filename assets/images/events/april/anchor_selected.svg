@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <defs>
+    <filter id="yellow-glow-sel" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="0" stdDeviation="4.5" flood-color="#FBEC77" flood-opacity="0.85"/>
+    </filter>
+  </defs>
+  <!-- Khung vuông bo góc nét đứt màu vàng chanh -->
+  <rect x="4.5" y="4.5" width="45" height="45" rx="10" fill="none" stroke="#FBEC77" stroke-width="2.5" stroke-dasharray="5 3.5"/>
+  <!-- Chân đứng -->
+  <path d="M30 38 L30 50 L26 50" fill="none" stroke="#FF73CA" stroke-width="1.8" stroke-linecap="round"/>
+  <!-- Hồng hạc phóng to nhẹ (scale 1.08) và phát sáng vàng chanh rực rỡ -->
+  <g transform="translate(27 27) scale(1.08) translate(-27 -27)" filter="url(#yellow-glow-sel)">
+    <ellipse cx="31" cy="30" rx="12" ry="10" fill="#FF73CA"/>
+    <path d="M25 32 C23 25 18 24 18 18 C18 13 23 11 25 14 C27 17 23 22 29 28 Z" fill="#FF73CA"/>
+    <circle cx="21" cy="15" r="5.5" fill="#FF73CA"/>
+    <path d="M16 16 L11 19 Q11 21 14 20 L16 18 Z" fill="#3A0648"/>
+    <path d="M26 27 C29 25 38 25 41 29 C41 34 34 36 28 35 Z" fill="#FDC1E3"/>
+    <circle cx="19.5" cy="14" r="1.5" fill="#000000"/>
+    <circle cx="19" cy="13.5" r="0.6" fill="#FFFFFF"/>
+    <!-- Ngôi sao kiểu chú hề nhỏ xinh trên đầu (Jester star) -->
+    <polygon points="21,5 22.5,8 26,8 23,10 24.5,13.5 21,11.5 17.5,13.5 19,10 16,8 19.5,8" fill="#FBEC77"/>
+  </g>
+</svg>

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="gift-star-burst" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Gạch nền -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#E896C7"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#FDC1E3"/>
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#FEC8EA"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#F4A9D3"/>
+
+  <!-- Đĩa tròn trung tâm màu Plum #520A56 -->
+  <rect x="36" y="36" width="104" height="104" rx="20" fill="#2A0336"/>
+  <rect x="36" y="33" width="104" height="104" rx="20" fill="#520A56"/>
+
+  <!-- Vầng sáng vàng Lemon Yellow và tia nổ sao bừng ra từ hộp quà -->
+  <circle cx="88" cy="76" r="30" fill="#FBEC77" opacity="0.4" filter="url(#gift-star-burst)"/>
+  <polygon points="88,48 93,65 110,65 96,75 101,92 88,81 75,92 80,75 66,65 83,65" fill="#FBEC77"/>
+
+  <!-- Hộp quà mở nắp (Popped open gift box) -->
+  <g>
+    <!-- Thân hộp quà màu hồng #FF73CA -->
+    <rect x="62" y="86" width="52" height="38" rx="4" fill="#FF73CA"/>
+    <!-- Ruy băng tím giữa thân hộp -->
+    <rect x="83" y="86" width="10" height="38" fill="#7A43F6"/>
+
+    <!-- Nắp hộp bung nghiêng lên góc trên bên trái -->
+    <g transform="translate(62 82) rotate(-22) translate(-62 -82)">
+      <rect x="56" y="74" width="58" height="10" rx="3" fill="#D94FA8"/>
+      <rect x="80" y="74" width="10" height="10" fill="#7A43F6"/>
+      <!-- Nơ to bồng bềnh -->
+      <ellipse cx="76" cy="69" rx="8" ry="5" fill="#7A43F6" transform="rotate(-25 76 69)"/>
+      <ellipse cx="94" cy="69" rx="8" ry="5" fill="#7A43F6" transform="rotate(25 94 69)"/>
+      <circle cx="85" cy="71" r="4" fill="#4B2699"/>
+    </g>
+  </g>
+
+  <!-- Hạt confetti bay lơ lửng xung quanh -->
+  <circle cx="56" cy="56" r="3" fill="#FF73CA"/>
+  <circle cx="122" cy="54" r="2.5" fill="#FDC1E3"/>
+  <rect x="120" y="76" width="4" height="4" rx="1" fill="#FBEC77" transform="rotate(40 120 76)"/>
+</svg>

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="key-ankh-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- 2 tia lấp lánh màu kem (Cream sparkles) -->
+  <path d="M135 38 Q135 48 125 48 Q135 48 135 58 Q135 48 145 48 Q135 48 135 38 Z" fill="#FFF0C8"/>
+  <path d="M38 125 Q38 133 30 133 Q38 133 38 141 Q38 133 46 133 Q38 133 38 125 Z" fill="#FFF0C8"/>
+
+  <!-- Chìa khóa Ankh vàng xoay nghiêng 40 độ từ tâm -->
+  <g transform="translate(88 88) rotate(-40) translate(-88 -88)" filter="url(#key-ankh-glow)">
+    <!-- Chuôi chìa khóa: Vòng lặp Ankh hình giọt nước / oval (Ankh loop bow) -->
+    <g>
+      <!-- Vòng ngoài Ankh màu Golden Yellow #FEC84C -->
+      <path d="M88 18 C74 18 68 32 68 44 C68 56 76 64 88 64 C100 64 108 56 108 44 C108 32 102 18 88 18 Z" fill="#FEC84C"/>
+      <!-- Vát đổ bóng màu cát Sand #E8A959 bên trong -->
+      <path d="M88 22 C78 22 73 34 73 44 C73 54 80 60 88 60 C96 60 103 54 103 44 C103 34 98 22 88 22 Z" fill="#E8A959"/>
+      <!-- Lỗ rỗng trong suốt của Ankh -->
+      <path d="M88 26 C82 26 78 34 78 44 C78 52 83 56 88 56 C93 56 98 52 98 44 C98 34 94 26 88 26 Z" fill="#3B200B"/>
+    </g>
+
+    <!-- Thanh ngang chữ thập Ankh (Crossbar) -->
+    <rect x="66" y="64" width="44" height="9" rx="3.5" fill="#E8A959"/>
+    <rect x="66" y="64" width="44" height="5" rx="2.5" fill="#FEC84C"/>
+
+    <!-- Thân chìa khóa dọc thẳng (Shaft) -->
+    <rect x="83.5" y="73" width="9" height="72" rx="4" fill="#E8A959"/>
+    <rect x="83.5" y="73" width="4.5" height="72" rx="2" fill="#FEC84C"/>
+
+    <!-- Răng chìa khóa (Bit) góc cạnh ở đáy -->
+    <path d="M92 112 L110 112 Q113 112 113 115 L113 122 Q113 125 110 125 L92 125 Z" fill="#E8A959"/>
+    <path d="M92 112 L110 112 Q113 112 113 115 L113 118 L92 118 Z" fill="#FEC84C"/>
+
+    <path d="M92 130 L106 130 Q109 130 109 133 L109 140 Q109 143 106 143 L92 143 Z" fill="#E8A959"/>
+    <path d="M92 130 L106 130 Q109 130 109 133 L109 136 L92 136 Z" fill="#FEC84C"/>
+
+    <!-- Chóp đáy chuôi chìa -->
+    <circle cx="88" cy="148" r="5" fill="#E8A959"/>
+    <circle cx="88" cy="147" r="3" fill="#FEC84C"/>
+  </g>
+</svg>

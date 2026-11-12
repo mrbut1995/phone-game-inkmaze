@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Gạch nền -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#DDBB7D"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#FFE3B0"/>
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#FFF2D6"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#FAD28B"/>
+
+  <!-- Đĩa trung tâm màu xám nâu desaturated #665042 -->
+  <rect x="36" y="36" width="104" height="104" rx="20" fill="#36251B"/>
+  <rect x="36" y="33" width="104" height="104" rx="20" fill="#665042"/>
+
+  <!-- Bánh đậy khăn ca rô xám nâu (Checkered cloth covering pie) -->
+  <g>
+    <ellipse cx="88" cy="106" rx="36" ry="14" fill="#36251B"/>
+    <ellipse cx="88" cy="100" rx="32" ry="11" fill="#8C7768"/>
+    <!-- Họa tiết kẻ ca rô -->
+    <line x1="68" y1="94" x2="108" y2="106" stroke="#5E4E42" stroke-width="2"/>
+    <line x1="72" y1="104" x2="104" y2="94" stroke="#5E4E42" stroke-width="2"/>
+  </g>
+
+  <!-- Dây thừng buộc chéo qua khăn -->
+  <line x1="66" y1="92" x2="110" y2="108" stroke="#D1BE99" stroke-width="4.5" stroke-dasharray="6 3" stroke-linecap="round"/>
+  <line x1="110" y1="92" x2="66" y2="108" stroke="#BAA780" stroke-width="4.5" stroke-dasharray="6 3" stroke-linecap="round"/>
+
+  <!-- Ổ khóa đồng nhỏ ở tâm bánh -->
+  <g transform="translate(88 98)">
+    <path d="M-5 -3 V-8 A5 5 0 0 1 5 -8 V-3" fill="none" stroke="#E8C98A" stroke-width="2.5" stroke-linecap="round"/>
+    <rect x="-7" y="-3" width="14" height="11" rx="2.5" fill="#C98A2B"/>
+    <circle cx="0" cy="2" r="1.3" fill="#2B0A01"/>
+  </g>
+</svg>

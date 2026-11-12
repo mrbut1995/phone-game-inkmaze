@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <!-- Thỏ màu hồng sẫm #E58FB0, ép dẹp dẹt (squashed), tai cụp xuống, không glow -->
+  <g transform="translate(27 33) scale(1.15, 0.85) translate(-27 -30)">
+    <circle cx="39" cy="36" r="4" fill="#FEF7E4"/>
+
+    <!-- 2 tai cụp nghiêng sang 2 bên -->
+    <ellipse cx="14" cy="22" rx="9" ry="3.8" fill="#E58FB0" transform="rotate(-30 14 22)"/>
+    <ellipse cx="14" cy="22" rx="6" ry="1.8" fill="#FEF7E4" transform="rotate(-30 14 22)"/>
+    <ellipse cx="40" cy="22" rx="9" ry="3.8" fill="#E58FB0" transform="rotate(30 40 22)"/>
+    <ellipse cx="40" cy="22" rx="6" ry="1.8" fill="#FEF7E4" transform="rotate(30 40 22)"/>
+
+    <ellipse cx="27" cy="34" rx="14" ry="10" fill="#E58FB0"/>
+    <circle cx="27" cy="27" r="10" fill="#E58FB0"/>
+
+    <circle cx="22.5" cy="26" r="1.5" fill="#0C3320"/>
+    <circle cx="22" cy="25.5" r="0.5" fill="#FFFFFF"/>
+    <circle cx="31.5" cy="26" r="1.5" fill="#0C3320"/>
+    <circle cx="31" cy="25.5" r="0.5" fill="#FFFFFF"/>
+
+    <polygon points="27,28.5 25.8,27.5 28.2,27.5" fill="#C46D8E"/>
+    <ellipse cx="23" cy="40" rx="3.5" ry="2" fill="#E58FB0"/>
+    <ellipse cx="31" cy="40" rx="3.5" ry="2" fill="#E58FB0"/>
+  </g>
+</svg>

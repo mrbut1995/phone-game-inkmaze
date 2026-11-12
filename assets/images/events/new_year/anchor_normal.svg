@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <defs>
+    <filter id="clock-warm-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.5" flood-color="#FBCB5C" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+  <!-- 2 chân đế vàng choãi ra ở đáy -->
+  <polygon points="19,41 23,41 20,46 16,46" fill="#D9A63A"/>
+  <polygon points="35,41 31,41 34,46 38,46" fill="#D9A63A"/>
+
+  <!-- Đồng hồ phát sáng ấm mềm -->
+  <g filter="url(#clock-warm-glow)">
+    <!-- 2 quả chuông vàng trên đỉnh -->
+    <ellipse cx="16" cy="16" rx="4.5" ry="3.5" fill="#FBCB5C" transform="rotate(-35 16 16)"/>
+    <ellipse cx="38" cy="16" rx="4.5" ry="3.5" fill="#FBCB5C" transform="rotate(35 38 16)"/>
+    <!-- Nút bấm chuông ở giữa -->
+    <rect x="25.5" y="11" width="3" height="3" rx="1" fill="#D9A63A"/>
+
+    <!-- Vòng vỏ đồng hồ màu Gold #FBCB5C -->
+    <circle cx="27" cy="29" r="16" fill="#FBCB5C"/>
+    <!-- Đổ bóng đáy vỏ -->
+    <path d="M11 29 C11 37.8 18.2 45 27 45 C35.8 45 43 37.8 43 29 C43 31 35.8 38 27 38 C18.2 38 11 31 11 29 Z" fill="#D9A63A"/>
+
+    <!-- Mặt kính đồng hồ màu Ice-Blue #CDE9FE -->
+    <circle cx="27" cy="29" r="12.5" fill="#CDE9FE"/>
+
+    <!-- 2 mắt tròn màu Navy #16305E -->
+    <circle cx="22.5" cy="28" r="1.5" fill="#16305E"/>
+    <circle cx="31.5" cy="28" r="1.5" fill="#16305E"/>
+
+    <!-- Miệng cười chúm chím -->
+    <path d="M25.5 31.5 Q27 33 28.5 31.5" fill="none" stroke="#16305E" stroke-width="1.1" stroke-linecap="round"/>
+
+    <!-- Má hồng phớt mềm mại -->
+    <ellipse cx="18.5" cy="30" rx="1.8" ry="1.1" fill="#E8507F" opacity="0.45"/>
+    <ellipse cx="35.5" cy="30" rx="1.8" ry="1.1" fill="#E8507F" opacity="0.45"/>
+  </g>
+</svg>

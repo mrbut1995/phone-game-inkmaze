@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Gạch nền Mid Purple -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#29124A"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#3E1D69"/>
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#582C91"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#4C2E74"/>
+
+  <!-- Đĩa tròn trung tâm màu Purple #52287C -->
+  <rect x="36" y="36" width="104" height="104" rx="20" fill="#210C36"/>
+  <rect x="36" y="33" width="104" height="104" rx="20" fill="#52287C"/>
+  <path d="M54 33 Q36 33 36 51 L36 54 Q36 36 54 36 L122 36 Q140 36 140 54 L140 51 Q140 33 122 33 Z" fill="#713AA8"/>
+
+  <!-- Nón phù thủy chóp nhọn (Witch hat in Deep Purple) -->
+  <g>
+    <!-- Vành nón rộng cong điệu đà -->
+    <ellipse cx="88" cy="116" rx="42" ry="11" fill="#170B31"/>
+    <ellipse cx="88" cy="114" rx="40" ry="10" fill="#2F1350"/>
+
+    <!-- Chóp nón nhọn uốn cong đỉnh sang bên phải -->
+    <path d="M68 112 C72 90 76 72 84 62 C88 56 104 46 114 48 C106 56 94 66 96 82 C98 94 102 104 108 112 Z" fill="#2F1350"/>
+    <path d="M68 112 C72 90 76 72 84 62 C88 56 98 50 106 50 C98 58 92 68 94 82 C96 94 100 104 108 112 Z" fill="#210C36"/>
+
+    <!-- Đai thắt màu cam Pumpkin Orange #FF8722 -->
+    <path d="M69 110 L107 110 L108 103 L68 103 Z" fill="#FF8722"/>
+
+    <!-- Khóa đai hình vuông có lỗ & ngôi sao nhỏ Moon Cream #FBE5A9 -->
+    <rect x="83" y="100.5" width="10" height="11" rx="2" fill="#FBE5A9"/>
+    <rect x="85.5" y="103" width="5" height="6" rx="1" fill="#2F1350"/>
+
+    <!-- Ngôi sao kem nhỏ xíu trang trí đỉnh nón -->
+    <polygon points="114,46 115.5,49 119,49 116.5,51 117.5,54 114,52 110.5,54 111.5,51 109,49 112.5,49" fill="#FBE5A9"/>
+  </g>
+</svg>

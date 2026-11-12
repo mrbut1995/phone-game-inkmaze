@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <defs>
+    <filter id="lavender-glow-foc" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.5" flood-color="#C6B3EB" flood-opacity="0.65"/>
+    </filter>
+  </defs>
+  <!-- Vòng vuông bo góc nét đứt màu Lavender #C6B3EB -->
+  <rect x="5" y="5" width="44" height="44" rx="10" fill="none" stroke="#C6B3EB" stroke-width="2.2" stroke-dasharray="4.5 3"/>
+
+  <!-- Thỏ đứng phát sáng dịu dàng -->
+  <g filter="url(#lavender-glow-foc)">
+    <circle cx="39" cy="38" r="4" fill="#FEF7E4"/>
+    <ellipse cx="21" cy="14" rx="4" ry="10" fill="#F5B1C8"/>
+    <ellipse cx="21" cy="14" rx="2" ry="7" fill="#FEF7E4"/>
+    <ellipse cx="33" cy="14" rx="4" ry="10" fill="#F5B1C8"/>
+    <ellipse cx="33" cy="14" rx="2" ry="7" fill="#FEF7E4"/>
+
+    <ellipse cx="27" cy="35" rx="14" ry="11" fill="#F5B1C8"/>
+    <circle cx="27" cy="26" r="10.5" fill="#F5B1C8"/>
+
+    <circle cx="22.5" cy="25" r="1.5" fill="#0C3320"/>
+    <circle cx="22" cy="24.5" r="0.5" fill="#FFFFFF"/>
+    <circle cx="31.5" cy="25" r="1.5" fill="#0C3320"/>
+    <circle cx="31" cy="24.5" r="0.5" fill="#FFFFFF"/>
+
+    <polygon points="27,27.5 25.8,26.5 28.2,26.5" fill="#E58FB0"/>
+    <path d="M25.5 29 Q27 30.5 28.5 29" fill="none" stroke="#0C3320" stroke-width="0.8" stroke-linecap="round"/>
+
+    <circle cx="19" cy="28" r="2" fill="#FEF7E4" opacity="0.6"/>
+    <circle cx="35" cy="28" r="2" fill="#FEF7E4" opacity="0.6"/>
+
+    <ellipse cx="23" cy="42" rx="3.5" ry="2" fill="#F5B1C8"/>
+    <ellipse cx="31" cy="42" rx="3.5" ry="2" fill="#F5B1C8"/>
+  </g>
+</svg>

@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 505 508" width="505" height="508">
+  <defs>
+    <!-- Đổ bóng màu xanh thẫm mềm dưới khung -->
+    <filter id="easter-board-shadow" x="-8%" y="-8%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#061A10" flood-opacity="0.65"/>
+    </filter>
+    <filter id="butter-sparkle-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="glow"/>
+      <feComposite in="SourceGraphic" in2="glow" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Bóng đổ toàn khung -->
+  <g filter="url(#easter-board-shadow)">
+    <!-- Viền mỏng Butter Yellow #FDE07A -->
+    <rect x="15" y="14" width="475" height="478" rx="26" fill="#FDE07A"/>
+    <!-- Thân khung Deep Forest Green #144B2E -->
+    <rect x="17.5" y="16.5" width="470" height="473" rx="24" fill="#144B2E"/>
+    <!-- Gờ sáng trên đỉnh tạo độ dày khối giấy -->
+    <path d="M42 16.5 Q17.5 16.5 17.5 41 L17.5 46 Q17.5 22 42 22 L463 22 Q487.5 22 487.5 46 L487.5 41 Q487.5 16.5 463 16.5 Z" fill="#205E3C"/>
+  </g>
+
+  <!-- LÒNG BÀN CỜ 5x5: Very-deep-green #0C3320 (440x440 chuẩn vuông, ~87% chiều rộng) -->
+  <rect x="32.5" y="38" width="440" height="440" rx="14" fill="#072215"/>
+  <rect x="32.5" y="38" width="440" height="440" rx="14" fill="#0C3320"/>
+  <!-- Vát bóng chìm mép trong -->
+  <rect x="32.5" y="38" width="440" height="5" fill="#05170E" opacity="0.6"/>
+
+  <!-- CÁC ĐÁM MÂY PASTEL BỒNG BỀNH GÓC TRÊN -->
+  <!-- Góc trái: Mây hồng Pastel #F5B1C8 & Lavender #C6B3EB -->
+  <g>
+    <path d="M18 42 Q18 20 40 20 Q50 16 64 22 Q80 20 86 36 Q92 50 78 58 Q64 62 48 56 Q30 62 20 50 Z" fill="#F5B1C8" opacity="0.9"/>
+    <path d="M46 36 Q56 24 72 26 Q86 28 88 42 Q90 54 78 60 Q66 64 52 56 Z" fill="#C6B3EB" opacity="0.85"/>
+  </g>
+  <!-- Góc phải: Mây vàng Butter Yellow #FDE07A & Hồng -->
+  <g>
+    <path d="M487 42 Q487 20 465 20 Q455 16 441 22 Q425 20 419 36 Q413 50 427 58 Q441 62 457 56 Q475 62 485 50 Z" fill="#FDE07A" opacity="0.9"/>
+    <path d="M459 36 Q449 24 433 26 Q419 28 417 42 Q415 54 427 60 Q439 64 453 56 Z" fill="#F5B1C8" opacity="0.85"/>
+  </g>
+
+  <!-- DÂY TREO TRỨNG PHỤC SINH DỌC CẠNH TRÊN (GARLAND OF DECORATED EGGS) -->
+  <path d="M85 24 Q252.5 42 420 24" fill="none" stroke="#0C3320" stroke-width="2" stroke-linecap="round"/>
+  <!-- Quả trứng 1: Vàng sọc ngang -->
+  <g transform="translate(130 30)">
+    <ellipse cx="0" cy="5" rx="6" ry="8" fill="#FDE07A"/>
+    <rect x="-5.5" y="4" width="11" height="2" fill="#F5B1C8"/>
+  </g>
+  <!-- Quả trứng 2: Lavender sọc -->
+  <g transform="translate(180 34)">
+    <ellipse cx="0" cy="5" rx="6" ry="8" fill="#C6B3EB"/>
+    <path d="M-5 4 L5 4 M-5 7 L5 7" stroke="#FEF7E4" stroke-width="1.2"/>
+  </g>
+  <!-- Quả trứng 3 (ở giữa): Hồng chấm bi trắng -->
+  <g transform="translate(252.5 37)">
+    <ellipse cx="0" cy="5" rx="7" ry="9" fill="#F5B1C8"/>
+    <circle cx="-2.5" cy="3" r="1.2" fill="#FEF7E4"/>
+    <circle cx="2.5" cy="3" r="1.2" fill="#FEF7E4"/>
+    <circle cx="0" cy="7" r="1.2" fill="#FEF7E4"/>
+  </g>
+  <!-- Quả trứng 4: Tím nhạt trơn -->
+  <g transform="translate(325 34)">
+    <ellipse cx="0" cy="5" rx="6" ry="8" fill="#C6B3EB"/>
+  </g>
+  <!-- Quả trứng 5: Vàng sọc hồng -->
+  <g transform="translate(375 30)">
+    <ellipse cx="0" cy="5" rx="6" ry="8" fill="#FDE07A"/>
+    <rect x="-5.5" y="4" width="11" height="2" fill="#F5B1C8"/>
+  </g>
+
+  <!-- Sparkle vàng rực rỡ ở tâm đỉnh -->
+  <g filter="url(#butter-sparkle-glow)">
+    <path d="M252.5 10 Q252.5 18 245 18 Q252.5 18 252.5 26 Q252.5 18 260 18 Q252.5 18 252.5 10 Z" fill="#FDE07A"/>
+    <circle cx="252.5" cy="18" r="1.8" fill="#FEF7E4"/>
+  </g>
+
+  <!-- GÓC DƯỚI TRÁI: HOA CÚC & HOA TULIP PASTEL -->
+  <g transform="translate(36 462)">
+    <!-- Lá & cành Leaf Green -->
+    <path d="M12 24 Q10 12 18 4" fill="none" stroke="#2F7A4A" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M24 24 Q26 14 22 8" fill="none" stroke="#2F7A4A" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Hoa Tulip hồng #F5B1C8 -->
+    <path d="M13 4 C11 -4 25 -4 23 4 C23 7 13 7 13 4 Z" fill="#F5B1C8"/>
+    <!-- Hoa Tulip vàng #FDE07A -->
+    <path d="M2 12 C0 5 12 5 10 12 C10 15 2 15 2 12 Z" fill="#FDE07A"/>
+    <!-- Hoa cúc (Daisy) cánh trắng tâm vàng -->
+    <g transform="translate(28 10)">
+      <circle cx="0" cy="-4" r="2.2" fill="#FEF7E4"/>
+      <circle cx="0" cy="4" r="2.2" fill="#FEF7E4"/>
+      <circle cx="-4" cy="0" r="2.2" fill="#FEF7E4"/>
+      <circle cx="4" cy="0" r="2.2" fill="#FEF7E4"/>
+      <circle cx="0" cy="0" r="2.5" fill="#FDE07A"/>
+    </g>
+  </g>
+
+  <!-- GÓC DƯỚI PHẢI: HOA CÚC, HOA TULIP VÀ CHÚ THỎ HỒNG NHỎ -->
+  <g transform="translate(425 456)">
+    <!-- Bụi hoa Tulip tím & Cúc -->
+    <g transform="translate(0 6)">
+      <path d="M10 20 Q12 10 8 4" fill="none" stroke="#2F7A4A" stroke-width="2" stroke-linecap="round"/>
+      <path d="M4 4 C2 -2 14 -2 12 4 Z" fill="#C6B3EB"/>
+      <g transform="translate(18 8)">
+        <circle cx="0" cy="-3.5" r="2" fill="#FEF7E4"/>
+        <circle cx="0" cy="3.5" r="2" fill="#FEF7E4"/>
+        <circle cx="-3.5" cy="0" r="2" fill="#FEF7E4"/>
+        <circle cx="3.5" cy="0" r="2" fill="#FEF7E4"/>
+        <circle cx="0" cy="0" r="2.2" fill="#FDE07A"/>
+      </g>
+    </g>
+    <!-- Chú thỏ hồng nhỏ (Tiny pink bunny) ngồi ngoan ngoãn -->
+    <g transform="translate(28 2)">
+      <!-- Đuôi tròn trắng -->
+      <circle cx="19" cy="18" r="3" fill="#FEF7E4"/>
+      <!-- Thân thỏ -->
+      <ellipse cx="10" cy="16" rx="8" ry="7" fill="#F5B1C8"/>
+      <!-- Đầu thỏ -->
+      <circle cx="6" cy="9" r="5" fill="#F5B1C8"/>
+      <!-- 2 tai dài vểnh lên -->
+      <ellipse cx="4" cy="1" rx="2" ry="5.5" fill="#F5B1C8" transform="rotate(-15 4 1)"/>
+      <ellipse cx="4" cy="1" rx="1" ry="3.5" fill="#FEF7E4" transform="rotate(-15 4 1)"/>
+      <ellipse cx="8" cy="2" rx="2" ry="5.5" fill="#F5B1C8" transform="rotate(10 8 2)"/>
+      <!-- Chân trước -->
+      <ellipse cx="4" cy="21" rx="3" ry="1.8" fill="#F5B1C8"/>
+    </g>
+  </g>
+</svg>

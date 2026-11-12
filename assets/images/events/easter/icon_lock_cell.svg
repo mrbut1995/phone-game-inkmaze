@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="keyhole-butter-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Bóng tròn xanh mềm bên dưới -->
+  <ellipse cx="88" cy="148" rx="46" ry="14" fill="#0C3320" opacity="0.45"/>
+
+  <!-- Quai khóa màu Pastel Pink #F5B1C8 -->
+  <path d="M64 80 V52 A24 24 0 0 1 112 52 V80" fill="none" stroke="#F5B1C8" stroke-width="14" stroke-linecap="round"/>
+  <!-- Gờ sáng trên đỉnh quai -->
+  <path d="M72 43 A20 20 0 0 1 104 43" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+
+  <!-- Dây leo xanh quấn quanh quai khóa kèm hoa cúc nhỏ (Vine & Daisy) -->
+  <path d="M60 62 Q52 46 68 44 Q76 42 78 54 Q82 68 64 68" fill="none" stroke="#2F7A4A" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- Bông hoa cúc nhỏ cài trên quai -->
+  <g transform="translate(68 46)">
+    <circle cx="0" cy="-3.5" r="2.2" fill="#FEF7E4"/>
+    <circle cx="0" cy="3.5" r="2.2" fill="#FEF7E4"/>
+    <circle cx="-3.5" cy="0" r="2.2" fill="#FEF7E4"/>
+    <circle cx="3.5" cy="0" r="2.2" fill="#FEF7E4"/>
+    <circle cx="0" cy="0" r="2.5" fill="#FDE07A"/>
+  </g>
+
+  <!-- Thân khóa chunky Lavender #C6B3EB -->
+  <rect x="48" y="78" width="80" height="62" rx="14" fill="#B39EE0"/>
+  <rect x="48" y="74" width="80" height="62" rx="14" fill="#C6B3EB"/>
+
+  <!-- Gờ sáng trên thân khóa -->
+  <path d="M62 74 Q48 74 48 88 L48 91 Q48 77 62 77 L114 77 Q128 77 128 91 L128 88 Q128 74 114 74 Z" fill="#DFD2F7"/>
+
+  <!-- Băng đáy tối màu #9A85CC -->
+  <path d="M48 112 Q48 136 72 136 L104 136 Q128 136 128 112 L128 106 L48 106 Z" fill="#9A85CC"/>
+
+  <!-- Lỗ khóa vàng Butter Yellow #FDE07A phát sáng -->
+  <g filter="url(#keyhole-butter-glow)">
+    <circle cx="88" cy="101" r="6.5" fill="#FDE07A"/>
+    <polygon points="84.5,102 91.5,102 89.5,120 86.5,120" fill="#FDE07A"/>
+    <circle cx="88" cy="101" r="2.5" fill="#FEF7E4"/>
+  </g>
+</svg>

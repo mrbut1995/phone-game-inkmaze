@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="key-easter-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- 2 tia lấp lánh màu trắng (Sparkles) -->
+  <path d="M135 38 Q135 48 125 48 Q135 48 135 58 Q135 48 145 48 Q135 48 135 38 Z" fill="#FFFFFF"/>
+  <path d="M38 125 Q38 133 30 133 Q38 133 38 141 Q38 133 46 133 Q38 133 38 125 Z" fill="#FFFFFF"/>
+
+  <!-- Chìa khóa vàng nghiêng 40 độ từ tâm -->
+  <g transform="translate(88 88) rotate(-40) translate(-88 -88)" filter="url(#key-easter-glow)">
+    <!-- Chuôi chìa khóa: Quả trứng Phục Sinh trang trí (Egg Bow) -->
+    <g>
+      <!-- Vỏ trứng màu Pastel Pink #F5B1C8 -->
+      <path d="M88 18 C70 18 66 44 66 58 C66 72 75 78 88 78 C101 78 110 72 110 58 C110 44 106 18 88 18 Z" fill="#F5B1C8"/>
+
+      <!-- Dải Zigzag vàng Butter Yellow #FDE07A -->
+      <path d="M68 46 L73 41 L78 46 L83 41 L88 46 L93 41 L98 46 L103 41 L108 46 L108 52 L103 47 L98 52 L93 47 L88 52 L83 47 L78 52 L73 47 L68 52 Z" fill="#FDE07A"/>
+
+      <!-- Các chấm bi màu Lavender #C6B3EB -->
+      <circle cx="78" cy="32" r="3" fill="#C6B3EB"/>
+      <circle cx="88" cy="28" r="3" fill="#C6B3EB"/>
+      <circle cx="98" cy="32" r="3" fill="#C6B3EB"/>
+      <circle cx="78" cy="64" r="2.5" fill="#C6B3EB"/>
+      <circle cx="98" cy="64" r="2.5" fill="#C6B3EB"/>
+
+      <!-- Lỗ tròn tâm trứng -->
+      <circle cx="88" cy="62" r="8" fill="#144B2E"/>
+      <circle cx="88" cy="62" r="4" fill="#FDE07A"/>
+    </g>
+
+    <!-- Thân chìa khóa vàng Butter Yellow có vát bóng sẫm #E0B840 -->
+    <rect x="83.5" y="76" width="9" height="68" rx="4" fill="#E0B840"/>
+    <rect x="83.5" y="76" width="4.5" height="68" rx="2" fill="#FDE07A"/>
+
+    <!-- Răng chìa khóa (Bit) góc cạnh kiểu lát giấy ngọt ngào -->
+    <path d="M92 110 L110 110 Q113 110 113 113 L113 120 Q113 123 110 123 L92 123 Z" fill="#E0B840"/>
+    <path d="M92 110 L110 110 Q113 110 113 113 L113 116 L92 116 Z" fill="#FDE07A"/>
+
+    <path d="M92 128 L106 128 Q109 128 109 131 L109 138 Q109 141 106 141 L92 141 Z" fill="#E0B840"/>
+    <path d="M92 128 L106 128 Q109 128 109 131 L109 134 L92 134 Z" fill="#FDE07A"/>
+
+    <!-- Chóp đáy chuôi chìa -->
+    <circle cx="88" cy="147" r="5" fill="#E0B840"/>
+    <circle cx="88" cy="146" r="3" fill="#FDE07A"/>
+  </g>
+</svg>

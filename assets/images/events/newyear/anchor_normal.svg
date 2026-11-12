@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <defs>
+    <filter id="lantern-warm-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.5" flood-color="#FEB415" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- Lồng đèn phát sáng ấm mềm -->
+  <g filter="url(#lantern-warm-glow)">
+    <!-- Quai treo phía trên -->
+    <path d="M27 9 L27 13" stroke="#FCD667" stroke-width="1.6" stroke-linecap="round"/>
+
+    <!-- Chóp nẹp vàng trên cùng -->
+    <rect x="21" y="13" width="12" height="3" rx="1" fill="#FEB415"/>
+
+    <!-- Thân lồng đèn tròn mập màu Lantern Red #C02B25 -->
+    <ellipse cx="27" cy="27" rx="16" ry="13" fill="#C02B25"/>
+    <!-- Múi gờ dọc màu đỏ sẫm #8E1410 tạo nếp lồng đèn -->
+    <ellipse cx="27" cy="27" rx="10" ry="13" fill="#AE1A16"/>
+    <ellipse cx="27" cy="27" rx="4" ry="13" fill="#8E1410"/>
+
+    <!-- Chóp nẹp vàng đáy -->
+    <rect x="22" y="38" width="10" height="3" rx="1" fill="#FEB415"/>
+
+    <!-- 2 mắt tròn màu đen sẫm -->
+    <circle cx="22.5" cy="26" r="1.5" fill="#2E0408"/>
+    <circle cx="31.5" cy="26" r="1.5" fill="#2E0408"/>
+
+    <!-- Miệng cười chúm chím -->
+    <path d="M25.5 29.5 Q27 31 28.5 29.5" fill="none" stroke="#2E0408" stroke-width="1.1" stroke-linecap="round"/>
+
+    <!-- Má hồng phớt nhẹ -->
+    <ellipse cx="19" cy="28.5" rx="1.8" ry="1.1" fill="#FFE9B0" opacity="0.6"/>
+    <ellipse cx="35" cy="28.5" rx="1.8" ry="1.1" fill="#FFE9B0" opacity="0.6"/>
+  </g>
+
+  <!-- Tua rua vàng và maroon thả dưới đáy -->
+  <circle cx="27" cy="42.5" r="1.8" fill="#630811"/>
+  <rect x="26" y="44" width="2" height="7" fill="#AE1A16"/>
+  <rect x="25" y="49" width="4" height="1.8" fill="#FEB415"/>
+</svg>

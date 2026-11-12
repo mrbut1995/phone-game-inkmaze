@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="lucky-pot-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Gạch nền -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#D9BA7E"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#FFE9B0"/>
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#FFF4D4"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#FAD78E"/>
+
+  <!-- Đĩa tròn trung tâm Deep Maroon #630811 -->
+  <rect x="36" y="36" width="104" height="104" rx="20" fill="#2E0408"/>
+  <rect x="36" y="33" width="104" height="104" rx="20" fill="#630811"/>
+
+  <!-- Vầng sáng ấm và tia pháo hoa 4 cánh bừng nở từ hũ vàng -->
+  <g transform="translate(88 72)" filter="url(#lucky-pot-glow)">
+    <circle cx="0" cy="0" r="32" fill="#FEB415" opacity="0.35"/>
+    <polygon points="0,-22 4,-6 20,-6 7,3 12,18 0,9 -12,18 -7,3 -20,-6 -4,-6" fill="#FEB415"/>
+  </g>
+
+  <!-- Hũ tài lộc đỏ (Red lucky pot) tràn ngập thỏi vàng & đồng xu -->
+  <g>
+    <!-- Các thỏi vàng (Yuanbao boat shapes) & đồng xu chất đầy miệng hũ -->
+    <!-- Đồng xu bên trái -->
+    <circle cx="72" cy="74" r="8" fill="#FCD667"/>
+    <rect x="70" y="72" width="4" height="4" fill="#630811"/>
+    <!-- Đồng xu bên phải -->
+    <circle cx="104" cy="74" r="8" fill="#FCD667"/>
+    <rect x="102" y="72" width="4" height="4" fill="#630811"/>
+
+    <!-- Thỏi vàng giữa (Yuanbao boat shape) -->
+    <g transform="translate(88 68)">
+      <path d="M-18 6 Q-12 14 0 14 Q12 14 18 6 Q12 -2 0 -2 Q-12 -2 -18 6 Z" fill="#C98A0C"/>
+      <path d="M-16 6 Q-10 12 0 12 Q10 12 16 6 Q10 0 0 0 Q-10 0 -16 6 Z" fill="#FEB415"/>
+      <ellipse cx="0" cy="4" rx="8" ry="4" fill="#FCD667"/>
+    </g>
+
+    <!-- Thân hũ tài lộc tròn bầu bĩnh màu đỏ Festival Red #AE1A16 -->
+    <ellipse cx="88" cy="116" rx="24" ry="7" fill="#630811"/>
+    <circle cx="88" cy="104" r="26" fill="#C02B25"/>
+    <ellipse cx="88" cy="85" rx="24" ry="6" fill="#8E1410"/>
+    <ellipse cx="88" cy="83" rx="24" ry="6" fill="#FEB415"/>
+    <ellipse cx="88" cy="83" rx="21" ry="4.5" fill="#AE1A16"/>
+
+    <!-- Đai vàng nẹp ngang thân hũ -->
+    <path d="M64 102 Q88 110 112 102 L112 106 Q88 114 64 106 Z" fill="#FEB415"/>
+  </g>
+</svg>

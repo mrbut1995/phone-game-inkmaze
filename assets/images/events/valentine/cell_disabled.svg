@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Gạch màu dusty mauve #C9A0AE mờ phẳng -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#9C7783"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#C9A0AE"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#B58D9A"/>
+  <!-- Trái tim phai mờ ở góc (Faded heart) -->
+  <g transform="translate(32 30) scale(0.6)" opacity="0.45">
+    <path d="M0 8 C-4 5 -8 2 -8 -2 C-8 -5 -5 -7 -2 -7 C0 -7 0 -5 0 -4 C0 -5 0 -7 2 -7 C5 -7 8 -5 8 -2 C8 2 4 5 0 8 Z" fill="#E3CAD1"/>
+  </g>
+</svg>

@@ -290,6 +290,15 @@ func _on_event_card_pressed(event_id: StringName) -> void:
 	if _is_daily_event(event_id):
 		Nav.goto_daily()
 		return
+	# Event CHUỖI MÀN TẠO SẴN: chạm là vào chơi liên tục (kiểu Dungeon) — không qua màn chọn màn.
+	# Đã xong hết mà chưa nhận quà → mở màn chi tiết để bấm NHẬN THƯỞNG.
+	var em := Svc.event()
+	var gm := Svc.game()
+	if em != null and gm != null and bool(em.call("is_level_series", event_id)):
+		var prog: Dictionary = em.call("get_progress", event_id)
+		var pending_claim := bool(prog.get("completed", false)) and not bool(prog.get("claimed", false))
+		if not pending_claim and bool(gm.call("start_event_series", event_id)):
+			return
 	Nav.goto_event(event_id)
 
 

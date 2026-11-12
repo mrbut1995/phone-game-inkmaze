@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="chest-gold-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Gạch nền -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#DECAA0"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#FDF3DA"/>
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#FFFDF8"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#F4E2B9"/>
+
+  <!-- Đĩa tròn trung tâm Ocean Blue #209FC2 -->
+  <rect x="36" y="36" width="104" height="104" rx="20" fill="#0E4A5C"/>
+  <rect x="36" y="33" width="104" height="104" rx="20" fill="#209FC2"/>
+
+  <!-- Vầng hào quang vàng và tia sao nổ bung ra từ rương kho báu -->
+  <g transform="translate(88 78)" filter="url(#chest-gold-glow)">
+    <circle cx="0" cy="0" r="32" fill="#FEC748" opacity="0.4"/>
+    <polygon points="0,-22 4,-6 20,-6 7,3 12,18 0,9 -12,18 -7,3 -20,-6 -4,-6" fill="#FEC748"/>
+  </g>
+
+  <!-- RƯƠNG KHO BÁU MỞ NẮP (OPEN TREASURE CHEST) -->
+  <g>
+    <!-- Nắp rương mở ngửa về phía sau -->
+    <path d="M60 76 L62 58 Q88 52 114 58 L116 76 Q88 70 60 76 Z" fill="#FF6A56"/>
+    <path d="M66 57 L68 73 M108 57 L106 73" stroke="#083B4E" stroke-width="3"/>
+
+    <!-- Các đồng tiền vàng tràn ngập trong miệng rương -->
+    <circle cx="78" cy="80" r="7" fill="#FEC748"/>
+    <circle cx="98" cy="80" r="7" fill="#FEC748"/>
+    <circle cx="88" cy="74" r="8" fill="#FFE59E"/>
+    <circle cx="88" cy="74" r="5" fill="#FEC748"/>
+
+    <!-- Thân rương kho báu màu Deep Navy #083B4E và nẹp San Hô #FF6A56 -->
+    <rect x="58" y="82" width="60" height="38" rx="6" fill="#083B4E"/>
+    <!-- Nẹp góc san hô -->
+    <path d="M58 82 L70 82 L70 120 L58 120 Z" fill="#FF6A56"/>
+    <path d="M106 82 L118 82 L118 120 L106 120 Z" fill="#FF6A56"/>
+    <!-- Khóa chốt vàng ở giữa rương -->
+    <rect x="84" y="80" width="8" height="12" rx="2" fill="#FEC748"/>
+  </g>
+
+  <!-- Sao biển mini và đồng xu rơi cạnh rương -->
+  <circle cx="62" cy="122" r="4.5" fill="#FEC748"/>
+  <g transform="translate(112 114) scale(0.65)">
+    <path d="M12 0 C13 0 14 4 16 6 C18 8 22 7 23 9 C23 10 20 13 19 15 C19 17 20 21 19 22 C17 22 14 19 12 19 C10 19 7 22 6 22 C4 21 5 17 5 15 C4 13 1 10 2 9 C2 7 6 8 8 6 C10 4 11 0 12 0 Z" fill="#FF6A56"/>
+  </g>
+</svg>

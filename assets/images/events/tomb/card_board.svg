@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 505 508" width="505" height="508">
+  <defs>
+    <!-- Đổ bóng sa mạc ấm mềm dưới khung -->
+    <filter id="egypt-board-shadow" x="-8%" y="-8%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#1A0D04" flood-opacity="0.8"/>
+    </filter>
+    <filter id="sun-egypt-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="glow"/>
+      <feComposite in="SourceGraphic" in2="glow" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Bóng đổ toàn khung -->
+  <g filter="url(#egypt-board-shadow)">
+    <!-- Viền mỏng Golden Yellow #FEC84C -->
+    <rect x="15" y="14" width="475" height="478" rx="26" fill="#FEC84C"/>
+    <!-- Thân khung đá sa thạch chạm khắc Warm-Brown #603515 -->
+    <rect x="17.5" y="16.5" width="470" height="473" rx="24" fill="#603515"/>
+
+    <!-- Gờ sáng trên đỉnh tạo độ dày khối đá -->
+    <path d="M42 16.5 Q17.5 16.5 17.5 41 L17.5 46 Q17.5 22 42 22 L463 22 Q487.5 22 487.5 46 L487.5 41 Q487.5 16.5 463 16.5 Z" fill="#7D4820"/>
+  </g>
+
+  <!-- LÒNG BÀN CỜ 5x5: Deep Brown #3B200B (440x440 chuẩn vuông, ~87% chiều rộng) -->
+  <rect x="32.5" y="38" width="440" height="440" rx="14" fill="#241306"/>
+  <rect x="32.5" y="38" width="440" height="440" rx="14" fill="#3B200B"/>
+  <!-- Vát bóng chìm mép trong lòng bàn cờ -->
+  <rect x="32.5" y="38" width="440" height="5" fill="#140A03" opacity="0.75"/>
+
+  <!-- DẢI HOA VĂN ZIGZAG & TAM GIÁC AI CẬP DỌC CẠNH ĐÁY (EGYPTIAN BORDER BAND) -->
+  <g transform="translate(32.5 480)">
+    <!-- Nền dải hoa văn màu Deep Turquoise -->
+    <rect x="0" y="0" width="440" height="12" fill="#276B68"/>
+    <!-- Họa tiết zigzag xen kẽ Vàng #FEC84C, Ngọc Lam #38938E và Cát #E8A959 -->
+    <path d="M 0,12 L 10,0 L 20,12 L 30,0 L 40,12 L 50,0 L 60,12 L 70,0 L 80,12 L 90,0 L 100,12 L 110,0 L 120,12 L 130,0 L 140,12 L 150,0 L 160,12 L 170,0 L 180,12 L 190,0 L 200,12 L 210,0 L 220,12 L 230,0 L 240,12 L 250,0 L 260,12 L 270,0 L 280,12 L 290,0 L 300,12 L 310,0 L 320,12 L 330,0 L 340,12 L 350,0 L 360,12 L 370,0 L 380,12 L 390,0 L 400,12 L 410,0 L 420,12 L 430,0 L 440,12 Z" fill="#FEC84C"/>
+    <!-- Lớp tam giác lồng màu ngọc lam -->
+    <path d="M 5,12 L 10,6 L 15,12 M 25,12 L 30,6 L 35,12 M 45,12 L 50,6 L 55,12 M 65,12 L 70,6 L 75,12 M 85,12 L 90,6 L 95,12 M 105,12 L 110,6 L 115,12 M 125,12 L 130,6 L 135,12 M 145,12 L 150,6 L 155,12 M 165,12 L 170,6 L 175,12 M 185,12 L 190,6 L 195,12 M 205,12 L 210,6 L 215,12 M 225,12 L 230,6 L 235,12 M 245,12 L 250,6 L 255,12 M 265,12 L 270,6 L 275,12 M 285,12 L 290,6 L 295,12 M 305,12 L 310,6 L 315,12 M 325,12 L 330,6 L 335,12 M 345,12 L 350,6 L 355,12 M 365,12 L 370,6 L 375,12 M 385,12 L 390,6 L 395,12 M 405,12 L 410,6 L 415,12 M 425,12 L 430,6 L 435,12" stroke="#38938E" stroke-width="2" fill="none"/>
+  </g>
+
+  <!-- DẢI HOA VĂN ZIGZAG 2 CẠNH BÊN -->
+  <!-- Bên trái -->
+  <g transform="translate(18 100)">
+    <path d="M0,0 L12,8 L0,16 L12,24 L0,32 L12,40 L0,48 L12,56 L0,64 L12,72 L0,80 L12,88 L0,96 L12,104 L0,112 L12,120 L0,128 L12,136 L0,144 L12,152 L0,160 L12,168 L0,176 L12,184 L0,192 L12,200 L0,208 L12,216 L0,224 L12,232 L0,240 L12,248 L0,256 L12,264 L0,272 L12,280 L0,288 L12,296 L0,304" fill="none" stroke="#38938E" stroke-width="3"/>
+  </g>
+  <!-- Bên phải -->
+  <g transform="translate(475 100)">
+    <path d="M12,0 L0,8 L12,16 L0,24 L12,32 L0,40 L12,48 L0,56 L12,64 L0,72 L12,80 L0,88 L12,96 L0,104 L12,112 L0,120 L12,128 L0,136 L12,144 L0,152 L12,160 L0,168 L12,176 L0,184 L12,192 L0,200 L12,208 L0,216 L12,224 L0,232 L12,240 L0,248 L12,256 L0,264 L12,272 L0,280 L12,288 L0,296 L12,304" fill="none" stroke="#38938E" stroke-width="3"/>
+  </g>
+
+  <!-- BỌ HUNG NGỌC LAM & ĐĨA MẶT TRỜI VÀNG Ở TÂM ĐỈNH GIỮA -->
+  <g transform="translate(252.5 24)" filter="url(#sun-egypt-glow)">
+    <!-- Đĩa mặt trời vàng Golden Yellow #FEC84C -->
+    <circle cx="0" cy="-6" r="11" fill="#FEC84C"/>
+    <circle cx="0" cy="-6" r="8.5" fill="#FFEAA8"/>
+
+    <!-- Bọ hung ngọc lam mini (Turquoise scarab) nâng mặt trời -->
+    <!-- Đầu bọ hung -->
+    <circle cx="0" cy="5" r="3.5" fill="#276B68"/>
+    <!-- Thân vỏ ngọc lam -->
+    <ellipse cx="0" cy="11" rx="6" ry="5" fill="#38938E"/>
+    <line x1="0" y1="6" x2="0" y2="16" stroke="#276B68" stroke-width="1"/>
+    <!-- Đôi chân trước vươn lên đỡ mặt trời -->
+    <path d="M-4 7 Q-6 0 -1 -3" fill="none" stroke="#276B68" stroke-width="1.2" stroke-linecap="round"/>
+    <path d="M4 7 Q6 0 1 -3" fill="none" stroke="#276B68" stroke-width="1.2" stroke-linecap="round"/>
+  </g>
+
+  <!-- SPARKLE KIM CƯƠNG 4 CÁNH Ở CÁC GÓC KHUNG -->
+  <polygon points="36,24 38,28 42,28 39,30 40,34 36,32 32,34 33,30 30,28 34,28" fill="#FEC84C"/>
+  <polygon points="469,24 471,28 475,28 472,30 473,34 469,32 465,34 466,30 463,28 467,28" fill="#FEC84C"/>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Gạch màu dusty gray-green #C9D8D0 mờ phẳng -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#9FB0A7"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#C9D8D0"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#B5C4BC"/>
+  <!-- Cánh hoa anh đào phai mờ ở góc (Faded petal) -->
+  <path d="M26 26 C34 22 38 32 30 36 C24 38 20 30 26 26 Z" fill="#E2EEE8" opacity="0.45"/>
+</svg>

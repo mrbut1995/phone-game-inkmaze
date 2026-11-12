@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Gạch nền Shell Cream -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#DECAA0"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#FDF3DA"/>
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#FFFDF8"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#F4E2B9"/>
+
+  <!-- Đĩa tròn trung tâm Sunny Yellow #FEC748 -->
+  <rect x="36" y="36" width="104" height="104" rx="20" fill="#D1981F"/>
+  <rect x="36" y="33" width="104" height="104" rx="20" fill="#FEC748"/>
+  <path d="M54 33 Q36 33 36 51 L36 54 Q36 36 54 36 L122 36 Q140 36 140 54 L140 51 Q140 33 122 33 Z" fill="#FFE59E"/>
+
+  <!-- Gò cát nhỏ ở đáy ô dù -->
+  <ellipse cx="88" cy="124" rx="32" ry="8" fill="#F4E2B9"/>
+
+  <!-- Cán dù bằng gỗ xiên góc -->
+  <line x1="88" y1="62" x2="88" y2="124" stroke="#083B4E" stroke-width="3.5" stroke-linecap="round"/>
+
+  <!-- DÙ BÃI BIỂN SỌC KHỐI SAN HÔ & OCEAN BLUE (BEACH UMBRELLA) -->
+  <g transform="translate(88 64)">
+    <!-- Đỉnh chóp dù -->
+    <circle cx="0" cy="-14" r="2.5" fill="#083B4E"/>
+
+    <!-- Tán dù chia các múi sọc: San hô #FF6A56 & Ocean Blue #209FC2 -->
+    <!-- Múi 1: Coral -->
+    <path d="M0 -14 L-38 6 Q-20 10 0 8 Z" fill="#FF6A56"/>
+    <!-- Múi 2: Ocean Blue -->
+    <path d="M0 -14 L-16 8 Q0 10 16 8 Z" fill="#209FC2"/>
+    <!-- Múi 3: Coral -->
+    <path d="M0 -14 L0 8 Q20 10 38 6 Z" fill="#FF6A56"/>
+  </g>
+
+  <!-- Sao biển mini bên cạnh gò cát -->
+  <g transform="translate(112 118) scale(0.65)">
+    <path d="M12 0 C13 0 14 4 16 6 C18 8 22 7 23 9 C23 10 20 13 19 15 C19 17 20 21 19 22 C17 22 14 19 12 19 C10 19 7 22 6 22 C4 21 5 17 5 15 C4 13 1 10 2 9 C2 7 6 8 8 6 C10 4 11 0 12 0 Z" fill="#FF6A56"/>
+  </g>
+</svg>

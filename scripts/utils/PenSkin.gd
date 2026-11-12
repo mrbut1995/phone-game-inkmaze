@@ -160,6 +160,9 @@ const FEELS := {
 		"haptic": 8, "shimmer": 0.35},
 }
 
+## EVENT skin: ÉP màu mực cho mọi nét (alpha 0 = tắt ⇒ dùng màu của bút đang trang bị).
+## Bàn cờ event nền TỐI nên mực xanh đậm của bút mặc định sẽ không đọc được.
+static var _ink_override := Color(0, 0, 0, 0)
 static var _cursor_cache: Dictionary = {}
 static var _icon_cache: Dictionary = {}
 ## Chu kỳ nét đứt (px, làm tròn) -> Texture2D (Line2D không có tuỳ chọn co giãn texture)
@@ -210,7 +213,17 @@ static func tip_uv(pen_id: String) -> Vector2:
 	return v if v is Vector2 else Vector2(0.786, 0.786)
 
 
+static func set_ink_override(color: Color) -> void:
+	_ink_override = color
+
+
+static func clear_ink_override() -> void:
+	_ink_override = Color(0, 0, 0, 0)
+
+
 static func ink_color(pen_id: String) -> Color:
+	if _ink_override.a > 0.0:
+		return _ink_override
 	return Color(str(data(pen_id).get("ink", "#2575A7")))
 
 

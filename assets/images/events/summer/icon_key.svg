@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="key-beach-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- 2 tia lấp lánh màu kem (Cream sparkles) -->
+  <path d="M135 38 Q135 48 125 48 Q135 48 135 58 Q135 48 145 48 Q135 48 135 38 Z" fill="#FDF3DA"/>
+  <path d="M38 125 Q38 133 30 133 Q38 133 38 141 Q38 133 46 133 Q38 133 38 125 Z" fill="#FDF3DA"/>
+
+  <!-- Chìa khóa vàng xoay nghiêng 40 độ từ tâm -->
+  <g transform="translate(88 88) rotate(-40) translate(-88 -88)" filter="url(#key-beach-glow)">
+    <!-- Chuôi chìa khóa: Sao biển màu San Hô (Starfish-shaped bow in Coral) -->
+    <g>
+      <!-- Hình khối sao biển 5 cánh mập tròn -->
+      <path d="M88 20 C92 20 94 28 100 32 C106 36 114 34 116 38 C118 42 110 48 108 54 C106 60 110 68 106 70 C102 72 94 66 88 66 C82 66 74 72 70 70 C66 68 70 60 68 54 C66 48 58 42 60 38 C62 34 70 36 76 32 C82 28 84 20 88 20 Z" fill="#FF6A56"/>
+
+      <!-- Các chấm tròn san hô sáng màu trên cánh sao -->
+      <circle cx="88" cy="27" r="2.2" fill="#FFA394"/>
+      <circle cx="106" cy="40" r="2.2" fill="#FFA394"/>
+      <circle cx="98" cy="61" r="2.2" fill="#FFA394"/>
+      <circle cx="78" cy="61" r="2.2" fill="#FFA394"/>
+      <circle cx="70" cy="40" r="2.2" fill="#FFA394"/>
+
+      <!-- Lỗ tròn ở tâm chuôi chìa khóa -->
+      <circle cx="88" cy="46" r="8" fill="#083B4E"/>
+      <circle cx="88" cy="46" r="4" fill="#FEC748"/>
+    </g>
+
+    <!-- Thân chìa khóa vàng Sunny Yellow với vát bóng vàng sẫm #DDA829 -->
+    <rect x="83.5" y="68" width="9" height="76" rx="4" fill="#DDA829"/>
+    <rect x="83.5" y="68" width="4.5" height="76" rx="2" fill="#FEC748"/>
+
+    <!-- Răng chìa khóa (Bit) hình sóng/cát biển góc cạnh gọn gàng -->
+    <path d="M92 112 L110 112 Q113 112 113 115 L113 122 Q113 125 110 125 L92 125 Z" fill="#DDA829"/>
+    <path d="M92 112 L110 112 Q113 112 113 115 L113 118 L92 118 Z" fill="#FEC748"/>
+
+    <path d="M92 130 L106 130 Q109 130 109 133 L109 140 Q109 143 106 143 L92 143 Z" fill="#DDA829"/>
+    <path d="M92 130 L106 130 Q109 130 109 133 L109 136 L92 136 Z" fill="#FEC748"/>
+
+    <!-- Chóp đáy chuôi chìa tròn xoe -->
+    <circle cx="88" cy="148" r="5" fill="#DDA829"/>
+    <circle cx="88" cy="147" r="3" fill="#FEC748"/>
+  </g>
+</svg>

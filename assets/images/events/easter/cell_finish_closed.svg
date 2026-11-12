@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Gạch nền -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#E5D9AE"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#FFF4D1"/>
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#FEF7E4"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#FDEBA8"/>
+
+  <!-- Đĩa trung tâm màu xám xanh desaturated #5A7865 -->
+  <rect x="36" y="36" width="104" height="104" rx="20" fill="#2E4436"/>
+  <rect x="36" y="33" width="104" height="104" rx="20" fill="#5A7865"/>
+
+  <!-- Quả trứng màu xám mờ (Dull gray egg) -->
+  <path d="M88 56 C68 56 64 88 64 104 C64 120 74 126 88 126 C102 126 112 120 112 104 C112 88 108 56 88 56 Z" fill="#9CA89F"/>
+  <path d="M64 92 L72 86 L80 92 L88 86 L96 92 L104 86 L112 92 L112 99 L104 93 L96 99 L88 93 L80 99 L72 93 L64 99 Z" fill="#849187"/>
+
+  <!-- Ruy băng bắt chéo quấn quanh trứng -->
+  <polygon points="68,76 108,118 104,122 64,80" fill="#B4BEB7"/>
+  <polygon points="108,76 68,118 64,122 104,80" fill="#A4AEA7"/>
+
+  <!-- Ổ khóa nhỏ màu xám -->
+  <g transform="translate(88 102)">
+    <path d="M-5 -3 V-8 A5 5 0 0 1 5 -8 V-3" fill="none" stroke="#DCE2DD" stroke-width="2.5" stroke-linecap="round"/>
+    <rect x="-7" y="-3" width="14" height="11" rx="2.5" fill="#717D75"/>
+    <circle cx="0" cy="2" r="1.3" fill="#2E4436"/>
+  </g>
+</svg>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Gạch nền Peach Cream -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#DCA36E"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#FFE3BD"/>
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#FFF2DF"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#FFCD98"/>
+
+  <!-- Đĩa tròn trung tâm Pumpkin Orange #E27017 -->
+  <rect x="36" y="36" width="104" height="104" rx="20" fill="#A84B03"/>
+  <rect x="36" y="33" width="104" height="104" rx="20" fill="#E27017"/>
+  <path d="M54 33 Q36 33 36 51 L36 54 Q36 36 54 36 L122 36 Q140 36 140 54 L140 51 Q140 33 122 33 Z" fill="#F48A3A"/>
+
+  <!-- Biển chỉ dẫn bằng gỗ chỉ sang phải (Wooden signpost) -->
+  <g>
+    <!-- Trụ cột gỗ Deep Brown #280E01 -->
+    <rect x="83" y="60" width="10" height="64" rx="2" fill="#280E01"/>
+    <!-- Mũi tên chỉ hướng sang phải -->
+    <path d="M60 66 L104 66 L118 78 L104 90 L60 90 Z" fill="#5A2A0C"/>
+    <!-- Vát sáng mép trên biển gỗ -->
+    <path d="M60 66 L104 66 L118 78 L113 78 L101 68 L60 68 Z" fill="#783B13"/>
+
+    <!-- Hạt dẻ nhỏ dưới chân cột -->
+    <g transform="translate(94 112)">
+      <path d="M2 3 C2 0 8 0 8 3 Z" fill="#280E01"/>
+      <path d="M2 3 C2 9 8 9 8 3 Z" fill="#F4AC3D"/>
+    </g>
+  </g>
+</svg>

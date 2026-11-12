@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Darkened tile -->
+  <rect x="2" y="2" width="172" height="172" rx="16" fill="#0D1C1F"/>
+  <rect x="2" y="2" width="172" height="168" rx="16" fill="#142528"/>
+  <rect x="12" y="12" width="152" height="152" rx="10" fill="#0E1E21"/>
+
+  <!-- Crossed dashed chains in teal -->
+  <g stroke="#378E6C" stroke-width="6" stroke-dasharray="10 8" stroke-linecap="round" opacity="0.6">
+    <line x1="26" y1="26" x2="150" y2="150"/>
+    <line x1="150" y1="26" x2="26" y2="150"/>
+  </g>
+
+  <!-- Center Padlock (Layered Paper Cut) -->
+  <g transform="translate(88, 88)">
+    <!-- Soft circular shadow -->
+    <ellipse cx="0" cy="24" rx="28" ry="8" fill="#0D1C1F" opacity="0.5"/>
+    <!-- Shackle -->
+    <path d="M -15 -2 V -18 A 15 15 0 0 1 15 -18 V -2" fill="none" stroke="#BFD9D1" stroke-width="7" stroke-linecap="round"/>
+    <!-- Body top / main body -->
+    <rect x="-26" y="-6" width="52" height="42" rx="8" fill="#7FA89E"/>
+    <!-- Darker bottom band -->
+    <path d="M -26 22 L 26 22 L 26 28 C 26 32 22 36 18 36 L -18 36 C -22 36 -26 32 -26 28 Z" fill="#4F7B72"/>
+    <!-- Glowing yellow keyhole -->
+    <circle cx="0" cy="11" r="5" fill="#FFD567"/>
+    <polygon points="-2.5,12 2.5,12 3.5,20 -3.5,20" fill="#FFD567"/>
+  </g>
+</svg>

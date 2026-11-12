@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="star-hole-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Bóng tròn màu tím mềm bên dưới -->
+  <ellipse cx="88" cy="148" rx="46" ry="14" fill="#32174E" opacity="0.4"/>
+
+  <!-- Quai khóa thép màu Lavender #D2BCFD -->
+  <path d="M64 80 V52 A24 24 0 0 1 112 52 V80" fill="none" stroke="#D2BCFD" stroke-width="14" stroke-linecap="round"/>
+  <!-- Điểm nhấn vát sáng trên đỉnh quai khóa -->
+  <path d="M72 43 A20 20 0 0 1 104 43" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+
+  <!-- Dải ruy băng hồng xoăn móc nhẹ trên quai khóa (Curly pink ribbon) -->
+  <path d="M62 48 Q50 44 54 58 Q58 72 48 80 Q44 84 48 88" fill="none" stroke="#FF6E97" stroke-width="4.5" stroke-linecap="round"/>
+  <ellipse cx="62" cy="48" rx="5" ry="3.5" fill="#FF6E97" transform="rotate(-15 62 48)"/>
+
+  <!-- Thân khóa chunky Teal #48CDE0 -->
+  <rect x="48" y="78" width="80" height="62" rx="14" fill="#33B5C7"/>
+  <rect x="48" y="74" width="80" height="62" rx="14" fill="#48CDE0"/>
+
+  <!-- Gờ sáng trên thân khóa -->
+  <path d="M62 74 Q48 74 48 88 L48 91 Q48 77 62 77 L114 77 Q128 77 128 91 L128 88 Q128 74 114 74 Z" fill="#8CE5F2"/>
+
+  <!-- Băng đáy tối màu #2A9AB0 -->
+  <path d="M48 112 Q48 136 72 136 L104 136 Q128 136 128 112 L128 106 L48 106 Z" fill="#2A9AB0"/>
+
+  <!-- Lỗ khóa hình ngôi sao vàng phát sáng (Gold star keyhole) -->
+  <g filter="url(#star-hole-glow)">
+    <polygon points="88,96 91.5,104 100,104 93.5,109 96,117 88,112 80,117 82.5,109 76,104 84.5,104" fill="#FDD158"/>
+    <circle cx="88" cy="107" r="3" fill="#FFFBE6"/>
+  </g>
+</svg>

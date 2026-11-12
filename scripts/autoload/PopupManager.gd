@@ -23,6 +23,8 @@ const POPUPS := {
 	"game_over_challenge": "res://scenes/objects/ui/popups/gameover_challenge.tscn",
 	"retry": "res://scenes/objects/ui/popups/retry.tscn",
 	"next_floor": "res://scenes/objects/ui/popups/next_floor.tscn",
+	"popup_event_continue": "res://scenes/objects/ui/popups/popup_event_continue.tscn",
+	"popup_event_win": "res://scenes/objects/ui/popups/popup_event_win.tscn",
 	"pause": "res://scenes/objects/ui/popups/pause.tscn",
 	"language": "res://scenes/objects/ui/popups/language.tscn",
 	"memory_countdown": "res://scenes/objects/ui/popups/memory_countdown.tscn",

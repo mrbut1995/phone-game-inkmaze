@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 505 508" width="505" height="508">
+  <defs>
+    <filter id="board-shadow" x="-5%" y="-4%" width="110%" height="112%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000000" flood-opacity="0.38"/>
+    </filter>
+    <filter id="glow-yellow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3.5" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Drop shadow & Outer frame panel -->
+  <g filter="url(#board-shadow)">
+    <!-- Moss green outer rim -->
+    <rect x="18" y="24" width="469" height="466" rx="22" fill="#378E6C"/>
+    <!-- Dark teal main body -->
+    <rect x="21" y="27" width="463" height="460" rx="19" fill="#113032"/>
+    <!-- Top inner highlight edge for paper-cut bevel -->
+    <rect x="26" y="30" width="453" height="3" rx="1.5" fill="#378E6C" opacity="0.6"/>
+  </g>
+
+  <!-- Top Wrought Iron Fence (spikes & bars) -->
+  <g fill="#0D1C1F">
+    <rect x="35" y="16" width="435" height="4" rx="1"/>
+    <rect x="35" y="22" width="435" height="3" rx="1"/>
+    <!-- Iron spikes -->
+    <path d="M 45,26 L 47,10 L 49,26 Z"/>
+    <path d="M 75,26 L 77,10 L 79,26 Z"/>
+    <path d="M 105,26 L 107,8 L 109,26 Z"/>
+    <path d="M 135,26 L 137,10 L 139,26 Z"/>
+    <path d="M 165,26 L 167,10 L 169,26 Z"/>
+    <path d="M 195,26 L 197,8 L 199,26 Z"/>
+    <path d="M 225,26 L 227,10 L 229,26 Z"/>
+    <path d="M 251,26 L 252.5,6 L 254,26 Z"/>
+    <path d="M 276,26 L 278,10 L 280,26 Z"/>
+    <path d="M 306,26 L 308,8 L 310,26 Z"/>
+    <path d="M 336,26 L 338,10 L 340,26 Z"/>
+    <path d="M 366,26 L 368,10 L 370,26 Z"/>
+    <path d="M 396,26 L 398,8 L 400,26 Z"/>
+    <path d="M 426,26 L 428,10 L 430,26 Z"/>
+    <path d="M 456,26 L 458,10 L 460,26 Z"/>
+  </g>
+
+  <!-- Top Center Sparkle -->
+  <g transform="translate(252.5, 34)" fill="#FFD567">
+    <polygon points="0,-7 2,-2 7,0 2,2 0,7 -2,2 -7,0 -2,-2"/>
+  </g>
+
+  <!-- Mint cobwebs in top corners -->
+  <g fill="#BAF7D5" opacity="0.45">
+    <!-- Top-left cobweb -->
+    <path d="M 30,36 C 50,37 60,47 62,67 L 57,67 C 55,51 46,42 30,40 Z"/>
+    <path d="M 30,52 C 42,54 48,60 50,72 L 46,72 C 44,63 39,57 30,55 Z"/>
+    <line x1="30" y1="36" x2="65" y2="71" stroke="#BAF7D5" stroke-width="1.2" opacity="0.5"/>
+    <!-- Top-right cobweb -->
+    <path d="M 475,36 C 455,37 445,47 443,67 L 448,67 C 450,51 459,42 475,40 Z"/>
+    <path d="M 475,52 C 463,54 457,60 455,72 L 459,72 C 461,63 466,57 475,55 Z"/>
+    <line x1="475" y1="36" x2="440" y2="71" stroke="#BAF7D5" stroke-width="1.2" opacity="0.5"/>
+  </g>
+
+  <!-- Central Playfield (Perfect Square ~87% width: 439x439) -->
+  <rect x="33" y="44" width="439" height="439" rx="14" fill="#0D1C1F"/>
+  <!-- Subtle inset rim on gameboard -->
+  <rect x="33" y="480" width="439" height="3" rx="1.5" fill="#1E3D42" opacity="0.4"/>
+
+  <!-- Grass tufts at bottom edge -->
+  <g fill="#378E6C">
+    <path d="M 120,486 L 124,475 L 128,486 L 132,473 L 136,486 Z"/>
+    <path d="M 235,486 L 240,474 L 245,486 L 250,471 L 255,486 L 260,475 L 265,486 Z"/>
+    <path d="M 365,486 L 370,474 L 374,486 L 378,472 L 382,486 Z"/>
+  </g>
+
+  <!-- Glowing Yellow Lamps at bottom corners -->
+  <!-- Left Lamp -->
+  <circle cx="50" cy="465" r="9" fill="#FFD567" opacity="0.18" filter="url(#glow-yellow)"/>
+  <circle cx="50" cy="465" r="4.5" fill="#FFD567"/>
+  <circle cx="50" cy="465" r="2" fill="#FFFFFF"/>
+  <path d="M 44,465 C 44,460 56,460 56,465" fill="#113032"/>
+  <!-- Right Lamp -->
+  <circle cx="455" cy="465" r="9" fill="#FFD567" opacity="0.18" filter="url(#glow-yellow)"/>
+  <circle cx="455" cy="465" r="4.5" fill="#FFD567"/>
+  <circle cx="455" cy="465" r="2" fill="#FFFFFF"/>
+  <path d="M 449,465 C 449,460 461,460 461,465" fill="#113032"/>
+</svg>

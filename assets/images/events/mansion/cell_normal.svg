@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Base Tile -->
+  <rect x="2" y="2" width="172" height="172" rx="16" fill="#11292D"/>
+  <!-- Bevel top highlight -->
+  <rect x="2" y="2" width="172" height="168" rx="16" fill="#1E3D42"/>
+  <!-- Inner inset panel -->
+  <rect x="12" y="12" width="152" height="152" rx="10" fill="#163237"/>
+  <!-- Subtle corner sparkles -->
+  <path d="M 24 20 L 25 24 L 29 25 L 25 26 L 24 30 L 23 26 L 19 25 L 23 24 Z" fill="#BAF7D5" opacity="0.3"/>
+  <path d="M 152 146 L 153 150 L 157 151 L 153 152 L 152 156 L 151 152 L 147 151 L 151 150 Z" fill="#BAF7D5" opacity="0.3"/>
+</svg>

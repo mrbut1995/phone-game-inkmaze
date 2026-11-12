@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Gạch nền Ice-Blue -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#9CC5E8"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#CDE9FE"/>
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#EAF5FE"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#B3DCFB"/>
+
+  <!-- Đĩa tròn trung tâm Sky-Blue #5CBAED -->
+  <rect x="36" y="36" width="104" height="104" rx="20" fill="#3290C2"/>
+  <rect x="36" y="33" width="104" height="104" rx="20" fill="#5CBAED"/>
+  <path d="M54 33 Q36 33 36 51 L36 54 Q36 36 54 36 L122 36 Q140 36 140 54 L140 51 Q140 33 122 33 Z" fill="#88D4FB"/>
+
+  <!-- Ly sâm panh thon dài (Champagne Flute) -->
+  <g transform="translate(88 88) rotate(-15) translate(-88 -88)">
+    <!-- Đế ly & chân ly thanh mảnh -->
+    <ellipse cx="88" cy="126" rx="16" ry="4" fill="#FFFFFF" opacity="0.75"/>
+    <rect x="86.5" y="100" width="3" height="26" rx="1.5" fill="#FFFFFF" opacity="0.75"/>
+
+    <!-- Thân ly thủy tinh hình ống cao -->
+    <path d="M78 58 L98 58 L94 98 C94 102 91 104 88 104 C85 104 82 102 82 98 Z" fill="#EAF5FE" opacity="0.5"/>
+
+    <!-- Rượu sâm panh vàng lấp lánh (Golden drink) -->
+    <path d="M80 72 L96 72 L93 96 C93 99 90.5 101 88 101 C85.5 101 83 99 83 96 Z" fill="#FBCB5C"/>
+
+    <!-- Vệt sáng phản chiếu mép ly -->
+    <path d="M80 62 L80 94" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" opacity="0.8"/>
+  </g>
+
+  <!-- Bọt khí sủi tăm bay lên (Rising bubbles) -->
+  <circle cx="78" cy="56" r="2.5" fill="#FFFFFF"/>
+  <circle cx="84" cy="50" r="1.8" fill="#FBCB5C"/>
+  <circle cx="76" cy="44" r="1.5" fill="#FFFFFF"/>
+
+  <!-- Sparkle vàng lấp lánh cạnh miệng ly -->
+  <polygon points="98,42 99.5,46 103.5,46 100.5,48.5 101.5,52.5 98,50 94.5,52.5 95.5,48.5 92.5,46 96.5,46" fill="#FBCB5C"/>
+</svg>

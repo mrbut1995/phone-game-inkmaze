@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Gạch màu Very Dark Purple #231046 mờ phẳng -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#130829"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#231046"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#190A33"/>
+  <!-- Mạng nhện mờ góc trên trái (#FBE5A9 opacity thấp) -->
+  <g fill="#FBE5A9" opacity="0.2">
+    <path d="M16 16 L56 16 C48 24 24 48 16 56 Z"/>
+    <path d="M16 16 L38 16 C33 21 21 33 16 38 Z"/>
+  </g>
+</svg>

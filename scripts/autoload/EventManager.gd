@@ -246,6 +246,36 @@ func get_progress(id: StringName) -> Dictionary:
 	}
 
 
+## Event có chạy theo chuỗi màn tạo sẵn không
+func is_level_series(id: StringName) -> bool:
+	var ev := get_event(id)
+	return ev != null and ev.is_level_series()
+
+
+## Vị trí (0-based) màn đầu tiên CHƯA xong; đã xong hết → 0 (chơi lại từ đầu)
+func first_unfinished_index(id: StringName) -> int:
+	var ev := get_event(id)
+	if ev == null:
+		return 0
+	var done_list: Array = _ensure_progress(id).get("done_levels", [])
+	for i in ev.levels.size():
+		if not done_list.has(str(ev.levels[i].level_id)):
+			return i
+	return 0
+
+
+## Mô tả phần thưởng của event để popup hiển thị: [{kind:int, amount:int, label_key:StringName}]
+func reward_rows(id: StringName) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var ev := get_event(id)
+	if ev == null:
+		return out
+	for r in ev.rewards:
+		if r != null:
+			out.append({"kind": int(r.kind), "amount": int(r.amount), "label_key": r.label_key})
+	return out
+
+
 ## Số giây còn lại đến hết hạn
 func seconds_left(id: StringName) -> int:
 	var ev := get_event(id)

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Gạch nền -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#E896C7"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#FDC1E3"/>
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#FEC8EA"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#F4A9D3"/>
+
+  <!-- Đĩa trung tâm màu xám lavender desaturated #9B88A8 -->
+  <rect x="36" y="36" width="104" height="104" rx="20" fill="#5E4E6D"/>
+  <rect x="36" y="33" width="104" height="104" rx="20" fill="#9B88A8"/>
+
+  <!-- Hộp quà đóng nắp màu xám tím mờ -->
+  <g>
+    <rect x="62" y="84" width="52" height="40" rx="4" fill="#A89AB5"/>
+    <rect x="58" y="76" width="60" height="10" rx="3" fill="#8F809D"/>
+
+    <!-- Dấu hỏi chấm màu mận #3A0648 trên mặt hộp -->
+    <path d="M85 94 Q85 90 88 90 Q91 90 91 94 Q91 96 88 98 L88 100" fill="none" stroke="#3A0648" stroke-width="2.2" stroke-linecap="round"/>
+    <circle cx="88" cy="103" r="1.2" fill="#3A0648"/>
+  </g>
+
+  <!-- Dây xích ruy băng bắt chéo khóa chặt (Crossed chain ribbon) -->
+  <line x1="52" y1="76" x2="124" y2="124" stroke="#756485" stroke-width="5" stroke-dasharray="7 4" stroke-linecap="round"/>
+  <line x1="124" y1="76" x2="52" y2="124" stroke="#635372" stroke-width="5" stroke-dasharray="7 4" stroke-linecap="round"/>
+
+  <!-- Ổ khóa violet nhỏ ở tâm -->
+  <g transform="translate(88 100)">
+    <path d="M-6 -4 V-10 A6 6 0 0 1 6 -10 V-4" fill="none" stroke="#FDC1E3" stroke-width="3" stroke-linecap="round"/>
+    <rect x="-9" y="-4" width="18" height="14" rx="3.5" fill="#7A43F6"/>
+    <circle cx="0" cy="2" r="1.8" fill="#FBEC77"/>
+  </g>
+</svg>

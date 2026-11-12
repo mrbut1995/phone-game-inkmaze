@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Normal tile base -->
+  <rect x="2" y="2" width="172" height="172" rx="16" fill="#11292D"/>
+  <rect x="2" y="2" width="172" height="168" rx="16" fill="#1E3D42"/>
+  <rect x="12" y="12" width="152" height="152" rx="10" fill="#163237"/>
+
+  <!-- Desaturated dark gray-teal plate (no glow) -->
+  <rect x="30" y="30" width="116" height="116" rx="18" fill="#142528"/>
+
+  <!-- Dark Mansion Silhouette -->
+  <g fill="#0D1C1F">
+    <ellipse cx="88" cy="130" rx="46" ry="14"/>
+    <rect x="58" y="86" width="22" height="34"/>
+    <polygon points="56,86 69,68 82,86"/>
+    <rect x="96" y="86" width="22" height="34"/>
+    <polygon points="94,86 107,68 120,86"/>
+    <rect x="76" y="68" width="24" height="52"/>
+    <polygon points="73,68 88,42 103,68"/>
+    <polygon points="88,42 88,34 96,38 88,40"/>
+  </g>
+
+  <!-- Dark unlit windows -->
+  <g fill="#142528">
+    <path d="M 85 64 A 3 3 0 0 1 91 64 L 91 72 L 85 72 Z"/>
+    <path d="M 66 94 A 2.5 2.5 0 0 1 71 94 L 71 101 L 66 101 Z"/>
+    <path d="M 105 94 A 2.5 2.5 0 0 1 110 94 L 110 101 L 105 101 Z"/>
+    <path d="M 84 104 A 4 4 0 0 1 92 104 L 92 120 L 84 120 Z"/>
+  </g>
+
+  <!-- Crossed wooden planks over door -->
+  <g fill="#374A47">
+    <polygon points="80,107 96,117 94,120 78,110"/>
+    <polygon points="78,117 94,107 96,110 80,120"/>
+  </g>
+  <!-- Small gray padlock -->
+  <path d="M 85 111 A 3 3 0 0 1 91 111 L 91 114 L 85 114 Z" fill="none" stroke="#BFD9D1" stroke-width="1.8"/>
+  <rect x="83" y="114" width="10" height="8" rx="2" fill="#7FA89E"/>
+</svg>

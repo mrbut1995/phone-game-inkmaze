@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="keyhole-heart-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Bóng tròn màu Wine mềm bên dưới -->
+  <ellipse cx="88" cy="148" rx="46" ry="14" fill="#2A0412" opacity="0.5"/>
+
+  <!-- Quai khóa thép màu Light Pink #FEC8D6 -->
+  <path d="M64 80 V52 A24 24 0 0 1 112 52 V80" fill="none" stroke="#FEC8D6" stroke-width="14" stroke-linecap="round"/>
+  <!-- Điểm nhấn vát sáng trên đỉnh quai -->
+  <path d="M72 43 A20 20 0 0 1 104 43" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+
+  <!-- Nơ ruy băng hồng nhỏ thắt trên quai khóa (Ribbon bow) -->
+  <g transform="translate(62 52)">
+    <ellipse cx="-6" cy="-2" rx="6" ry="4" fill="#FF578B" transform="rotate(-20 -6 -2)"/>
+    <ellipse cx="6" cy="-2" rx="6" ry="4" fill="#FF578B" transform="rotate(20 6 -2)"/>
+    <circle cx="0" cy="0" r="3" fill="#C01742"/>
+    <!-- Dải đuôi nơ -->
+    <path d="M-2 2 Q-5 10 -2 14" fill="none" stroke="#FF578B" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M2 2 Q5 10 2 14" fill="none" stroke="#FF578B" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Thân khóa chunky Crimson #C01742 -->
+  <rect x="48" y="78" width="80" height="62" rx="14" fill="#940F31"/>
+  <rect x="48" y="74" width="80" height="62" rx="14" fill="#C01742"/>
+
+  <!-- Gờ sáng trên thân khóa -->
+  <path d="M62 74 Q48 74 48 88 L48 91 Q48 77 62 77 L114 77 Q128 77 128 91 L128 88 Q128 74 114 74 Z" fill="#E82A5C"/>
+
+  <!-- Băng đáy tối màu #8A1030 -->
+  <path d="M48 112 Q48 136 72 136 L104 136 Q128 136 128 112 L128 106 L48 106 Z" fill="#8A1030"/>
+
+  <!-- Lỗ khóa hình trái tim nhỏ màu Light Pink phát sáng (#FEC8D6) -->
+  <g transform="translate(88 104)" filter="url(#keyhole-heart-glow)">
+    <path d="M0 9 C-5 6 -9 2 -9 -3 C-9 -6 -6 -9 -3 -9 C0 -9 0 -6 0 -5 C0 -6 0 -9 3 -9 C6 -9 9 -6 9 -3 C9 2 5 6 0 9 Z" fill="#FEC8D6"/>
+    <circle cx="0" cy="-2" r="2.5" fill="#FDEDF0"/>
+  </g>
+</svg>

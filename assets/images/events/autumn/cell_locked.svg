@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Gạch màu dusty tan tối #C4A17B -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#997753"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#C4A17B"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#B38E66"/>
+
+  <!-- Dây leo cây màu nâu bắt chéo (Crossed brown vines) -->
+  <line x1="24" y1="24" x2="152" y2="152" stroke="#5A2A0C" stroke-width="10" stroke-linecap="round"/>
+  <line x1="152" y1="24" x2="24" y2="152" stroke="#451E06" stroke-width="10" stroke-linecap="round"/>
+
+  <!-- Vài chiếc lá khô bám trên dây leo -->
+  <path d="M48 40 Q58 38 60 48 Q50 50 48 40 Z" fill="#E27017"/>
+  <path d="M128 48 Q138 58 128 66 Q120 56 128 48 Z" fill="#B83020"/>
+  <path d="M42 120 Q52 122 50 132 Q40 130 42 120 Z" fill="#F4AC3D"/>
+  <path d="M124 126 Q134 116 136 126 Q126 134 124 126 Z" fill="#E27017"/>
+
+  <!-- Bóng tròn sau ổ khóa -->
+  <circle cx="88" cy="94" r="32" fill="#280E01" opacity="0.45"/>
+
+  <!-- Ổ khóa đồng brass chunky ở trung tâm -->
+  <g transform="translate(88 88)">
+    <!-- Quai khóa sáng màu #E8C98A -->
+    <path d="M-18 -8 V-24 A18 18 0 0 1 18 -24 V-8" fill="none" stroke="#E8C98A" stroke-width="9" stroke-linecap="round"/>
+    <!-- Thân khóa đồng #C98A2B -->
+    <rect x="-28" y="-8" width="56" height="46" rx="9" fill="#C98A2B"/>
+    <!-- Băng đáy tối màu #8A5A1C -->
+    <path d="M-28 17 Q-28 38 -9 38 L9 38 Q28 38 28 17 L28 12 L-28 12 Z" fill="#8A5A1C"/>
+    <!-- Lỗ khóa vàng rực nổi bật hình giọt nước -->
+    <circle cx="0" cy="11" r="5" fill="#F4AC3D"/>
+    <polygon points="-3,12 3,12 2,24 -2,24" fill="#F4AC3D"/>
+  </g>
+</svg>

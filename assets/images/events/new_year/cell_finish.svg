@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="midnight-firework-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Gạch nền -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#9CC5E8"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#CDE9FE"/>
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#EAF5FE"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#B3DCFB"/>
+
+  <!-- Đĩa tròn trung tâm Navy #16305E -->
+  <rect x="36" y="36" width="104" height="104" rx="20" fill="#071730"/>
+  <rect x="36" y="33" width="104" height="104" rx="20" fill="#16305E"/>
+
+  <!-- Chùm pháo hoa bung nở rực rỡ phía sau: Vàng và Hồng (Firework burst) -->
+  <g transform="translate(88 85)" filter="url(#midnight-firework-glow)">
+    <circle cx="0" cy="0" r="32" fill="#FBCB5C" opacity="0.3"/>
+    <!-- Tia pháo hoa vàng -->
+    <line x1="0" y1="-26" x2="0" y2="-36" stroke="#FBCB5C" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="18" y1="-18" x2="26" y2="-26" stroke="#FBCB5C" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="26" y1="0" x2="36" y2="0" stroke="#FBCB5C" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="18" y1="18" x2="26" y2="26" stroke="#FBCB5C" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="0" y1="26" x2="0" y2="36" stroke="#FBCB5C" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="-18" y1="18" x2="-26" y2="26" stroke="#FBCB5C" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="-26" y1="0" x2="-36" y2="0" stroke="#FBCB5C" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="-18" y1="-18" x2="-26" y2="-26" stroke="#FBCB5C" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Tia pháo hoa hồng -->
+    <line x1="10" y1="-24" x2="14" y2="-33" stroke="#E8507F" stroke-width="2" stroke-linecap="round"/>
+    <line x1="24" y1="-10" x2="33" y2="-14" stroke="#E8507F" stroke-width="2" stroke-linecap="round"/>
+    <line x1="24" y1="10" x2="33" y2="14" stroke="#E8507F" stroke-width="2" stroke-linecap="round"/>
+    <line x1="10" y1="24" x2="14" y2="33" stroke="#E8507F" stroke-width="2" stroke-linecap="round"/>
+    <line x1="-10" y1="24" x2="-14" y2="33" stroke="#E8507F" stroke-width="2" stroke-linecap="round"/>
+    <line x1="-24" y1="10" x2="-33" y2="14" stroke="#E8507F" stroke-width="2" stroke-linecap="round"/>
+    <line x1="-24" y1="-10" x2="-33" y2="-14" stroke="#E8507F" stroke-width="2" stroke-linecap="round"/>
+    <line x1="-10" y1="-24" x2="-14" y2="-33" stroke="#E8507F" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <!-- ĐỒNG HỒ ĐẾM NGƯỢC CHỈ 12 GIỜ ĐÊM (MIDNIGHT CLOCK) -->
+  <g transform="translate(88 85)">
+    <!-- Vòng vỏ đồng hồ màu Gold #FBCB5C -->
+    <circle cx="0" cy="0" r="28" fill="#FBCB5C"/>
+    <!-- Mặt kính đồng hồ Ice-Blue #CDE9FE -->
+    <circle cx="0" cy="0" r="22" fill="#CDE9FE"/>
+
+    <!-- Các chấm chia giờ màu vàng (Gold tick dots) -->
+    <circle cx="0" cy="-17" r="1.8" fill="#FBCB5C"/>
+    <circle cx="8.5" cy="-14.7" r="1.3" fill="#FBCB5C"/>
+    <circle cx="14.7" cy="-8.5" r="1.3" fill="#FBCB5C"/>
+    <circle cx="17" cy="0" r="1.8" fill="#FBCB5C"/>
+    <circle cx="14.7" cy="8.5" r="1.3" fill="#FBCB5C"/>
+    <circle cx="8.5" cy="14.7" r="1.3" fill="#FBCB5C"/>
+    <circle cx="0" cy="17" r="1.8" fill="#FBCB5C"/>
+    <circle cx="-8.5" cy="14.7" r="1.3" fill="#FBCB5C"/>
+    <circle cx="-14.7" cy="8.5" r="1.3" fill="#FBCB5C"/>
+    <circle cx="-17" cy="0" r="1.8" fill="#FBCB5C"/>
+    <circle cx="-14.7" cy="-8.5" r="1.3" fill="#FBCB5C"/>
+    <circle cx="-8.5" cy="-14.7" r="1.3" fill="#FBCB5C"/>
+
+    <!-- 2 kim đồng hồ thẳng tắp chỉ 12h đêm (Midnight) -->
+    <!-- Kim giờ -->
+    <rect x="-1.8" y="-12" width="3.6" height="13" rx="1.8" fill="#16305E"/>
+    <!-- Kim phút dài hơn -->
+    <rect x="-1.2" y="-17" width="2.4" height="18" rx="1.2" fill="#16305E"/>
+    <!-- Trục kim ở giữa -->
+    <circle cx="0" cy="0" r="2.8" fill="#16305E"/>
+    <circle cx="0" cy="0" r="1.2" fill="#FBCB5C"/>
+  </g>
+</svg>

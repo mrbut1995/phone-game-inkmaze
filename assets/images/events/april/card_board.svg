@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 505 508" width="505" height="508">
+  <defs>
+    <!-- Đổ bóng plum đậm mềm dưới khung -->
+    <filter id="mystery-board-shadow" x="-8%" y="-8%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#1A0122" flood-opacity="0.65"/>
+    </filter>
+    <filter id="star-glow-top" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="glow"/>
+      <feComposite in="SourceGraphic" in2="glow" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Bóng đổ toàn khung -->
+  <g filter="url(#mystery-board-shadow)">
+    <!-- Viền mỏng Hot-Pink #FF73CA -->
+    <rect x="15" y="14" width="475" height="478" rx="26" fill="#FF73CA"/>
+    <!-- Thân khung Deep Plum #3A0648 -->
+    <rect x="17.5" y="16.5" width="470" height="473" rx="24" fill="#3A0648"/>
+    <!-- Gờ sáng trên đỉnh tạo độ dày khối giấy -->
+    <path d="M42 16.5 Q17.5 16.5 17.5 41 L17.5 46 Q17.5 22 42 22 L463 22 Q487.5 22 487.5 46 L487.5 41 Q487.5 16.5 463 16.5 Z" fill="#520A56"/>
+  </g>
+
+  <!-- DÂY CỜ ĐUÔI NHEO TAM GIÁC (BUNTING FLAGS) DỌC CẠNH TRÊN -->
+  <!-- Dây treo cờ uốn võng nhẹ -->
+  <path d="M30 20 Q140 32 252.5 25 Q365 32 475 20" fill="none" stroke="#2A0336" stroke-width="2" stroke-linecap="round"/>
+  <!-- Các lá cờ tam giác: Violet, Pink, Light Pink, Plum xen kẽ -->
+  <g>
+    <polygon points="50,23 68,24 59,42" fill="#7A43F6"/>
+    <polygon points="76,25 94,26 85,44" fill="#FF73CA"/>
+    <polygon points="102,27 120,28 111,46" fill="#FDC1E3"/>
+    <polygon points="128,28 146,29 137,47" fill="#520A56"/>
+    <polygon points="154,29 172,29 163,47" fill="#7A43F6"/>
+    <polygon points="180,29 198,28 189,46" fill="#FF73CA"/>
+    <polygon points="206,28 224,27 215,44" fill="#FDC1E3"/>
+
+    <!-- Bên phải sao trung tâm -->
+    <polygon points="281,27 299,28 290,44" fill="#FDC1E3"/>
+    <polygon points="307,28 325,29 316,46" fill="#FF73CA"/>
+    <polygon points="333,29 351,29 342,47" fill="#7A43F6"/>
+    <polygon points="359,29 377,28 368,47" fill="#520A56"/>
+    <polygon points="385,28 403,27 394,46" fill="#FDC1E3"/>
+    <polygon points="411,26 429,25 420,44" fill="#FF73CA"/>
+    <polygon points="437,24 455,23 446,42" fill="#7A43F6"/>
+  </g>
+
+  <!-- Confetti và Ruy băng xoăn ở 2 góc trên -->
+  <g>
+    <!-- Góc trái -->
+    <path d="M30 40 Q22 48 30 55 Q38 62 30 70" fill="none" stroke="#FF73CA" stroke-width="2" stroke-linecap="round"/>
+    <rect x="22" y="32" width="5" height="5" rx="1.5" fill="#FBEC77" transform="rotate(35 22 32)"/>
+    <circle cx="42" cy="48" r="2.5" fill="#7A43F6"/>
+    <polygon points="25,58 29,64 21,64" fill="#FDC1E3"/>
+
+    <!-- Góc phải -->
+    <path d="M475 40 Q483 48 475 55 Q467 62 475 70" fill="none" stroke="#7A43F6" stroke-width="2" stroke-linecap="round"/>
+    <rect x="478" y="32" width="5" height="5" rx="1.5" fill="#FBEC77" transform="rotate(-35 478 32)"/>
+    <circle cx="463" cy="48" r="2.5" fill="#FF73CA"/>
+    <polygon points="480,58 484,64 476,64" fill="#FDC1E3"/>
+  </g>
+
+  <!-- Ngôi sao vàng nhỏ ở tâm trên đỉnh -->
+  <g filter="url(#star-glow-top)">
+    <polygon points="252.5,9 256,19 266,19 258,25 261,35 252.5,29 244,35 247,25 239,19 249,19" fill="#FBEC77"/>
+  </g>
+
+  <!-- LÒNG BÀN CỜ 5x5: Very-deep-plum #2A0336 (~87% chiều rộng = 440x440) -->
+  <rect x="32.5" y="38" width="440" height="440" rx="14" fill="#1C0124"/>
+  <rect x="32.5" y="38" width="440" height="440" rx="14" fill="#2A0336"/>
+  <!-- Vát bóng chìm mép trong -->
+  <rect x="32.5" y="38" width="440" height="5" fill="#15001C" opacity="0.6"/>
+
+  <!-- Dấu hỏi chấm màu vàng (#FBEC77) ở góc dưới bên trái -->
+  <g transform="translate(42 462)" filter="url(#star-glow-top)">
+    <path d="M4 6 Q4 0 10 0 Q16 0 16 6 Q16 10 11 12 L11 15" fill="none" stroke="#FBEC77" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="11" cy="20" r="2" fill="#FBEC77"/>
+  </g>
+
+  <!-- Dấu hỏi chấm màu vàng (#FBEC77) ở góc dưới bên phải -->
+  <g transform="translate(444 462)" filter="url(#star-glow-top)">
+    <path d="M4 6 Q4 0 10 0 Q16 0 16 6 Q16 10 11 12 L11 15" fill="none" stroke="#FBEC77" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="11" cy="20" r="2" fill="#FBEC77"/>
+  </g>
+</svg>

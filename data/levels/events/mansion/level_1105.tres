@@ -1,22 +1,29 @@
-[gd_resource type="Resource" script_class="LevelData" format=3]
+[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://scripts/models/definitions/LevelData.gd" id="1_tpm4h"]
+[ext_resource type="Script" path="res://scripts/models/definitions/LevelData.gd" id="1_level"]
 
 [resource]
-script = ExtResource("1_tpm4h")
+script = ExtResource("1_level")
 level_id = 1105
 level_title = "Mansion · 6"
 chapter = 0
-width = 4
-height = 4
-start_pos = Vector2i(0, 3)
-end_pos = Vector2i(3, 0)
-max_steps = 20
-par_time = 50.0
-v_walls = PackedByteArray(1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1)
-v_walls_visible = PackedByteArray(1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1)
-h_walls = PackedByteArray(1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1)
-h_walls_visible = PackedByteArray(1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1)
+mode_id = "play"
+difficulty = "hard"
+challenge = ""
+challenge_param = 0
+width = 5
+height = 5
+start_pos = Vector2i(0, 0)
+end_pos = Vector2i(4, 1)
+max_steps = 27
+par_time = 87.0
+v_walls = PackedByteArray(1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1)
+v_walls_visible = PackedByteArray(1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1)
+h_walls = PackedByteArray(1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1)
+h_walls_visible = PackedByteArray(1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1)
 cell_mask = PackedByteArray()
+lock_cells = PackedInt32Array(1, 2, 1, 3, 2, 2)
+key_cells = PackedInt32Array(1, 0, 1, 4, 3, 2)
 mission_types = PackedStringArray()
 mission_params = PackedInt32Array()
+custom_cell_values = {}

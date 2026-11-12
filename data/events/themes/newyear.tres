@@ -4,6 +4,7 @@
 [ext_resource uid="uid://b6koi2oxebqsc" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_newyear_normal.png" id="btn_normal"]
 [ext_resource uid="uid://bwa2m85h0bmtw" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_newyear_pressed.png" id="btn_pressed"]
 [ext_resource uid="uid://4rddg12l7v3a" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_newyear_disabled.png" id="btn_disabled"]
+[ext_resource type="Resource" path="res://data/events/skins/newyear_board.tres" id="board_skin"]
 
 [resource]
 script = ExtResource("2_f4gub")
@@ -26,3 +27,4 @@ chip_text = Color(1, 0.8784314, 0.50980395, 1)
 button_normal = ExtResource("btn_normal")
 button_pressed = ExtResource("btn_pressed")
 button_disabled = ExtResource("btn_disabled")
+board_skin = ExtResource("board_skin")

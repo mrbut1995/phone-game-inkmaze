@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <defs>
+    <filter id="purple-glow-foc" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.5" flood-color="#B79ADB" flood-opacity="0.75"/>
+    </filter>
+  </defs>
+  <!-- Vòng bo viền nét đứt màu Soft Purple / Lavender -->
+  <rect x="5" y="5" width="44" height="44" rx="10" fill="none" stroke="#B79ADB" stroke-width="2.2" stroke-dasharray="4.5 3"/>
+
+  <!-- Cuống bí -->
+  <path d="M27 15 Q30 11 34 12" fill="none" stroke="#4C2E74" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Bí ngô phát sáng mềm -->
+  <g filter="url(#purple-glow-foc)">
+    <ellipse cx="27" cy="30" rx="17" ry="14" fill="#FF8722"/>
+    <ellipse cx="27" cy="30" rx="11" ry="14" fill="#E8710D"/>
+    <ellipse cx="27" cy="30" rx="5.5" ry="14" fill="#FF8722"/>
+
+    <polygon points="20,26 23,22 24.5,26" fill="#FBE5A9"/>
+    <polygon points="34,26 31,22 29.5,26" fill="#FBE5A9"/>
+
+    <path d="M19 30 Q27 40 35 30 C33 34 31 32 30 35 C28 32 26 32 24 35 C23 32 21 34 19 30 Z" fill="#FBE5A9"/>
+  </g>
+</svg>

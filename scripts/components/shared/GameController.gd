@@ -204,6 +204,10 @@ func _update_hud() -> void:
 	hint_left = _tool_uses_left(ToolIds.HINT)
 	var extra_info := game_mode_controller.game_mode.get_hud_extra_info() if game_mode_controller.game_mode != null else ""
 	var title := game_mode_controller.game_mode.get_hud_floor_title(game_state.floor_number) if game_mode_controller.game_mode != null else "TẦNG %d" % game_state.floor_number
+	var ev_gm: Node = Svc.game()
+	var ev_info: Dictionary = ev_gm.call("event_series_info") if ev_gm != null and ev_gm.has_method("event_series_info") else {}
+	if not ev_info.is_empty():
+		title = tr("STR_EVENT_FLOOR_FORMAT").format([ev_info["floor"], ev_info["total"]])
 	var subtitle := game_mode_controller.game_mode.get_hud_subtitle(game_state.floor_number) if game_mode_controller.game_mode != null else ""
 	var running := _run_active and not _floor_finished
 	# Kiểm overlay "Hết nước đi" trên bàn (mode nào override `is_stuck` — hiện chưa chế độ nào dùng)
@@ -436,6 +440,10 @@ func _complete_floor() -> void:
 	# Daily: chốt NHIỆM VỤ của ngày (rỗng nếu ván này không phải ván Daily)
 	var daily := _complete_daily_missions(mission_rows)
 
+	# SỰ KIỆN (chuỗi màn tạo sẵn): ghi nhận thắng NGAY (thoát giữa chừng vẫn giữ tiến độ);
+	# qua tầng cuối → phát quà + popup chiến thắng event
+	var event_info := _record_event_floor(stars)
+
 	# Challenge: gửi kèm dữ liệu thử thách để UIController mở popup "hoàn thành thử thách"
 	var ch := _challenge()
 	if ui_controller != null:
@@ -483,7 +491,26 @@ func _complete_floor() -> void:
 			"daily_stars_max": int(daily.get("stars_max", 6)),
 			"daily_month_stars": int(daily.get("month_stars", 0)),
 			"daily_month_goal": int(daily.get("month_goal", 150)),
+			"event": not event_info.is_empty(),
+			"event_info": event_info,
 		})
+
+
+## Ghi nhận thắng 1 tầng của chuỗi sự kiện. Rỗng nếu ván này không thuộc chuỗi sự kiện.
+func _record_event_floor(stars: int) -> Dictionary:
+	var gm: Node = Svc.game()
+	if gm == null or not gm.has_method("event_series_info"):
+		return {}
+	var info: Dictionary = (gm.call("event_series_info") as Dictionary).duplicate()
+	if info.is_empty():
+		return {}
+	gm.call("record_level_clear", int(gm.get("current_level")), stars, game_state.elapsed_time)
+	var em := Svc.event()
+	if bool(info.get("last", false)) and em != null:
+		var id: StringName = info["event_id"]
+		info["claimed_now"] = bool(em.call("can_claim", id)) and bool(em.call("claim_reward", id))
+		info["rewards"] = em.call("reward_rows", id)
+	return info
 
 
 func _check_game_over() -> void:
@@ -554,6 +581,13 @@ func _on_continue_requested() -> void:
 		return
 	if ui_controller != null:
 		ui_controller.hide_overlays()
+
+	# SỰ KIỆN: đã ghi nhận lúc thắng tầng → chỉ việc sang tầng kế (hết tầng thì về Menu)
+	var ev_gm: Node = Svc.game()
+	if ev_gm != null and ev_gm.has_method("is_event_series_run") and bool(ev_gm.call("is_event_series_run")):
+		if not bool(ev_gm.call("start_next_event_level")):
+			ev_gm.call("return_to_levels")
+		return
 
 	if game_mode_controller != null and game_mode_controller.game_mode != null and not game_mode_controller.game_mode.is_endless:
 		var gm: Node = Svc.game()

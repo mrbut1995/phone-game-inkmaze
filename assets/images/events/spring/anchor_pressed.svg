@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <!-- 2 chân tăm nhỏ -->
+  <line x1="24" y1="41" x2="24" y2="47" stroke="#711B3E" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="30" y1="41" x2="30" y2="47" stroke="#711B3E" stroke-width="1.8" stroke-linecap="round"/>
+
+  <!-- Chim sẻ ép dẹp nhẹ (squashed), màu vàng sẫm #E0B840, không glow -->
+  <g transform="translate(27 31) scale(1.15, 0.88) translate(-27 -28)">
+    <path d="M25 15 Q27 11 30 12 Q28 16 26 17 Z" fill="#E0B840"/>
+    <path d="M28 15 Q32 11 34 14 Q31 17 29 17 Z" fill="#E0B840"/>
+
+    <ellipse cx="27" cy="28" rx="14" ry="13" fill="#E0B840"/>
+
+    <polygon points="38,26.5 44,28.5 38,30.5" fill="#E9729A"/>
+
+    <circle cx="33" cy="24.5" r="1.8" fill="#5D1F34"/>
+    <circle cx="33.5" cy="24" r="0.6" fill="#FFFFFF"/>
+
+    <ellipse cx="29" cy="28.5" rx="2.2" ry="1.4" fill="#F1A5BF" opacity="0.5"/>
+
+    <ellipse cx="21" cy="29.5" rx="6.5" ry="4.5" fill="#FAD782" transform="rotate(-15 21 29.5)"/>
+  </g>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Đáy gạch màu xanh băng đậm lót khối -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#B3D3EF"/>
+  <!-- Mặt gạch tuyết trắng Ice-Blue nhạt #EAF3FC -->
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#EAF3FC"/>
+  <!-- Gờ sáng bóng trên đỉnh #FFFFFF -->
+  <path d="M18 4 Q4 4 4 18 L4 22 Q4 8 18 8 L158 8 Q172 8 172 22 L172 18 Q172 4 158 4 Z" fill="#FFFFFF"/>
+  <!-- Lòng gạch lún màu xanh băng mịn hơn một tông -->
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#D4E7F9"/>
+
+  <!-- Bông tuyết nhỏ & sparkle vàng ấm ở 2 góc -->
+  <circle cx="32" cy="32" r="2.5" fill="#FFFFFF" opacity="0.8"/>
+  <polygon points="144,136 145.5,140 149.5,140 146.5,142.5 147.5,146.5 144,144 140.5,146.5 141.5,142.5 138.5,140 142.5,140" fill="#FED136" opacity="0.75"/>
+</svg>

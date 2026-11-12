@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="star-hole-glow2" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Bóng tròn màu Plum mềm bên dưới -->
+  <ellipse cx="88" cy="148" rx="46" ry="14" fill="#3A0648" opacity="0.45"/>
+
+  <!-- Quai khóa thép màu hồng nhạt #FDC1E3 -->
+  <path d="M64 80 V52 A24 24 0 0 1 112 52 V80" fill="none" stroke="#FDC1E3" stroke-width="14" stroke-linecap="round"/>
+  <!-- Điểm nhấn vát sáng trên đỉnh quai khóa -->
+  <path d="M72 43 A20 20 0 0 1 104 43" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+
+  <!-- Nơ hồng nhỏ nhắn buộc trên quai khóa (Tiny pink bow) -->
+  <g transform="translate(64 54)">
+    <ellipse cx="-6" cy="-2" rx="6" ry="4" fill="#FF73CA" transform="rotate(-20 -6 -2)"/>
+    <ellipse cx="6" cy="-2" rx="6" ry="4" fill="#FF73CA" transform="rotate(20 6 -2)"/>
+    <circle cx="0" cy="0" r="3" fill="#D94FA8"/>
+    <!-- Dải đuôi nơ -->
+    <path d="M-2 2 Q-5 10 -2 14" fill="none" stroke="#FF73CA" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M2 2 Q5 10 2 14" fill="none" stroke="#FF73CA" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Thân khóa chunky Violet #7A43F6 -->
+  <rect x="48" y="78" width="80" height="62" rx="14" fill="#5F31C4"/>
+  <rect x="48" y="74" width="80" height="62" rx="14" fill="#7A43F6"/>
+
+  <!-- Gờ sáng trên thân khóa -->
+  <path d="M62 74 Q48 74 48 88 L48 91 Q48 77 62 77 L114 77 Q128 77 128 91 L128 88 Q128 74 114 74 Z" fill="#9D73FB"/>
+
+  <!-- Băng đáy tối màu #4B2699 -->
+  <path d="M48 112 Q48 136 72 136 L104 136 Q128 136 128 112 L128 106 L48 106 Z" fill="#4B2699"/>
+
+  <!-- Lỗ khóa hình ngôi sao vàng Lemon Yellow phát sáng (#FBEC77) -->
+  <g filter="url(#star-hole-glow2)">
+    <polygon points="88,96 91.5,104 100,104 93.5,109 96,117 88,112 80,117 82.5,109 76,104 84.5,104" fill="#FBEC77"/>
+    <circle cx="88" cy="107" r="3" fill="#FFFBE6"/>
+  </g>
+</svg>

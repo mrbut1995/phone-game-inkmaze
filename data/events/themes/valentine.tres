@@ -4,6 +4,7 @@
 [ext_resource uid="uid://cowl0or14wafr" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_valentine_normal.png" id="btn_normal"]
 [ext_resource uid="uid://0cp6dipscge8" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_valentine_pressed.png" id="btn_pressed"]
 [ext_resource uid="uid://dphe52dui51k1" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_valentine_disabled.png" id="btn_disabled"]
+[ext_resource type="Resource" path="res://data/events/skins/valentine_board.tres" id="board_skin"]
 
 [resource]
 script = ExtResource("1_script")
@@ -25,3 +26,4 @@ chip_text = Color(1, 0.7921569, 0.8666667, 1)
 button_normal = ExtResource("btn_normal")
 button_pressed = ExtResource("btn_pressed")
 button_disabled = ExtResource("btn_disabled")
+board_skin = ExtResource("board_skin")

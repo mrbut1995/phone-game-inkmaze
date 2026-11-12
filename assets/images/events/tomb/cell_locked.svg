@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Gạch màu tan sẫm #B88E58 -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#876231"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#B88E58"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#A17945"/>
+
+  <!-- VIỀN HỌA TIẾT ZIGZAG NGỌC LAM VÀ VÀNG QUANH MÉP (TURQUOISE & GOLD ZIGZAG BORDER) -->
+  <!-- Viền trên -->
+  <path d="M24,26 L30,20 L36,26 L42,20 L48,26 L54,20 L60,26 L66,20 L72,26 L78,20 L84,26 L90,20 L96,26 L102,20 L108,26 L114,20 L120,26 L126,20 L132,26 L138,20 L144,26 L150,20" stroke="#FEC84C" stroke-width="3" fill="none"/>
+  <!-- Viền dưới -->
+  <path d="M24,150 L30,156 L36,150 L42,156 L48,150 L54,156 L60,150 L66,156 L72,150 L78,156 L84,150 L90,156 L96,150 L102,156 L108,150 L114,156 L120,150 L126,156 L132,150 L138,156 L144,150 L150,156" stroke="#38938E" stroke-width="3" fill="none"/>
+
+  <!-- Bóng tròn sau ổ khóa -->
+  <circle cx="88" cy="94" r="32" fill="#3B200B" opacity="0.6"/>
+
+  <!-- Ổ khóa vàng Ai Cập chunky ở trung tâm với lỗ khóa nâu sâu -->
+  <g transform="translate(88 88)">
+    <!-- Quai khóa thép sáng màu #F5D98A -->
+    <path d="M-18 -8 V-24 A18 18 0 0 1 18 -24 V-8" fill="none" stroke="#F5D98A" stroke-width="9" stroke-linecap="round"/>
+    <!-- Thân khóa vàng #E5A92E -->
+    <rect x="-28" y="-8" width="56" height="46" rx="9" fill="#E5A92E"/>
+    <!-- Băng đáy tối màu #B07A1C -->
+    <path d="M-28 17 Q-28 38 -9 38 L9 38 Q28 38 28 17 L28 12 L-28 12 Z" fill="#B07A1C"/>
+    <!-- Viên ngọc lam đính trước mặt khóa -->
+    <polygon points="0,-2 6,4 0,10 -6,4" fill="#38938E"/>
+    <!-- Lỗ khóa màu Deep Brown #3B200B -->
+    <circle cx="0" cy="18" r="4.5" fill="#3B200B"/>
+    <polygon points="-2.5,19 2.5,19 1.8,29 -1.8,29" fill="#3B200B"/>
+  </g>
+</svg>

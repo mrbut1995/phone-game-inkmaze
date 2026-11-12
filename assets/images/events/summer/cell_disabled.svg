@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <!-- Gạch màu dusty beige #E3D3B0 mờ phẳng -->
+  <rect x="4" y="8" width="168" height="164" rx="14" fill="#BAA780"/>
+  <rect x="4" y="4" width="168" height="164" rx="14" fill="#E3D3B0"/>
+  <rect x="16" y="16" width="144" height="140" rx="10" fill="#D1BE99"/>
+  <!-- Vết dấu chân nhỏ mờ trên cát ở góc (Faint footprint mark) -->
+  <ellipse cx="32" cy="34" rx="3.5" ry="5.5" fill="#C4B08A" opacity="0.5" transform="rotate(-25 32 34)"/>
+  <circle cx="28" cy="26" r="1.1" fill="#C4B08A" opacity="0.5"/>
+  <circle cx="31" cy="25" r="1.2" fill="#C4B08A" opacity="0.5"/>
+  <circle cx="34" cy="26" r="1.1" fill="#C4B08A" opacity="0.5"/>
+</svg>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <defs>
+    <filter id="balloon-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.5" flood-color="#FDD158" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+  <!-- Dây bóng uốn cong -->
+  <path d="M27 40 Q24 45 28 47 Q31 49 27 52" fill="none" stroke="#F5B7DD" stroke-width="1.6" stroke-linecap="round"/>
+  <!-- Nút thắt bóng -->
+  <polygon points="25,38 29,38 27,41" fill="#E0527B"/>
+  <!-- Thân bóng hồng chubby #FF6E97 tỏa sáng nhẹ -->
+  <g filter="url(#balloon-glow)">
+    <circle cx="27" cy="24" r="15" fill="#FF6E97"/>
+    <!-- Đốm phản chiếu sáng màu trắng -->
+    <ellipse cx="21" cy="16" rx="3.5" ry="2" fill="#FFFFFF" opacity="0.65" transform="rotate(-35 21 16)"/>
+    <!-- Khuôn mặt đáng yêu -->
+    <circle cx="22" cy="24" r="1.5" fill="#32174E"/>
+    <circle cx="32" cy="24" r="1.5" fill="#32174E"/>
+    <!-- Miệng cười chúm chím -->
+    <path d="M25.5 28 Q27 30 28.5 28" fill="none" stroke="#32174E" stroke-width="1.2" stroke-linecap="round"/>
+    <!-- Má hồng -->
+    <circle cx="18.5" cy="26" r="2.2" fill="#F5B7DD" opacity="0.8"/>
+    <circle cx="35.5" cy="26" r="2.2" fill="#F5B7DD" opacity="0.8"/>
+  </g>
+</svg>

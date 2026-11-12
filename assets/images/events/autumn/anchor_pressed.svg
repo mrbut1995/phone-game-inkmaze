@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <!-- Nhím cuộn tròn thành quả bóng gai (Spiky ball), không phát sáng -->
+  <g transform="translate(27 28)">
+    <!-- Quả cầu gai Deep Brown #280E01 -->
+    <circle cx="0" cy="0" r="12" fill="#280E01"/>
+    <!-- Các chóp gai nhọn xòe tròn đều -->
+    <polygon points="0,-16 -3,-11 3,-11" fill="#280E01"/>
+    <polygon points="11,-11 7,-8 11,-5" fill="#280E01"/>
+    <polygon points="16,0 11,-3 11,3" fill="#280E01"/>
+    <polygon points="11,11 11,5 7,8" fill="#280E01"/>
+    <polygon points="0,16 3,11 -3,11" fill="#280E01"/>
+    <polygon points="-11,11 -7,8 -11,5" fill="#280E01"/>
+    <polygon points="-16,0 -11,3 -11,-3" fill="#280E01"/>
+    <polygon points="-11,-11 -11,-5 -7,-8" fill="#280E01"/>
+
+    <!-- Lưng nhím cuộn thấy một phần bụng & mũi giấu vào trong -->
+    <path d="M-6 2 C-6 8 4 8 6 2 Z" fill="#FFE3BD"/>
+    <circle cx="5" cy="3" r="1.2" fill="#280E01"/>
+  </g>
+</svg>

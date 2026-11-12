@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <defs>
+    <filter id="orange-glow-foc" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.5" flood-color="#E27017" flood-opacity="0.65"/>
+    </filter>
+  </defs>
+  <!-- Vòng vuông bo góc nét đứt màu Pumpkin Orange #E27017 -->
+  <rect x="5" y="5" width="44" height="44" rx="10" fill="none" stroke="#E27017" stroke-width="2.2" stroke-dasharray="4.5 3"/>
+
+  <!-- Nhím đứng phát sáng mềm dịu -->
+  <g filter="url(#orange-glow-foc)">
+    <rect x="22" y="38" width="4" height="4" rx="1.5" fill="#280E01"/>
+    <rect x="34" y="38" width="4" height="4" rx="1.5" fill="#280E01"/>
+    <path d="M14 36 L12 30 L16 32 L13 24 L18 27 L16 19 L22 23 L22 16 L28 21 L30 15 L35 22 L40 18 L39 25 L45 23 L41 31 L46 32 L40 37 Z" fill="#280E01"/>
+    <path d="M22 37 C18 37 18 30 24 28 C28 26 34 26 39 28 L44 32 C45 33 44 35 42 35 L40 36 C36 37 28 37 22 37 Z" fill="#FFE3BD"/>
+    <circle cx="44.5" cy="32.5" r="1.4" fill="#280E01"/>
+    <circle cx="36" cy="30" r="1.4" fill="#280E01"/>
+    <circle cx="35.5" cy="29.5" r="0.5" fill="#FFFFFF"/>
+    <ellipse cx="38" cy="33" rx="1.6" ry="1" fill="#FFCD98"/>
+  </g>
+</svg>

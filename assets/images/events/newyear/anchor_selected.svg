@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="27" height="27">
+  <defs>
+    <filter id="gold-glow-sel3" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="0" stdDeviation="4.5" flood-color="#FEB415" flood-opacity="0.9"/>
+    </filter>
+  </defs>
+  <!-- Khung bo góc nét đứt màu vàng Gold #FEB415 -->
+  <rect x="4.5" y="4.5" width="45" height="45" rx="10" fill="none" stroke="#FEB415" stroke-width="2.5" stroke-dasharray="5 3.5"/>
+
+  <!-- Tia sáng sparkle vàng trên đỉnh -->
+  <polygon points="27,3 28.5,6.5 32,6.5 29.5,8.5 30.5,12 27,10 23.5,12 24.5,8.5 22,6.5 25.5,6.5" fill="#FEB415"/>
+
+  <!-- Lồng đèn phóng to nhẹ (scale 1.08), phát sáng vàng rực rỡ -->
+  <g transform="translate(27 27) scale(1.08) translate(-27 -27)" filter="url(#gold-glow-sel3)">
+    <path d="M27 9 L27 13" stroke="#FCD667" stroke-width="1.6" stroke-linecap="round"/>
+    <rect x="21" y="13" width="12" height="3" rx="1" fill="#FEB415"/>
+
+    <ellipse cx="27" cy="27" rx="16" ry="13" fill="#C02B25"/>
+    <ellipse cx="27" cy="27" rx="10" ry="13" fill="#AE1A16"/>
+    <ellipse cx="27" cy="27" rx="4" ry="13" fill="#8E1410"/>
+
+    <rect x="22" y="38" width="10" height="3" rx="1" fill="#FEB415"/>
+
+    <circle cx="22.5" cy="26" r="1.5" fill="#2E0408"/>
+    <circle cx="31.5" cy="26" r="1.5" fill="#2E0408"/>
+
+    <path d="M25.5 29.5 Q27 31 28.5 29.5" fill="none" stroke="#2E0408" stroke-width="1.1" stroke-linecap="round"/>
+
+    <ellipse cx="19" cy="28.5" rx="1.8" ry="1.1" fill="#FFE9B0" opacity="0.7"/>
+    <ellipse cx="35" cy="28.5" rx="1.8" ry="1.1" fill="#FFE9B0" opacity="0.7"/>
+  </g>
+
+  <!-- Tua rua -->
+  <circle cx="27" cy="44" r="1.8" fill="#630811"/>
+  <rect x="26" y="45.5" width="2" height="6.5" fill="#AE1A16"/>
+  <rect x="25" y="50" width="4" height="1.8" fill="#FEB415"/>
+</svg>

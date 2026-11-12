@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  <defs>
+    <filter id="mansion-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+  <!-- Normal tile base -->
+  <rect x="2" y="2" width="172" height="172" rx="16" fill="#11292D"/>
+  <rect x="2" y="2" width="172" height="168" rx="16" fill="#1E3D42"/>
+  <rect x="12" y="12" width="152" height="152" rx="10" fill="#163237"/>
+
+  <!-- Slate-teal rounded plate -->
+  <rect x="30" y="30" width="116" height="116" rx="18" fill="#113032"/>
+
+  <!-- Yellow Moon Glow Behind Mansion -->
+  <circle cx="88" cy="78" r="32" fill="#FFD567" opacity="0.25" filter="url(#mansion-glow)"/>
+
+  <!-- Black Haunted Mansion Silhouette -->
+  <g fill="#0D1C1F">
+    <!-- Hill -->
+    <ellipse cx="88" cy="130" rx="46" ry="14"/>
+    <!-- Wings -->
+    <rect x="58" y="86" width="22" height="34"/>
+    <polygon points="56,86 69,68 82,86"/>
+    <rect x="96" y="86" width="22" height="34"/>
+    <polygon points="94,86 107,68 120,86"/>
+    <!-- Central Tower -->
+    <rect x="76" y="68" width="24" height="52"/>
+    <polygon points="73,68 88,42 103,68"/>
+    <!-- Tiny Flag -->
+    <polygon points="88,42 88,34 96,38 88,40"/>
+  </g>
+
+  <!-- Glowing Yellow Arched Windows & Door -->
+  <g fill="#FFD567">
+    <!-- Tower Window -->
+    <path d="M 85 64 A 3 3 0 0 1 91 64 L 91 72 L 85 72 Z"/>
+    <!-- Left Wing Window -->
+    <path d="M 66 94 A 2.5 2.5 0 0 1 71 94 L 71 101 L 66 101 Z"/>
+    <!-- Right Wing Window -->
+    <path d="M 105 94 A 2.5 2.5 0 0 1 110 94 L 110 101 L 105 101 Z"/>
+    <!-- Mansion Main Door -->
+    <path d="M 84 104 A 4 4 0 0 1 92 104 L 92 120 L 84 120 Z"/>
+  </g>
+</svg>
