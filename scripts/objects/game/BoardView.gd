@@ -44,6 +44,9 @@ static var _design_cursor_size := 0.0
 @export var FALLBACK_FONT_SIZE := 28
 
 ## Mép chừa thêm bên trong phần GIẤY VẼ THẬT (px) - để ô không chạm viền giấy
+const INTRO_HALF := 0.5  # EXCEPTION(R1-keep): thông số hoạt cảnh intro
+const INTRO_WAVE_STEP := 0.06  # EXCEPTION(R1-keep): thông số hoạt cảnh intro
+const INTRO_CELL_TIME := 0.32  # EXCEPTION(R1-keep): thông số hoạt cảnh intro
 @export var BOARD_PADDING := 6
 ## Nhỏ nhất có thể co (0.24 * 176 ≈ 42px) -> board 20x20 vẫn nằm gọn
 @export var MIN_FIT_SCALE := 0.24
@@ -693,6 +696,23 @@ func _drag_guide_other_end() -> Vector2:
 		if corner.x != -1:
 			return _anchor_center_pos(corner)
 	return _drag_guide_last_local
+
+## INTRO vào game: các ô nở ra theo làn sóng từ ô góc trái-trên (gọi khi bảng bắt đầu rơi).
+func play_intro_wave(start_delay: float) -> void:
+	for y in _height:
+		for x in _width:
+			var c := _cell_node(Vector2i(x, y))
+			if c == null:
+				continue
+			c.pivot_offset = c.size * INTRO_HALF
+			c.scale = Vector2.ZERO
+			c.modulate.a = 0.0
+			var tw := c.create_tween()  # EXCEPTION(R4-tween): số ô/độ trễ tính lúc chạy (intro một lần)
+			tw.set_parallel(true)
+			var delay := start_delay + float(x + y) * INTRO_WAVE_STEP
+			tw.tween_property(c, "scale", Vector2.ONE, INTRO_CELL_TIME).set_delay(delay).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): intro một lần
+			tw.tween_property(c, "modulate:a", 1.0, INTRO_CELL_TIME).set_delay(delay)  # EXCEPTION(R4-tween): intro một lần
+
 
 func _build_cells() -> void:
 	# Board có thể là polyomino: ô ngoài board KHÔNG có node -> mảng giữ null

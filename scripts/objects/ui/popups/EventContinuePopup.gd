@@ -11,7 +11,7 @@ extends BasePopup
 ## ============================================================================
 
 ## Scene contract
-## Exports:  label_title, label_event, label_floor, dots, label_remaining, go_label
+## Exports:  label_title, label_event, label_floor, ruler_cells, cell_scene, label_remaining, go_label
 ## Emits:    rest_requested, enter_requested
 ## Handlers wired in scene: _on_enter_pressed, _on_rest_pressed
 ## Subscribes in code (EventBus/Model): (none)
@@ -19,15 +19,12 @@ extends BasePopup
 signal rest_requested
 signal enter_requested
 
-const DOT_DONE := Color(0.18, 0.62, 0.34, 1.0)
-const DOT_NOW := Color(1.0, 0.72, 0.15, 1.0)
-const DOT_TODO := Color(0.78, 0.8, 0.82, 1.0)
-const DOT_SIZE := 18.0
-
 @export var label_title: Label = null
 @export var label_event: Label = null
 @export var label_floor: Label = null
-@export var dots: HBoxContainer = null
+@export var ruler_cells: HBoxContainer = null
+## Scene 1 vạch thước (event_ruler_cell.tscn) — nhân bản theo số tầng
+@export var cell_scene: PackedScene = null
 @export var label_remaining: Label = null
 @export var go_label: Label = null
 
@@ -46,22 +43,17 @@ func _on_open() -> void:
 	else:
 		label_remaining.text = tr("STR_EVENT_CONT_REMAIN").format([remaining])
 	go_label.text = tr("STR_NF_ENTER").format([floor_no + 1])
-	_build_dots(floor_no, total)
+	_build_ruler(floor_no, total)
 
 
-## Hàng chấm tiến độ: đã qua (xanh) · sắp vào (vàng) · chưa tới (xám)
-func _build_dots(floor_no: int, total: int) -> void:
-	for c in dots.get_children():
+## Thước kẻ tiến độ: đã qua (✔ xanh) · sắp vào (bút chì) · chưa tới (chỉ vạch + số)
+func _build_ruler(floor_no: int, total: int) -> void:
+	for c in ruler_cells.get_children():
 		c.queue_free()
 	for i in total:
-		var dot := Panel.new()
-		dot.custom_minimum_size = Vector2(DOT_SIZE, DOT_SIZE)
-		dot.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		var sb := StyleBoxFlat.new()
-		sb.set_corner_radius_all(int(DOT_SIZE))
-		sb.bg_color = DOT_DONE if i < floor_no else (DOT_NOW if i == floor_no else DOT_TODO)
-		dot.add_theme_stylebox_override("panel", sb)
-		dots.add_child(dot)
+		var cell := cell_scene.instantiate() as EventRulerCell
+		ruler_cells.add_child(cell)
+		cell.setup(i + 1, i < floor_no, i == floor_no)
 
 
 func _event_name(id: StringName) -> String:

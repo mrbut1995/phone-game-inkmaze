@@ -12,6 +12,16 @@ extends BaseScene
 
 const UIAnim := preload("res://scripts/utils/UIAnim.gd")
 
+## Intro "bảng rơi xuống bàn" khi VÀO game từ màn khác (không chạy khi chơi lại / qua level kế / từ Tutorial về)
+const INTRO_START_SCALE := 1.35  # EXCEPTION(R1-keep): thông số hoạt cảnh intro
+const INTRO_START_ROTATION := -0.16  # EXCEPTION(R1-keep): thông số hoạt cảnh intro
+const INTRO_DURATION := 0.9  # EXCEPTION(R1-keep): thông số hoạt cảnh intro
+const INTRO_DROP := 420.0  # EXCEPTION(R1-keep): thông số hoạt cảnh intro (px bảng rơi từ trên xuống)
+const INTRO_RESUME_SCENE := "tutorial.tscn"
+const INTRO_GAME_SCENE := "res://scenes/screens/game.tscn"
+const HALF := 0.5
+const INTRO_WAVE_DELAY := 0.7  # EXCEPTION(R1-keep): các ô nở sau khi bảng chạm bàn
+
 ## Ảnh nền của skin sự kiện (null = ván thường)
 var _event_backdrop: TextureRect = null
 
@@ -282,10 +292,48 @@ func _ready() -> void:
 		if d != null and str(d) != "":
 			initial_diff = str(d)
 	switch_mode(initial_mode, initial_diff)
+	if _should_play_intro() and board_view != null:
+		board_view.modulate.a = 0.0  # ẩn bàn NGAY (tránh nháy 1 khung) — _play_board_intro hiện lại sau chuyển cảnh
+		call_deferred("_play_board_intro")
 	# Nếu quay lại từ Tutorial (người chơi bấm “?”), đồng hồ đã dừng trước khi mở — chạy lại.
 	# (timer_controller.pause() gọi trong open_instruction(); tới đây khi Tutorial đổi scene)
 	if timer_controller != null and game_controller != null:
 		call_deferred("_resume_timer_if_paused")
+
+
+## TRUE khi người chơi đến từ màn KHÁC game (Main/Daily/Event…). Chơi lại, qua level kế
+## (previous = game) hoặc quay về từ Tutorial thì KHÔNG chạy intro.
+func _should_play_intro() -> bool:
+	var sm := get_node_or_null("/root/SceneManager")  # code-connect: tree
+	if sm == null:
+		return false
+	var prev := str(sm.get("previous_scene_path"))
+	if prev.is_empty() or prev == INTRO_GAME_SCENE:
+		return false
+	return prev.get_file() != INTRO_RESUME_SCENE
+
+
+## Bảng rơi xuống bàn: rơi từ trên xuống (nảy), nghiêng + phóng to rồi về đúng chỗ.
+## ĐỢI lớp chuyển cảnh (mực loang) hé xong mới chạy, nếu không hiệu ứng diễn ra dưới lớp mực.
+func _play_board_intro() -> void:
+	var sm := get_node_or_null("/root/SceneManager")  # code-connect: tree
+	var trans: Node = sm.get("transition") as Node if sm != null else null
+	if trans != null and trans.has_method("is_busy") and bool(trans.call("is_busy")):
+		await trans.transition_finished
+	if board_view == null or not is_instance_valid(board_view):
+		return
+	var rest_y := board_view.position.y
+	board_view.pivot_offset = board_view.size * HALF
+	board_view.position.y = rest_y - INTRO_DROP
+	board_view.scale = Vector2.ONE * INTRO_START_SCALE
+	board_view.rotation = INTRO_START_ROTATION
+	board_view.modulate.a = 1.0
+	if board_view.has_method("play_intro_wave"):
+		board_view.call("play_intro_wave", INTRO_WAVE_DELAY)
+	var tw := create_tween().set_parallel(true)  # EXCEPTION(R4-tween): endpoints đặt lúc chạy (intro một lần)
+	tw.tween_property(board_view, "position:y", rest_y, INTRO_DURATION).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): intro một lần
+	tw.tween_property(board_view, "scale", Vector2.ONE, INTRO_DURATION).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): intro một lần
+	tw.tween_property(board_view, "rotation", 0.0, INTRO_DURATION).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)  # EXCEPTION(R4-tween): intro một lần
 
 
 ## SỰ KIỆN: đổi ảnh nền + art bàn chơi + màu chữ/mực theo skin của event đang chơi.

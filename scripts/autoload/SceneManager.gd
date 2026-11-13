@@ -39,6 +39,9 @@ const SCENE_LOADING := "res://scenes/autoload/loading.tscn"
 const LoadingScene := preload("res://scenes/autoload/loading.tscn")
 
 var transition: CanvasLayer = null
+## Scene ĐÃ RỜI ở lần đổi scene gần nhất ("" = chưa đổi lần nào). GameScene đọc để quyết định
+## có chạy intro vào màn không (chỉ khi đến từ màn KHÁC game).
+var previous_scene_path := ""
 
 
 func _ready() -> void:
@@ -79,6 +82,7 @@ func change_scene(path: String, record_history := true, style := "auto") -> void
 		return
 
 	var previous := current_scene_path()
+	previous_scene_path = previous
 	if record_history and not previous.is_empty() and previous != path:
 		var screen: Variant = Svc.screen()
 		if screen != null and screen.has_method("push_history"):
